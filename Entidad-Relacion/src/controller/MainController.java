@@ -29,8 +29,7 @@ import javafx.stage.Stage;
  * @author Victor Sepulveda
  */
 public class MainController implements Initializable {
-    @FXML
-    public AnchorPane root;
+    
     @FXML
     public Pane pizarra;
     @FXML
@@ -74,6 +73,7 @@ public class MainController implements Initializable {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
+    
     public void popAgregarEntidad()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar entidad");

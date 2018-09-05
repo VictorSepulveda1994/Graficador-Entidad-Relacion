@@ -6,8 +6,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -18,16 +20,39 @@
    <children>
       <GridPane GridPane.rowIndex="1">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="65.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="752.0" minWidth="10.0" prefWidth="752.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="112.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="752.0" minWidth="10.0" prefWidth="722.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="65.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #A9A9A9;" />
+            <Pane prefHeight="518.0" prefWidth="112.0" style="-fx-background-color: #A9A9A9;">
+               <children>
+                  <ImageView fitHeight="88.0" fitWidth="97.0" layoutX="8.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/button_entidad.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#f8f6f6" layoutX="23.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entidad">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+                  <ImageView fitHeight="95.0" fitWidth="97.0" layoutX="8.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/button_relacion.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="WHITE" layoutX="20.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Relacion">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+               </children></Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #A9A9A9;" GridPane.columnIndex="2" />
+            <Pane fx:id="pizarra" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <Pane onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #000000;">
