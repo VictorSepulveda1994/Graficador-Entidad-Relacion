@@ -5,6 +5,7 @@
  */
 package controller;
 
+import static controller.PopAgregarNodoController.nombreDelNodo;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
@@ -26,8 +28,6 @@ import javafx.stage.Stage;
  */
 public class PopAgregarRelacionController implements Initializable {
     @FXML
-    private Spinner<Object> spinner = new Spinner<>();
-    @FXML
     private AnchorPane root;
     @FXML
     public TextField nombreRelacion;
@@ -37,25 +37,21 @@ public class PopAgregarRelacionController implements Initializable {
      * Initializes the controller class.
      */
     public static String nombreDeLaRelacion;
-    public static String numero;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        spinner.setId("list-spinner");
-        List<Object> names = new ArrayList<Object>();
-        names.add("1");
-        names.add("2");
-        names.add("3");
-        names.add("4");
-        names.add("5");
-        names.add("6");
-        names.add("7");
-        spinner.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<Object>(FXCollections.observableArrayList(names)));
-        spinner.getValueFactory();
+        
     }
     public void continuar(){
         nombreDeLaRelacion=nombreRelacion.textProperty().get();
-        numero= (String) spinner.getValue();
+        if(nombreDelNodo.isEmpty() || nombreDelNodo.length()>21){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error al ingresar nombre");
+            alert.setHeaderText("Se encontro un error en el nombre de la relacion,"
+                    + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
+            alert.showAndWait();
+        }
         ((Stage)root.getScene().getWindow()).close();
     }
     
