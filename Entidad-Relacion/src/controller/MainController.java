@@ -132,5 +132,6 @@ public class MainController implements Initializable {
     }
     public void mostrarRelacion() throws IOException{
         popAgregarRelacion();
+        
     }
 }

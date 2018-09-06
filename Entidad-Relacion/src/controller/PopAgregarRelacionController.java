@@ -15,7 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -26,12 +28,16 @@ public class PopAgregarRelacionController implements Initializable {
     @FXML
     private Spinner<Object> spinner = new Spinner<>();
     @FXML
-    private AnchorPane root; 
+    private AnchorPane root;
+    @FXML
+    public TextField nombreRelacion;
 
     //private IntegerSpinnerValueFactory numeros= new IntegerSpinnerValueFactory(0, 7, 0);
     /**
      * Initializes the controller class.
      */
+    public static String nombreDeLaRelacion;
+    public static String numero;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -46,6 +52,11 @@ public class PopAgregarRelacionController implements Initializable {
         names.add("7");
         spinner.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<Object>(FXCollections.observableArrayList(names)));
         spinner.getValueFactory();
-    }    
+    }
+    public void continuar(){
+        nombreDeLaRelacion=nombreRelacion.textProperty().get();
+        numero= (String) spinner.getValue();
+        ((Stage)root.getScene().getWindow()).close();
+    }
     
 }
