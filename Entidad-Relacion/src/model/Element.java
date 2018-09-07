@@ -39,5 +39,4 @@ public class Element {
         this.type = type;
     }
     
-    
 }
