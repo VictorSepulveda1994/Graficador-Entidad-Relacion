@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<GridPane gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -51,9 +51,9 @@
                <children>
                   <Pane style="-fx-background-color: #A9A9A9;" GridPane.rowIndex="1">
                      <children>
-                        <Button layoutX="4.0" layoutY="31.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="101.0" style="-fx-background-color: #94EDA8; -fx-border-color: #000000;" text="Entidad">
+                        <Button layoutX="4.0" layoutY="31.0" mnemonicParsing="false" onAction="#showEntity" prefHeight="63.0" prefWidth="101.0" style="-fx-background-color: #94EDA8; -fx-border-color: #000000;">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold" size="13.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -61,9 +61,9 @@
                            <effect>
                               <InnerShadow />
                            </effect></Button>
-                        <Button layoutX="17.0" layoutY="123.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" rotate="45.0" style="-fx-background-color: #DFE12C; -fx-border-color: #000000;">
+                        <Button layoutX="17.0" layoutY="149.0" mnemonicParsing="false" onAction="#showRelation" prefHeight="75.0" prefWidth="75.0" rotate="45.0" style="-fx-background-color: #DFE12C; -fx-border-color: #000000;">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold" size="13.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -72,16 +72,16 @@
                               <InnerShadow />
                            </effect>
                         </Button>
-                        <Label layoutX="19.0" layoutY="147.0" text="Relación">
+                        <Label layoutX="22.0" layoutY="94.0" text="Entidad">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
                         </Label>
-                        <Button layoutX="30.0" layoutY="267.0" mnemonicParsing="false" onAction="#mostrarEntidad" text="Entidad" />
-                        <Button layoutX="29.0" layoutY="322.0" mnemonicParsing="false" onAction="#mostrarRelacion" text="Relacion" />
+                        <Label layoutX="18.0" layoutY="240.0" text="Relación">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                   <Pane style="-fx-background-color: #373E3B;">

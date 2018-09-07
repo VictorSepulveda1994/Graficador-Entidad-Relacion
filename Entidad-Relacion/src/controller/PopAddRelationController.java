@@ -5,7 +5,6 @@
  */
 package controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -18,30 +17,35 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Alejandra
+ * @author Equipo Rocket
  */
-public class PopAgregarNodoController implements Initializable {
+public class PopAddRelationController implements Initializable {
     @FXML
-    public AnchorPane root;
+    private AnchorPane root;
     @FXML
-    public TextField nombreNodo;
+    public TextField nameRelation;
+
+    //private IntegerSpinnerValueFactory numeros= new IntegerSpinnerValueFactory(0, 7, 0);
     /**
      * Initializes the controller class.
      */
-    public static String nombreDelNodo;
+    public static String nameOfRelation = "";
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    public void agregarALaPantalla(){
-        nombreDelNodo=nombreNodo.textProperty().get();
-        if(nombreDelNodo.isEmpty() || nombreDelNodo.length()>21){
+        // TODO   
+    }
+    
+    public void addToScreen(){
+        nameOfRelation=nameRelation.textProperty().get();
+        if(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error al ingresar nombre");
-            alert.setHeaderText("Se encontro un error en el nombre de la entidad,"
+            alert.setHeaderText("Se encontro un error en el nombre de la relacion,"
                     + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
             alert.showAndWait();
         }
         ((Stage)root.getScene().getWindow()).close();
     }
+    
 }

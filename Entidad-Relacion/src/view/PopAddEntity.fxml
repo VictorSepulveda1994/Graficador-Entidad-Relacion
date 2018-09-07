@@ -6,8 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="178.0" prefWidth="502.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="controller.PopAgregarNodoController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="178.0" prefWidth="502.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopAddEntityController">
    <children>
       <Text layoutX="21.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar Nodo">
          <font>
@@ -15,11 +14,11 @@
          </font>
       </Text>
       <Text layoutX="21.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agrega un nombre: " />
-      <TextField fx:id="nombreNodo" layoutX="135.0" layoutY="78.0" prefHeight="31.0" prefWidth="298.0">
+      <TextField fx:id="nameEntity" layoutX="152.0" layoutY="78.0" prefHeight="31.0" prefWidth="281.0">
          <font>
             <Font size="13.0" />
          </font>
       </TextField>
-      <Button layoutX="408.0" layoutY="130.0" mnemonicParsing="false" onAction="#agregarALaPantalla" text="Añadir" />
+      <Button layoutX="408.0" layoutY="130.0" mnemonicParsing="false" onAction="#addToScreen" text="Añadir" />
    </children>
 </AnchorPane>
