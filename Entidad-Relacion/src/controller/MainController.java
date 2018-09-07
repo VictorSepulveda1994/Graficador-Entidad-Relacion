@@ -17,11 +17,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import static controller.PopAddEntityController.nameOfEntity;
+import static controller.PopAddRelationController.nameOfRelation;
 
 /**
  *
@@ -44,6 +43,18 @@ public class MainController implements Initializable {
     double x, y;
     
     @FXML
+    private void close(MouseEvent event) {
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void min(MouseEvent event) {
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.setIconified(true);
+    }
+    
+    @FXML
     void dragged(MouseEvent event) {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.setX(event.getScreenX() - x);
@@ -60,24 +71,12 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-
-    @FXML
-    private void close(MouseEvent event) {
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    private void min(MouseEvent event) {
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.setIconified(true);
-    }
     
-    public void popAgregarEntidad()throws IOException {
+    public void popAddEntity()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar entidad");
         
-        Parent root = FXMLLoader.load(getClass().getResource("PopAgregarNodo.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddEntity.fxml"));
         
         Scene xscene = new Scene(root);
         
@@ -88,14 +87,13 @@ public class MainController implements Initializable {
         dialog.showAndWait();
         dialog.setResizable(false);
         dialog.close();    
-        
     }
     
-    public void popAgregarRelacion()throws IOException {
+    public void popAddRelation()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar relacion");
         
-        Parent root = FXMLLoader.load(getClass().getResource("PopAgregarRelacion.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddRelation.fxml"));
         
         Scene xscene = new Scene(root);
         
@@ -109,28 +107,21 @@ public class MainController implements Initializable {
         
     }
     
-    public void mostrarEntidad() throws IOException{
-        popAgregarEntidad();
-        Line linea = new Line(x_i,y_i,x_i+largo,y_i);
-        Line linea2= new Line(x_i+largo,y_i,x_i+largo,y_i+ancho);
-        Line linea3= new Line(x_i,y_i,x_i,y_i+ancho);
-        Line linea4=new Line(x_i,y_i+ancho,x_i+largo,y_i+ancho);
-        linea.setStroke(Color.CHOCOLATE);
-        linea2.setStroke(Color.BLACK);
-        linea3.setStroke(Color.DARKMAGENTA);
-        linea4.setStroke(Color.DARKTURQUOISE);
-        pizarra.getChildren().add(linea);
-        pizarra.getChildren().add(linea2);
-        pizarra.getChildren().add(linea3);
-        pizarra.getChildren().add(linea4);
-        Text texto= new Text();
-        texto.setLayoutX(x_i+20);
-        texto.setLayoutY(y_i+25);
-        texto.setFill(Color.BLACK);
-        texto.setText(PopAgregarNodoController.nombreDelNodo);
-        pizarra.getChildren().add(texto);
+    public void showEntity() throws IOException{
+        popAddEntity();
+        while(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
+            popAddEntity();
+        }
+        String nombre=PopAddEntityController.nameOfEntity;
+        System.out.println("Nombre: "+nombre);
     }
-    public void mostrarRelacion() throws IOException{
-        popAgregarRelacion();
+    
+    public void showRelation() throws IOException{
+        popAddRelation();
+        while(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
+            popAddRelation();
+        }
+        String name= PopAddRelationController.nameOfRelation;
+        System.out.println("Nombre: "+name);
     }
 }

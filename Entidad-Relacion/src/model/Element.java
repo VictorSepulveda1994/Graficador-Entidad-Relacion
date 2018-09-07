@@ -9,11 +9,14 @@ package model;
  *
  * @author Milagod
  */
-public class Element {
+public abstract class Element {
     
-    private Polygon polygon;
-    private String name;
-    private Type type;
+    protected Polygon polygon;
+    protected String name;
+
+    public Element(String name) {
+        this.name = name;
+    }
 
     public Polygon getPolygon() {
         return polygon;
@@ -30,13 +33,5 @@ public class Element {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-    
+ 
 }
