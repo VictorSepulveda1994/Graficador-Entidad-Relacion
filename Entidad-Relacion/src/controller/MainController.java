@@ -5,6 +5,8 @@
  */
 package controller;
 
+import static controller.PopAgregarNodoController.nombreDelNodo;
+import static controller.PopAgregarRelacionController.nombreDeLaRelacion;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -77,7 +79,7 @@ public class MainController implements Initializable {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar entidad");
         
-        Parent root = FXMLLoader.load(getClass().getResource("PopAgregarNodo.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAgregarNodo.fxml"));
         
         Scene xscene = new Scene(root);
         
@@ -95,7 +97,7 @@ public class MainController implements Initializable {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar relacion");
         
-        Parent root = FXMLLoader.load(getClass().getResource("PopAgregarRelacion.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAgregarRelacion.fxml"));
         
         Scene xscene = new Scene(root);
         
@@ -111,26 +113,18 @@ public class MainController implements Initializable {
     
     public void mostrarEntidad() throws IOException{
         popAgregarEntidad();
-        Line linea = new Line(x_i,y_i,x_i+largo,y_i);
-        Line linea2= new Line(x_i+largo,y_i,x_i+largo,y_i+ancho);
-        Line linea3= new Line(x_i,y_i,x_i,y_i+ancho);
-        Line linea4=new Line(x_i,y_i+ancho,x_i+largo,y_i+ancho);
-        linea.setStroke(Color.CHOCOLATE);
-        linea2.setStroke(Color.BLACK);
-        linea3.setStroke(Color.DARKMAGENTA);
-        linea4.setStroke(Color.DARKTURQUOISE);
-        pizarra.getChildren().add(linea);
-        pizarra.getChildren().add(linea2);
-        pizarra.getChildren().add(linea3);
-        pizarra.getChildren().add(linea4);
-        Text texto= new Text();
-        texto.setLayoutX(x_i+20);
-        texto.setLayoutY(y_i+25);
-        texto.setFill(Color.BLACK);
-        texto.setText(PopAgregarNodoController.nombreDelNodo);
-        pizarra.getChildren().add(texto);
+        while(nombreDelNodo.isEmpty() || nombreDelNodo.length()>21){
+            popAgregarEntidad();
+        }
+        String nombre=PopAgregarNodoController.nombreDelNodo;
+        System.out.println("Nombre: "+nombre);
     }
     public void mostrarRelacion() throws IOException{
         popAgregarRelacion();
+        while(nombreDeLaRelacion.isEmpty() || nombreDeLaRelacion.length()>21){
+            popAgregarEntidad();
+        }
+        String nombre= PopAgregarRelacionController.nombreDeLaRelacion;
+        System.out.println("Nombre: "+nombre);
     }
 }

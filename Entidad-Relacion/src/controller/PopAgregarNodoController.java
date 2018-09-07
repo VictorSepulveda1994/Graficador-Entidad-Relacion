@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -34,6 +35,13 @@ public class PopAgregarNodoController implements Initializable {
     }    
     public void agregarALaPantalla(){
         nombreDelNodo=nombreNodo.textProperty().get();
+        if(nombreDelNodo.isEmpty() || nombreDelNodo.length()>21){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error al ingresar nombre");
+            alert.setHeaderText("Se encontro un error en el nombre de la entidad,"
+                    + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
+            alert.showAndWait();
+        }
         ((Stage)root.getScene().getWindow()).close();
     }
 }
