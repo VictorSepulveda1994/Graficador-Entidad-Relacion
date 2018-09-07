@@ -31,16 +31,29 @@ public class Polygon {
     public Point getPoint (int index){
         return this.points.get(index);
     }
-    
-    public void drawPolygon (String name){
-        
-    }
-    
+
     public void drawConnnectors (ArrayList <Element> elements){
         
     }
     
-    public void drawAll (){
+    public void drawRectangle (String name){
         
     }
+    
+    public void drawTriangle (String name){
+        
+    }
+    
+    public void drawDiamond (String name){
+        
+    }
+    
+    public void drawPentagon (String name){
+        
+    }
+    
+    public void drawHexagon (String name){
+        
+    }
+      
 }
