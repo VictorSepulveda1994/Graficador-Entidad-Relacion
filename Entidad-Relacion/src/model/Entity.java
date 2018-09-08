@@ -14,10 +14,10 @@ public class Entity extends Element {
     private final int width;
     private final int height;
 
-    public Entity(int width, int height, String name) {
+    public Entity(String name) {
         super(name);
-        this.width = width;
-        this.height = height;
+        this.width = 100;
+        this.height = 50;
     }
 
     public int getWidth() {
@@ -27,5 +27,10 @@ public class Entity extends Element {
     public int getHeight() {
         return height;
     }
+
+    public String getName() {
+        return name;
+    }
+    
 
 }

@@ -21,6 +21,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static controller.PopAddEntityController.nameOfEntity;
 import static controller.PopAddRelationController.nameOfRelation;
+import model.Entity;
+import static model.Main.diagram;
+import model.Relation;
 
 /**
  *
@@ -66,12 +69,6 @@ public class MainController implements Initializable {
         x = event.getSceneX();
         y = event.getSceneY();
     }
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
     public void popAddEntity()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar entidad");
@@ -112,8 +109,10 @@ public class MainController implements Initializable {
         while(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
             popAddEntity();
         }
-        String nombre=PopAddEntityController.nameOfEntity;
-        System.out.println("Nombre: "+nombre);
+        String name=PopAddEntityController.nameOfEntity;
+        Entity entity= new Entity(name);
+        diagram.addEntity(entity);
+       
     }
     
     public void showRelation() throws IOException{
@@ -122,6 +121,20 @@ public class MainController implements Initializable {
             popAddRelation();
         }
         String name= PopAddRelationController.nameOfRelation;
-        System.out.println("Nombre: "+name);
+        Relation relation = new Relation(name);
+        diagram.addRelation(relation);
+        
     }
+    
+    public void cleanScreen() throws IOException{
+        diagram.clearAll();
+       
+    }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+    }    
+    
+    
 }
