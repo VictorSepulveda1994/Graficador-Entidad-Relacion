@@ -115,7 +115,7 @@
                   <Pane style="-fx-background-color: #A9A9A9;" GridPane.rowIndex="1" />
                   <Pane style="-fx-background-color: #373E3B;">
                      <children>
-                        <ImageView fitHeight="79.0" fitWidth="79.0" layoutX="16.0" layoutY="3.0">
+                        <ImageView fitHeight="79.0" fitWidth="79.0" layoutX="16.0" layoutY="3.0" onMouseClicked="#saveImage">
                            <image>
                               <Image url="@../icons/save.png" />
                            </image>

@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Alejandra
+ * @author Equipo Rocket
  */
 public class PopAddEntityController implements Initializable {
     @FXML

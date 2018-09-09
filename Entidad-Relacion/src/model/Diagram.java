@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Milagod
+ * @author Equipo Rocket
  */
 public class Diagram {
     

@@ -21,13 +21,21 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static controller.PopAddEntityController.nameOfEntity;
 import static controller.PopAddRelationController.nameOfRelation;
+import static controller.PopSaveImageController.exist;
+import static controller.PopSaveImageController.namePhoto;
+import static controller.PopSaveImageController.nameURL;
+import java.io.File;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
+import javax.imageio.ImageIO;
 import model.Entity;
 import static model.Main.diagram;
 import model.Relation;
 
 /**
  *
- * @author Victor Sepulveda
+ * @author Equipo Rocket
  */
 public class MainController implements Initializable {
     
@@ -104,6 +112,24 @@ public class MainController implements Initializable {
         
     }
     
+    public void popSaveImage()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Guardar imagen");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopSaveImage.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.setResizable(false);
+        dialog.close();    
+        
+    }
+    
     public void showEntity() throws IOException{
         popAddEntity();
         while(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
@@ -131,6 +157,21 @@ public class MainController implements Initializable {
        
     }
     
+    public void saveImage() throws IOException{
+        popSaveImage(); 
+        while(namePhoto.isEmpty() || namePhoto.length()>21 || exist==false){
+            popSaveImage();
+        }
+        WritableImage wim = pizarra.snapshot(new SnapshotParameters(), null);
+        System.out.println("Nombre: "+namePhoto);
+        System.out.println("Direccion: "+nameURL);
+        System.out.println(nameURL+"\\"+namePhoto+".png");
+        File file = new File(nameURL+"\\"+namePhoto+".png");
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
+        } catch (Exception s) {
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         

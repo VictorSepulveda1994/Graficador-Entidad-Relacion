@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author Milagod
+ * @author Equipo Rocket
  */
 public class Entity extends Element {
    
