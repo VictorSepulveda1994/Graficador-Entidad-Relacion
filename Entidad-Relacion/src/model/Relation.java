@@ -15,10 +15,18 @@ public class Relation extends Element {
 
     private ArrayList <Entity> entities = new ArrayList <>();
 
+    /**
+     *
+     * @param name
+     */
     public Relation(String name) {
         super(name);
     }
     
+    /**
+     *
+     * @param entity
+     */
     public void addEntity (Entity entity){
         this.entities.add(entity);
     }

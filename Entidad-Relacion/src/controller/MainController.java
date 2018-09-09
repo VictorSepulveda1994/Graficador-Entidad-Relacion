@@ -39,32 +39,67 @@ import model.Relation;
  */
 public class MainController implements Initializable {
     
+    /**
+     *Drawing panel
+     */
     @FXML
     public Pane pizarra;
+
+    /**
+     *Add entity
+     */
     @FXML
     public Button botonAgregarNodo;
+
+    /**
+     *Add relation
+     */
     @FXML
     public Button botonAgregarRelacion;
     
+    /**
+     *
+     */
     public static int x_i=20;
+
+    /**
+     *
+     */
     public static int y_i=20;
+
+    /**
+     *
+     */
     public static int largo=100;
+
+    /**
+     *
+     */
     public static int ancho=50;
     
     double x, y;
     
+    /**
+     *Handles close window
+     */
     @FXML
     private void close(MouseEvent event) {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
-
+    
+    /**
+     *Manage to minimize window
+     */
     @FXML
     private void min(MouseEvent event) {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.setIconified(true);
     }
     
+    /**
+     *
+     */
     @FXML
     void dragged(MouseEvent event) {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -72,11 +107,19 @@ public class MainController implements Initializable {
         stage.setY(event.getScreenY() - y);
     }
     
+    /**
+     *
+     */
     @FXML
     void pressed(MouseEvent event) {
         x = event.getSceneX();
         y = event.getSceneY();
     }
+
+    /**
+     *
+     * Add an entity 
+     */
     public void popAddEntity()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar entidad");
@@ -94,6 +137,10 @@ public class MainController implements Initializable {
         dialog.close();    
     }
     
+    /**
+     *
+     * Add an relacion
+     */
     public void popAddRelation()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar relacion");
@@ -112,6 +159,10 @@ public class MainController implements Initializable {
         
     }
     
+    /**
+     *
+     * Save the image of the blackboard
+     */
     public void popSaveImage()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Guardar imagen");
@@ -130,6 +181,10 @@ public class MainController implements Initializable {
         
     }
     
+    /**
+     *
+     * Save an entity
+     */
     public void showEntity() throws IOException{
         popAddEntity();
         while(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
@@ -141,6 +196,10 @@ public class MainController implements Initializable {
        
     }
     
+    /**
+     *
+     * Save an relation
+     */
     public void showRelation() throws IOException{
         popAddRelation();
         while(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
@@ -152,11 +211,19 @@ public class MainController implements Initializable {
         
     }
     
+    /**
+     *
+     * Clean the window
+     */
     public void cleanScreen() throws IOException{
         diagram.clearAll();
        
     }
     
+    /**
+     *
+     * Save a Image in .png
+     */
     public void saveImage() throws IOException{
         popSaveImage(); 
         while(namePhoto.isEmpty() || namePhoto.length()>21 || exist==false){

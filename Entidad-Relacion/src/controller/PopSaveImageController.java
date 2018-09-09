@@ -23,24 +23,44 @@ import javafx.stage.Stage;
  * @author Equipo Rocket
  */
 public class PopSaveImageController implements Initializable {
+
+    /**
+     *Panel where I perform actions
+     */
     @FXML
     public AnchorPane root;
+
+    /**
+     *Receive the name of the image
+     */
     @FXML
     public TextField nameImage;
+
+    /**
+     *Receive the name of the destination
+     */
     @FXML
     public TextField nameDestination;
+    
+    public static String namePhoto = "";
+
+    public static String nameURL = "";
+ 
+    public static boolean exist = true;
     /**
      * Initializes the controller class.
      */
-    public static String namePhoto = "";
-    public static String nameURL = "";
-    public static boolean exist = true;
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
 
+    /**
+     *
+     * Get the name of the image and the address where you want to save it, the
+     * name of the image is checked the length and if it is empty, and it is verified
+     * if the address exists inside the computer
+     */
     public void addImage() throws IOException{
         namePhoto= nameImage.textProperty().get();
         if(namePhoto.isEmpty() || namePhoto.length()>21){

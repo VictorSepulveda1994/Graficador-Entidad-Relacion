@@ -20,22 +20,32 @@ import javafx.stage.Stage;
  * @author Equipo Rocket
  */
 public class PopAddRelationController implements Initializable {
+    
+    /**
+     *Panel where I perform actions
+     */
     @FXML
     private AnchorPane root;
+
+    /**
+     *Receive the name of the relation
+     */
     @FXML
     public TextField nameRelation;
 
-    //private IntegerSpinnerValueFactory numeros= new IntegerSpinnerValueFactory(0, 7, 0);
+    
+    public static String nameOfRelation = "";
     /**
      * Initializes the controller class.
      */
-    public static String nameOfRelation = "";
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO   
     }
     
+    /**
+     *Get the name of an relation and verify the length and if it is empty
+     */
     public void addToScreen(){
         nameOfRelation=nameRelation.textProperty().get();
         if(nameOfRelation.isEmpty() || nameOfRelation.length()>21){

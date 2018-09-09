@@ -18,6 +18,9 @@ import javafx.stage.StageStyle;
  */
 public class Main extends Application {
     
+    /**
+     *
+     */
     public static Diagram diagram=new Diagram();
     
     @Override

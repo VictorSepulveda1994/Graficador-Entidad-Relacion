@@ -20,21 +20,32 @@ import javafx.stage.Stage;
  * @author Equipo Rocket
  */
 public class PopAddEntityController implements Initializable {
+
+    /**
+     *Panel where I perform actions
+     */
     @FXML
     public AnchorPane root;
+
+    /**
+     *Receive the name of the entity
+     */
     @FXML
     public TextField nameEntity;
     
+    
+    public static String nameOfEntity = "";
     /**
      * Initializes the controller class.
      */
-    public static String nameOfEntity = "";
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
     
+    /**
+     *Get the name of an entity and verify the length and if it is empty
+     */
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
         if(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
