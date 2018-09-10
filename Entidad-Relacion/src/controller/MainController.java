@@ -27,11 +27,13 @@ import static controller.PopSaveImageController.nameURL;
 import java.io.File;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
 import model.Entity;
 import static model.Main.diagram;
-import model.Relation;
+import model.*;
 
 /**
  *
@@ -56,6 +58,12 @@ public class MainController implements Initializable {
      */
     @FXML
     public Button botonAgregarRelacion;
+    
+    /**
+     *
+     */
+    @FXML
+    public Canvas canvas;
     
     /**
      *
@@ -115,7 +123,35 @@ public class MainController implements Initializable {
         x = event.getSceneX();
         y = event.getSceneY();
     }
-
+    
+    @FXML
+    public void addEntity (MouseEvent event) {
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        x = event.getSceneX()-115;
+        y = event.getSceneY()-50;
+        Entity entity = new Entity ("Test");
+        /*
+        Polygon rectangle = new Polygon ();
+        rectangle.addPoint(new Point(x-(entity.getWidth()/2),y-(entity.getHeight()/2)));//Point1
+        rectangle.addPoint(new Point(x+(entity.getWidth()/2),y-(entity.getHeight()/2)));//Point2
+        rectangle.addPoint(new Point(x+(entity.getWidth()/2),y+(entity.getHeight()/2)));//Point3
+        rectangle.addPoint(new Point(x-(entity.getWidth()/2),y+(entity.getHeight()/2)));//Point4
+        
+        rectangle.drawRectangle("Camika", gc);
+        */
+        
+        Polygon diamond = new Polygon ();
+        diamond.addPoint(new Point(x,y-(entity.getHeight()/2)));//Point1
+        diamond.addPoint(new Point(x+(entity.getWidth()/2),y));//Point2
+        diamond.addPoint(new Point(x,y+(entity.getHeight()/2)));//Point3
+        diamond.addPoint(new Point(x-(entity.getWidth()/2),y));//Point4
+        
+        diamond.drawDiamond("Camika", gc);
+        
+        System.out.println(event.getSceneX());
+        System.out.println(event.getSceneY());
+    }
+    
     /**
      *
      * Add an entity 
@@ -134,7 +170,8 @@ public class MainController implements Initializable {
         dialog.setScene(xscene);
         dialog.showAndWait();
         dialog.setResizable(false);
-        dialog.close();    
+        dialog.close();
+
     }
     
     /**
@@ -239,6 +276,7 @@ public class MainController implements Initializable {
         } catch (Exception s) {
         }
     }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         

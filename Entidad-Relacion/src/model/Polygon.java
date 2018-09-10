@@ -6,6 +6,8 @@
 package model;
 
 import java.util.ArrayList;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -61,8 +63,35 @@ public class Polygon {
      *
      * @param name
      */
-    public void drawRectangle (String name){
+    public void drawRectangle (String name,GraphicsContext gc){
+        Point pointOne = this.points.get(0);
+        Point pointTwo = this.points.get(1);
+        Point pointThree = this.points.get(2);
+        Point pointFour = this.points.get(3);
         
+        gc.setFill(Color.BLACK);
+        gc.strokeLine(pointOne.getX(),pointOne.getY(),pointTwo.getX(),pointTwo.getY());
+        gc.strokeLine(pointTwo.getX(),pointTwo.getY(),pointThree.getX(),pointThree.getY());
+        gc.strokeLine(pointThree.getX(),pointThree.getY(),pointFour.getX(),pointFour.getY());
+        gc.strokeLine(pointFour.getX(),pointFour.getY(),pointOne.getX(),pointOne.getY());   
+    }
+    
+    /**
+     *
+     * @param name
+     */
+    public void drawDiamond (String name,GraphicsContext gc){
+        
+        Point pointOne = this.points.get(0);
+        Point pointTwo = this.points.get(1);
+        Point pointThree = this.points.get(2);
+        Point pointFour = this.points.get(3);
+        
+        gc.setFill(Color.BLACK);
+        gc.strokeLine(pointOne.getX(),pointOne.getY(),pointTwo.getX(),pointTwo.getY());
+        gc.strokeLine(pointTwo.getX(),pointTwo.getY(),pointThree.getX(),pointThree.getY());
+        gc.strokeLine(pointThree.getX(),pointThree.getY(),pointFour.getX(),pointFour.getY());
+        gc.strokeLine(pointFour.getX(),pointFour.getY(),pointOne.getX(),pointOne.getY());  
     }
     
     /**
@@ -73,13 +102,6 @@ public class Polygon {
         
     }
     
-    /**
-     *
-     * @param name
-     */
-    public void drawDiamond (String name){
-        
-    }
     
     /**
      *
