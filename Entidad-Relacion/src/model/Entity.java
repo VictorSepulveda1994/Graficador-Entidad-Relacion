@@ -7,25 +7,54 @@ package model;
 
 /**
  *
- * @author Milagod
+ * @author Equipo Rocket
  */
 public class Entity extends Element {
    
     private final int width;
     private final int height;
 
-    public Entity(int width, int height, String name) {
+    /**
+     *
+     * @param name
+     */
+    public Entity(String name) {
         super(name);
-        this.width = width;
-        this.height = height;
+        this.width = 100;
+        this.height = 50;
+        this.polygon = new Polygon ();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     *
+     * @return
+     */
+    public String getName() {
+        return name;
+    }
+    
+    public void setPointsPolygon (double x, double y){
+        this.polygon.addPoint(new Point(x-(this.width/2),y-(this.height/2)));//Point1
+        this.polygon.addPoint(new Point(x+(this.width/2),y-(this.height/2)));//Point2
+        this.polygon.addPoint(new Point(x+(this.width/2),y+(this.height/2)));//Point3
+        this.polygon.addPoint(new Point(x-(this.width/2),y+(this.height/2)));//Point4  
+    }
+    
+    
 }

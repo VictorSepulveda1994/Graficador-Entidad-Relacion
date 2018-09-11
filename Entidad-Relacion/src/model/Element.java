@@ -7,29 +7,56 @@ package model;
 
 /**
  *
- * @author Milagod
+ * @author Equipo Rocket
  */
 public abstract class Element {
     
+    /**
+     *
+     */
     protected Polygon polygon;
+
+    /**
+     *
+     */
     protected String name;
 
+    /**
+     *
+     * @param name
+     */
     public Element(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public Polygon getPolygon() {
         return polygon;
     }
 
+    /**
+     *
+     * @param polygon
+     */
     public void setPolygon(Polygon polygon) {
         this.polygon = polygon;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }

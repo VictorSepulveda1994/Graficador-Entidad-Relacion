@@ -9,18 +9,45 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Milagod
+ * @author Equipo Rocket
  */
 public class Relation extends Element {
 
     private ArrayList <Entity> entities = new ArrayList <>();
-
+    private int width;
+    private int height;
+    /**
+     *
+     * @param name
+     */
     public Relation(String name) {
         super(name);
     }
     
+    /**
+     *
+     * @param entity
+     */
     public void addEntity (Entity entity){
         this.entities.add(entity);
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    
+    
 
 }
