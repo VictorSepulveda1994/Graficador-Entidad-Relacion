@@ -64,6 +64,7 @@ public class Polygon {
      * @param name
      */
     public void drawRectangle (String name,GraphicsContext gc){
+        
         Point pointOne = this.points.get(0);
         Point pointTwo = this.points.get(1);
         Point pointThree = this.points.get(2);
@@ -98,8 +99,16 @@ public class Polygon {
      *
      * @param name
      */
-    public void drawTriangle (String name){
+    public void drawTriangle (String name,GraphicsContext gc){
         
+        Point pointOne = this.points.get(0);
+        Point pointTwo = this.points.get(1);
+        Point pointThree = this.points.get(2);
+        
+        gc.setFill(Color.BLACK);
+        gc.strokeLine(pointOne.getX(),pointOne.getY(),pointTwo.getX(),pointTwo.getY());
+        gc.strokeLine(pointTwo.getX(),pointTwo.getY(),pointThree.getX(),pointThree.getY());
+        gc.strokeLine(pointThree.getX(),pointThree.getY(),pointOne.getX(),pointOne.getY()); 
     }
     
     
@@ -107,15 +116,41 @@ public class Polygon {
      *
      * @param name
      */
-    public void drawPentagon (String name){
+    public void drawPentagon (String name,GraphicsContext gc){
         
+        Point pointOne = this.points.get(0);
+        Point pointTwo = this.points.get(1);
+        Point pointThree = this.points.get(2);
+        Point pointFour = this.points.get(3);
+        Point pointFive = this.points.get(4);
+        
+        gc.setFill(Color.BLACK);
+        gc.strokeLine(pointOne.getX(),pointOne.getY(),pointTwo.getX(),pointTwo.getY());
+        gc.strokeLine(pointTwo.getX(),pointTwo.getY(),pointThree.getX(),pointThree.getY());
+        gc.strokeLine(pointThree.getX(),pointThree.getY(),pointFour.getX(),pointFour.getY());
+        gc.strokeLine(pointFour.getX(),pointFour.getY(),pointFive.getX(),pointFive.getY());  
+        gc.strokeLine(pointFive.getX(),pointFive.getY(),pointOne.getX(),pointOne.getY());
     }
     
     /**
      *
      * @param name
      */
-    public void drawHexagon (String name){
+    public void drawHexagon (String name,GraphicsContext gc){
+        Point pointOne = this.points.get(0);
+        Point pointTwo = this.points.get(1);
+        Point pointThree = this.points.get(2);
+        Point pointFour = this.points.get(3);
+        Point pointFive = this.points.get(4);
+        Point pointSix = this.points.get(5);
+        
+        gc.setFill(Color.BLACK);
+        gc.strokeLine(pointOne.getX(),pointOne.getY(),pointTwo.getX(),pointTwo.getY());
+        gc.strokeLine(pointTwo.getX(),pointTwo.getY(),pointThree.getX(),pointThree.getY());
+        gc.strokeLine(pointThree.getX(),pointThree.getY(),pointFour.getX(),pointFour.getY());
+        gc.strokeLine(pointFour.getX(),pointFour.getY(),pointFive.getX(),pointFive.getY());  
+        gc.strokeLine(pointFive.getX(),pointFive.getY(),pointSix.getX(),pointSix.getY());
+        gc.strokeLine(pointSix.getX(),pointSix.getY(),pointOne.getX(),pointOne.getY());
         
     }
       

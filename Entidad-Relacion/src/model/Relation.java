@@ -14,7 +14,8 @@ import java.util.ArrayList;
 public class Relation extends Element {
 
     private ArrayList <Entity> entities = new ArrayList <>();
-
+    private int width;
+    private int height;
     /**
      *
      * @param name
@@ -30,5 +31,23 @@ public class Relation extends Element {
     public void addEntity (Entity entity){
         this.entities.add(entity);
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    
+    
 
 }

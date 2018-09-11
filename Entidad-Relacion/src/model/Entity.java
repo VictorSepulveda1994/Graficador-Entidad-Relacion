@@ -22,6 +22,7 @@ public class Entity extends Element {
         super(name);
         this.width = 100;
         this.height = 50;
+        this.polygon = new Polygon ();
     }
 
     /**
@@ -48,5 +49,12 @@ public class Entity extends Element {
         return name;
     }
     
-
+    public void setPointsPolygon (double x, double y){
+        this.polygon.addPoint(new Point(x-(this.width/2),y-(this.height/2)));//Point1
+        this.polygon.addPoint(new Point(x+(this.width/2),y-(this.height/2)));//Point2
+        this.polygon.addPoint(new Point(x+(this.width/2),y+(this.height/2)));//Point3
+        this.polygon.addPoint(new Point(x-(this.width/2),y+(this.height/2)));//Point4  
+    }
+    
+    
 }

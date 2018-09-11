@@ -84,8 +84,8 @@ public class MainController implements Initializable {
      *
      */
     public static int ancho=50;
-    
     double x, y;
+    
     
     /**
      *Handles close window
@@ -127,29 +127,81 @@ public class MainController implements Initializable {
     @FXML
     public void addEntity (MouseEvent event) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        x = event.getSceneX()-115;
+        x = event.getSceneX()-120;
         y = event.getSceneY()-50;
         Entity entity = new Entity ("Test");
+        entity.setPointsPolygon(x, y);
+        entity.getPolygon().drawRectangle(entity.getName(), gc);
+
+        /////////////DIAMOND/////////////////////
         /*
-        Polygon rectangle = new Polygon ();
-        rectangle.addPoint(new Point(x-(entity.getWidth()/2),y-(entity.getHeight()/2)));//Point1
-        rectangle.addPoint(new Point(x+(entity.getWidth()/2),y-(entity.getHeight()/2)));//Point2
-        rectangle.addPoint(new Point(x+(entity.getWidth()/2),y+(entity.getHeight()/2)));//Point3
-        rectangle.addPoint(new Point(x-(entity.getWidth()/2),y+(entity.getHeight()/2)));//Point4
-        
-        rectangle.drawRectangle("Camika", gc);
-        */
-        
+        Relation relation = new Relation("Test");
+        relation.setHeight(100);
+        relation.setWidth(50);
         Polygon diamond = new Polygon ();
-        diamond.addPoint(new Point(x,y-(entity.getHeight()/2)));//Point1
-        diamond.addPoint(new Point(x+(entity.getWidth()/2),y));//Point2
-        diamond.addPoint(new Point(x,y+(entity.getHeight()/2)));//Point3
-        diamond.addPoint(new Point(x-(entity.getWidth()/2),y));//Point4
+        relation.setPolygon(diamond);
         
-        diamond.drawDiamond("Camika", gc);
+        relation.getPolygon().addPoint(new Point(x,y-(relation.getHeight()/2))); //Point1
+        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/2),y));  //Point2
+        relation.getPolygon().addPoint(new Point(x,y+(relation.getHeight()/2))); //Point3
+        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/2),y));  //Point4
         
-        System.out.println(event.getSceneX());
-        System.out.println(event.getSceneY());
+        relation.getPolygon().drawDiamond(relation.getName(), gc);
+        */
+        //////////////////////////////////////////
+        
+        /////////////TRIANGLE/////////////////////
+        /*
+        Relation relation = new Relation("Test"); 
+        relation.setHeight(70);
+        relation.setWidth(65);
+        Polygon triangle = new Polygon ();
+        relation.setPolygon(triangle);
+        
+        relation.getPolygon().addPoint(new Point(x,y-(relation.getHeight()/2)));                          //Point1
+        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/2),y+(relation.getHeight()/2)));  //Point2
+        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/2),y+(relation.getHeight()/2)));  //Point3
+        
+        relation.getPolygon().drawTriangle(relation.getName(), gc);
+        */
+        //////////////////////////////////////////
+        
+        /////////////PENTAGON/////////////////////
+        /*
+        Relation relation = new Relation("Test"); 
+        relation.setHeight(85);
+        relation.setWidth(85);
+        Polygon pentagon = new Polygon ();
+        relation.setPolygon(pentagon);
+        
+        relation.getPolygon().addPoint(new Point(x,y-(relation.getHeight()/2)));                          //Point1
+        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/2),y-(relation.getHeight()/8)));  //Point2
+        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/3),y+(relation.getHeight()/2)));  //Point3
+        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/3),y+(relation.getHeight()/2)));  //Point4
+        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/2),y-(relation.getHeight()/8)));  //Point5
+        
+        relation.getPolygon().drawPentagon(relation.getName(), gc);
+        */
+        //////////////////////////////////////////
+        
+        /////////////HEXAGON/////////////////////
+        /*
+        Relation relation = new Relation("Test"); 
+        relation.setHeight(80);
+        relation.setWidth(90);
+        Polygon hexagon = new Polygon ();
+        relation.setPolygon(hexagon);
+        
+        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/4),y-(relation.getHeight()/2)));    //Point1
+        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/4),y-(relation.getHeight()/2)));    //Point2    
+        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/2),y));                             //Point3
+        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/4),y+(relation.getHeight()/2)));    //Point4 
+        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/4),y+(relation.getHeight()/2)));    //Point5
+        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/2),y));                             //Point6
+        
+        relation.getPolygon().drawHexagon(relation.getName(), gc);
+        */
+        //////////////////////////////////////////
     }
     
     /**
