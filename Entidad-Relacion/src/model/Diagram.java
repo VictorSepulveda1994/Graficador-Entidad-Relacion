@@ -6,6 +6,8 @@
 package model;
 
 import java.util.ArrayList;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  *
@@ -95,10 +97,15 @@ public class Diagram {
     /**
      *Remove everything in the diagram
      */
-    public void clearAll(){
+    public void clearAll(Canvas canvas){
         this.entities.clear();
         this.relations.clear();
         this.connectors.clear();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        double width=canvas.getWidth();
+        double height=canvas.getHeight();
+        gc.clearRect(0,0 , width, height);
+        
     }
     
 }

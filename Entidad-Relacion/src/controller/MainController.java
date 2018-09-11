@@ -305,8 +305,8 @@ public class MainController implements Initializable {
      * Clean the window
      */
     public void cleanScreen() throws IOException{
-        diagram.clearAll();
-       
+        diagram.clearAll(canvas);
+        
     }
     
     /**
@@ -318,7 +318,7 @@ public class MainController implements Initializable {
         while(namePhoto.isEmpty() || namePhoto.length()>21 || exist==false){
             popSaveImage();
         }
-        WritableImage wim = pizarra.snapshot(new SnapshotParameters(), null);
+        WritableImage wim = canvas.snapshot(new SnapshotParameters(), null);
         System.out.println("Nombre: "+namePhoto);
         System.out.println("Direccion: "+nameURL);
         System.out.println(nameURL+"\\"+namePhoto+".png");
