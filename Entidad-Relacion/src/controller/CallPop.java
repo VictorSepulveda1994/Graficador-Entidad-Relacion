@@ -15,13 +15,13 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Alejandra
+ * @author Equipo Rocket
  */
 public class CallPop {
     
     /**
      *
-     * Add an entity 
+     * Se añade el nombre
      * @throws java.io.IOException
      */
     public void popAddEntity()throws IOException {
@@ -43,8 +43,29 @@ public class CallPop {
     }
     
     /**
+     *Edita el nombre de un elemento
+     * @throws IOException
+     */
+    public void popEditElement()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Editar elemento");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopEditElement.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.setResizable(false);
+        dialog.close();
+
+    }
+    /**
      *
-     * Add an relacion
+     * Se añade el nombre
      * @throws java.io.IOException
      */
     public void popAddRelation()throws IOException {
@@ -66,28 +87,8 @@ public class CallPop {
     }
     
     /**
-     *
-     * Save the image of the blackboard
-     * @throws java.io.IOException
+     *Muestra un mensaje de error al ingresar nombre invalido
      */
-    public void popSaveImage()throws IOException {
-        final Stage dialog = new Stage();
-        dialog.setTitle("Guardar imagen");
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopSaveImage.fxml"));
-        
-        Scene xscene = new Scene(root);
-        
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner((Stage) root.getScene().getWindow());
-        
-        dialog.setScene(xscene);
-        dialog.showAndWait();
-        dialog.setResizable(false);
-        dialog.close();    
-        
-    }
-    
     public void alertName(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error al ingresar nombre");

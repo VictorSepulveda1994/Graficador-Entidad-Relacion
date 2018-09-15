@@ -22,23 +22,30 @@ import javafx.stage.Stage;
 public class PopAddRelationController extends CallPop implements Initializable {
     
     /**
-     *Panel where I perform actions
+     *Muestra la ventana
      */
     @FXML
     private AnchorPane root;
 
     /**
-     *Receive the name of the relation
+     *Recibe el nombre de la relacion
      */
     @FXML
     public TextField nameRelation;
 
-    
+    /**
+     *Guarda el nombre de la relacion
+     */
     public static String nameOfRelation = "";
     
+    /**
+     *Cancela la accion
+     */
     public static boolean cancelActionRelation = false;
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,7 +53,8 @@ public class PopAddRelationController extends CallPop implements Initializable {
     }
     
     /**
-     *Get the name of an relation and verify the length and if it is empty
+     *Guarda el nombre de la relacion y verifica que no este vacia y que sea menor que
+     * 20 la cantidad de letras
      */
     public void addToScreen(){
         nameOfRelation=nameRelation.textProperty().get();
@@ -57,6 +65,9 @@ public class PopAddRelationController extends CallPop implements Initializable {
         ((Stage)root.getScene().getWindow()).close();
     }
     
+    /**
+     *Cancela la accion y cierra la ventana
+     */
     public void cancel(){
         cancelActionRelation = true;
         ((Stage)root.getScene().getWindow()).close();

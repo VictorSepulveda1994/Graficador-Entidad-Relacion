@@ -10,29 +10,29 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static controller.PopAddEntityController.nameOfEntity;
 import static controller.PopAddRelationController.cancelActionRelation;
 import static controller.PopAddRelationController.nameOfRelation;
-import static controller.PopSaveImageController.cancelAction;
-import static controller.PopSaveImageController.exist;
-import static controller.PopSaveImageController.namePhoto;
-import static controller.PopSaveImageController.nameURL;
+import static controller.PopEditElementController.cancelActionEdit;
+import static controller.PopEditElementController.enteredName;
+import java.awt.image.RenderedImage;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
+import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import model.Entity;
 import static model.Main.diagram;
@@ -45,25 +45,25 @@ import model.*;
 public class MainController extends CallPop implements Initializable {
     
     /**
-     *Drawing panel
+     *
      */
     @FXML
     public Pane pizarra;
 
     /**
-     *Add entity
+     *Añade una entidad
      */
     @FXML
     public Button botonAgregarNodo;
 
     /**
-     *Add relation
+     *Añade una relacion
      */
     @FXML
     public Button botonAgregarRelacion;
     
     /**
-     *
+     *Se puede dibujar aca
      */
     @FXML
     public Canvas canvas;
@@ -91,7 +91,7 @@ public class MainController extends CallPop implements Initializable {
     
     
     /**
-     *Handles close window
+     *Cierra la ventana
      */
     @FXML
     private void close(MouseEvent event) {
@@ -100,7 +100,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     *Manage to minimize window
+     *Minimiza la pantalla
      */
     @FXML
     private void min(MouseEvent event) {
@@ -127,15 +127,31 @@ public class MainController extends CallPop implements Initializable {
         y = event.getSceneY();
     }
     
+    /**
+     *Realiza un circulo
+     */
+    public void circlePoint(){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.BLACK);
+        gc.setLineWidth(6);
+        gc.strokeArc(x, y, 2, 2,360,300, ArcType.ROUND);
+    }
+    
+    /**
+     *
+     * @param event
+     */
     @FXML
     public void addEntity (MouseEvent event) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         x = event.getSceneX()-120;
         y = event.getSceneY()-50;
+      
+       
         Entity entity = new Entity ("Test");
         entity.setPointsPolygon(x, y);
         entity.getPolygon().drawRectangle(entity.getName(), gc);
-
+        
         /////////////DIAMOND/////////////////////
         /*
         Relation relation = new Relation("Test");
@@ -209,7 +225,8 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      *
-     * Save an entity
+     * Guarda una entidad
+     * @throws java.io.IOException
      */
     public void showEntity() throws IOException{
         popAddEntity();
@@ -226,7 +243,8 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      *
-     * Save an relation
+     * Guarda una relacion
+     * @throws java.io.IOException
      */
     public void showRelation() throws IOException{
         popAddRelation();
@@ -242,8 +260,28 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
+     *Realiza la edicion de un nombre
+     * @param event
+     * @throws IOException
+     */
+    public void showEdition(MouseEvent event) throws IOException{
+        popEditElement();
+        for(int i=0; i<diagram.getEntities().size();i++){
+            
+        }
+        if(cancelActionEdit==false){
+            while(enteredName.isEmpty() || enteredName.length()>21){
+                popEditElement();
+            }
+            String name= enteredName;
+            System.out.println("name edit: "+name);
+        }
+        
+    }
+    
+    /**
      *
-     * Clean the window
+     * Limpia la ventana
      * @throws java.io.IOException
      */
     public void cleanScreen() throws IOException{
@@ -253,23 +291,29 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      *
-     * Save a Image in .png
+     * Guarda el dibujo como .png
      * @throws java.io.IOException
      */
     public void saveImage() throws IOException{
-        popSaveImage();
-        if(cancelAction==false){
-            while(namePhoto.isEmpty() || namePhoto.length()>21 || exist==false){
-                popSaveImage();
-            }
-            WritableImage wim = canvas.snapshot(new SnapshotParameters(), null);
-            System.out.println("Nombre: "+namePhoto);
-            System.out.println("Direccion: "+nameURL);
-            System.out.println(nameURL+"\\"+namePhoto+".png");
-            File file = new File(nameURL+"\\"+namePhoto+".png");
+        FileChooser fileChooser = new FileChooser();
+                 
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilter = 
+                new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        final Stage stage = new Stage();
+        File file = fileChooser.showSaveDialog(stage);
+
+        if(file != null){
             try {
-                ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
-            } catch (IOException s) {
+                WritableImage writableImage = canvas.snapshot(new SnapshotParameters(), null);
+                canvas.snapshot(null, writableImage);
+                RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+                ImageIO.write(renderedImage, "png", file);
+            } catch (IOException ex) {
+                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

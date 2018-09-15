@@ -5,6 +5,7 @@
  */
 package controller;
 
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -16,31 +17,31 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Equipo Rocket
+ * @author Alejandra
  */
-public class PopAddEntityController extends CallPop implements Initializable {
+public class PopEditElementController extends CallPop implements Initializable {
 
     /**
      *Panel donde se realizan las acciones
      */
     @FXML
     public AnchorPane root;
-
+    
     /**
-     *Recibe el nombre de la entidad
+     *Recibe el nombre
      */
     @FXML
-    public TextField nameEntity;
+    public static TextField name;
     
     /**
-     *Guarda el nombre de la entidad 
+     *Guarda el nombre
      */
-    public static String nameOfEntity = "";
-    
+    public static String enteredName="";
+
     /**
-     *cancela la accion
+     *Verifica si se cancela la accion
      */
-    public static boolean cancelActionEntity = false;
+    public static boolean cancelActionEdit = false;
     /**
      * Initializes the controller class.
      * @param url
@@ -49,25 +50,27 @@ public class PopAddEntityController extends CallPop implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }
     
     /**
-     *Añade un nombre y luego verifica si este esta vacio o su tamaño es mayor a 20
+     *Guarda los cambios realizados
      */
-    public void addToScreen(){
-        nameOfEntity=nameEntity.textProperty().get();
-        if(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
+    public void saveChange(){
+        enteredName=name.textProperty().get();
+        if(enteredName.isEmpty() || enteredName.length()>21){
             alertName();
         }
-        cancelActionEntity = false;
+        cancelActionEdit = false;
         ((Stage)root.getScene().getWindow()).close();
     }
     
     /**
-     *Cancela la accion y cierra la ventana
+     *Cancela la accion
      */
     public void cancel(){
-        cancelActionEntity = true;
+        cancelActionEdit = true;
         ((Stage)root.getScene().getWindow()).close();
     }
+    
 }
