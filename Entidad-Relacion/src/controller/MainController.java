@@ -5,6 +5,7 @@
  */
 package controller;
 
+import static controller.PopAddEntityController.cancelActionEntity;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,7 +21,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static controller.PopAddEntityController.nameOfEntity;
+import static controller.PopAddRelationController.cancelActionRelation;
 import static controller.PopAddRelationController.nameOfRelation;
+import static controller.PopSaveImageController.cancelAction;
 import static controller.PopSaveImageController.exist;
 import static controller.PopSaveImageController.namePhoto;
 import static controller.PopSaveImageController.nameURL;
@@ -39,7 +42,7 @@ import model.*;
  *
  * @author Equipo Rocket
  */
-public class MainController implements Initializable {
+public class MainController extends CallPop implements Initializable {
     
     /**
      *Drawing panel
@@ -206,82 +209,18 @@ public class MainController implements Initializable {
     
     /**
      *
-     * Add an entity 
-     */
-    public void popAddEntity()throws IOException {
-        final Stage dialog = new Stage();
-        dialog.setTitle("Agregar entidad");
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddEntity.fxml"));
-        
-        Scene xscene = new Scene(root);
-        
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner((Stage) root.getScene().getWindow());
-        
-        dialog.setScene(xscene);
-        dialog.showAndWait();
-        dialog.setResizable(false);
-        dialog.close();
-
-    }
-    
-    /**
-     *
-     * Add an relacion
-     */
-    public void popAddRelation()throws IOException {
-        final Stage dialog = new Stage();
-        dialog.setTitle("Agregar relacion");
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddRelation.fxml"));
-        
-        Scene xscene = new Scene(root);
-        
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner((Stage) root.getScene().getWindow());
-        
-        dialog.setScene(xscene);
-        dialog.showAndWait();
-        dialog.setResizable(false);
-        dialog.close();    
-        
-    }
-    
-    /**
-     *
-     * Save the image of the blackboard
-     */
-    public void popSaveImage()throws IOException {
-        final Stage dialog = new Stage();
-        dialog.setTitle("Guardar imagen");
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopSaveImage.fxml"));
-        
-        Scene xscene = new Scene(root);
-        
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner((Stage) root.getScene().getWindow());
-        
-        dialog.setScene(xscene);
-        dialog.showAndWait();
-        dialog.setResizable(false);
-        dialog.close();    
-        
-    }
-    
-    /**
-     *
      * Save an entity
      */
     public void showEntity() throws IOException{
         popAddEntity();
-        while(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
-            popAddEntity();
+        if(cancelActionEntity==false){
+            while(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
+                popAddEntity();
+            }
+            String name=PopAddEntityController.nameOfEntity;
+            Entity entity= new Entity(name);
+            diagram.addEntity(entity);
         }
-        String name=PopAddEntityController.nameOfEntity;
-        Entity entity= new Entity(name);
-        diagram.addEntity(entity);
        
     }
     
@@ -291,18 +230,21 @@ public class MainController implements Initializable {
      */
     public void showRelation() throws IOException{
         popAddRelation();
-        while(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
-            popAddRelation();
+        if(cancelActionRelation==false){
+            while(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
+                popAddRelation();
+            }
+            String name= PopAddRelationController.nameOfRelation;
+            Relation relation = new Relation(name);
+            diagram.addRelation(relation);
         }
-        String name= PopAddRelationController.nameOfRelation;
-        Relation relation = new Relation(name);
-        diagram.addRelation(relation);
         
     }
     
     /**
      *
      * Clean the window
+     * @throws java.io.IOException
      */
     public void cleanScreen() throws IOException{
         diagram.clearAll(canvas);
@@ -312,20 +254,23 @@ public class MainController implements Initializable {
     /**
      *
      * Save a Image in .png
+     * @throws java.io.IOException
      */
     public void saveImage() throws IOException{
-        popSaveImage(); 
-        while(namePhoto.isEmpty() || namePhoto.length()>21 || exist==false){
-            popSaveImage();
-        }
-        WritableImage wim = canvas.snapshot(new SnapshotParameters(), null);
-        System.out.println("Nombre: "+namePhoto);
-        System.out.println("Direccion: "+nameURL);
-        System.out.println(nameURL+"\\"+namePhoto+".png");
-        File file = new File(nameURL+"\\"+namePhoto+".png");
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
-        } catch (Exception s) {
+        popSaveImage();
+        if(cancelAction==false){
+            while(namePhoto.isEmpty() || namePhoto.length()>21 || exist==false){
+                popSaveImage();
+            }
+            WritableImage wim = canvas.snapshot(new SnapshotParameters(), null);
+            System.out.println("Nombre: "+namePhoto);
+            System.out.println("Direccion: "+nameURL);
+            System.out.println(nameURL+"\\"+namePhoto+".png");
+            File file = new File(nameURL+"\\"+namePhoto+".png");
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
+            } catch (IOException s) {
+            }
         }
     }
     

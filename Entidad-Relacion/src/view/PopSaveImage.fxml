@@ -17,6 +17,7 @@
       <Text layoutX="34.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre del archivo" />
       <Text layoutX="34.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copiar direccion" />
       <TextField fx:id="nameDestination" layoutX="151.0" layoutY="137.0" prefHeight="25.0" prefWidth="311.0" />
-      <Button layoutX="492.0" layoutY="185.0" mnemonicParsing="false" onAction="#addImage" text="Aceptar" />
+      <Button layoutX="418.0" layoutY="184.0" mnemonicParsing="false" onAction="#addImage" text="Aceptar" />
+      <Button layoutX="510.0" layoutY="184.0" mnemonicParsing="false" onAction="#cancel" text="Cancelar" />
    </children>
 </AnchorPane>

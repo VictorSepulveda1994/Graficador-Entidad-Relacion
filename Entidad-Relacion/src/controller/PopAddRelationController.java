@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  *
  * @author Equipo Rocket
  */
-public class PopAddRelationController implements Initializable {
+public class PopAddRelationController extends CallPop implements Initializable {
     
     /**
      *Panel where I perform actions
@@ -35,6 +35,8 @@ public class PopAddRelationController implements Initializable {
 
     
     public static String nameOfRelation = "";
+    
+    public static boolean cancelActionRelation = false;
     /**
      * Initializes the controller class.
      */
@@ -49,12 +51,14 @@ public class PopAddRelationController implements Initializable {
     public void addToScreen(){
         nameOfRelation=nameRelation.textProperty().get();
         if(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error al ingresar nombre");
-            alert.setHeaderText("Se encontro un error en el nombre de la relacion,"
-                    + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
-            alert.showAndWait();
+            alertName();
         }
+        cancelActionRelation = false;
+        ((Stage)root.getScene().getWindow()).close();
+    }
+    
+    public void cancel(){
+        cancelActionRelation = true;
         ((Stage)root.getScene().getWindow()).close();
     }
     

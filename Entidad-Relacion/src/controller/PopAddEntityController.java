@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  *
  * @author Equipo Rocket
  */
-public class PopAddEntityController implements Initializable {
+public class PopAddEntityController extends CallPop implements Initializable {
 
     /**
      *Panel where I perform actions
@@ -35,6 +35,8 @@ public class PopAddEntityController implements Initializable {
     
     
     public static String nameOfEntity = "";
+    
+    public static boolean cancelActionEntity = false;
     /**
      * Initializes the controller class.
      */
@@ -49,12 +51,14 @@ public class PopAddEntityController implements Initializable {
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
         if(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error al ingresar nombre");
-            alert.setHeaderText("Se encontro un error en el nombre de la entidad,"
-                    + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
-            alert.showAndWait();
+            alertName();
         }
+        cancelActionEntity = false;
+        ((Stage)root.getScene().getWindow()).close();
+    }
+    
+    public void cancel(){
+        cancelActionEntity = true;
         ((Stage)root.getScene().getWindow()).close();
     }
 }

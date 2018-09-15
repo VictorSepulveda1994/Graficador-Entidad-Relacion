@@ -22,7 +22,7 @@ import javafx.stage.Stage;
  *
  * @author Equipo Rocket
  */
-public class PopSaveImageController implements Initializable {
+public class PopSaveImageController extends CallPop implements Initializable {
 
     /**
      *Panel where I perform actions
@@ -47,6 +47,8 @@ public class PopSaveImageController implements Initializable {
     public static String nameURL = "";
  
     public static boolean exist = true;
+    
+    public static boolean cancelAction = false;
     /**
      * Initializes the controller class.
      */
@@ -60,15 +62,12 @@ public class PopSaveImageController implements Initializable {
      * Get the name of the image and the address where you want to save it, the
      * name of the image is checked the length and if it is empty, and it is verified
      * if the address exists inside the computer
+     * @throws java.io.IOException
      */
     public void addImage() throws IOException{
         namePhoto= nameImage.textProperty().get();
         if(namePhoto.isEmpty() || namePhoto.length()>21){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error al ingresar nombre");
-            alert.setHeaderText("Se encontro un error en el nombre de la imagen,"
-                    + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
-            alert.showAndWait();
+            alertName();
         }
         nameURL= nameDestination.textProperty().get();
         File file = new File(nameURL);
@@ -83,6 +82,12 @@ public class PopSaveImageController implements Initializable {
         else{            
             exist=true;
         }
+        cancelAction = false;
+        ((Stage)root.getScene().getWindow()).close();
+    }
+    
+    public void cancel(){
+        cancelAction = true;
         ((Stage)root.getScene().getWindow()).close();
     }
     

@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="210.0" prefWidth="600.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopAddRelationController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="210.0" prefWidth="600.0" style="-fx-background-color: #A9A9A9;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopAddRelationController">
    <children>
       <Text layoutX="22.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar Relación">
          <font>
@@ -19,12 +19,13 @@
             <Font name="Berlin Sans FB" size="14.0" />
          </font></Text>
       <TextField fx:id="nameRelation" layoutX="160.0" layoutY="117.0" prefHeight="25.0" prefWidth="288.0" />
-      <Button layoutX="463.0" layoutY="164.0" mnemonicParsing="false" onAction="#addToScreen" text="Aceptar">
+      <Button layoutX="410.0" layoutY="165.0" mnemonicParsing="false" onAction="#addToScreen" text="Aceptar">
          <font>
             <Font name="Berlin Sans FB" size="16.0" />
          </font>
          <effect>
             <DropShadow />
          </effect></Button>
+      <Button layoutX="513.0" layoutY="168.0" mnemonicParsing="false" onAction="#cancel" text="Cancelar" />
    </children>
 </AnchorPane>
