@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.ArrayList;
@@ -14,10 +9,15 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Equipo Rocket
  */
 public class Diagram {
-    
-    private ArrayList <Entity> entities = new ArrayList <>();
-    private ArrayList <Relation> relations = new ArrayList <>();
-    private ArrayList <Connector> connectors = new ArrayList <>();
+    private ArrayList <Entity> entities;
+    private ArrayList <Relation> relations;
+    private ArrayList <Connector> connectors;
+
+    public Diagram() {
+        entities = new ArrayList <>();
+        relations = new ArrayList <>();
+        connectors = new ArrayList <>();
+    }
     
     /**
      *
@@ -42,10 +42,27 @@ public class Diagram {
     public void addConnector (Connector connector){
         this.connectors.add(connector);
     }
-
+    
+    /**
+     * Método que recorre "entities","relations","connectors" y dibuja dichos objetos en el "canvas"
+     * @param canvas
+     */
+    public void paint(Canvas canvas){
+        for (Entity entity : entities) {
+            entity.paint(canvas);
+        }
+        for (Relation relation : relations) {
+            relation.paint(canvas);
+        }
+        /*
+        for (Connector connector : connectors) {
+            connector.paint(canvas.getGraphicsContext2D());
+        }*/
+    }
+    
     /**
      *
-     * @return
+     * @return entities
      */
     public ArrayList<Entity> getEntities() {
         return entities;
@@ -53,7 +70,7 @@ public class Diagram {
 
     /**
      *
-     * @return
+     * @return relations
      */
     public ArrayList<Relation> getRelations() {
         return relations;
@@ -61,51 +78,23 @@ public class Diagram {
 
     /**
      *
-     * @return
+     * @return connectors
      */
     public ArrayList<Connector> getConnectors() {
         return connectors;
     }
     
     /**
-     *Remove the last entity entered
-     */
-    public void deleteLastEntity(){
-        if(this.entities.isEmpty()==false){
-            this.entities.remove(this.entities.size()-1);
-        }    
-    }
-    
-    /**
-     *Remove the last relation entered
-     */
-    public void deleteLastRelation(){
-        if(this.relations.isEmpty()==false){
-            this.relations.remove(this.relations.size()-1);
-        }
-    }
-    
-    /**
-     *Remove the last connector entered
-     */
-    public void deleteLastConnector(){
-        if(this.connectors.isEmpty()==false){
-            this.connectors.remove(this.connectors.size()-1);
-        }
-    }
-    
-    /**
-     *Remove everything in the diagram
+     * Elimina todo el contenido en el diagrama y en el canvas
      */
     public void clearAll(Canvas canvas){
+        double width=canvas.getWidth();
+        double height=canvas.getHeight();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
         this.entities.clear();
         this.relations.clear();
         this.connectors.clear();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        double width=canvas.getWidth();
-        double height=canvas.getHeight();
         gc.clearRect(0,0 , width, height);
-        
     }
     
 }
