@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Entity;
 
 /**
  * FXML Controller class
@@ -22,16 +23,16 @@ import javafx.stage.Stage;
 public class PopAddEntityController implements Initializable {
 
     /**
-     *Panel where I perform actions
+     * Panel donde se realizaran las acciones
      */
     @FXML
-    public AnchorPane root;
+    private AnchorPane root;
 
     /**
-     *Receive the name of the entity
+     * Recibe el nombre de la entidad
      */
     @FXML
-    public TextField nameEntity;
+    private TextField nameEntity;
     
     
     public static String nameOfEntity = "";
@@ -44,7 +45,8 @@ public class PopAddEntityController implements Initializable {
     }
     
     /**
-     *Get the name of an entity and verify the length and if it is empty
+     * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío
+     * Crea un objeto "entity" y es agregado a "diagram"
      */
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
@@ -54,6 +56,9 @@ public class PopAddEntityController implements Initializable {
             alert.setHeaderText("Se encontro un error en el nombre de la entidad,"
                     + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
             alert.showAndWait();
+        }
+        else{
+            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY() ) );
         }
         ((Stage)root.getScene().getWindow()).close();
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -14,9 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import static controller.PopAddEntityController.nameOfEntity;
@@ -26,69 +19,49 @@ import static controller.PopSaveImageController.namePhoto;
 import static controller.PopSaveImageController.nameURL;
 import java.io.File;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
+import model.Diagram;
 import model.Entity;
-import static model.Main.diagram;
-import model.*;
+import model.Relation;
 
 /**
  *
  * @author Equipo Rocket
  */
 public class MainController implements Initializable {
-    
+
     /**
-     *Drawing panel
+     * ToggleButtons creados para seleccionar la accion que se desea hacer
      */
     @FXML
-    public Pane pizarra;
-
+    private ToggleButton entityToggleButton;
+    @FXML
+    private ToggleButton relationToggleButton;
+    
     /**
-     *Add entity
+     * Lugar donde se dibujaran las figuras
      */
     @FXML
-    public Button botonAgregarNodo;
+    private Canvas canvas;
 
     /**
-     *Add relation
+     * Clase static para guardar las coordenadas del mouse
      */
-    @FXML
-    public Button botonAgregarRelacion;
+    public static MouseEvent event;
     
     /**
-     *
+     * Clase static para guardar y gestionar los elementos "Entities", 
+     * "Relation" y "Connector" que se crearan por el usuario
      */
-    @FXML
-    public Canvas canvas;
+    public static Diagram diagram;
     
     /**
-     *
-     */
-    public static int x_i=20;
-
-    /**
-     *
-     */
-    public static int y_i=20;
-
-    /**
-     *
-     */
-    public static int largo=100;
-
-    /**
-     *
-     */
-    public static int ancho=50;
-    double x, y;
-    
-    
-    /**
-     *Handles close window
+     * Accion para cerrar la ventana
      */
     @FXML
     private void close(MouseEvent event) {
@@ -97,7 +70,7 @@ public class MainController implements Initializable {
     }
     
     /**
-     *Manage to minimize window
+     * Accion para Minimizar Ventana
      */
     @FXML
     private void min(MouseEvent event) {
@@ -106,107 +79,64 @@ public class MainController implements Initializable {
     }
     
     /**
-     *
+     * Permite arrastrar la ventana
      */
     @FXML
-    void dragged(MouseEvent event) {
+    void dragWindow(MouseEvent event) {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.setX(event.getScreenX() - x);
-        stage.setY(event.getScreenY() - y);
+        stage.setX(event.getScreenX() - MainController.event.getX());
+        stage.setY(event.getScreenY() - MainController.event.getY());
     }
     
     /**
-     *
+     * Detecta cuando la ventana es presionada y guarda el "MouseEvent"
      */
     @FXML
-    void pressed(MouseEvent event) {
-        x = event.getSceneX();
-        y = event.getSceneY();
+    void pressedWindow(MouseEvent event) {
+        MainController.event = event;
+    }
+    
+    /**
+     * Si el "entityToggleButton" es presionado, se activará y desactivará los demás.
+     */
+    @FXML
+    private void buttonEntityClicked(ActionEvent event){
+        entityToggleButton.setSelected(true);
+        relationToggleButton.setSelected(false);
+    }
+    
+    /**
+     * Si el "relationToggleButton" es presionado, se activará y desactivará los demás.
+     */
+    @FXML
+    private void buttonRelationClicked(ActionEvent event){
+        relationToggleButton.setSelected(true);
+        entityToggleButton.setSelected(false);
     }
     
     @FXML
-    public void addEntity (MouseEvent event) {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        x = event.getSceneX()-120;
-        y = event.getSceneY()-50;
-        Entity entity = new Entity ("Test");
-        entity.setPointsPolygon(x, y);
-        entity.getPolygon().drawRectangle(entity.getName(), gc);
-
-        /////////////DIAMOND/////////////////////
-        /*
-        Relation relation = new Relation("Test");
-        relation.setHeight(100);
-        relation.setWidth(50);
-        Polygon diamond = new Polygon ();
-        relation.setPolygon(diamond);
+    private void cleanScreen(MouseEvent event) {
+        diagram.clearAll(canvas);
+    }
+    
+    @FXML
+    private void canvasClicked(MouseEvent event) throws IOException {
+        MainController.event = event;
+        if(entityToggleButton.isSelected()){
+            popAddEntity();
+            //diagram.addEntity(new Entity( (int)event.getX(), (int)event.getY() ) );
+        }
+        if(relationToggleButton.isSelected()){
+            diagram.addRelation(new Relation("Test",12, (int)event.getX(), (int)event.getY() ) );
+        }
         
-        relation.getPolygon().addPoint(new Point(x,y-(relation.getHeight()/2))); //Point1
-        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/2),y));  //Point2
-        relation.getPolygon().addPoint(new Point(x,y+(relation.getHeight()/2))); //Point3
-        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/2),y));  //Point4
-        
-        relation.getPolygon().drawDiamond(relation.getName(), gc);
-        */
-        //////////////////////////////////////////
-        
-        /////////////TRIANGLE/////////////////////
-        /*
-        Relation relation = new Relation("Test"); 
-        relation.setHeight(70);
-        relation.setWidth(65);
-        Polygon triangle = new Polygon ();
-        relation.setPolygon(triangle);
-        
-        relation.getPolygon().addPoint(new Point(x,y-(relation.getHeight()/2)));                          //Point1
-        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/2),y+(relation.getHeight()/2)));  //Point2
-        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/2),y+(relation.getHeight()/2)));  //Point3
-        
-        relation.getPolygon().drawTriangle(relation.getName(), gc);
-        */
-        //////////////////////////////////////////
-        
-        /////////////PENTAGON/////////////////////
-        /*
-        Relation relation = new Relation("Test"); 
-        relation.setHeight(85);
-        relation.setWidth(85);
-        Polygon pentagon = new Polygon ();
-        relation.setPolygon(pentagon);
-        
-        relation.getPolygon().addPoint(new Point(x,y-(relation.getHeight()/2)));                          //Point1
-        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/2),y-(relation.getHeight()/8)));  //Point2
-        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/3),y+(relation.getHeight()/2)));  //Point3
-        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/3),y+(relation.getHeight()/2)));  //Point4
-        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/2),y-(relation.getHeight()/8)));  //Point5
-        
-        relation.getPolygon().drawPentagon(relation.getName(), gc);
-        */
-        //////////////////////////////////////////
-        
-        /////////////HEXAGON/////////////////////
-        /*
-        Relation relation = new Relation("Test"); 
-        relation.setHeight(80);
-        relation.setWidth(90);
-        Polygon hexagon = new Polygon ();
-        relation.setPolygon(hexagon);
-        
-        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/4),y-(relation.getHeight()/2)));    //Point1
-        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/4),y-(relation.getHeight()/2)));    //Point2    
-        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/2),y));                             //Point3
-        relation.getPolygon().addPoint(new Point(x+(relation.getWidth()/4),y+(relation.getHeight()/2)));    //Point4 
-        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/4),y+(relation.getHeight()/2)));    //Point5
-        relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/2),y));                             //Point6
-        
-        relation.getPolygon().drawHexagon(relation.getName(), gc);
-        */
-        //////////////////////////////////////////
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        diagram.paint(canvas);
     }
     
     /**
      *
-     * Add an entity 
+     * Abre ventana para agregar el nombre de la entidad y crear la entidad
      */
     public void popAddEntity()throws IOException {
         final Stage dialog = new Stage();
@@ -223,12 +153,10 @@ public class MainController implements Initializable {
         dialog.showAndWait();
         dialog.setResizable(false);
         dialog.close();
-
     }
     
     /**
-     *
-     * Add an relacion
+     * Abre ventana para agregar el nombre de la relacion y crear la relacion
      */
     public void popAddRelation()throws IOException {
         final Stage dialog = new Stage();
@@ -272,46 +200,7 @@ public class MainController implements Initializable {
     
     /**
      *
-     * Save an entity
-     */
-    public void showEntity() throws IOException{
-        popAddEntity();
-        while(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
-            popAddEntity();
-        }
-        String name=PopAddEntityController.nameOfEntity;
-        Entity entity= new Entity(name);
-        diagram.addEntity(entity);
-       
-    }
-    
-    /**
-     *
-     * Save an relation
-     */
-    public void showRelation() throws IOException{
-        popAddRelation();
-        while(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
-            popAddRelation();
-        }
-        String name= PopAddRelationController.nameOfRelation;
-        Relation relation = new Relation(name);
-        diagram.addRelation(relation);
-        
-    }
-    
-    /**
-     *
-     * Clean the window
-     */
-    public void cleanScreen() throws IOException{
-        diagram.clearAll(canvas);
-        
-    }
-    
-    /**
-     *
-     * Save a Image in .png
+     * Guardar una imagen como "imagen.png"
      */
     public void saveImage() throws IOException{
         popSaveImage(); 
@@ -331,8 +220,8 @@ public class MainController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
+        diagram = new Diagram();
+    }
     
     
 }

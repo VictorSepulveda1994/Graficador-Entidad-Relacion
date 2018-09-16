@@ -18,11 +18,6 @@ import javafx.stage.StageStyle;
  */
 public class Main extends Application {
     
-    /**
-     *
-     */
-    public static Diagram diagram=new Diagram();
-    
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
