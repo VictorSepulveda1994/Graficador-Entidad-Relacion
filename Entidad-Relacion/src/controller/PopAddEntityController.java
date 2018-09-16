@@ -23,7 +23,11 @@ public class PopAddEntityController extends CallPop implements Initializable {
 
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      *Panel donde se realizan las acciones
+=======
+     * Panel donde se realizaran las acciones
+>>>>>>> origin/victor
 =======
      * Panel donde se realizaran las acciones
 >>>>>>> origin/victor
@@ -33,6 +37,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
 
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      *Recibe el nombre de la entidad
 =======
      * Recibe el nombre de la entidad
@@ -40,6 +45,13 @@ public class PopAddEntityController extends CallPop implements Initializable {
      */
     @FXML
     private TextField nameEntity;
+=======
+     * Recibe el nombre de la entidad
+     */
+    @FXML
+    private TextField nameEntity;
+    
+>>>>>>> origin/victor
     
     /**
      *Guarda el nombre de la entidad 
@@ -62,7 +74,12 @@ public class PopAddEntityController extends CallPop implements Initializable {
     
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      *Añade un nombre y luego verifica si este esta vacio o su tamaño es mayor a 20
+=======
+     * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío
+     * Crea un objeto "entity" y es agregado a "diagram"
+>>>>>>> origin/victor
 =======
      * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío
      * Crea un objeto "entity" y es agregado a "diagram"
@@ -83,6 +100,12 @@ public class PopAddEntityController extends CallPop implements Initializable {
      */
     public void cancel(){
         cancelActionEntity = true;
+=======
+        else{
+            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY() ) );
+        }
+<<<<<<< HEAD
+>>>>>>> origin/victor
 =======
         else{
             MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY() ) );

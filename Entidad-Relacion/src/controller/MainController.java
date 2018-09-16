@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -17,6 +18,16 @@ import static controller.PopAddRelationController.cancelActionRelation;
 import static controller.PopAddRelationController.nameOfRelation;
 import static controller.PopEditElementController.cancelActionEdit;
 import static controller.PopEditElementController.enteredName;
+=======
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import static controller.PopSaveImageController.exist;
+import static controller.PopSaveImageController.namePhoto;
+import static controller.PopSaveImageController.nameURL;
+>>>>>>> origin/victor
 =======
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,8 +49,11 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.WritableImage;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
+=======
+>>>>>>> origin/victor
 =======
 >>>>>>> origin/victor
 import javafx.stage.FileChooser;
@@ -51,6 +65,7 @@ import model.Relation;
  *
  * @author Equipo Rocket
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 public class MainController extends CallPop implements Initializable {
     
@@ -89,6 +104,22 @@ public class MainController implements Initializable {
 >>>>>>> origin/victor
      */
     @FXML
+=======
+public class MainController implements Initializable {
+
+    /**
+     * ToggleButtons creados para seleccionar la accion que se desea hacer
+     */
+    @FXML
+    private ToggleButton entityToggleButton;
+    @FXML
+    private ToggleButton relationToggleButton;
+    
+    /**
+     * Lugar donde se dibujaran las figuras
+     */
+    @FXML
+>>>>>>> origin/victor
     private Canvas canvas;
 
     /**
@@ -104,7 +135,11 @@ public class MainController implements Initializable {
     
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      *Cierra la ventana
+=======
+     * Accion para cerrar la ventana
+>>>>>>> origin/victor
 =======
      * Accion para cerrar la ventana
 >>>>>>> origin/victor
@@ -117,7 +152,11 @@ public class MainController implements Initializable {
     
     /**
 <<<<<<< HEAD
+<<<<<<< HEAD
      *Minimiza la pantalla
+=======
+     * Accion para Minimizar Ventana
+>>>>>>> origin/victor
 =======
      * Accion para Minimizar Ventana
 >>>>>>> origin/victor
@@ -155,6 +194,7 @@ public class MainController implements Initializable {
         relationToggleButton.setSelected(false);
     }
     
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     /**
@@ -242,6 +282,12 @@ public class MainController implements Initializable {
      * Si el "relationToggleButton" es presionado, se activará y desactivará los demás.
      */
     @FXML
+=======
+    /**
+     * Si el "relationToggleButton" es presionado, se activará y desactivará los demás.
+     */
+    @FXML
+>>>>>>> origin/victor
     private void buttonRelationClicked(ActionEvent event){
         relationToggleButton.setSelected(true);
         entityToggleButton.setSelected(false);
@@ -261,6 +307,9 @@ public class MainController implements Initializable {
         if(relationToggleButton.isSelected()){
             diagram.addRelation(new Relation("Test",12, (int)event.getX(), (int)event.getY() ) );
         }
+<<<<<<< HEAD
+>>>>>>> origin/victor
+=======
 >>>>>>> origin/victor
         
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -269,6 +318,7 @@ public class MainController implements Initializable {
     
     /**
      *
+<<<<<<< HEAD
 <<<<<<< HEAD
      * Guarda una entidad
      * @throws java.io.IOException
@@ -285,6 +335,8 @@ public class MainController implements Initializable {
         }
        
 =======
+=======
+>>>>>>> origin/victor
      * Abre ventana para agregar el nombre de la entidad y crear la entidad
      */
     public void popAddEntity()throws IOException {
@@ -322,11 +374,15 @@ public class MainController implements Initializable {
         dialog.showAndWait();
         dialog.setResizable(false);
         dialog.close();    
+<<<<<<< HEAD
+>>>>>>> origin/victor
+=======
 >>>>>>> origin/victor
     }
     
     /**
      *
+<<<<<<< HEAD
 <<<<<<< HEAD
      * Guarda una relacion
      * @throws java.io.IOException
@@ -384,19 +440,28 @@ public class MainController implements Initializable {
                  
         //Set extension filter
 =======
+=======
+>>>>>>> origin/victor
      * Guardar una imagen como "imagen.png"
      */
     public void saveImage() {
         FileChooser fileChooser = new FileChooser();
                  
         //Ingreso de filtro de extensión
+<<<<<<< HEAD
+>>>>>>> origin/victor
+=======
 >>>>>>> origin/victor
         FileChooser.ExtensionFilter extFilter = 
                 new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
         fileChooser.getExtensionFilters().add(extFilter);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         //Show save file dialog
+=======
+        //Mostrar diálogo de guardar archivo
+>>>>>>> origin/victor
 =======
         //Mostrar diálogo de guardar archivo
 >>>>>>> origin/victor
