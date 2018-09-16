@@ -24,18 +24,25 @@ public class PopAddEntityController extends CallPop implements Initializable {
     /**
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Cami
      *Panel donde se realizan las acciones
 =======
      * Panel donde se realizaran las acciones
 >>>>>>> origin/victor
+<<<<<<< HEAD
 =======
      * Panel donde se realizaran las acciones
 >>>>>>> origin/victor
+=======
+>>>>>>> origin/Cami
      */
     @FXML
     private AnchorPane root;
 
     /**
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
      *Recibe el nombre de la entidad
@@ -46,13 +53,21 @@ public class PopAddEntityController extends CallPop implements Initializable {
     @FXML
     private TextField nameEntity;
 =======
+=======
+     *Recibe el nombre de la entidad
+=======
+>>>>>>> origin/Cami
      * Recibe el nombre de la entidad
+>>>>>>> origin/victor
      */
     @FXML
     private TextField nameEntity;
     
+<<<<<<< HEAD
 >>>>>>> origin/victor
     
+=======
+>>>>>>> origin/Cami
     /**
      *Guarda el nombre de la entidad 
      */
@@ -75,20 +90,27 @@ public class PopAddEntityController extends CallPop implements Initializable {
     /**
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Cami
      *Añade un nombre y luego verifica si este esta vacio o su tamaño es mayor a 20
 =======
      * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío
      * Crea un objeto "entity" y es agregado a "diagram"
 >>>>>>> origin/victor
+<<<<<<< HEAD
 =======
      * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío
      * Crea un objeto "entity" y es agregado a "diagram"
 >>>>>>> origin/victor
+=======
+>>>>>>> origin/Cami
      */
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
         if(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
             alertName();
+<<<<<<< HEAD
         }
 <<<<<<< HEAD
         cancelActionEntity = false;
@@ -106,6 +128,19 @@ public class PopAddEntityController extends CallPop implements Initializable {
         }
 <<<<<<< HEAD
 >>>>>>> origin/victor
+=======
+        }
+<<<<<<< HEAD
+        cancelActionEntity = false;
+        ((Stage)root.getScene().getWindow()).close();
+    }
+    
+    /**
+     *Cancela la accion y cierra la ventana
+     */
+    public void cancel(){
+        cancelActionEntity = true;
+>>>>>>> origin/Cami
 =======
         else{
             MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY() ) );

@@ -9,6 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Cami
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -28,6 +31,7 @@ import static controller.PopSaveImageController.exist;
 import static controller.PopSaveImageController.namePhoto;
 import static controller.PopSaveImageController.nameURL;
 >>>>>>> origin/victor
+<<<<<<< HEAD
 =======
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,6 +42,8 @@ import static controller.PopSaveImageController.exist;
 import static controller.PopSaveImageController.namePhoto;
 import static controller.PopSaveImageController.nameURL;
 >>>>>>> origin/victor
+=======
+>>>>>>> origin/Cami
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.logging.Level;
@@ -50,12 +56,18 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.WritableImage;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Cami
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 =======
 >>>>>>> origin/victor
+<<<<<<< HEAD
 =======
 >>>>>>> origin/victor
+=======
+>>>>>>> origin/Cami
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import model.Diagram;
@@ -67,6 +79,9 @@ import model.Relation;
  */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Cami
 public class MainController extends CallPop implements Initializable {
     
     /**
@@ -136,13 +151,19 @@ public class MainController implements Initializable {
     /**
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Cami
      *Cierra la ventana
 =======
      * Accion para cerrar la ventana
 >>>>>>> origin/victor
+<<<<<<< HEAD
 =======
      * Accion para cerrar la ventana
 >>>>>>> origin/victor
+=======
+>>>>>>> origin/Cami
      */
     @FXML
     private void close(MouseEvent event) {
@@ -153,11 +174,16 @@ public class MainController implements Initializable {
     /**
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
      *Minimiza la pantalla
 =======
      * Accion para Minimizar Ventana
 >>>>>>> origin/victor
 =======
+=======
+     *Minimiza la pantalla
+=======
+>>>>>>> origin/Cami
      * Accion para Minimizar Ventana
 >>>>>>> origin/victor
      */
@@ -196,6 +222,9 @@ public class MainController implements Initializable {
     
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Cami
     
     /**
      *
@@ -278,11 +307,14 @@ public class MainController implements Initializable {
         relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/4),y+(relation.getHeight()/2)));    //Point5
         relation.getPolygon().addPoint(new Point(x-(relation.getWidth()/2),y));                             //Point6
 =======
+<<<<<<< HEAD
     /**
      * Si el "relationToggleButton" es presionado, se activará y desactivará los demás.
      */
     @FXML
 =======
+=======
+>>>>>>> origin/Cami
     /**
      * Si el "relationToggleButton" es presionado, se activará y desactivará los demás.
      */
@@ -308,8 +340,11 @@ public class MainController implements Initializable {
             diagram.addRelation(new Relation("Test",12, (int)event.getX(), (int)event.getY() ) );
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/victor
 =======
+=======
+>>>>>>> origin/Cami
 >>>>>>> origin/victor
         
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -320,6 +355,9 @@ public class MainController implements Initializable {
      *
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Cami
      * Guarda una entidad
      * @throws java.io.IOException
      */
@@ -335,8 +373,11 @@ public class MainController implements Initializable {
         }
        
 =======
+<<<<<<< HEAD
 =======
 >>>>>>> origin/victor
+=======
+>>>>>>> origin/Cami
      * Abre ventana para agregar el nombre de la entidad y crear la entidad
      */
     public void popAddEntity()throws IOException {
@@ -374,6 +415,7 @@ public class MainController implements Initializable {
         dialog.showAndWait();
         dialog.setResizable(false);
         dialog.close();    
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> origin/victor
 =======
@@ -418,10 +460,55 @@ public class MainController implements Initializable {
             System.out.println("name edit: "+name);
         }
         
+=======
+>>>>>>> origin/victor
+>>>>>>> origin/Cami
     }
     
     /**
      *
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+     * Guarda una relacion
+     * @throws java.io.IOException
+     */
+    public void showRelation() throws IOException{
+        popAddRelation();
+        if(cancelActionRelation==false){
+            while(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
+                popAddRelation();
+            }
+            String name= PopAddRelationController.nameOfRelation;
+            Relation relation = new Relation(name);
+            diagram.addRelation(relation);
+        }
+        
+    }
+    
+    /**
+     *Realiza la edicion de un nombre
+     * @param event
+     * @throws IOException
+     */
+    public void showEdition(MouseEvent event) throws IOException{
+        popEditElement();
+        for(int i=0; i<diagram.getEntities().size();i++){
+            
+        }
+        if(cancelActionEdit==false){
+            while(enteredName.isEmpty() || enteredName.length()>21){
+                popEditElement();
+            }
+            String name= enteredName;
+            System.out.println("name edit: "+name);
+        }
+        
+    }
+    
+    /**
+     *
+>>>>>>> origin/Cami
      * Limpia la ventana
      * @throws java.io.IOException
      */
@@ -440,8 +527,11 @@ public class MainController implements Initializable {
                  
         //Set extension filter
 =======
+<<<<<<< HEAD
 =======
 >>>>>>> origin/victor
+=======
+>>>>>>> origin/Cami
      * Guardar una imagen como "imagen.png"
      */
     public void saveImage() {
@@ -449,8 +539,11 @@ public class MainController implements Initializable {
                  
         //Ingreso de filtro de extensión
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/victor
 =======
+=======
+>>>>>>> origin/Cami
 >>>>>>> origin/victor
         FileChooser.ExtensionFilter extFilter = 
                 new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
@@ -458,11 +551,16 @@ public class MainController implements Initializable {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         //Show save file dialog
 =======
         //Mostrar diálogo de guardar archivo
 >>>>>>> origin/victor
 =======
+=======
+        //Show save file dialog
+=======
+>>>>>>> origin/Cami
         //Mostrar diálogo de guardar archivo
 >>>>>>> origin/victor
         final Stage stage = new Stage();
