@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;

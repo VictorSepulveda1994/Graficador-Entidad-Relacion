@@ -12,9 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static controller.PopSaveImageController.exist;
-import static controller.PopSaveImageController.namePhoto;
-import static controller.PopSaveImageController.nameURL;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.logging.Level;
@@ -26,6 +23,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
+import javafx.stage.StageStyle;
 import javax.imageio.ImageIO;
 import model.Diagram;
 import model.Relation;
@@ -141,7 +139,7 @@ public class MainController implements Initializable {
     public void popAddEntity()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar entidad");
-        
+        dialog.initStyle(StageStyle.UTILITY);
         Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddEntity.fxml"));
         
         Scene xscene = new Scene(root);
