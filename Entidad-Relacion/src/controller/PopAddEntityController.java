@@ -9,34 +9,51 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Entity;
 
 /**
  * FXML Controller class
  *
  * @author Equipo Rocket
  */
-public class PopAddEntityController implements Initializable {
+public class PopAddEntityController extends CallPop implements Initializable {
 
     /**
-     *Panel where I perform actions
+<<<<<<< HEAD
+     *Panel donde se realizan las acciones
+=======
+     * Panel donde se realizaran las acciones
+>>>>>>> origin/victor
      */
     @FXML
-    public AnchorPane root;
+    private AnchorPane root;
 
     /**
-     *Receive the name of the entity
+<<<<<<< HEAD
+     *Recibe el nombre de la entidad
+=======
+     * Recibe el nombre de la entidad
+>>>>>>> origin/victor
      */
     @FXML
-    public TextField nameEntity;
+    private TextField nameEntity;
     
-    
+    /**
+     *Guarda el nombre de la entidad 
+     */
     public static String nameOfEntity = "";
+    
+    /**
+     *cancela la accion
+     */
+    public static boolean cancelActionEntity = false;
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -44,17 +61,33 @@ public class PopAddEntityController implements Initializable {
     }
     
     /**
-     *Get the name of an entity and verify the length and if it is empty
+<<<<<<< HEAD
+     *Añade un nombre y luego verifica si este esta vacio o su tamaño es mayor a 20
+=======
+     * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío
+     * Crea un objeto "entity" y es agregado a "diagram"
+>>>>>>> origin/victor
      */
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
         if(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error al ingresar nombre");
-            alert.setHeaderText("Se encontro un error en el nombre de la entidad,"
-                    + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
-            alert.showAndWait();
+            alertName();
         }
+<<<<<<< HEAD
+        cancelActionEntity = false;
+        ((Stage)root.getScene().getWindow()).close();
+    }
+    
+    /**
+     *Cancela la accion y cierra la ventana
+     */
+    public void cancel(){
+        cancelActionEntity = true;
+=======
+        else{
+            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY() ) );
+        }
+>>>>>>> origin/victor
         ((Stage)root.getScene().getWindow()).close();
     }
 }

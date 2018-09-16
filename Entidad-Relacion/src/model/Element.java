@@ -5,6 +5,8 @@
  */
 package model;
 
+import javafx.scene.canvas.Canvas;
+
 /**
  *
  * @author Equipo Rocket
@@ -14,11 +16,7 @@ public abstract class Element {
     /**
      *
      */
-    protected Polygon polygon;
-
-    /**
-     *
-     */
+    protected Figure figure;
     protected String name;
 
     /**
@@ -28,21 +26,25 @@ public abstract class Element {
     public Element(String name) {
         this.name = name;
     }
-
+    
+    public void paint(Canvas canvas){
+        figure.paintLines(canvas);
+    }
+    
     /**
      *
      * @return
      */
-    public Polygon getPolygon() {
-        return polygon;
+    public Figure getFigure() {
+        return figure;
     }
 
     /**
      *
-     * @param polygon
+     * @param figure
      */
-    public void setPolygon(Polygon polygon) {
-        this.polygon = polygon;
+    public void setPolygon(Figure figure) {
+        this.figure = figure;
     }
 
     /**

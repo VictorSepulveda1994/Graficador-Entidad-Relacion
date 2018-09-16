@@ -5,11 +5,11 @@
  */
 package controller;
 
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -17,31 +17,31 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Equipo Rocket
+ * @author Alejandra
  */
-public class PopAddRelationController extends CallPop implements Initializable {
-    
-    /**
-     *Muestra la ventana
-     */
-    @FXML
-    private AnchorPane root;
+public class PopEditElementController extends CallPop implements Initializable {
 
     /**
-     *Recibe el nombre de la relacion
+     *Panel donde se realizan las acciones
      */
     @FXML
-    public TextField nameRelation;
-
-    /**
-     *Guarda el nombre de la relacion
-     */
-    public static String nameOfRelation = "";
+    public AnchorPane root;
     
     /**
-     *Cancela la accion
+     *Recibe el nombre
      */
-    public static boolean cancelActionRelation = false;
+    @FXML
+    public static TextField name;
+    
+    /**
+     *Guarda el nombre
+     */
+    public static String enteredName="";
+
+    /**
+     *Verifica si se cancela la accion
+     */
+    public static boolean cancelActionEdit = false;
     /**
      * Initializes the controller class.
      * @param url
@@ -49,27 +49,27 @@ public class PopAddRelationController extends CallPop implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO   
+        // TODO
+        
     }
     
     /**
-     *Guarda el nombre de la relacion y verifica que no este vacia y que sea menor que
-     * 20 la cantidad de letras
+     *Guarda los cambios realizados
      */
-    public void addToScreen(){
-        nameOfRelation=nameRelation.textProperty().get();
-        if(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
+    public void saveChange(){
+        enteredName=name.textProperty().get();
+        if(enteredName.isEmpty() || enteredName.length()>21){
             alertName();
         }
-        cancelActionRelation = false;
+        cancelActionEdit = false;
         ((Stage)root.getScene().getWindow()).close();
     }
     
     /**
-     *Cancela la accion y cierra la ventana
+     *Cancela la accion
      */
     public void cancel(){
-        cancelActionRelation = true;
+        cancelActionEdit = true;
         ((Stage)root.getScene().getWindow()).close();
     }
     
