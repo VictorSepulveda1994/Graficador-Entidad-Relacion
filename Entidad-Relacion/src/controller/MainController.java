@@ -12,21 +12,22 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static controller.PopAddEntityController.nameOfEntity;
-import static controller.PopAddRelationController.nameOfRelation;
 import static controller.PopSaveImageController.exist;
 import static controller.PopSaveImageController.namePhoto;
 import static controller.PopSaveImageController.nameURL;
+import java.awt.image.RenderedImage;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import model.Diagram;
-import model.Entity;
 import model.Relation;
 
 /**
@@ -124,7 +125,6 @@ public class MainController implements Initializable {
         MainController.event = event;
         if(entityToggleButton.isSelected()){
             popAddEntity();
-            //diagram.addEntity(new Entity( (int)event.getX(), (int)event.getY() ) );
         }
         if(relationToggleButton.isSelected()){
             diagram.addRelation(new Relation("Test",12, (int)event.getX(), (int)event.getY() ) );
@@ -173,48 +173,33 @@ public class MainController implements Initializable {
         dialog.showAndWait();
         dialog.setResizable(false);
         dialog.close();    
-        
-    }
-    
-    /**
-     *
-     * Save the image of the blackboard
-     */
-    public void popSaveImage()throws IOException {
-        final Stage dialog = new Stage();
-        dialog.setTitle("Guardar imagen");
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopSaveImage.fxml"));
-        
-        Scene xscene = new Scene(root);
-        
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner((Stage) root.getScene().getWindow());
-        
-        dialog.setScene(xscene);
-        dialog.showAndWait();
-        dialog.setResizable(false);
-        dialog.close();    
-        
     }
     
     /**
      *
      * Guardar una imagen como "imagen.png"
      */
-    public void saveImage() throws IOException{
-        popSaveImage(); 
-        while(namePhoto.isEmpty() || namePhoto.length()>21 || exist==false){
-            popSaveImage();
-        }
-        WritableImage wim = canvas.snapshot(new SnapshotParameters(), null);
-        System.out.println("Nombre: "+namePhoto);
-        System.out.println("Direccion: "+nameURL);
-        System.out.println(nameURL+"\\"+namePhoto+".png");
-        File file = new File(nameURL+"\\"+namePhoto+".png");
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(wim, null), "png", file);
-        } catch (Exception s) {
+    public void saveImage() {
+        FileChooser fileChooser = new FileChooser();
+                 
+        //Ingreso de filtro de extensión
+        FileChooser.ExtensionFilter extFilter = 
+                new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Mostrar diálogo de guardar archivo
+        final Stage stage = new Stage();
+        File file = fileChooser.showSaveDialog(stage);
+
+        if(file != null){
+            try {
+                WritableImage writableImage = canvas.snapshot(new SnapshotParameters(), null);
+                canvas.snapshot(null, writableImage);
+                RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+                ImageIO.write(renderedImage, "png", file);
+            } catch (IOException ex) {
+                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
