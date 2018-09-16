@@ -127,15 +127,6 @@ public class MainController extends CallPop implements Initializable {
         y = event.getSceneY();
     }
     
-    /**
-     *Realiza un circulo
-     */
-    public void circlePoint(){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
-        gc.setLineWidth(6);
-        gc.strokeArc(x, y, 2, 2,360,300, ArcType.ROUND);
-    }
     
     /**
      *
