@@ -11,12 +11,12 @@ package model;
  */
 public class Point {
     
-    private double x;
-    private double y;
+    private int posX;
+    private int posY;
 
-    public Point(double x, double y) {
-        this.x = x;
-        this.y = y;
+    public Point(int x, int y) {
+        this.posX = x;
+        this.posY = y;
     }
 
     /**
@@ -24,15 +24,15 @@ public class Point {
      * @return
      */
     public double getX() {
-        return x;
+        return posX;
     }
 
     /**
      *
      * @param x
      */
-    public void setX(double x) {
-        this.x = x;
+    public void setX(int x) {
+        this.posX = x;
     }
 
     /**
@@ -40,15 +40,15 @@ public class Point {
      * @return
      */
     public double getY() {
-        return y;
+        return posY;
     }
 
     /**
      *
      * @param y
      */
-    public void setY(double y) {
-        this.y = y;
+    public void setY(int y) {
+        this.posY = y;
     }
     
     

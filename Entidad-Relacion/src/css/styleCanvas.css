@@ -1,0 +1,4 @@
+.anchor {
+    -fx-background-image: url('../icons/background.png');
+    -fx-background-repeat: repeat;
+}

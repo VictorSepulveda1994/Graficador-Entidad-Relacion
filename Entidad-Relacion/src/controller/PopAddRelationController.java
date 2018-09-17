@@ -1,34 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Relation;
 
 /**
  * FXML Controller class
  *
  * @author Equipo Rocket
  */
-public class PopAddRelationController implements Initializable {
+public class PopAddRelationController extends CallPop implements Initializable {
     
     /**
-     *Panel where I perform actions
+     * Panel donde se realizaran las acciones
      */
     @FXML
     private AnchorPane root;
 
     /**
-     *Receive the name of the relation
+     * Recibe el nombre de la entidad
      */
     @FXML
     public TextField nameRelation;
@@ -36,7 +31,7 @@ public class PopAddRelationController implements Initializable {
     
     public static String nameOfRelation = "";
     /**
-     * Initializes the controller class.
+     * Inicio de la clase controladora
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -44,17 +39,25 @@ public class PopAddRelationController implements Initializable {
     }
     
     /**
-     *Get the name of an relation and verify the length and if it is empty
+     * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío y
+     * crea un objeto "relation" y es agregado a "diagram"
      */
     public void addToScreen(){
         nameOfRelation=nameRelation.textProperty().get();
         if(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error al ingresar nombre");
-            alert.setHeaderText("Se encontro un error en el nombre de la relacion,"
-                    + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
-            alert.showAndWait();
+            alertName();
         }
+        else{
+            System.out.println("hola");
+            MainController.diagram.addRelation(new Relation(nameOfRelation, 3, (int)MainController.event.getX(), (int)MainController.event.getY() ) );
+            ((Stage)root.getScene().getWindow()).close();
+        }
+    }
+    
+    /**
+     * Cancela la operación
+     */
+    public void cancel(){
         ((Stage)root.getScene().getWindow()).close();
     }
     
