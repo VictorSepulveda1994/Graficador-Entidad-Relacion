@@ -27,8 +27,11 @@ public abstract class Element {
         this.name = name;
     }
     
-    public void paint(Canvas canvas){
+    public void paint(Canvas canvas , boolean showPoints){
         figure.paintLines(canvas);
+        if(showPoints){
+            figure.paintPoints(canvas);
+        }
     }
     
     /**

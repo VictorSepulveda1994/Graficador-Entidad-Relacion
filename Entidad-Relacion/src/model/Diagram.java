@@ -47,12 +47,13 @@ public class Diagram {
      * Método que recorre "entities","relations","connectors" y dibuja dichos objetos en el "canvas"
      * @param canvas
      */
-    public void paint(Canvas canvas){
+    public void paint(Canvas canvas, boolean showPoints){
+        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (Entity entity : entities) {
-            entity.paint(canvas);
+            entity.paint(canvas,showPoints);
         }
         for (Relation relation : relations) {
-            relation.paint(canvas);
+            relation.paint(canvas,showPoints);
         }
         /*
         for (Connector connector : connectors) {

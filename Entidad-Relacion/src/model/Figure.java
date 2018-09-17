@@ -1,10 +1,12 @@
 package model;
 
-import java.awt.Font;
 import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -54,6 +56,7 @@ public class Figure {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(20));
         gc.fillText(name, posX, posY);
         int size = points.size();
         for (int i = 0; i+1 < size; i++) {
@@ -64,6 +67,19 @@ public class Figure {
         Point point1 = points.get(0);
         Point point2 = points.get(size-1);
         gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+    }
+    
+    /**
+     * Método que realiza un circulo en cada punto para resaltarlo
+     */
+    public void paintPoints(Canvas canvas){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.BLACK);
+        gc.setLineWidth(6);
+        for (Point point : points) {
+            gc.strokeArc(point.getX(), point.getY(), 2, 2,360,300, ArcType.ROUND);
+        }
+        gc.setLineWidth(1);
     }
     
     /**

@@ -4,35 +4,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.awt.image.RenderedImage;
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.WritableImage;
-import javafx.stage.FileChooser;
-import javafx.stage.StageStyle;
-import javax.imageio.ImageIO;
 import model.Diagram;
-import model.Relation;
 
 /**
  *
  * @author Equipo Rocket
  */
-public class MainController implements Initializable {
+public class MainController extends CallPop implements Initializable {
 
     /**
      * ToggleButtons creados para seleccionar la accion que se desea hacer
@@ -58,6 +43,11 @@ public class MainController implements Initializable {
      * "Relation" y "Connector" que se crearan por el usuario
      */
     public static Diagram diagram;
+    
+    /**
+     * Variable que gestionará si se muestran los puntos en el "canvas"
+     */
+    private boolean showPoints;
     
     /**
      * Accion para cerrar la ventana
@@ -113,6 +103,9 @@ public class MainController implements Initializable {
         entityToggleButton.setSelected(false);
     }
     
+    /**
+     * Limpia la pantalla y el interior del objeto "diagram"
+     */
     @FXML
     private void cleanScreen(MouseEvent event) {
         diagram.clearAll(canvas);
@@ -125,85 +118,32 @@ public class MainController implements Initializable {
             popAddEntity();
         }
         if(relationToggleButton.isSelected()){
-            diagram.addRelation(new Relation("Test",12, (int)event.getX(), (int)event.getY() ) );
+            popAddRelation();
         }
-        
-        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        diagram.paint(canvas);
+        diagram.paint(canvas,showPoints);
     }
     
     /**
      *
-     * Abre ventana para agregar el nombre de la entidad y crear la entidad
-     */
-    public void popAddEntity()throws IOException {
-        final Stage dialog = new Stage();
-        dialog.setTitle("Agregar entidad");
-        dialog.initStyle(StageStyle.UTILITY);
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddEntity.fxml"));
-        
-        Scene xscene = new Scene(root);
-        
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner((Stage) root.getScene().getWindow());
-        
-        dialog.setScene(xscene);
-        dialog.showAndWait();
-        dialog.setResizable(false);
-        dialog.close();
-    }
-    
-    /**
-     * Abre ventana para agregar el nombre de la relacion y crear la relacion
-     */
-    public void popAddRelation()throws IOException {
-        final Stage dialog = new Stage();
-        dialog.setTitle("Agregar relacion");
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddRelation.fxml"));
-        
-        Scene xscene = new Scene(root);
-        
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner((Stage) root.getScene().getWindow());
-        
-        dialog.setScene(xscene);
-        dialog.showAndWait();
-        dialog.setResizable(false);
-        dialog.close();    
-    }
-    
-    /**
-     *
-     * Guardar una imagen como "imagen.png"
+     * Metodo para guardar una imagen como "imagen.png"
      */
     public void saveImage() {
-        FileChooser fileChooser = new FileChooser();
-                 
-        //Ingreso de filtro de extensión
-        FileChooser.ExtensionFilter extFilter = 
-                new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
-        fileChooser.getExtensionFilters().add(extFilter);
-
-        //Mostrar diálogo de guardar archivo
-        final Stage stage = new Stage();
-        File file = fileChooser.showSaveDialog(stage);
-
-        if(file != null){
-            try {
-                WritableImage writableImage = canvas.snapshot(new SnapshotParameters(), null);
-                canvas.snapshot(null, writableImage);
-                RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
-                ImageIO.write(renderedImage, "png", file);
-            } catch (IOException ex) {
-                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        saveDiagramPng(canvas);
+    }
+    
+    /**
+     *
+     * Metodo para cuando se deseen mostrar/ocultar los puntos de control
+     */
+    public void showPoints() {
+        showPoints = !showPoints;
+        diagram.paint(canvas, showPoints);
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         diagram = new Diagram();
+        showPoints = false;
     }
     
     
