@@ -48,7 +48,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
             alertName();
         }
         else{
-            MainController.diagram.addRelation(new Relation(nameOfRelation, 3, (int)MainController.event.getX(), (int)MainController.event.getY() ) );
+            MainController.diagram.addRelation(new Relation(nameOfRelation, 3, (int)MainController.event.getX(), (int)MainController.event.getY(), false) );
             ((Stage)root.getScene().getWindow()).close();
         }
     }

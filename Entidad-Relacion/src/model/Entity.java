@@ -8,10 +8,13 @@ public class Entity extends Element {
     
     /**
      *
-     * @param name,posX,posY
+     * @param name
+     * @param posX
+     * @param posY
+     * @param selected
      */
-    public Entity(String name, int posX, int posY) {
-        super(name);
+    public Entity(String name, int posX, int posY, boolean selected) {
+        super(name,selected);
         figure = new Figure(name, posX, posY);
     }
     

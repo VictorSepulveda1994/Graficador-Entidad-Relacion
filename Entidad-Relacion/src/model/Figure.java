@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -40,6 +41,8 @@ public class Figure {
     /**
      * Constructor para crear rectangulos
      * @param name,posX,posY
+     * @param posX
+     * @param posY
      */
     public Figure(String name, int posX, int posY) {
         points = new ArrayList<>();
@@ -53,8 +56,16 @@ public class Figure {
      * Pinta las lineas en el "canvas" segun los puntos que hayan en "points"
      * @param canvas
      */
-    public void paintLines(Canvas canvas){
+    public void paintLines(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        if( selected ){
+            gc.setFill(Color.DARKGREEN);
+            gc.setStroke(Color.DARKGREEN);
+        }
+        else{
+            gc.setFill(Color.BLACK);
+            gc.setStroke(Color.BLACK);
+        }
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(20));
@@ -85,6 +96,7 @@ public class Figure {
     
     /**
      * Método que retorna el punto mínimo presente en "points"
+     * @return Point
      */
     public Point minPoint(){
         int minX = points.get(0).getX();
@@ -102,6 +114,7 @@ public class Figure {
     
     /**
      * Método que retorna el punto máximo presente en "points"
+     * @return Point
      */
     public Point maxPoint(){
         int maxX = points.get(0).getX();
@@ -119,6 +132,8 @@ public class Figure {
     
     /**
      * Método que revisa si el punto de "event" se encuentra dentro de la figura
+     * @param event
+     * @return 
      */
     public boolean isInFigure(MouseEvent event){
         boolean inside = false;
