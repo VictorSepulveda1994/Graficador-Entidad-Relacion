@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
 import model.Diagram;
-import model.Point;
 
 /**
  *
@@ -57,8 +56,8 @@ public class MainController extends CallPop implements Initializable {
     /**
      * Variables que establecen el ancho mínimo y el alto mínimo del "canvas"
      */
-    private int minWidth = 673;
-    private int minHeight = 515;
+    private final int minWidth = 673;
+    private final int minHeight = 515;
     
     /**
      * Accion para cerrar la ventana
@@ -163,7 +162,8 @@ public class MainController extends CallPop implements Initializable {
             popAddEntity();
         }
         if(relationToggleButton.isSelected()){
-            popAddRelation();
+            diagram.selectElement(event, canvas, showPoints);
+            //popAddRelation();
         }
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
@@ -174,7 +174,7 @@ public class MainController extends CallPop implements Initializable {
     @FXML
     private void mousePressed(MouseEvent event){
         if(moveToggleButton.isSelected()){
-            diagram.selectElement(event);
+            diagram.selectElement(event, canvas, showPoints);
         }
     }
     

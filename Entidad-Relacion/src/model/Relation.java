@@ -12,10 +12,14 @@ public class Relation extends Element {
     
     /**
      *
-     * @param name,sides,posX,posY
+     * @param name
+     * @param sides
+     * @param posX
+     * @param posY
+     * @param selected
      */
-    public Relation(String name, int sides, int posX, int posY) {
-        super(name);
+    public Relation(String name, int sides, int posX, int posY, boolean selected) {
+        super(name,selected);
         entities = new ArrayList <>();
         figure = new Figure(name, sides, posX, posY);
     }

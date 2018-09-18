@@ -14,20 +14,25 @@ public abstract class Element {
      */
     protected Figure figure;
     protected String name;
+    protected boolean selected;
 
     /**
      *
      * @param name
+     * @param selected
      */
-    public Element(String name) {
+    public Element(String name,boolean selected) {
         this.name = name;
+        this.selected = selected;
     }
     
     /**
      * Método que llama al objeto "figure" y llama a sus métodos "paintLines" o "paintPoints"
+     * @param canvas
+     * @param showPoints
      */
-    public void paint(Canvas canvas , boolean showPoints){
-        figure.paintLines(canvas);
+    public void paint(Canvas canvas, boolean showPoints){
+        figure.paintLines(canvas,selected);
         if(showPoints){
             figure.paintPoints(canvas);
         }
@@ -35,6 +40,7 @@ public abstract class Element {
     
     /**
      * Método que retorna el punto mínimo en la figura del elemento
+     * @return Point
      */
     public Point minPoint(){
         return figure.minPoint();
@@ -42,6 +48,7 @@ public abstract class Element {
     
     /**
      * Método que retorna el punto máximo en la figura del elemento
+     * @return Point
      */
     public Point maxPoint(){
         return figure.maxPoint();
@@ -53,7 +60,7 @@ public abstract class Element {
     
     /**
      *
-     * @return
+     * @return figure
      */
     public Figure getFigure() {
         return figure;
@@ -69,7 +76,7 @@ public abstract class Element {
 
     /**
      *
-     * @return
+     * @return name
      */
     public String getName() {
         return name;
@@ -82,5 +89,9 @@ public abstract class Element {
     public void setName(String name) {
         this.name = name;
     }
- 
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+    
 }

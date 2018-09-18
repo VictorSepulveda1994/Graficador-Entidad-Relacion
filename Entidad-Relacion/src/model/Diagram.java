@@ -132,12 +132,14 @@ public class Diagram {
      * Método que guarda en "selectedElement" el objeto que contiene al punto de "event"
      * Además, guarda el indice de dicho elemento en "iElement"
      */
-    public void selectElement(MouseEvent event){
+    public void selectElement(MouseEvent event, Canvas canvas, boolean showPoints){
         int iE = 0;
         for (Entity entity : entities) {
             if(entity.isInFigure(event)){
                 selectedElement = entity;
+                selectedElement.setSelected(true);
                 iElement = iE;
+                paint(canvas, showPoints);
                 break;
             }
             iE++;
@@ -146,7 +148,9 @@ public class Diagram {
         for (Relation relation : relations) {
             if(relation.isInFigure(event)){
                 selectedElement = relation;
+                selectedElement.setSelected(true);
                 iElement = iE;
+                paint(canvas, showPoints);
                 break;
             }
             iE++;
@@ -155,15 +159,20 @@ public class Diagram {
     
     /**
      * Método que permite mover el objeto almacendo en "selectedElement"
+     * @param event
+     * @param canvas
+     * @param showPoints
+     * @param minWidth
+     * @param minHeight
      */
     public void moveElement(MouseEvent event, Canvas canvas, boolean showPoints, int minWidth, int minHeight){
         if( selectedElement != null ){
             String type = selectedElement.getClass().getName().substring(6);
             if( "Entity".equals(type) ){
-                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY()));
+                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected));
             }
             if( "Relation".equals(type) ){
-                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY()));
+                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected));
             }
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
@@ -172,14 +181,27 @@ public class Diagram {
     
     /**
      * Método que limpia "selectedElement" y el índice "iElement"
+     * @param event
      */
     public void deselectElement(MouseEvent event){
+        if( selectedElement != null ){
+            String type = selectedElement.getClass().getName().substring(6);
+            if( "Entity".equals(type) ){
+                entities.get(iElement).setSelected(false);
+            }
+            if( "Relation".equals(type) ){
+                relations.get(iElement).setSelected(false);
+            }
+        }
         selectedElement = null;
         iElement = -1;
     }
     
     /**
      * Método para ajustar el canvas según figuras en el interior
+     * @param canvas
+     * @param minWidth
+     * @param minHeight
      */
     public void adjustScreen(Canvas canvas, int minWidth, int minHeight){
         Point maxPoint = maxPoint();
@@ -203,6 +225,9 @@ public class Diagram {
     
     /**
      * Elimina todo el contenido en el diagrama y en regresa el canvas al estado original
+     * @param canvas
+     * @param minWidth
+     * @param minHeight
      */
     public void clearAll(Canvas canvas, int minWidth, int minHeight){
         GraphicsContext gc = canvas.getGraphicsContext2D();

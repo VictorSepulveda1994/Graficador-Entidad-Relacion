@@ -53,7 +53,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
             alertName();
         }
         else{
-            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY() ) );
+            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false) );
             ((Stage)root.getScene().getWindow()).close();
         }
     }
