@@ -23,7 +23,7 @@ public class Point {
      *
      * @return
      */
-    public double getX() {
+    public int getX() {
         return posX;
     }
 
@@ -39,7 +39,7 @@ public class Point {
      *
      * @return
      */
-    public double getY() {
+    public int getY() {
         return posY;
     }
 

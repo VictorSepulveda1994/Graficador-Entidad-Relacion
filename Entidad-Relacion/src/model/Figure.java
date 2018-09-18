@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
@@ -83,6 +84,55 @@ public class Figure {
     }
     
     /**
+     * Método que retorna el punto mínimo presente en "points"
+     */
+    public Point minPoint(){
+        int minX = points.get(0).getX();
+        int minY = points.get(0).getY();
+        for (Point point : points) {
+            if(minX > point.getX()){
+                minX = point.getX();
+            }
+            if(minY > point.getY()){
+                minY = point.getY();
+            }
+        }
+        return (new Point(minX, minY));
+    }
+    
+    /**
+     * Método que retorna el punto máximo presente en "points"
+     */
+    public Point maxPoint(){
+        int maxX = points.get(0).getX();
+        int maxY = points.get(0).getY();
+        for (Point point : points) {
+            if(maxX < point.getX()){
+                maxX = point.getX();
+            }
+            if(maxY < point.getY()){
+                maxY = point.getY();
+            }
+        }
+        return (new Point(maxX, maxY));
+    }
+    
+    /**
+     * Método que revisa si el punto de "event" se encuentra dentro de la figura
+     */
+    public boolean isInFigure(MouseEvent event){
+        boolean inside = false;
+        Point minPoint = minPoint();
+        Point maxPoint = maxPoint();
+        if( event.getX() > minPoint.getX() && event.getY() > minPoint().getY() ){
+            if( event.getX() < maxPoint.getX() && event.getY() < maxPoint().getY() ){
+                inside = true;
+            }
+        }
+        return inside;   
+    }
+    
+    /**
      * Crea los puntos del poligono y los almacena en "points"
      */
     private void createPointsPolygon(){
@@ -119,6 +169,13 @@ public class Figure {
         points.add(point);
         point = new Point ( (int)(posX - rectangleWidth), (int)(posY + rectangleHeight));
         points.add(point);
+    }
+
+    /**
+     * @return sides
+     */
+    public int getSides() {
+        return sides;
     }
     
 }
