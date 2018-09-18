@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -27,11 +23,32 @@ public abstract class Element {
         this.name = name;
     }
     
+    /**
+     * Método que llama al objeto "figure" y llama a sus métodos "paintLines" o "paintPoints"
+     */
     public void paint(Canvas canvas , boolean showPoints){
         figure.paintLines(canvas);
         if(showPoints){
             figure.paintPoints(canvas);
         }
+    }
+    
+    /**
+     * Método que retorna el punto mínimo en la figura del elemento
+     */
+    public Point minPoint(){
+        return figure.minPoint();
+    }
+    
+    /**
+     * Método que retorna el punto máximo en la figura del elemento
+     */
+    public Point maxPoint(){
+        return figure.maxPoint();
+    }
+    
+    public boolean isInFigure(MouseEvent event){
+        return figure.isInFigure(event);
     }
     
     /**
@@ -46,7 +63,7 @@ public abstract class Element {
      *
      * @param figure
      */
-    public void setPolygon(Figure figure) {
+    public void setFigure(Figure figure) {
         this.figure = figure;
     }
 
