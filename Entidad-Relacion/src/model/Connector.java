@@ -10,10 +10,34 @@ package model;
  * @author Equipo Rocket
  */
 public class Connector {
-    
+    //AYLINE MODIFICO AQUI
     private Element element1;
+    private Point pointElement1;
     private Element element2;
+    private Point pointElement2;
 
+    public Connector(Element element1, Element element2) {
+        this.element1 = element1;
+        this.element2 = element2;
+    }
+
+    public Point getPointElement1() {
+        return pointElement1;
+    }
+
+    public void setPointElement1(Point pointElement1) {
+        this.pointElement1 = pointElement1;
+    }
+
+    public Point getPointElement2() {
+        return pointElement2;
+    }
+
+    public void setPointElement2(Point pointElement2) {
+        this.pointElement2 = pointElement2;
+    }
+    
+    
     /**
      *
      * @return

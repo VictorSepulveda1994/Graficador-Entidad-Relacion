@@ -196,4 +196,9 @@ public class Figure {
     public void setSides(int sides) {
         this.sides = sides;
     }
+//AYLINE MODIFICO AQUI
+    public ArrayList<Point> getPoints() {
+        return points;
+    }    
+    
 }

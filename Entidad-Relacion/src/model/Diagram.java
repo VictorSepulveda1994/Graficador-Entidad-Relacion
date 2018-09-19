@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -58,10 +59,8 @@ public class Diagram {
         for (Relation relation : relations) {
             relation.paint(canvas,showPoints);
         }
-        /*
-        for (Connector connector : connectors) {
-            connector.paint(canvas.getGraphicsContext2D());
-        }*/
+        System.out.println("Ingrese a pintar");
+        paintConnector(canvas);
     }
     
     /**
@@ -251,6 +250,16 @@ public class Diagram {
         }
         return count;
     }
+    //AYLINE MODIFICO AQUI
+    public ArrayList<Entity> entitiesSelect (){
+        ArrayList<Entity> entities= new ArrayList<>();
+        for (Entity entitie : this.entities) {
+            if(entitie.selected){
+                entities.add(entitie);
+            }
+        }
+        return entities;
+    }
     
     public void deselectAllEntities (){
         for (Entity entitie : this.entities) {
@@ -294,4 +303,94 @@ public class Diagram {
         return connectors;
     }
     
+    //AYLINE MODIFICO AQUI
+    public void createConnectors(){
+        int j=0;
+        for(int i=0;i<relations.size();i++){
+            for(int a=0;a<relations.get(i).getEntities().size();a++){
+                System.out.println("relacion= "+relations.get(i).getName()+
+                        " entidad= "+relations.get(i).getEntities().get(a).getName());
+                if(relations.get(i).getEntities().size()==1){
+                    Connector connector= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
+                    connector.setPointElement1(relations.get(i).getFigure().getPoints().get(1));
+                    Point punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
+                        .get(i),relations.get(i).getEntities().get(a).getFigure().getPoints()
+                        .get(i+1));
+                    connector.setPointElement2(punto);
+                    connectors.add(connector); 
+                    
+                    Connector connector2= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
+                    connector2.setPointElement1(relations.get(i).getFigure().getPoints().get(2));
+                    Point punto2=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
+                        .get(i),relations.get(i).getEntities().get(a).getFigure().getPoints()
+                        .get(i+3));
+                    connector2.setPointElement2(punto2);
+                    connectors.add(connector2);         
+                }
+                if(relations.get(i).getEntities().size()==2){
+                    Connector connector= new Connector(relations.get(i),relations.get(i).getEntities().get(0));
+                    connector.setPointElement1(relations.get(i).getFigure().getPoints().get(2));
+                    Point punto=middlePoint(relations.get(i).getEntities().get(0).getFigure().getPoints()
+                        .get(i),relations.get(i).getEntities().get(0).getFigure().getPoints()
+                        .get(i+1));
+                    connector.setPointElement2(punto);
+                    connectors.add(connector);
+                    
+                    Connector connector2= new Connector(relations.get(i),relations.get(i).getEntities().get(1));
+                    connector2.setPointElement1(relations.get(i).getFigure().getPoints().get(0));
+                    Point punto2=middlePoint(relations.get(i).getEntities().get(1).getFigure().getPoints()
+                        .get(i+2),relations.get(i).getEntities().get(1).getFigure().getPoints()
+                        .get(i+3));
+                    connector2.setPointElement2(punto2);
+                    connectors.add(connector2);         
+                }
+                if(relations.get(i).getEntities().size()>2){
+                    Connector connector= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
+                    connector.setPointElement1(relations.get(i).getFigure().getPoints().get(a));
+                    Point punto= new Point(0,0);
+                    if(a==0 || a==5){
+                        punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
+                            .get(j+2),relations.get(i).getEntities().get(a).getFigure().getPoints()
+                            .get(j+3));
+                    }
+                    if(a==1){
+                        punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
+                            .get(j+3),relations.get(i).getEntities().get(a).getFigure().getPoints()
+                            .get(j));
+                    }
+                    if(a==2){
+                        punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
+                            .get(j+1),relations.get(i).getEntities().get(a).getFigure().getPoints()
+                            .get(j));
+                    }
+                    if(a==3 || a==4){
+                        punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
+                            .get(j+1),relations.get(i).getEntities().get(a).getFigure().getPoints()
+                            .get(j+2));
+                    }
+                    connector.setPointElement2(punto);
+                    connectors.add(connector);
+                }
+            }
+        }
+        System.out.println("Se crearon: "+connectors.size());
+    }
+    //AYLINE MODIFICO AQUI
+    public Point middlePoint(Point point1, Point point2){
+        int x= (point1.getPosX()+point2.getPosX())/2;
+        int y= (point1.getPosY()+point2.getPosY())/2;
+        return new Point(x,y);
+    }
+    //AYLINE MODIFICO AQUI
+    public void paintConnector(Canvas canvas){
+        System.out.println("Se pintaran los conectores");
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.ROYALBLUE);
+        gc.setLineWidth(4);
+        createConnectors();
+        for(int i=0;i<connectors.size();i++){
+           gc.strokeLine(connectors.get(i).getPointElement1().getPosX(),connectors.get(i).getPointElement1().
+                   getPosY(), connectors.get(i).getPointElement2().getPosX(), connectors.get(i).getPointElement2().getPosY());
+        }
+    }   
 }

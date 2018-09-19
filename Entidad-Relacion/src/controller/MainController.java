@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.Glow;
 import model.Diagram;
 import model.Element;
+import model.Entity;
 import model.Relation;
 
 /**
@@ -62,6 +64,7 @@ public class MainController extends CallPop implements Initializable {
      */
     private final int minWidth = 673;
     private final int minHeight = 515;
+    public static ArrayList<Entity> entitiesSelect = new ArrayList<>();
     
     /**
      * Accion para cerrar la ventana
@@ -179,10 +182,11 @@ public class MainController extends CallPop implements Initializable {
     private void cleanScreen(MouseEvent event) {
         diagram.clearAll(canvas, minWidth, minHeight);
     }
-    
+    //AYLINE MODIFICO AQUI
     @FXML
     private void canvasClicked(MouseEvent event) throws IOException {
         MainController.event = event;
+        entitiesSelect.clear();
         if(entityToggleButton.isSelected()){
             popAddEntity();
         }
@@ -191,6 +195,7 @@ public class MainController extends CallPop implements Initializable {
                 if (diagram.getSelectedElement()!=null){
                     Element element = diagram.getSelectedElement();
                     if (!element.isInFigure(event)){
+                        entitiesSelect=diagram.entitiesSelect();
                         popAddRelation();
                     }   
             }

@@ -31,5 +31,14 @@ public class Relation extends Element {
     public void addEntity (Entity entity){
         this.entities.add(entity);
     }
+//AYLINE MODIFICO AQUI
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
+
+    public void setEntities(ArrayList<Entity> entities) {
+        this.entities = entities;
+    }
     
 }
+
