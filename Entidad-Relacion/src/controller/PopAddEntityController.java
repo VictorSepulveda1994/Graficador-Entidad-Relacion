@@ -49,7 +49,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
      */
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
-        if(nameOfEntity.isEmpty() || nameOfEntity.length()>21){
+        if(nameOfEntity.isEmpty() || nameOfEntity.length()>8){
             alertName();
         }
         else{

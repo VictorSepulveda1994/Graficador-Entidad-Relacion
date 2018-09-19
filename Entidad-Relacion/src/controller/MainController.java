@@ -9,9 +9,13 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.effect.Glow;
 import model.Diagram;
+import model.Element;
+import model.Relation;
 
 /**
  *
@@ -106,27 +110,43 @@ public class MainController extends CallPop implements Initializable {
         //Cambios de tamaño de botones
         entityToggleButton.setScaleX(1.15);
         entityToggleButton.setScaleY(1.15);
+        Glow glow = new Glow ();
+        glow.setLevel(1);
+        entityToggleButton.setEffect(glow);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
+        relationToggleButton.setEffect(null);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
+        canvas.setCursor(Cursor.CROSSHAIR);
+        //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
     }
     
     /**
      * Si el "relationToggleButton" es presionado, se activará y desactivará los demás.
      */
     @FXML
-    private void buttonRelationClicked(ActionEvent event){
+    private void buttonRelationClicked(ActionEvent event){ 
         relationToggleButton.setSelected(true);
         entityToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
         //Cambios de tamaño de botones
+        Glow glow = new Glow ();
+        glow.setLevel(1);
+        relationToggleButton.setEffect(glow);
         relationToggleButton.setScaleX(1.15);
         relationToggleButton.setScaleY(1.15);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
+        entityToggleButton.setEffect(null);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
+        canvas.setCursor(Cursor.HAND);
+        //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
     }
     
     /**
@@ -142,9 +162,14 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1.15);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
+        relationToggleButton.setEffect(null);
+        entityToggleButton.setEffect(null);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
-        
+        canvas.setCursor(Cursor.MOVE);
+        //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
     }
     
     /**
@@ -161,14 +186,20 @@ public class MainController extends CallPop implements Initializable {
         if(entityToggleButton.isSelected()){
             popAddEntity();
         }
-        if(relationToggleButton.isSelected()){
+        if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0){
             diagram.selectElement(event, canvas, showPoints);
-            //popAddRelation();
+                if (diagram.getSelectedElement()!=null){
+                    Element element = diagram.getSelectedElement();
+                    if (!element.isInFigure(event)){
+                        popAddRelation();
+                    }   
+            }
         }
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
         }
+        
     }
     
     @FXML
@@ -214,12 +245,28 @@ public class MainController extends CallPop implements Initializable {
             pointsToggleButton.setScaleY(1);
         }
         diagram.paint(canvas, showPoints);
+        
+        //Cambios para desactivar los otros botones
+        entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
+        entityToggleButton.setEffect(null);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        relationToggleButton.setScaleX(1);
+        relationToggleButton.setScaleY(1);
+        relationToggleButton.setEffect(null);
+        relationToggleButton.setSelected(false);
+        entityToggleButton.setSelected(false);
+        moveToggleButton.setSelected(false);
+        canvas.setCursor(Cursor.DEFAULT);
+        diagram.deselectAllEntities();
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         diagram = new Diagram();
         showPoints = false;
+        canvas.setCursor(Cursor.DEFAULT);
     }
     
     

@@ -70,27 +70,27 @@ public class Diagram {
     public Point minPoint(){
         int minX,minY;
         if(entities.size() > 0){
-            minX = entities.get(0).maxPoint().getX();
-            minY = entities.get(0).maxPoint().getY();
+            minX = entities.get(0).maxPoint().getPosX();
+            minY = entities.get(0).maxPoint().getPosY();
         }
         else {
-            minX = relations.get(0).maxPoint().getX();
-            minY = relations.get(0).maxPoint().getY();
+            minX = relations.get(0).maxPoint().getPosX();
+            minY = relations.get(0).maxPoint().getPosY();
         }
         for (Entity entity : entities) {
-            if(minX > entity.minPoint().getX()){
-                minX = entity.minPoint().getX();
+            if(minX > entity.minPoint().getPosX()){
+                minX = entity.minPoint().getPosX();
             }
-            if(minY > entity.minPoint().getY()){
-                minY = entity.minPoint().getY();
+            if(minY > entity.minPoint().getPosY()){
+                minY = entity.minPoint().getPosY();
             }
         }
         for (Relation relation : relations) {
-            if(minX > relation.minPoint().getX()){
-                minX = relation.minPoint().getX();
+            if(minX > relation.minPoint().getPosX()){
+                minX = relation.minPoint().getPosX();
             }
-            if(minY > relation.minPoint().getY()){
-                minY = relation.minPoint().getY();
+            if(minY > relation.minPoint().getPosY()){
+                minY = relation.minPoint().getPosY();
             }
         }
         return (new Point(minX, minY));
@@ -102,27 +102,27 @@ public class Diagram {
     public Point maxPoint(){
         int maxX,maxY;
         if(entities.size() > 0){
-            maxX = entities.get(0).maxPoint().getX();
-            maxY = entities.get(0).maxPoint().getY();
+            maxX = entities.get(0).maxPoint().getPosX();
+            maxY = entities.get(0).maxPoint().getPosY();
         }
         else {
-            maxX = relations.get(0).maxPoint().getX();
-            maxY = relations.get(0).maxPoint().getY();
+            maxX = relations.get(0).maxPoint().getPosX();
+            maxY = relations.get(0).maxPoint().getPosY();
         }
         for (Entity entity : entities) {
-            if(maxX < entity.maxPoint().getX()){
-                maxX = entity.maxPoint().getX();
+            if(maxX < entity.maxPoint().getPosX()){
+                maxX = entity.maxPoint().getPosX();
             }
-            if(maxY < entity.maxPoint().getY()){
-                maxY = entity.maxPoint().getY();
+            if(maxY < entity.maxPoint().getPosY()){
+                maxY = entity.maxPoint().getPosY();
             }
         }
         for (Relation relation : relations) {
-            if(maxX < relation.maxPoint().getX()){
-                maxX = relation.maxPoint().getX();
+            if(maxX < relation.maxPoint().getPosX()){
+                maxX = relation.maxPoint().getPosX();
             }
-            if(maxY < relation.maxPoint().getY()){
-                maxY = relation.maxPoint().getY();
+            if(maxY < relation.maxPoint().getPosY()){
+                maxY = relation.maxPoint().getPosY();
             }
         }
         return (new Point(maxX, maxY));
@@ -205,20 +205,20 @@ public class Diagram {
      */
     public void adjustScreen(Canvas canvas, int minWidth, int minHeight){
         Point maxPoint = maxPoint();
-        if( maxPoint.getX() <= minWidth){
+        if( maxPoint.getPosX() <= minWidth){
             canvas.setWidth(minWidth);
         }
         else{
-            if( maxPoint.getX() > canvas.getWidth() || maxPoint.getX() < canvas.getWidth() ){
-                canvas.setWidth(maxPoint.getX() + 5);
+            if( maxPoint.getPosX() > canvas.getWidth() || maxPoint.getPosX() < canvas.getWidth() ){
+                canvas.setWidth(maxPoint.getPosX() + 5);
             }
         }
-        if( maxPoint.getY() <= minHeight){
+        if( maxPoint.getPosY() <= minHeight){
             canvas.setHeight(minHeight);
         }
         else{
-            if( maxPoint.getY() > canvas.getHeight() || maxPoint.getY() < canvas.getHeight() ){
-                canvas.setHeight(maxPoint.getY() + 5);
+            if( maxPoint.getPosY() > canvas.getHeight() || maxPoint.getPosY() < canvas.getHeight() ){
+                canvas.setHeight(maxPoint.getPosY() + 5);
             }
         }
     }
@@ -237,8 +237,37 @@ public class Diagram {
         this.entities.clear();
         this.relations.clear();
         this.connectors.clear();
+        this.selectedElement = null;
         canvas.setWidth(minWidth);
         canvas.setHeight(minHeight);
+    }
+    
+    public int numberOfEntitiesSelect (){
+        int count = 0;
+        for (Entity entitie : this.entities) {
+            if(entitie.selected){
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    public void deselectAllEntities (){
+        for (Entity entitie : this.entities) {
+            entitie.setSelected(false);
+        }
+    }
+       
+    public Element getSelectedElement() {
+        return selectedElement;
+    }
+
+    public void setSelectedElement(Element selectedElement) {
+        this.selectedElement = selectedElement;
+    }
+    
+    public boolean isSomethingSelect (){
+        return this.selectedElement!=null;
     }
     
     /**

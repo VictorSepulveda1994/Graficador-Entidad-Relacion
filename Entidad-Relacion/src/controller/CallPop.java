@@ -75,7 +75,7 @@ public class CallPop {
      */
     public void popAddRelation()throws IOException {
         final Stage dialog = new Stage();
-        dialog.setTitle("Agregar relacion");
+        dialog.setTitle("Agregar relación");
         
         Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddRelation.fxml"));
         
@@ -97,8 +97,8 @@ public class CallPop {
     public void alertName(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error al ingresar nombre");
-        alert.setHeaderText("Se encontro un error en el nombre,"
-                + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
+        alert.setHeaderText("Se encontró un error en el nombre,"
+                + " es vació o tiene mas de 8 caracteres. Debe ingresar el nombre nuevamente.");
         alert.showAndWait();
     }
     

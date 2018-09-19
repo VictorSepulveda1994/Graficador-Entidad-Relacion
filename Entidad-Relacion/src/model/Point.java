@@ -14,16 +14,16 @@ public class Point {
     private int posX;
     private int posY;
 
-    public Point(int x, int y) {
-        this.posX = x;
-        this.posY = y;
+    public Point(int posx, int posy) {
+        this.posX = posx;
+        this.posY = posy;
     }
 
     /**
      *
      * @return
      */
-    public int getX() {
+    public int getPosX() {
         return posX;
     }
 
@@ -31,15 +31,15 @@ public class Point {
      *
      * @param x
      */
-    public void setX(int x) {
-        this.posX = x;
+    public void setPosX(int posx) {
+        this.posX = posx;
     }
 
     /**
      *
      * @return
      */
-    public int getY() {
+    public int getPosY() {
         return posY;
     }
 
@@ -47,8 +47,8 @@ public class Point {
      *
      * @param y
      */
-    public void setY(int y) {
-        this.posY = y;
+    public void setPosY(int posy) {
+        this.posY = posy;
     }
     
     

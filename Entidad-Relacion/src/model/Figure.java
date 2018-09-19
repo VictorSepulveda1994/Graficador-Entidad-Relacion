@@ -74,11 +74,11 @@ public class Figure {
         for (int i = 0; i+1 < size; i++) {
             Point point1 = points.get(i);
             Point point2 = points.get(i+1);
-            gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+            gc.strokeLine(point1.getPosX(), point1.getPosY(), point2.getPosX(), point2.getPosY());
         }
         Point point1 = points.get(0);
         Point point2 = points.get(size-1);
-        gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+        gc.strokeLine(point2.getPosX(), point2.getPosY(), point1.getPosX(), point1.getPosY());
     }
     
     /**
@@ -89,7 +89,7 @@ public class Figure {
         gc.setFill(Color.BLACK);
         gc.setLineWidth(6);
         for (Point point : points) {
-            gc.strokeArc(point.getX(), point.getY(), 2, 2,360,300, ArcType.ROUND);
+            gc.strokeArc(point.getPosX(), point.getPosY(), 2, 2,360,300, ArcType.ROUND);
         }
         gc.setLineWidth(1);
     }
@@ -99,14 +99,14 @@ public class Figure {
      * @return Point
      */
     public Point minPoint(){
-        int minX = points.get(0).getX();
-        int minY = points.get(0).getY();
+        int minX = points.get(0).getPosX();
+        int minY = points.get(0).getPosY();
         for (Point point : points) {
-            if(minX > point.getX()){
-                minX = point.getX();
+            if(minX > point.getPosX()){
+                minX = point.getPosX();
             }
-            if(minY > point.getY()){
-                minY = point.getY();
+            if(minY > point.getPosY()){
+                minY = point.getPosY();
             }
         }
         return (new Point(minX, minY));
@@ -117,14 +117,14 @@ public class Figure {
      * @return Point
      */
     public Point maxPoint(){
-        int maxX = points.get(0).getX();
-        int maxY = points.get(0).getY();
+        int maxX = points.get(0).getPosX();
+        int maxY = points.get(0).getPosY();
         for (Point point : points) {
-            if(maxX < point.getX()){
-                maxX = point.getX();
+            if(maxX < point.getPosX()){
+                maxX = point.getPosX();
             }
-            if(maxY < point.getY()){
-                maxY = point.getY();
+            if(maxY < point.getPosY()){
+                maxY = point.getPosY();
             }
         }
         return (new Point(maxX, maxY));
@@ -139,8 +139,8 @@ public class Figure {
         boolean inside = false;
         Point minPoint = minPoint();
         Point maxPoint = maxPoint();
-        if( event.getX() > minPoint.getX() && event.getY() > minPoint().getY() ){
-            if( event.getX() < maxPoint.getX() && event.getY() < maxPoint().getY() ){
+        if( event.getX() > minPoint.getPosX() && event.getY() > minPoint().getPosY() ){
+            if( event.getX() < maxPoint.getPosX() && event.getY() < maxPoint().getPosY() ){
                 inside = true;
             }
         }
@@ -193,4 +193,7 @@ public class Figure {
         return sides;
     }
     
+    public void setSides(int sides) {
+        this.sides = sides;
+    }
 }
