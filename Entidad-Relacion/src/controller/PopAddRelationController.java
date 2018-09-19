@@ -48,18 +48,11 @@ public class PopAddRelationController extends CallPop implements Initializable {
             alertName();
         }
         else{
-            MainController.diagram.addRelation(new Relation(nameOfRelation, calculateSidesOfRelation (), (int)MainController.event.getX(), (int)MainController.event.getY(), false) );
+            MainController.diagram.addRelation(new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false) );
             ((Stage)root.getScene().getWindow()).close();
         }
     }
     
-    public int calculateSidesOfRelation (){
-        int numberOfEntities = MainController.diagram.numberOfEntitiesSelect();
-        if (numberOfEntities==1 || numberOfEntities==2 || numberOfEntities==4){
-            return 4;
-        }
-        return numberOfEntities;
-    }
     
     /**
      * Cancela la operación
