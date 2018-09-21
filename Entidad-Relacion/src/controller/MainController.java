@@ -14,6 +14,7 @@ import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.Glow;
+import javafx.scene.input.MouseButton;
 import model.Diagram;
 import model.Element;
 import model.Entity;
@@ -202,7 +203,7 @@ public class MainController extends CallPop implements Initializable {
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
-        }
+        } 
         
     }
     
