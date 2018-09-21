@@ -182,11 +182,10 @@ public class MainController extends CallPop implements Initializable {
     private void cleanScreen(MouseEvent event) {
         diagram.clearAll(canvas, minWidth, minHeight);
     }
-    //AYLINE MODIFICO AQUI
+    //AYLINE MODIFICO AQUI el 20/09
     @FXML
     private void canvasClicked(MouseEvent event) throws IOException {
         MainController.event = event;
-        entitiesSelect.clear();
         if(entityToggleButton.isSelected()){
             popAddEntity();
         }

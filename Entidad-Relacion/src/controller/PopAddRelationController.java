@@ -54,7 +54,10 @@ public class PopAddRelationController extends CallPop implements Initializable {
         }
         else{
             Relation relation=new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false);
-            relation.setEntities(entitiesSelect);
+            ArrayList<Entity> entities= new ArrayList<>();
+            entities=(ArrayList<Entity>) entitiesSelect.clone();
+            relation.setEntities(entities);
+            entitiesSelect.clear();
             MainController.diagram.addRelation(relation);
             ((Stage)root.getScene().getWindow()).close();
         }

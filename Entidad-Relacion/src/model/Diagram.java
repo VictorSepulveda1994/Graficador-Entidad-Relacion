@@ -59,7 +59,7 @@ public class Diagram {
         for (Relation relation : relations) {
             relation.paint(canvas,showPoints);
         }
-        System.out.println("Ingrese a pintar");
+        connectors.clear();
         paintConnector(canvas);
     }
     
@@ -155,7 +155,7 @@ public class Diagram {
             iE++;
         }
     }
-    
+    //AYLINE MODIFICO AQUI el 20/09
     /**
      * Método que permite mover el objeto almacendo en "selectedElement"
      * @param event
@@ -169,13 +169,31 @@ public class Diagram {
             String type = selectedElement.getClass().getName().substring(6);
             if( "Entity".equals(type) ){
                 entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected));
+               
             }
             if( "Relation".equals(type) ){
                 relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected));
             }
+            for (int i=0; i<relations.size();i++) {
+                for (int a=0; a<relations.get(i).getEntities().size();a++) {
+                    int nElement=search(relations.get(i).getEntities().get(a));
+                    if(nElement!=-1){
+                        relations.get(i).getEntities().set(a, entities.get(nElement));
+                    }
+                }
+            }
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
         }
+    }
+    //AYLINE MODIFICO AQUI el 20/09
+    public int search(Entity entity){
+        for(int i=0; i<entities.size();i++){
+            if(entities.get(i).getName().equals(entity.getName())){
+                return i;
+            }
+        }
+        return -1;
     }
     
     /**
@@ -303,13 +321,11 @@ public class Diagram {
         return connectors;
     }
     
-    //AYLINE MODIFICO AQUI
+    //AYLINE MODIFICO AQUI el 20/09
     public void createConnectors(){
         int j=0;
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getEntities().size();a++){
-                System.out.println("relacion= "+relations.get(i).getName()+
-                        " entidad= "+relations.get(i).getEntities().get(a).getName());
                 if(relations.get(i).getEntities().size()==1){
                     Connector connector= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
                     connector.setPointElement1(relations.get(i).getFigure().getPoints().get(1));
@@ -373,7 +389,6 @@ public class Diagram {
                 }
             }
         }
-        System.out.println("Se crearon: "+connectors.size());
     }
     //AYLINE MODIFICO AQUI
     public Point middlePoint(Point point1, Point point2){
@@ -381,9 +396,8 @@ public class Diagram {
         int y= (point1.getPosY()+point2.getPosY())/2;
         return new Point(x,y);
     }
-    //AYLINE MODIFICO AQUI
+    //AYLINE MODIFICO AQUI el 20/09
     public void paintConnector(Canvas canvas){
-        System.out.println("Se pintaran los conectores");
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.ROYALBLUE);
         gc.setLineWidth(4);
