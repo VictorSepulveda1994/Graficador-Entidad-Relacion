@@ -330,16 +330,16 @@ public class Diagram {
                     Connector connector= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
                     connector.setPointElement1(relations.get(i).getFigure().getPoints().get(1));
                     Point punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
-                        .get(i),relations.get(i).getEntities().get(a).getFigure().getPoints()
-                        .get(i+1));
+                        .get(j),relations.get(i).getEntities().get(a).getFigure().getPoints()
+                        .get(j+1));
                     connector.setPointElement2(punto);
                     connectors.add(connector); 
                     
                     Connector connector2= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
                     connector2.setPointElement1(relations.get(i).getFigure().getPoints().get(2));
                     Point punto2=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
-                        .get(i),relations.get(i).getEntities().get(a).getFigure().getPoints()
-                        .get(i+3));
+                        .get(j),relations.get(i).getEntities().get(a).getFigure().getPoints()
+                        .get(j+3));
                     connector2.setPointElement2(punto2);
                     connectors.add(connector2);         
                 }
@@ -347,16 +347,16 @@ public class Diagram {
                     Connector connector= new Connector(relations.get(i),relations.get(i).getEntities().get(0));
                     connector.setPointElement1(relations.get(i).getFigure().getPoints().get(2));
                     Point punto=middlePoint(relations.get(i).getEntities().get(0).getFigure().getPoints()
-                        .get(i),relations.get(i).getEntities().get(0).getFigure().getPoints()
-                        .get(i+1));
+                        .get(j),relations.get(i).getEntities().get(0).getFigure().getPoints()
+                        .get(j+1));
                     connector.setPointElement2(punto);
                     connectors.add(connector);
                     
                     Connector connector2= new Connector(relations.get(i),relations.get(i).getEntities().get(1));
                     connector2.setPointElement1(relations.get(i).getFigure().getPoints().get(0));
                     Point punto2=middlePoint(relations.get(i).getEntities().get(1).getFigure().getPoints()
-                        .get(i+2),relations.get(i).getEntities().get(1).getFigure().getPoints()
-                        .get(i+3));
+                        .get(j+2),relations.get(i).getEntities().get(1).getFigure().getPoints()
+                        .get(j+3));
                     connector2.setPointElement2(punto2);
                     connectors.add(connector2);         
                 }
