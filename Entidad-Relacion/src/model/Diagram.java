@@ -155,7 +155,7 @@ public class Diagram {
             iE++;
         }
     }
-    //AYLINE MODIFICO AQUI el 20/09
+    //AYLINE MODIFICO AQUI el 21/09
     /**
      * Método que permite mover el objeto almacendo en "selectedElement"
      * @param event
@@ -172,7 +172,9 @@ public class Diagram {
                
             }
             if( "Relation".equals(type) ){
-                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected));
+                ArrayList<Entity> entitiesCopy= new ArrayList<>();
+                entitiesCopy=(ArrayList<Entity>) relations.get(iElement).getEntities().clone();
+                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy));
             }
             for (int i=0; i<relations.size();i++) {
                 for (int a=0; a<relations.get(i).getEntities().size();a++) {
@@ -181,7 +183,7 @@ public class Diagram {
                         relations.get(i).getEntities().set(a, entities.get(nElement));
                     }
                 }
-            }
+            }           
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
         }

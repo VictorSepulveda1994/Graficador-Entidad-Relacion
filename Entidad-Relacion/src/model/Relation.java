@@ -10,6 +10,7 @@ public class Relation extends Element {
 
     private ArrayList <Entity> entities;
     
+    //AYLINE MODIFICO AQUI el 21/09
     /**
      *
      * @param name
@@ -18,9 +19,9 @@ public class Relation extends Element {
      * @param posY
      * @param selected
      */
-    public Relation(String name, int sides, int posX, int posY, boolean selected) {
+    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities) {
         super(name,selected);
-        entities = new ArrayList <>();
+        this.entities = (ArrayList<Entity>) entities.clone();
         figure = new Figure(name, sides, posX, posY);
     }
     
