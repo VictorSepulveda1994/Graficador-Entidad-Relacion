@@ -41,7 +41,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO   
     }
-    
+    //AYLINE MODIFICO AQUI el 21/09
     /**
      * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío y
      * crea un objeto "relation" y es agregado a "diagram"
@@ -53,10 +53,9 @@ public class PopAddRelationController extends CallPop implements Initializable {
             alertName();
         }
         else{
-            Relation relation=new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false);
             ArrayList<Entity> entities= new ArrayList<>();
             entities=(ArrayList<Entity>) entitiesSelect.clone();
-            relation.setEntities(entities);
+            Relation relation=new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false,entities);
             entitiesSelect.clear();
             MainController.diagram.addRelation(relation);
             ((Stage)root.getScene().getWindow()).close();
