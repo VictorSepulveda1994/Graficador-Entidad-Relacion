@@ -18,9 +18,9 @@ public class Relation extends Element {
      * @param posY
      * @param selected
      */
-    public Relation(String name, int sides, int posX, int posY, boolean selected) {
+    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities) {
         super(name,selected);
-        entities = new ArrayList <>();
+        this.entities = (ArrayList<Entity>) entities.clone();
         figure = new Figure(name, sides, posX, posY);
     }
     
@@ -30,6 +30,14 @@ public class Relation extends Element {
      */
     public void addEntity (Entity entity){
         this.entities.add(entity);
+    }
+    
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
+
+    public void setEntities(ArrayList<Entity> entities) {
+        this.entities = entities;
     }
     
 }

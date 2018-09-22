@@ -38,8 +38,7 @@ public class Figure {
         createPointsPolygon();
     }
     
-    /**
-     * Constructor para crear rectangulos
+    /* Constructor para crear rectangulos
      * @param name,posX,posY
      * @param posX
      * @param posY
@@ -51,6 +50,7 @@ public class Figure {
         this.name = name;
         createPointsRectangle();
     }
+    
     
     /**
      * Pinta las lineas en el "canvas" segun los puntos que hayan en "points"
@@ -193,4 +193,27 @@ public class Figure {
         return sides;
     }
     
+    public void setSides(int sides) {
+        this.sides = sides;
+    }
+
+    public ArrayList<Point> getPoints() {
+        return points;
+    }  
+    
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
 }

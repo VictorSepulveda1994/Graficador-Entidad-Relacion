@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,9 +10,12 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
 import model.Diagram;
+import model.Element;
+import model.Entity;
 
 /**
  *
@@ -58,6 +62,7 @@ public class MainController extends CallPop implements Initializable {
      */
     private final int minWidth = 673;
     private final int minHeight = 515;
+    public static ArrayList<Entity> entitiesSelect = new ArrayList<>();
     
     /**
      * Accion para cerrar la ventana
@@ -161,14 +166,21 @@ public class MainController extends CallPop implements Initializable {
         if(entityToggleButton.isSelected()){
             popAddEntity();
         }
-        if(relationToggleButton.isSelected()){
+        if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0){
             diagram.selectElement(event, canvas, showPoints);
-            //popAddRelation();
+                if (diagram.getSelectedElement()!=null){
+                    Element element = diagram.getSelectedElement();
+                    if (!element.isInFigure(event)){
+                        entitiesSelect=diagram.entitiesSelect();
+                        popAddRelation();
+                    }   
+            }
         }
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
         }
+        
     }
     
     @FXML
@@ -220,6 +232,7 @@ public class MainController extends CallPop implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         diagram = new Diagram();
         showPoints = false;
+        canvas.setCursor(Cursor.DEFAULT);
     }
     
     

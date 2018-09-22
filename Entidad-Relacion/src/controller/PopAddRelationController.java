@@ -1,12 +1,15 @@
 package controller;
 
+import static controller.MainController.entitiesSelect;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Entity;
 import model.Relation;
 
 /**
@@ -48,7 +51,11 @@ public class PopAddRelationController extends CallPop implements Initializable {
             alertName();
         }
         else{
-            MainController.diagram.addRelation(new Relation(nameOfRelation, 3, (int)MainController.event.getX(), (int)MainController.event.getY(), false) );
+            ArrayList<Entity> entities= new ArrayList<>();
+            entities=(ArrayList<Entity>) entitiesSelect.clone();
+            Relation relation=new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false,entities);
+            entitiesSelect.clear();
+            MainController.diagram.addRelation(relation);
             ((Stage)root.getScene().getWindow()).close();
         }
     }
