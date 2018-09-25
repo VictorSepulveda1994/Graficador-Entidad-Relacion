@@ -21,8 +21,8 @@ public class Figure {
     private int sides;
     private final int diamondDiagonal1 = 50;
     private final int diamondDiagonal2 = 30;
-    private final int rectangleWidth = 50;
-    private final int rectangleHeight = 30;
+    private final int rectangleWidth = 70;
+    private final int rectangleHeight = 40;
     private ArrayList<Point> points;
 
     /**
@@ -58,9 +58,10 @@ public class Figure {
      */
     public void paintLines(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(3);
         if( selected ){
-            gc.setFill(Color.DARKGREEN);
-            gc.setStroke(Color.DARKGREEN);
+            gc.setFill(Color.BLUE);
+            gc.setStroke(Color.BLUE);
         }
         else{
             gc.setFill(Color.BLACK);
@@ -86,12 +87,12 @@ public class Figure {
      */
     public void paintPoints(Canvas canvas){
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
-        gc.setLineWidth(6);
+        gc.setLineWidth(7);
         for (Point point : points) {
-            gc.strokeArc(point.getX(), point.getY(), 2, 2,360,300, ArcType.ROUND);
+            gc.setStroke(Color.ORANGERED);
+            gc.strokeArc(point.getX(), point.getY(), 3, 3,360,300, ArcType.ROUND);
         }
-        gc.setLineWidth(1);
+        gc.setStroke(Color.BLACK);
     }
     
     /**

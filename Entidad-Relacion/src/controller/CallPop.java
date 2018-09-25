@@ -39,6 +39,7 @@ public class CallPop {
         
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner((Stage) root.getScene().getWindow());
+        //dialog.resizableProperty().setValue(Boolean.FALSE);
         
         dialog.setScene(xscene);
         dialog.showAndWait();
@@ -55,7 +56,7 @@ public class CallPop {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar elemento");
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopEditElement.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopChangeName.fxml"));
         
         Scene xscene = new Scene(root);
         
@@ -64,6 +65,7 @@ public class CallPop {
         
         dialog.setScene(xscene);
         dialog.showAndWait();
+        dialog.resizableProperty().setValue(Boolean.FALSE);
         dialog.setResizable(false);
         dialog.close();
 
@@ -75,7 +77,7 @@ public class CallPop {
      */
     public void popAddRelation()throws IOException {
         final Stage dialog = new Stage();
-        dialog.setTitle("Agregar relacion");
+        dialog.setTitle("Agregar relación");
         
         Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddRelation.fxml"));
         
@@ -87,6 +89,7 @@ public class CallPop {
         dialog.setScene(xscene);
         dialog.showAndWait();
         dialog.setResizable(false);
+        dialog.resizableProperty().setValue(Boolean.FALSE);
         dialog.close();    
         
     }
@@ -97,8 +100,8 @@ public class CallPop {
     public void alertName(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error al ingresar nombre");
-        alert.setHeaderText("Se encontro un error en el nombre,"
-                + " es vacio o tiene mas de 20 caracteres. Debe ingresar el nombre nuevamente.");
+        alert.setHeaderText("Se encontró un error en el nombre,"
+                + " es vació o tiene mas de 12 caracteres. Debe ingresar el nombre nuevamente.");
         alert.showAndWait();
     }
     

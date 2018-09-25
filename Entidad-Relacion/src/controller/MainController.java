@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.InnerShadow;
 import model.Diagram;
 import model.Element;
 import model.Entity;
@@ -60,7 +62,7 @@ public class MainController extends CallPop implements Initializable {
     /**
      * Variables que establecen el ancho mínimo y el alto mínimo del "canvas"
      */
-    private final int minWidth = 673;
+    private final int minWidth = 777;
     private final int minHeight = 515;
     public static ArrayList<Entity> entitiesSelect = new ArrayList<>();
     
@@ -115,6 +117,10 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
+        canvas.setCursor(Cursor.CROSSHAIR);
+        //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
     }
     
     /**
@@ -132,6 +138,10 @@ public class MainController extends CallPop implements Initializable {
         entityToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
+        canvas.setCursor(Cursor.HAND);
+        //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
     }
     
     /**
@@ -142,13 +152,17 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setSelected(true);
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
-        //Cambios de tamaño de botones
+         //Cambios de tamaño de botones
         moveToggleButton.setScaleX(1.15);
         moveToggleButton.setScaleY(1.15);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
+        canvas.setCursor(Cursor.MOVE);
+        //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
         
     }
     
@@ -158,6 +172,19 @@ public class MainController extends CallPop implements Initializable {
     @FXML
     private void cleanScreen(MouseEvent event) {
         diagram.clearAll(canvas, minWidth, minHeight);
+        //Se restablecen los botones
+        relationToggleButton.setSelected(false);
+        entityToggleButton.setSelected(false);
+        moveToggleButton.setSelected(false);
+        pointsToggleButton.setSelected(false);
+        entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        relationToggleButton.setScaleX(1);
+        relationToggleButton.setScaleY(1);
+        pointsToggleButton.setScaleX(1);
+        pointsToggleButton.setScaleY(1);
     }
     
     @FXML
@@ -225,7 +252,19 @@ public class MainController extends CallPop implements Initializable {
             pointsToggleButton.setScaleX(1);
             pointsToggleButton.setScaleY(1);
         }
-        diagram.paint(canvas, showPoints);
+        //Cambios para desactivar los otros botones
+        entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        relationToggleButton.setScaleX(1);
+        relationToggleButton.setScaleY(1);
+        relationToggleButton.setSelected(false);
+        entityToggleButton.setSelected(false);
+        moveToggleButton.setSelected(false);
+        canvas.setCursor(Cursor.DEFAULT);
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
     }
     
     @Override
@@ -234,6 +273,5 @@ public class MainController extends CallPop implements Initializable {
         showPoints = false;
         canvas.setCursor(Cursor.DEFAULT);
     }
-    
-    
+
 }

@@ -47,7 +47,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
      */
     public void addToScreen(){
         nameOfRelation=nameRelation.textProperty().get();
-        if(nameOfRelation.isEmpty() || nameOfRelation.length()>21){
+        if(nameOfRelation.isEmpty() || nameOfRelation.length()>12){
             alertName();
         }
         else{

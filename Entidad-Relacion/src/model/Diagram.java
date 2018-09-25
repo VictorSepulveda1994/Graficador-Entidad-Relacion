@@ -375,8 +375,7 @@ public class Diagram {
 
     public void paintConnector(Canvas canvas){
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.ROYALBLUE);
-        gc.setLineWidth(4);
+        gc.setLineWidth(3);
         createConnectors();
         for(int i=0;i<connectors.size();i++){
            gc.strokeLine(connectors.get(i).getPointElement1().getX(),connectors.get(i).getPointElement1().

@@ -12,16 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.Entity;
-
 /**
- * FXML Controller class
  *
- * @author Equipo Rocket
+ * @author Milagod
  */
-public class PopAddEntityController extends CallPop implements Initializable {
-
-    /**
+public class PopChangeName extends CallPop implements Initializable{
+/**
      * Panel donde se realizaran las acciones
      */
     @FXML
@@ -31,32 +27,25 @@ public class PopAddEntityController extends CallPop implements Initializable {
      * Recibe el nombre de la entidad
      */
     @FXML
-    private TextField nameEntity;
+    public TextField newName;
+
     
-    
-    public static String nameOfEntity = "";
     /**
      * Inicio de la clase controladora
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // TODO   
     }
     
     /**
-     * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío
-     * Crea un objeto "entity" y es agregado a "diagram"
+     * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío y
+     * crea un objeto "relation" y es agregado a "diagram"
      */
     public void addToScreen(){
-        nameOfEntity=nameEntity.textProperty().get();
-        if(nameOfEntity.isEmpty() || nameOfEntity.length()>12){
-            alertName();
-        }
-        else{
-            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false) );
-            ((Stage)root.getScene().getWindow()).close();
-        }
+        alertName();
     }
+    
     
     /**
      * Cancela la operación
@@ -64,4 +53,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
     public void cancel(){
         ((Stage)root.getScene().getWindow()).close();
     }
+    
 }
+
+    

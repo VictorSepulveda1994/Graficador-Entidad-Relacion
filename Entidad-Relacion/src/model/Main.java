@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -26,6 +27,8 @@ public class Main extends Application {
 
         stage.resizableProperty().set(false);
         stage.initStyle(StageStyle.TRANSPARENT);
+        //stage.setTitle("Diagrama ER");
+        //stage.getIcons().add(new Image("/icons/appIcon.png"));
         stage.setScene(scene);
         stage.show();
     }
