@@ -207,6 +207,10 @@ public class MainController extends CallPop implements Initializable {
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
         }
+        if(!entityToggleButton.isSelected() && !relationToggleButton.isSelected() 
+                && !moveToggleButton.isSelected()){
+            diagram.selectElementEdit(event, canvas, showPoints);
+        }
         
     }
     
