@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 /**
  *
@@ -284,6 +283,7 @@ public class Diagram {
         for (Entity entitie : this.entities) {
             entitie.setSelected(false);
         }
+        selectedElement=null;
     }
     
     public Element getSelectedElement() {
@@ -309,7 +309,7 @@ public class Diagram {
                         .get(j),relations.get(i).getEntities().get(a).getFigure().getPoints()
                         .get(j+1));
                     connector.setPointElement2(punto);
-                    connectors.add(connector); 
+                    connectors.add(connector);
                     
                     Connector connector2= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
                     connector2.setPointElement1(relations.get(i).getFigure().getPoints().get(2));

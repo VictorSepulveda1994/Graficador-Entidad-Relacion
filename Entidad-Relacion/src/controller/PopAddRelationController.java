@@ -56,6 +56,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
             Relation relation=new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false,entities);
             entitiesSelect.clear();
             MainController.diagram.addRelation(relation);
+            MainController.diagram.deselectAllEntities();
             ((Stage)root.getScene().getWindow()).close();
         }
     }
@@ -64,6 +65,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
      * Cancela la operación
      */
     public void cancel(){
+        MainController.diagram.deselectAllEntities();
         ((Stage)root.getScene().getWindow()).close();
     }
     

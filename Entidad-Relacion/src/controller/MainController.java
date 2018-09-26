@@ -13,8 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.effect.Glow;
-import javafx.scene.effect.InnerShadow;
 import model.Diagram;
 import model.Element;
 import model.Entity;
@@ -62,7 +60,7 @@ public class MainController extends CallPop implements Initializable {
     /**
      * Variables que establecen el ancho mínimo y el alto mínimo del "canvas"
      */
-    private final int minWidth = 777;
+    private final int minWidth = 700;
     private final int minHeight = 515;
     public static ArrayList<Entity> entitiesSelect = new ArrayList<>();
     
@@ -197,6 +195,10 @@ public class MainController extends CallPop implements Initializable {
             diagram.selectElement(event, canvas, showPoints);
                 if (diagram.getSelectedElement()!=null){
                     Element element = diagram.getSelectedElement();
+                    String type = element.getClass().getName().substring(6);
+                    if("Relation".equals(type)){
+                        diagram.deselectElement(event);
+                    }
                     if (!element.isInFigure(event)){
                         entitiesSelect=diagram.entitiesSelect();
                         popAddRelation();

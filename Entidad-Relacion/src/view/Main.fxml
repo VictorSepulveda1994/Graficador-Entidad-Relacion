@@ -118,6 +118,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button layoutX="665.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#saveImage" prefHeight="45.0" prefWidth="115.0" style="-fx-background-color: #eae8e8;" text="Exportar">
                      <font>
@@ -130,6 +133,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </Pane>
