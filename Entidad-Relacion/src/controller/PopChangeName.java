@@ -29,7 +29,10 @@ public class PopChangeName extends CallPop implements Initializable{
     @FXML
     public TextField newName;
 
-    
+    /**
+     *Guarda el nombre
+     */
+    public static String enteredName="";
     /**
      * Inicio de la clase controladora
      */
@@ -43,7 +46,11 @@ public class PopChangeName extends CallPop implements Initializable{
      * crea un objeto "relation" y es agregado a "diagram"
      */
     public void addToScreen(){
-        alertName();
+        enteredName=newName.textProperty().get();
+        if(enteredName.isEmpty() || enteredName.length()>21){
+            alertName();
+        }
+        ((Stage)root.getScene().getWindow()).close();
     }
     
     

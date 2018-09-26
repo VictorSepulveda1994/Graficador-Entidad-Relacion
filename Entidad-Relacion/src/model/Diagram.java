@@ -1,5 +1,8 @@
 package model;
 
+import controller.CallPop;
+import static controller.PopChangeName.enteredName;
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,7 +12,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Equipo Rocket
  */
-public class Diagram {
+public class Diagram extends CallPop {
     private ArrayList <Entity> entities;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
@@ -405,6 +408,27 @@ public class Diagram {
      */
     public ArrayList<Connector> getConnectors() {
         return connectors;
+    }
+    
+    public void selectElementEdit(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        int iE = 0;
+        for (Entity entity : entities) {
+            if(entity.isInFigure(event)){
+                popEditElement();
+                entity.setName(enteredName);
+                break;
+            }
+            iE++;
+        }
+        iE = 0;
+        for (Relation relation : relations) {
+            if(relation.isInFigure(event)){
+                popEditElement();
+                relation.setName(enteredName);
+                break;
+            }
+            iE++;
+        }
     }
     
 }
