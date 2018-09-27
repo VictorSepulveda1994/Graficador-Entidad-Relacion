@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import model.Diagram;
 import model.Element;
@@ -34,7 +35,9 @@ public class MainController extends CallPop implements Initializable {
     private ToggleButton moveToggleButton;
     @FXML
     private ToggleButton pointsToggleButton;
-    
+    @FXML
+    private ToggleButton editToggleButton;
+
     /**
      * Lugar donde se dibujaran las figuras
      */
@@ -108,6 +111,7 @@ public class MainController extends CallPop implements Initializable {
         entityToggleButton.setSelected(true);
         relationToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
+        editToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         entityToggleButton.setScaleX(1.15);
         entityToggleButton.setScaleY(1.15);
@@ -129,6 +133,7 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setSelected(true);
         entityToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
+        editToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         relationToggleButton.setScaleX(1.15);
         relationToggleButton.setScaleY(1.15);
@@ -150,6 +155,7 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setSelected(true);
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
+        editToggleButton.setSelected(false);
          //Cambios de tamaño de botones
         moveToggleButton.setScaleX(1.15);
         moveToggleButton.setScaleY(1.15);
@@ -174,6 +180,7 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
+        editToggleButton.setSelected(false);
         pointsToggleButton.setSelected(false);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
@@ -183,7 +190,20 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setScaleY(1);
         pointsToggleButton.setScaleX(1);
         pointsToggleButton.setScaleY(1);
+        canvas.setCursor(Cursor.DEFAULT);
     }
+    
+    @FXML
+    private void edit (MouseEvent event) throws IOException{       
+        relationToggleButton.setSelected(false);
+        entityToggleButton.setSelected(false);
+        moveToggleButton.setSelected(false);
+        pointsToggleButton.setSelected(false);
+        editToggleButton.setSelected(true);
+        canvas.setCursor(Cursor.TEXT);
+    }
+    
+    
     
     @FXML
     private void canvasClicked(MouseEvent event) throws IOException {
@@ -209,8 +229,7 @@ public class MainController extends CallPop implements Initializable {
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
         }
-        if(!entityToggleButton.isSelected() && !relationToggleButton.isSelected() 
-                && !moveToggleButton.isSelected()){
+        if(editToggleButton.isSelected()){
             diagram.selectElementEdit(event, canvas, showPoints);
         }
         
@@ -268,6 +287,7 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
+        editToggleButton.setSelected(false);
         canvas.setCursor(Cursor.DEFAULT);
         diagram.deselectAllEntities();
         diagram.paint(canvas,showPoints);

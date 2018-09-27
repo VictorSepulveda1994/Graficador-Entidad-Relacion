@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -137,6 +138,27 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <ToggleButton fx:id="editToggleButton" layoutX="414.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#edit" prefHeight="47.0" prefWidth="115.0" style="-fx-background-color: #eae8e8;" text="   Editar">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/edit.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="Century Gothic Bold" size="13.0" />
+                     </font>
+                  </ToggleButton>
                </children>
             </Pane>
             <Pane prefHeight="71.0" prefWidth="112.0" style="-fx-background-color: #5798d6;">

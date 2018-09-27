@@ -217,4 +217,13 @@ public class Figure {
     public void setPosY(int posY) {
         this.posY = posY;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
 }

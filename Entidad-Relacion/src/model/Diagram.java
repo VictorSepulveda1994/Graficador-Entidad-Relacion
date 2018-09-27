@@ -416,6 +416,7 @@ public class Diagram extends CallPop {
             if(entity.isInFigure(event)){
                 popEditElement();
                 entity.setName(enteredName);
+                entity.figure.setName(enteredName);
                 break;
             }
             iE++;
@@ -425,10 +426,11 @@ public class Diagram extends CallPop {
             if(relation.isInFigure(event)){
                 popEditElement();
                 relation.setName(enteredName);
+                relation.figure.setName(enteredName);
                 break;
             }
             iE++;
-        }
+        }       
+        paint(canvas, showPoints);
     }
-    
 }

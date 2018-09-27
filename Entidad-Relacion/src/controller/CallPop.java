@@ -54,7 +54,7 @@ public class CallPop {
      */
     public void popEditElement()throws IOException {
         final Stage dialog = new Stage();
-        dialog.setTitle("Editar elemento");
+        dialog.setTitle("Editar nombre");
         
         Parent root = FXMLLoader.load(getClass().getResource("/view/PopChangeName.fxml"));
         
