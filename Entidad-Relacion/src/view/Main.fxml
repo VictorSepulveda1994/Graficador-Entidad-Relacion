@@ -211,6 +211,11 @@
                   <Image url="@../icons/-.png" />
                </image>
             </ImageView>
+            <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="821.0" layoutY="6.0" onMouseClicked="#helpMe" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/help.png" />
+               </image>
+            </ImageView>
          </children>
          <effect>
             <DropShadow />

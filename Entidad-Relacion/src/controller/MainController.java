@@ -85,6 +85,11 @@ public class MainController extends CallPop implements Initializable {
         stage.setIconified(true);
     }
     
+    @FXML
+    private void helpMe(MouseEvent event) throws IOException {
+        popShowHelp();
+    }
+    
     /**
      * Permite arrastrar la ventana
      */
@@ -215,13 +220,16 @@ public class MainController extends CallPop implements Initializable {
             diagram.selectElement(event, canvas, showPoints);
                 if (diagram.getSelectedElement()!=null){
                     Element element = diagram.getSelectedElement();
-                    String type = element.getClass().getName().substring(6);
-                    if("Relation".equals(type)){
-                        diagram.deselectElement(event);
-                    }
                     if (!element.isInFigure(event)){
                         entitiesSelect=diagram.entitiesSelect();
-                        popAddRelation();
+                        if(entitiesSelect.size()>7){
+                            alertEntities();
+                            diagram.deselectAllEntities();
+                            entitiesSelect.clear();
+                        }
+                        else{
+                            popAddRelation();
+                        }
                     }   
             }
         }

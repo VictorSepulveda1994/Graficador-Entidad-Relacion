@@ -51,6 +51,16 @@ public class Figure {
         createPointsRectangle();
     }
     
+    public Figure(Point point1,Point point2){
+        points = new ArrayList<>();
+        createPointsLine(point1,point2);
+        
+    }
+
+    public void createPointsLine(Point point1,Point point2){
+        points.add(point1);
+        points.add(point2);
+    }
     
     /**
      * Pinta las lineas en el "canvas" segun los puntos que hayan en "points"

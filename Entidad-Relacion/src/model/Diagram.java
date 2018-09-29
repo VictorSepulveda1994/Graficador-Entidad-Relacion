@@ -63,6 +63,9 @@ public class Diagram extends CallPop {
         }
         connectors.clear();
         paintConnector(canvas);
+        for (Connector connector : connectors) {
+            connector.paint(canvas,showPoints);
+        }
     }
     
     /**
@@ -305,45 +308,35 @@ public class Diagram extends CallPop {
         int j=0;
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getEntities().size();a++){
-                if(relations.get(i).getEntities().size()==1){
-                    Connector connector= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
-                    connector.setPointElement1(relations.get(i).getFigure().getPoints().get(1));
+                if(relations.get(i).getEntities().size()==1){                 
                     Point punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
                         .get(j),relations.get(i).getEntities().get(a).getFigure().getPoints()
                         .get(j+1));
-                    connector.setPointElement2(punto);
-                    connectors.add(connector);
+                    Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a),punto,"",false);
+                    connectors.add(connector); 
                     
-                    Connector connector2= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
-                    connector2.setPointElement1(relations.get(i).getFigure().getPoints().get(2));
                     Point punto2=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
                         .get(j),relations.get(i).getEntities().get(a).getFigure().getPoints()
                         .get(j+3));
-                    connector2.setPointElement2(punto2);
+                    Connector connector2= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(2),relations.get(i).getEntities().get(a),punto2," ",false);
                     connectors.add(connector2);         
                 }
                 if(relations.get(i).getEntities().size()==2){
-                    Connector connector= new Connector(relations.get(i),relations.get(i).getEntities().get(0));
-                    connector.setPointElement1(relations.get(i).getFigure().getPoints().get(2));
                     Point punto=middlePoint(relations.get(i).getEntities().get(0).getFigure().getPoints()
                         .get(j),relations.get(i).getEntities().get(0).getFigure().getPoints()
                         .get(j+1));
-                    connector.setPointElement2(punto);
+                    Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(2),relations.get(i).getEntities().get(0),punto," ",false);
                     connectors.add(connector);
                     
-                    Connector connector2= new Connector(relations.get(i),relations.get(i).getEntities().get(1));
-                    connector2.setPointElement1(relations.get(i).getFigure().getPoints().get(0));
                     Point punto2=middlePoint(relations.get(i).getEntities().get(1).getFigure().getPoints()
                         .get(j+2),relations.get(i).getEntities().get(1).getFigure().getPoints()
                         .get(j+3));
-                    connector2.setPointElement2(punto2);
+                    Connector connector2= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(0),relations.get(i).getEntities().get(1),punto2," ",false);
                     connectors.add(connector2);         
                 }
                 if(relations.get(i).getEntities().size()>2){
-                    Connector connector= new Connector(relations.get(i),relations.get(i).getEntities().get(a));
-                    connector.setPointElement1(relations.get(i).getFigure().getPoints().get(a));
                     Point punto= new Point(0,0);
-                    if(a==0 || a==5){
+                    if(a==0 || a==5 || a==6){
                         punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
                             .get(j+2),relations.get(i).getEntities().get(a).getFigure().getPoints()
                             .get(j+3));
@@ -363,7 +356,7 @@ public class Diagram extends CallPop {
                             .get(j+1),relations.get(i).getEntities().get(a).getFigure().getPoints()
                             .get(j+2));
                     }
-                    connector.setPointElement2(punto);
+                    Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a),punto," ",false);
                     connectors.add(connector);
                 }
             }

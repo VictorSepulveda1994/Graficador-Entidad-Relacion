@@ -105,6 +105,12 @@ public class CallPop {
         alert.showAndWait();
     }
     
+    public void alertEntities(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Exceso de entidades");
+        alert.setHeaderText("Puedes seleccionar hasta 7 entidades para relacionarlas");
+        alert.showAndWait();
+    }
     /**
      *
      * Guardar una imagen como "imagen.png"
@@ -131,6 +137,24 @@ public class CallPop {
                 Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public void popShowHelp()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Ayuda");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopHelp.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.setResizable(false);
+        dialog.close();
+
     }
     
 }

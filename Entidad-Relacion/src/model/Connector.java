@@ -9,16 +9,20 @@ package model;
  *
  * @author Equipo Rocket
  */
-public class Connector {
+public class Connector extends Element{
     
     private Element element1;
     private Point pointElement1;
     private Element element2;
     private Point pointElement2;
     
-    public Connector(Element element1, Element element2) {
+    public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected) {
+        super(name, selected);
         this.element1 = element1;
+        this.pointElement1 = pointElement1;
         this.element2 = element2;
+        this.pointElement2 = pointElement2;
+        figure= new Figure(this.pointElement1,this.pointElement2);
     }
 
     public Point getPointElement1() {
