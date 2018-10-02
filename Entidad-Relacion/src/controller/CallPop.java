@@ -139,6 +139,10 @@ public class CallPop {
         }
     }
     
+    public void saveDiagramPdf(Canvas canvas) {
+        
+    }
+    
     public void popShowHelp()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Ayuda");

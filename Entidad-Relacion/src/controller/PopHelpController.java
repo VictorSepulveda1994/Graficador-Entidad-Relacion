@@ -72,7 +72,7 @@ public class PopHelpController implements Initializable {
                     + " la parte superior de la pantalla con el nombre ''Editar'', al abrir una ventana emergente debes"
                     + " ingresar el nuevo nombre que le deseas dar al elemento.");
         }
-        if("Descargar como imagen".equals(opciones.getValue())){
+        if("Exportar como imagen".equals(opciones.getValue())){
             title.setText(opciones.getValue());
             information.setText("Para descargar lo que estas dibujando como imagen en tu computador, debes presionar "
                     + "el boton que se encuentra en la parte superior de la pantalla con el nombre ''Exportar'', luego debes elegir "
@@ -91,7 +91,7 @@ public class PopHelpController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         opciones.getItems().addAll("Agregar entidad","Agregar relacion","Mover elementos","Marcar puntos",
-                "Limpiar la pantalla","Editar elemento","Descargar como imagen","Otros problemas");
+                "Limpiar la pantalla","Editar elemento","Exportar como imagen","Otros problemas");
         opciones.setValue("Elige una opción: ");
         opciones.getItems();
         title.setText("Centro de Ayuda");
