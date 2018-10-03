@@ -14,7 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 /**
  *
- * @author Milagod
+ * @author Equipo Rocket
  */
 public class PopChangeName extends CallPop implements Initializable{
 /**
@@ -47,10 +47,12 @@ public class PopChangeName extends CallPop implements Initializable{
      */
     public void addToScreen(){
         enteredName=newName.textProperty().get();
-        if(enteredName.isEmpty() || enteredName.length()>21){
+        if(enteredName.isEmpty() || enteredName.length()>12){
             alertName();
         }
-        ((Stage)root.getScene().getWindow()).close();
+        else{
+            ((Stage)root.getScene().getWindow()).close();
+        }
     }
     
     
