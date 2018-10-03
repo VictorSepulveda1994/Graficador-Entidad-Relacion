@@ -1,5 +1,6 @@
 package controller;
 
+import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class MainController extends CallPop implements Initializable {
     private ToggleButton pointsToggleButton;
     @FXML
     private ToggleButton editToggleButton;
+    @FXML
+    private ToggleButton deleteToggleButton;
 
     /**
      * Lugar donde se dibujaran las figuras
@@ -124,6 +127,8 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.CROSSHAIR);
         //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
         diagram.deselectAllEntities();
@@ -146,6 +151,8 @@ public class MainController extends CallPop implements Initializable {
         entityToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.HAND);
         //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
         diagram.deselectAllEntities();
@@ -168,6 +175,8 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.MOVE);
         //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
         diagram.deselectAllEntities();
@@ -195,6 +204,8 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setScaleY(1);
         pointsToggleButton.setScaleX(1);
         pointsToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.DEFAULT);
     }
     
@@ -205,10 +216,20 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setSelected(false);
         pointsToggleButton.setSelected(false);
         editToggleButton.setSelected(true);
+        entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        relationToggleButton.setScaleX(1);
+        relationToggleButton.setScaleY(1);
+        pointsToggleButton.setScaleX(1);
+        pointsToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1.15);
+        editToggleButton.setScaleY(1.15);
         canvas.setCursor(Cursor.TEXT);
     }
     
-    
+
     
     @FXML
     private void canvasClicked(MouseEvent event) throws IOException {
@@ -245,7 +266,12 @@ public class MainController extends CallPop implements Initializable {
         }
         if(editToggleButton.isSelected()){
             diagram.selectElementEdit(event, canvas, showPoints);
+        }     
+        /*
+        if(deleteToggleButton.isSelected()){
+            diagram.delete(event, canvas, showPoints);
         }
+        */
         
     }
     
@@ -273,9 +299,14 @@ public class MainController extends CallPop implements Initializable {
     /**
      * Metodo para guardar una imagen como "imagen.png"
      */
-    public void saveImage() {
+    public void exportImagePng() {
         saveDiagramPng(canvas);
     }
+    
+    public void exportImagePdf() throws DocumentException {
+        saveDiagramPdf(canvas);
+    }
+   
     
     /**
      *
@@ -298,6 +329,8 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);

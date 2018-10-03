@@ -1,11 +1,8 @@
 package controller;
 
 import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,7 +13,18 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.ByteArrayOutputStream;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import javafx.embed.swing.SwingFXUtils;
 import javax.imageio.ImageIO;
+/*
 
 /**
  *
@@ -126,7 +134,7 @@ public class CallPop {
         //Mostrar diálogo de guardar archivo
         final Stage stage = new Stage();
         File file = fileChooser.showSaveDialog(stage);
-
+          
         if(file != null){
             try {
                 WritableImage writableImage = canvas.snapshot(new SnapshotParameters(), null);
@@ -139,8 +147,47 @@ public class CallPop {
         }
     }
     
-    public void saveDiagramPdf(Canvas canvas) {
-        
+    public void saveDiagramPdf(Canvas canvas) throws DocumentException {
+        FileChooser fileChooser = new FileChooser();
+                 
+        //Ingreso de filtro de extensión
+        FileChooser.ExtensionFilter extFilter = 
+                    new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Mostrar diálogo de guardar archivo
+        final Stage stage = new Stage();
+        File file = fileChooser.showSaveDialog(stage);
+
+        if(file != null){
+            try {
+                Document document = new Document();
+
+                PdfWriter.getInstance(document, new FileOutputStream(file));
+
+                //open
+                document.open();
+
+                ByteArrayOutputStream  byteOutput = new ByteArrayOutputStream();
+
+                ImageIO.write( SwingFXUtils.fromFXImage( canvas.snapshot(new SnapshotParameters(), null), null ), "png", byteOutput );
+
+                com.itextpdf.text.Image  graph;
+                graph = com.itextpdf.text.Image.getInstance( byteOutput.toByteArray() );
+                graph.scaleToFit(document.getPageSize());
+
+                graph.setAlignment(Image.ALIGN_CENTER);
+                graph.setAlignment(Image.MIDDLE);
+
+                document.add(graph);
+
+                //close
+                document.close();
+
+            } catch (IOException ex) {
+                Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public void popShowHelp()throws IOException {
