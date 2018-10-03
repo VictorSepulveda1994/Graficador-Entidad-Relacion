@@ -411,6 +411,7 @@ public class Diagram extends CallPop {
                 if(enteredName.length()>0){
                     entity.setName(enteredName);
                     entity.figure.setName(enteredName);
+                    enteredName="";
                 }
                 break;
             }
@@ -423,6 +424,7 @@ public class Diagram extends CallPop {
                 if(enteredName.length()>0){
                     relation.setName(enteredName);
                     relation.figure.setName(enteredName);
+                    enteredName="";
                 }
                 break;
             }
