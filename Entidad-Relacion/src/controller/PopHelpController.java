@@ -90,7 +90,7 @@ public class PopHelpController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        opciones.getItems().addAll("Agregar entidad","Agregar relacion","Mover elementos","Marcar puntos",
+        opciones.getItems().addAll("Agregar entidad","Agregar relación","Mover elementos","Marcar puntos",
                 "Limpiar la pantalla","Editar elemento","Exportar como imagen","Otros problemas");
         opciones.setValue("Elige una opción: ");
         opciones.getItems();

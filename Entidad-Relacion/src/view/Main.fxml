@@ -230,6 +230,9 @@
                <image>
                   <Image url="@../icons/help.png" />
                </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </ImageView>
          </children>
          <effect>
