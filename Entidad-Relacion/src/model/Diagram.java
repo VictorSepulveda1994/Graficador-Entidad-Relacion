@@ -426,4 +426,14 @@ public class Diagram extends CallPop {
         }       
         paint(canvas, showPoints);
     }
+    
+    public void delete(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        for (int i = 0; i < this.relations.size(); i++) {
+            if(this.relations.get(i).isInFigure(event)){
+                System.out.println(this.relations.get(i).figure.getName());
+                this.relations.remove(i);
+            }
+        }
+        paint(canvas, showPoints);
+    }
 }
