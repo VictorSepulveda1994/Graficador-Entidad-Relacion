@@ -219,20 +219,26 @@ public class MainController extends CallPop implements Initializable {
         if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0){
             diagram.selectElement(event, canvas, showPoints);
                 if (diagram.getSelectedElement()!=null){
-                    Element element = diagram.getSelectedElement();
-                    if (!element.isInFigure(event)){
-                        entitiesSelect=diagram.entitiesSelect();
-                        if(entitiesSelect.size()>7){
-                            alertEntities();
-                            diagram.deselectAllEntities();
-                            entitiesSelect.clear();
-                        }
-                        else{
-                            popAddRelation();
-                        }
-                    }   
+                Element element = diagram.getSelectedElement();
+                String type = element.getClass().getName().substring(6);
+                if("Relation".equals(type)){
+                    diagram.deselectElement(event);
+                    diagram.deselectAllEntities();
+                }
+                if (!element.isInFigure(event)){
+                    entitiesSelect=diagram.entitiesSelect();
+                    if(entitiesSelect.size()>7){
+                        alertEntities();
+                        diagram.deselectAllEntities();
+                        entitiesSelect.clear();
+                    }
+                    else{
+                        popAddRelation();
+                    }
+                }   
             }
         }
+        
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
