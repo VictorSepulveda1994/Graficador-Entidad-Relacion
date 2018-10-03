@@ -248,7 +248,7 @@ public class Diagram extends CallPop {
     }
     
     /**
-     * Elimina todo el contenido en el diagrama y en regresa el canvas al estado original
+     * Elimina todo el contenido en el diagrama y regresa el canvas al estado original
      * @param canvas
      * @param minWidth
      * @param minHeight
@@ -408,8 +408,10 @@ public class Diagram extends CallPop {
         for (Entity entity : entities) {
             if(entity.isInFigure(event)){
                 popEditElement();
-                entity.setName(enteredName);
-                entity.figure.setName(enteredName);
+                if(enteredName.length()>0){
+                    entity.setName(enteredName);
+                    entity.figure.setName(enteredName);
+                }
                 break;
             }
             iE++;
@@ -418,8 +420,10 @@ public class Diagram extends CallPop {
         for (Relation relation : relations) {
             if(relation.isInFigure(event)){
                 popEditElement();
-                relation.setName(enteredName);
-                relation.figure.setName(enteredName);
+                if(enteredName.length()>0){
+                    relation.setName(enteredName);
+                    relation.figure.setName(enteredName);
+                }
                 break;
             }
             iE++;
