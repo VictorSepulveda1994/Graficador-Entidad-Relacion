@@ -242,21 +242,17 @@ public class MainController extends CallPop implements Initializable {
     
     @FXML
     private void deshacerAccion(){       
-        System.out.println("UltimaAccion: "+diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo());
         if(diagram.getAcciones().size()>0){
             if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
                     .equals(TipoDeAccion.AgregoEntidad)){
-                System.out.println("Se elimina la ultima entidad");
                 diagram.getEntities().remove(diagram.getEntities().size()-1);
             }
             if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
                     .equals(TipoDeAccion.AgregoRelacion)){
-                System.out.println("Se elimina la ultima relacion");
                 diagram.getRelations().remove(diagram.getRelations().size()-1);
             }
             if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
                     .equals(TipoDeAccion.EditarNombreEntidad)){
-                System.out.println("DeseditarNombre");
                 for (Entity entitie : diagram.getEntities()) {
                     if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento2().equals(entitie)){
                         entitie.setName(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento().getName());
@@ -266,7 +262,6 @@ public class MainController extends CallPop implements Initializable {
             }
             if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
                     .equals(TipoDeAccion.EditarNombreRelacion)){
-                System.out.println("DeseditarNombre");
                 for (Relation relation : diagram.getRelations()) {
                     if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento2().equals(relation)){
                         relation.setName(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento().getName());
@@ -276,12 +271,6 @@ public class MainController extends CallPop implements Initializable {
             }
             if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
                     .equals(TipoDeAccion.LimpiarPantalla)){
-                System.out.println("Deshace limpieza");
-                System.out.println("adentro: "+diagram.getAcciones().get(diagram.getAcciones().size()-1).getDiagram().getEntities().size());
-                if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getDiagram().getEntities().size()>0){
-                    System.out.println("diagramaGuardado: "+diagram.getAcciones().get(diagram.getAcciones().size()-1).getDiagram().getEntities().get(0).getName());
-                }
-
                 diagram.setEntities(diagram.getAcciones().get(diagram.getAcciones().size()-1).getDiagram().getEntities());
                 diagram.setRelations(diagram.getAcciones().get(diagram.getAcciones().size()-1).getDiagram().getRelations());
             }
