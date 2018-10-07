@@ -12,7 +12,7 @@ public abstract class Element {
     /**
      *
      */
-    protected Figure figure;
+    public Figure figure;
     protected String name;
     protected boolean selected;
 

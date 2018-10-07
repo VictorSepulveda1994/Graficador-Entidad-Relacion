@@ -12,7 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Accion;
 import model.Entity;
+import model.TipoDeAccion;
 
 /**
  * FXML Controller class
@@ -54,6 +56,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
         }
         else{
             MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false) );
+            MainController.diagram.addAcciones(new Accion(TipoDeAccion.AgregoEntidad,new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false)));
             ((Stage)root.getScene().getWindow()).close();
         }
     }

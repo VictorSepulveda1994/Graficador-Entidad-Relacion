@@ -1,6 +1,7 @@
 package model;
 
 import controller.CallPop;
+import controller.MainController;
 import static controller.PopChangeName.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Diagram extends CallPop {
     private ArrayList <Entity> entities;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
+    private ArrayList <Accion> acciones;
     private Element selectedElement;
     private int iElement;
 
@@ -23,6 +25,7 @@ public class Diagram extends CallPop {
         entities = new ArrayList <>();
         relations = new ArrayList <>();
         connectors = new ArrayList <>();
+        acciones = new ArrayList <>();
     }
     
     /**
@@ -47,6 +50,22 @@ public class Diagram extends CallPop {
      */
     public void addConnector (Connector connector){
         this.connectors.add(connector);
+    }
+    
+    public ArrayList<Accion> getAcciones() {
+        return acciones;
+    }
+
+    public void addAcciones(Accion accion) {
+        this.acciones.add(accion);
+    }
+
+    public void setEntities(ArrayList<Entity> entities) {
+        this.entities = entities;
+    }
+
+    public void setRelations(ArrayList<Relation> relations) {
+        this.relations = relations;
     }
     
     /**
@@ -308,53 +327,40 @@ public class Diagram extends CallPop {
         int j=0;
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getEntities().size();a++){
+                for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
+                    point.setDisponible(true);
+                }
                 if(relations.get(i).getEntities().size()==1){                 
-                    Point punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
-                        .get(j),relations.get(i).getEntities().get(a).getFigure().getPoints()
-                        .get(j+1));
+                    Point punto=puntoMasCercano(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
+                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a).getFigure().getPoints().get(2),
+                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(3));
+                    for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
+                        if(point.equals(punto)){
+                            point.setDisponible(false);
+                        }
+                    }
                     Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a),punto,"",false);
                     connectors.add(connector); 
                     
-                    Point punto2=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
-                        .get(j),relations.get(i).getEntities().get(a).getFigure().getPoints()
-                        .get(j+3));
+                    Point punto2=puntoMasCercano(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
+                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a).getFigure().getPoints().get(2),
+                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(3));
+                    for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
+                        if(point.equals(punto2)){
+                            point.setDisponible(false);
+                        }
+                    }
                     Connector connector2= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(2),relations.get(i).getEntities().get(a),punto2," ",false);
                     connectors.add(connector2);         
                 }
-                if(relations.get(i).getEntities().size()==2){
-                    Point punto=middlePoint(relations.get(i).getEntities().get(0).getFigure().getPoints()
-                        .get(j),relations.get(i).getEntities().get(0).getFigure().getPoints()
-                        .get(j+1));
-                    Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(2),relations.get(i).getEntities().get(0),punto," ",false);
-                    connectors.add(connector);
-                    
-                    Point punto2=middlePoint(relations.get(i).getEntities().get(1).getFigure().getPoints()
-                        .get(j+2),relations.get(i).getEntities().get(1).getFigure().getPoints()
-                        .get(j+3));
-                    Connector connector2= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(0),relations.get(i).getEntities().get(1),punto2," ",false);
-                    connectors.add(connector2);         
-                }
-                if(relations.get(i).getEntities().size()>2){
-                    Point punto= new Point(0,0);
-                    if(a==0 || a==5 || a==6){
-                        punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
-                            .get(j+2),relations.get(i).getEntities().get(a).getFigure().getPoints()
-                            .get(j+3));
-                    }
-                    if(a==1){
-                        punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
-                            .get(j+3),relations.get(i).getEntities().get(a).getFigure().getPoints()
-                            .get(j));
-                    }
-                    if(a==2){
-                        punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
-                            .get(j+1),relations.get(i).getEntities().get(a).getFigure().getPoints()
-                            .get(j));
-                    }
-                    if(a==3 || a==4){
-                        punto=middlePoint(relations.get(i).getEntities().get(a).getFigure().getPoints()
-                            .get(j+1),relations.get(i).getEntities().get(a).getFigure().getPoints()
-                            .get(j+2));
+                if(relations.get(i).getEntities().size()>=2){
+                    Point punto=puntoMasCercano(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
+                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a).getFigure().getPoints().get(2),
+                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(3));
+                    for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
+                        if(point.equals(punto)){
+                            point.setDisponible(false);
+                        }
                     }
                     Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a),punto," ",false);
                     connectors.add(connector);
@@ -367,6 +373,33 @@ public class Diagram extends CallPop {
         int x= (point1.getX()+point2.getX())/2;
         int y= (point1.getY()+point2.getY())/2;
         return new Point(x,y);
+    }
+    
+    public Point puntoMasCercano(Point pointRelation,Point p1,Point p2, Point p3,Point p4){
+        int restax=p1.getX()-pointRelation.getX();
+        int restay=p1.getY()-pointRelation.getY();
+        int d1=(int) Math.sqrt(restax*restax + restay*restay);
+        restax=p2.getX()-pointRelation.getX();
+        restay=p2.getY()-pointRelation.getY();
+        int d2=(int) Math.sqrt(restax*restax + restay*restay);
+        restax=p3.getX()-pointRelation.getX();
+        restay=p3.getY()-pointRelation.getY();
+        int d3=(int) Math.sqrt(restax*restax + restay*restay);
+        restax=p4.getX()-pointRelation.getX();
+        restay=p4.getY()-pointRelation.getY();
+        int d4=(int) Math.sqrt(restax*restax + restay*restay);
+        if(d1 < d2 && d1 < d3 && d1 < d4 && p1.isDisponible()){
+            return p1;
+        }else{
+            if(d2 < d1 && d2 < d3 && d2 < d4 && p2.isDisponible()){
+                return p2;
+            }else{
+                if(d3 < d1 && d3 < d2 && d3 < d4 && p3.isDisponible()){
+                    return p3;
+                }else
+                    return p4;
+            }
+        }
     }
 
     public void paintConnector(Canvas canvas){
@@ -404,31 +437,27 @@ public class Diagram extends CallPop {
     }
     
     public void selectElementEdit(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
-        int iE = 0;
         for (Entity entity : entities) {
             if(entity.isInFigure(event)){
                 popEditElement();
-                if(enteredName.length()>0){
-                    entity.setName(enteredName);
-                    entity.figure.setName(enteredName);
-                    enteredName="";
-                }
+                Accion accion= new Accion(TipoDeAccion.EditarNombreEntidad,new Entity(entity.getName(),entity.figure.getPosX(),entity.figure.getPosY(),entity.selected));
+                entity.setName(enteredName);
+                entity.figure.setName(enteredName); 
+                accion.setElemento2(entity);
+                MainController.diagram.addAcciones(accion);
                 break;
             }
-            iE++;
         }
-        iE = 0;
         for (Relation relation : relations) {
             if(relation.isInFigure(event)){
                 popEditElement();
-                if(enteredName.length()>0){
-                    relation.setName(enteredName);
-                    relation.figure.setName(enteredName);
-                    enteredName="";
-                }
+                Accion accion= new Accion(TipoDeAccion.EditarNombreRelacion,new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,relation.getEntities())); 
+                relation.setName(enteredName);
+                relation.figure.setName(enteredName);
+                accion.setElemento2(relation);
+                MainController.diagram.addAcciones(accion);
                 break;
             }
-            iE++;
         }       
         paint(canvas, showPoints);
     }
