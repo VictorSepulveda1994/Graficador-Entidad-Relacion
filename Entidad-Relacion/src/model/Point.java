@@ -13,10 +13,12 @@ public class Point {
     
     private int posX;
     private int posY;
+    private boolean disponible;
 
     public Point(int x, int y) {
         this.posX = x;
         this.posY = y;
+        this.disponible=true;
     }
 
     /**
@@ -49,6 +51,14 @@ public class Point {
      */
     public void setY(int y) {
         this.posY = y;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
     
     

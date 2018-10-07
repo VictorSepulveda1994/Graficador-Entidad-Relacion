@@ -49,7 +49,7 @@
             </ScrollPane>
             <Pane prefHeight="460.0" prefWidth="124.0" style="-fx-background-color: #b8b4b4;" GridPane.rowIndex="1">
                <children>
-                  <Label alignment="CENTER" layoutY="17.0" prefHeight="32.0" prefWidth="112.0" text="Figuras" textAlignment="CENTER" textFill="#0d0101">
+                  <Label alignment="CENTER" layoutY="17.0" prefHeight="32.0" prefWidth="112.0" text="Elementos" textAlignment="CENTER" textFill="#0d0101">
                      <font>
                         <Font name="Century Gothic Bold" size="18.0" />
                      </font>
@@ -193,7 +193,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="4.0" layoutY="5.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="105.0" style="-fx-background-color: #eae8e8;" text="Deshacer">
+                  <Button layoutX="4.0" layoutY="5.0" mnemonicParsing="false" onAction="#deshacerAccion" prefHeight="18.0" prefWidth="105.0" style="-fx-background-color: #eae8e8;" text="Deshacer">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>

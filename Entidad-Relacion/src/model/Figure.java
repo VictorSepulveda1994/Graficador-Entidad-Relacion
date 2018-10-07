@@ -17,10 +17,10 @@ import javafx.scene.text.TextAlignment;
 public class Figure {
     private String name;
     private int posX,posY;
-    private final int radiusPolygon = 50;
+    private final int radiusPolygon = 80;
     private int sides;
-    private final int diamondDiagonal1 = 50;
-    private final int diamondDiagonal2 = 30;
+    private final int diamondDiagonal1 = 80;
+    private final int diamondDiagonal2 = 60;
     private final int rectangleWidth = 70;
     private final int rectangleHeight = 40;
     private ArrayList<Point> points;
