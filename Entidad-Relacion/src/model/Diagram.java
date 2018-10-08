@@ -463,6 +463,7 @@ public class Diagram extends CallPop {
     }
     
     public void delete(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        System.out.println("estoy en deletediagram");
         for (int i = 0; i < this.relations.size(); i++) {
             if(this.relations.get(i).isInFigure(event)){
                 System.out.println(this.relations.get(i).figure.getName());
