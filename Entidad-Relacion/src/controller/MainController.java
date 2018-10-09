@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import model.Accion;
 import model.Diagram;
@@ -323,14 +322,14 @@ public class MainController extends CallPop implements Initializable {
                 }   
             }
         }
-        
+        if(editToggleButton.isSelected()){
+            diagram.selectElementEdit(event, canvas, showPoints);
+        }  
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
         }
-        if(editToggleButton.isSelected()){
-            diagram.selectElementEdit(event, canvas, showPoints);
-        }     
+           
         /*
         if(deleteToggleButton.isSelected()){
             diagram.delete(event, canvas, showPoints);

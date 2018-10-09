@@ -440,22 +440,29 @@ public class Diagram extends CallPop {
         for (Entity entity : entities) {
             if(entity.isInFigure(event)){
                 popEditElement();
-                Accion accion= new Accion(TipoDeAccion.EditarNombreEntidad,new Entity(entity.getName(),entity.figure.getPosX(),entity.figure.getPosY(),entity.selected));
-                entity.setName(enteredName);
-                entity.figure.setName(enteredName); 
-                accion.setElemento2(entity);
-                MainController.diagram.addAcciones(accion);
+                if(!"".equals(enteredName)){
+                    Accion accion= new Accion(TipoDeAccion.EditarNombreEntidad,new Entity(entity.getName(),entity.figure.getPosX(),entity.figure.getPosY(),entity.selected));
+                    entity.setName(enteredName);
+                    entity.figure.setName(enteredName); 
+                    enteredName="";
+                    accion.setElemento2(entity);
+                    MainController.diagram.addAcciones(accion);
+                    enteredName="";
+                }
                 break;
             }
         }
         for (Relation relation : relations) {
             if(relation.isInFigure(event)){
                 popEditElement();
-                Accion accion= new Accion(TipoDeAccion.EditarNombreRelacion,new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,relation.getEntities())); 
-                relation.setName(enteredName);
-                relation.figure.setName(enteredName);
-                accion.setElemento2(relation);
-                MainController.diagram.addAcciones(accion);
+                if(!"".equals(enteredName)){
+                    Accion accion= new Accion(TipoDeAccion.EditarNombreRelacion,new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,relation.getEntities())); 
+                    relation.setName(enteredName);
+                    relation.figure.setName(enteredName);
+                    accion.setElemento2(relation);
+                    MainController.diagram.addAcciones(accion);
+                    enteredName="";
+                }
                 break;
             }
         }       
