@@ -206,6 +206,7 @@ public class Figure {
     
     public void setSides(int sides) {
         this.sides = sides;
+        createPointsPolygon();
     }
 
     public ArrayList<Point> getPoints() {

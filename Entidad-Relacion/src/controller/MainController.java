@@ -349,8 +349,10 @@ public class MainController extends CallPop implements Initializable {
         }     
         
         if(deleteToggleButton.isSelected()){
-            System.out.println("entre a borrar");
-            diagram.delete(event, canvas, showPoints);
+            if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){
+                diagram.delete(event, canvas, showPoints);
+                System.out.println("sali");
+            }
         }
         
     }

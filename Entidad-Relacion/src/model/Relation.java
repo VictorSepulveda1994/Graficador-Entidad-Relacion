@@ -40,4 +40,21 @@ public class Relation extends Element {
         this.entities = entities;
     }
     
+    public boolean hasThisEntity (Entity entity){
+        for (int i = 0; i < this.entities.size(); i++) {
+            if(entity.equals(this.entities.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void removeEntity (Entity entity){
+        for (int i = 0; i < this.entities.size(); i++) {
+            if(entity.equals(this.entities.get(i))){
+                this.entities.remove(i);
+            }
+        }
+    }
+    
 }
