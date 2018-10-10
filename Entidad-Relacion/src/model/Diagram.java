@@ -463,6 +463,8 @@ public class Diagram extends CallPop {
     }
     
     public void delete(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        
+        //Eliminar una Relación
         for (int i = 0; i < this.relations.size(); i++) {
             if(this.relations.get(i).isInFigure(event)){
                 System.out.println(this.relations.get(i).figure.getName());
@@ -470,38 +472,34 @@ public class Diagram extends CallPop {
             }
         }
         
+        //Eliminar una entidad
         for (int i = 0; i < this.entities.size(); i++) {
             if(this.entities.get(i).isInFigure(event)){
-                System.out.println(this.entities.get(i).figure.getName());
                 Entity entity = this.entities.get(i);
-                for (int j = 0; j <this.relations.size(); j++) {
-                    System.out.println("j:"+j);
-                    if(this.relations.get(j).hasThisEntity(entity)){
-                        System.out.println("entre a relacion"+this.relations.get(j).name);
-                        Relation relation = this.relations.get(j);
-                        System.out.println(relation.getEntities().size());
-                        if (relation.getEntities().size()<=1){
-                            System.out.println("borro la relacion");
-                            this.relations.remove(j);                      
+                while(hasAnyRelation(entity)){
+                    for (int j = 0; j <this.relations.size(); j++) {
+                        if(this.relations.get(j).hasThisEntity(entity)){
+                            Relation relation = this.relations.get(j);
+                            if (relation.getEntities().size()<=1){
+                                this.relations.remove(j);                      
+                            }
+                            else{
+                                relation.removeEntity(entity);
+                                ArrayList<Entity> entitiesCopy= new ArrayList<>();
+                                entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy));
+                                paint(canvas, showPoints); 
+                            }
+                            j=0;
                         }
-                        else{
-                            System.out.println("hi");
-                            relation.removeEntity(entity);
-                            ArrayList<Entity> entitiesCopy= new ArrayList<>();
-                            entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
-                            this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy));
-                            paint(canvas, showPoints); 
-                        }
-                        j=0;
                     }
-                    
                 }
                 if (!hasAnyRelation(this.entities.get(i))){
-                    System.out.println("borro la entidad"+this.entities.get(i).name);
                     this.entities.remove(i);
                 }
             }
         }
+        
         paint(canvas, showPoints);
     }
     
