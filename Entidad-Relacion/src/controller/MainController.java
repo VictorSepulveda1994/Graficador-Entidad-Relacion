@@ -12,8 +12,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import model.Accion;
 import model.Diagram;
 import model.Element;
@@ -28,7 +33,7 @@ import model.TipoDeAccion;
 public class MainController extends CallPop implements Initializable {
 
     /**
-     * ToggleButtons creados para seleccionar la accion que se desea hacer
+     * "ToggleButtons" y "Buttons" creados para seleccionar la accion que se desea hacer
      */
     @FXML
     private ToggleButton entityToggleButton;
@@ -41,7 +46,18 @@ public class MainController extends CallPop implements Initializable {
     @FXML
     private ToggleButton editToggleButton;
     @FXML
+    private Button cleanButton;
+    @FXML
+    private Button exportPngButton;
+    @FXML
+    private Button exportPdfButton;
+    @FXML
     private ToggleButton deleteToggleButton;
+    
+    @FXML
+    private GridPane root;
+    @FXML
+    private ScrollPane scrollPane;
 
     /**
      * Lugar donde se dibujaran las figuras
@@ -68,8 +84,9 @@ public class MainController extends CallPop implements Initializable {
     /**
      * Variables que establecen el ancho mínimo y el alto mínimo del "canvas"
      */
-    private final int minWidth = 700;
-    private final int minHeight = 515;
+    private int minWidth = 765;
+    private int minHeight = 481;
+    
     public static ArrayList<Entity> entitiesSelect = new ArrayList<>();
     
     /**
@@ -90,6 +107,9 @@ public class MainController extends CallPop implements Initializable {
         stage.setIconified(true);
     }
     
+    /**
+     * Accion para abrir la ventana de ayuda
+     */
     @FXML
     private void helpMe(MouseEvent event) throws IOException {
         popShowHelp();
@@ -170,7 +190,7 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
-         //Cambios de tamaño de botones
+        //Cambios de tamaño de botones
         moveToggleButton.setScaleX(1.15);
         moveToggleButton.setScaleY(1.15);
         relationToggleButton.setScaleX(1);
@@ -187,10 +207,64 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
+     *
+     * Método para cuando se deseen mostrar/ocultar los puntos de control
+     */
+    @FXML
+    private void showPoints(ActionEvent event) {
+        showPoints = !showPoints;
+        if (showPoints){
+            pointsToggleButton.setScaleX(1.15);
+            pointsToggleButton.setScaleY(1.15);
+        }
+        else{
+            pointsToggleButton.setScaleX(1);
+            pointsToggleButton.setScaleY(1);
+        }
+        //Cambios para desactivar los otros botones
+        entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        relationToggleButton.setScaleX(1);
+        relationToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
+        relationToggleButton.setSelected(false);
+        entityToggleButton.setSelected(false);
+        moveToggleButton.setSelected(false);
+        editToggleButton.setSelected(false);
+        canvas.setCursor(Cursor.DEFAULT);
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
+    }
+    
+    //No necesario aún
+    @FXML
+    private void edit (MouseEvent event) throws IOException{       
+        relationToggleButton.setSelected(false);
+        entityToggleButton.setSelected(false);
+        moveToggleButton.setSelected(false);
+        pointsToggleButton.setSelected(false);
+        editToggleButton.setSelected(true);
+        entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        relationToggleButton.setScaleX(1);
+        relationToggleButton.setScaleY(1);
+        pointsToggleButton.setScaleX(1);
+        pointsToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1.15);
+        editToggleButton.setScaleY(1.15);
+        canvas.setCursor(Cursor.TEXT);
+    }
+    
+    /**
      * Limpia la pantalla y el interior del objeto "diagram"
      */
     @FXML
-    private void cleanScreen(MouseEvent event) {
+    private void cleanScreen(ActionEvent event) {
         Accion accion=new Accion(TipoDeAccion.LimpiarPantalla,null);
         Diagram diagrama1= new Diagram();
         ArrayList <Entity> entities= (ArrayList<Entity>) diagram.getEntities().clone();
@@ -219,26 +293,104 @@ public class MainController extends CallPop implements Initializable {
         canvas.setCursor(Cursor.DEFAULT);
     }
     
+    /**
+     * Metodo para guardar dibujo hecho en canvas como "imagen.png"
+     */
     @FXML
-    private void edit (MouseEvent event) throws IOException{       
-        relationToggleButton.setSelected(false);
-        entityToggleButton.setSelected(false);
-        moveToggleButton.setSelected(false);
-        pointsToggleButton.setSelected(false);
-        editToggleButton.setSelected(true);
-        entityToggleButton.setScaleX(1);
-        entityToggleButton.setScaleY(1);
-        moveToggleButton.setScaleX(1);
-        moveToggleButton.setScaleY(1);
-        relationToggleButton.setScaleX(1);
-        relationToggleButton.setScaleY(1);
-        pointsToggleButton.setScaleX(1);
-        pointsToggleButton.setScaleY(1);
-        editToggleButton.setScaleX(1.15);
-        editToggleButton.setScaleY(1.15);
-        canvas.setCursor(Cursor.TEXT);
+    private void exportImagePng(ActionEvent event) {
+        saveDiagramPng(canvas);
     }
     
+    /**
+     * Metodo para guardar dibujo hecho en canvas como "archivo.pdf"
+     * @throws com.itextpdf.text.DocumentException
+     */
+    @FXML
+    private void exportImagePdf(ActionEvent event) throws DocumentException {
+        saveDiagramPdf(canvas);
+    }
+    
+    /**
+     * Metodo para administrar las acciones cuando el canvas sea "clickeado"
+     */
+    @FXML
+    private void canvasClicked(MouseEvent event) throws IOException {
+        MainController.event = event;
+        if(entityToggleButton.isSelected()){
+            popAddEntity();
+        }
+        if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0){
+            diagram.selectElement(event, canvas, showPoints);
+                if (diagram.getSelectedElement()!=null){
+                Element element = diagram.getSelectedElement();
+                String type = element.getClass().getName().substring(6);
+                if("Relation".equals(type)){
+                    diagram.deselectElement(event);
+                    diagram.deselectAllEntities();
+                }
+                if (!element.isInFigure(event)){
+                    entitiesSelect=diagram.entitiesSelect();
+                    if(entitiesSelect.size()>7){
+                        alertEntities();
+                        diagram.deselectAllEntities();
+                        entitiesSelect.clear();
+                    }
+                    else{
+                        popAddRelation();
+                    }
+                }   
+            }
+        }
+        if(editToggleButton.isSelected()){
+            diagram.selectElementEdit(event, canvas, showPoints);
+        }  
+        if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
+            diagram.adjustScreen(canvas, minWidth, minHeight);
+            diagram.paint(canvas,showPoints);
+        }
+           
+        /*
+        if(deleteToggleButton.isSelected()){
+            diagram.delete(event, canvas, showPoints);
+        }
+        */
+        
+    }
+    
+    /**
+     * Método que guarda el "MouseEvent" cuando se presione el mouse en el "canvas"
+     * y selecciona el elemento que haya en esa posición
+     */
+    @FXML
+    private void mousePressed(MouseEvent event){
+        if(moveToggleButton.isSelected()){
+            diagram.selectElement(event, canvas, showPoints);
+        }
+    }
+    
+    /**
+     * Método que mueve el elemento que haya sido seleccionado en el "canvas" cuando el mouse se
+     * mueva
+     */
+    @FXML
+    private void mouseDragged(MouseEvent event){
+        if(moveToggleButton.isSelected()){
+            diagram.moveElement(event, canvas, showPoints, minWidth, minHeight);
+        }
+    }
+    
+    /**
+     * Método que deselecciona el elemento que haya sido seleccionado en el "canvas"
+     * cuando se suelte el botón del mouse
+     */
+    @FXML
+    private void mouseReleased(MouseEvent event){
+        if(moveToggleButton.isSelected()){
+            diagram.deselectElement(event);
+        }
+    }
+    
+    //No necesario aún
     @FXML
     private void deshacerAccion(){       
         if(diagram.getAcciones().size()>0){
@@ -294,117 +446,11 @@ public class MainController extends CallPop implements Initializable {
         }
     }
     
-    @FXML
-    private void canvasClicked(MouseEvent event) throws IOException {
-        MainController.event = event;
-        if(entityToggleButton.isSelected()){
-            popAddEntity();
-        }
-        if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0){
-            diagram.selectElement(event, canvas, showPoints);
-                if (diagram.getSelectedElement()!=null){
-                Element element = diagram.getSelectedElement();
-                String type = element.getClass().getName().substring(6);
-                if("Relation".equals(type)){
-                    diagram.deselectElement(event);
-                    diagram.deselectAllEntities();
-                }
-                if (!element.isInFigure(event)){
-                    entitiesSelect=diagram.entitiesSelect();
-                    if(entitiesSelect.size()>7){
-                        alertEntities();
-                        diagram.deselectAllEntities();
-                        entitiesSelect.clear();
-                    }
-                    else{
-                        popAddRelation();
-                    }
-                }   
-            }
-        }
-        if(editToggleButton.isSelected()){
-            diagram.selectElementEdit(event, canvas, showPoints);
-        }  
-        if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
-            diagram.adjustScreen(canvas, minWidth, minHeight);
-            diagram.paint(canvas,showPoints);
-        }
-           
-        /*
-        if(deleteToggleButton.isSelected()){
-            diagram.delete(event, canvas, showPoints);
-        }
-        */
-        
-    }
-    
-    @FXML
-    private void mousePressed(MouseEvent event){
-        if(moveToggleButton.isSelected()){
-            diagram.selectElement(event, canvas, showPoints);
-        }
-    }
-    
-    @FXML
-    private void mouseDragged(MouseEvent event){
-        if(moveToggleButton.isSelected()){
-            diagram.moveElement(event, canvas, showPoints, minWidth, minHeight);
-        }
-    }
-    
-    @FXML
-    private void mouseReleased(MouseEvent event){
-        if(moveToggleButton.isSelected()){
-            diagram.deselectElement(event);
-        }
-    }
-    
-    /**
-     * Metodo para guardar una imagen como "imagen.png"
-     */
-    public void exportImagePng() {
-        saveDiagramPng(canvas);
-    }
-    
-    public void exportImagePdf() throws DocumentException {
-        saveDiagramPdf(canvas);
-    }
-   
-    
-    /**
-     *
-     * Metodo para cuando se deseen mostrar/ocultar los puntos de control
-     */
-    public void showPoints() {
-        showPoints = !showPoints;
-        if (showPoints){
-            pointsToggleButton.setScaleX(1.15);
-            pointsToggleButton.setScaleY(1.15);
-        }
-        else{
-            pointsToggleButton.setScaleX(1);
-            pointsToggleButton.setScaleY(1);
-        }
-        //Cambios para desactivar los otros botones
-        entityToggleButton.setScaleX(1);
-        entityToggleButton.setScaleY(1);
-        moveToggleButton.setScaleX(1);
-        moveToggleButton.setScaleY(1);
-        relationToggleButton.setScaleX(1);
-        relationToggleButton.setScaleY(1);
-        editToggleButton.setScaleX(1);
-        editToggleButton.setScaleY(1);
-        relationToggleButton.setSelected(false);
-        entityToggleButton.setSelected(false);
-        moveToggleButton.setSelected(false);
-        editToggleButton.setSelected(false);
-        canvas.setCursor(Cursor.DEFAULT);
-        diagram.deselectAllEntities();
-        diagram.paint(canvas,showPoints);
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        minWidth = (int) (85*root.getMinWidth())/100;
+        minHeight = (int) (90*root.getMinHeight())/100;
+        
         diagram = new Diagram();
         showPoints = false;
         canvas.setCursor(Cursor.DEFAULT);

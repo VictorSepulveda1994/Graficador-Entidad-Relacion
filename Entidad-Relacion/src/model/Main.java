@@ -21,8 +21,7 @@ public class Main extends Application {
 
         stage.resizableProperty().set(false);
         stage.initStyle(StageStyle.TRANSPARENT);
-        //stage.setTitle("Diagrama ER");
-        //stage.getIcons().add(new Image("/icons/appIcon.png"));
+        //stage.setFullScreen(true);
         stage.setScene(scene);
         stage.show();
     }
