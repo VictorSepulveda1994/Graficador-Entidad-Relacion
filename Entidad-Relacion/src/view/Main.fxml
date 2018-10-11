@@ -42,7 +42,7 @@
               <content>
                 <AnchorPane prefHeight="515.0" prefWidth="869.0" styleClass="anchor" stylesheets="@../css/styleCanvas.css">
                      <children>
-                        <Canvas fx:id="canvas" height="523.0" onMouseClicked="#canvasClicked" onMouseDragged="#mouseDragged" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" width="871.0" />
+                        <Canvas fx:id="canvas" height="523.0" onMouseClicked="#canvasClicked" onMouseDragged="#mouseDragged" onMouseMoved="#handle" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" width="871.0" />
                      </children>
                   </AnchorPane>
               </content>

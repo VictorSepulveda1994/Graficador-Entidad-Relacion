@@ -82,6 +82,32 @@ public class MainController extends CallPop implements Initializable {
         stage.close();
     }
     
+    @FXML
+    public void handle(MouseEvent event) {
+        if(deleteToggleButton.isSelected()){
+            //Pintar Entidad
+            for (int i = 0; i <diagram.getEntities().size(); i++) {
+                if(diagram.getEntities().get(i).isInFigure(event)){
+                    diagram.getEntities().get(i).setSelected(true);
+                }
+                else{
+                    diagram.getEntities().get(i).setSelected(false);
+                }
+            }
+            //Pintar Relacion
+            for (int i = 0; i <diagram.getRelations().size(); i++) {
+                if(diagram.getRelations().get(i).isInFigure(event)){
+                    diagram.getRelations().get(i).setSelected(true);
+                   
+                }
+                else{
+                    diagram.getRelations().get(i).setSelected(false);
+                }
+            }
+            diagram.paint(canvas, showPoints);
+        }
+    }
+    
     /**
      * Accion para Minimizar Ventana
      */
@@ -253,6 +279,14 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setSelected(false);
         pointsToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
+        entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        relationToggleButton.setScaleX(1);
+        relationToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.DEFAULT);
     }
     
