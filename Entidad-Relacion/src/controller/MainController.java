@@ -12,13 +12,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import model.Accion;
 import model.Diagram;
 import model.Element;
@@ -46,13 +44,13 @@ public class MainController extends CallPop implements Initializable {
     @FXML
     private ToggleButton editToggleButton;
     @FXML
+    private ToggleButton deleteToggleButton;
+    @FXML
     private Button cleanButton;
     @FXML
     private Button exportPngButton;
     @FXML
     private Button exportPdfButton;
-    @FXML
-    private ToggleButton deleteToggleButton;
     
     @FXML
     private GridPane root;
@@ -135,6 +133,7 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      * Si el "entityToggleButton" es presionado, se activará y desactivará los demás.
+     * Permite crear "entities" en el canvas
      */
     @FXML
     private void buttonEntityClicked(ActionEvent event){
@@ -159,6 +158,7 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      * Si el "relationToggleButton" es presionado, se activará y desactivará los demás.
+     * Permite crear "relations" en el canvas
      */
     @FXML
     private void buttonRelationClicked(ActionEvent event){
@@ -183,6 +183,7 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      * Si el "moveToggleButton" es presionado, se activará y desactivará los demás.
+     * Permite mover las figuras en el canvas
      */
     @FXML
     private void buttonMoveClicked(ActionEvent event){
@@ -207,11 +208,10 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     *
      * Método para cuando se deseen mostrar/ocultar los puntos de control
      */
     @FXML
-    private void showPoints(ActionEvent event) {
+    private void buttonShowPointsClicked(ActionEvent event) {
         showPoints = !showPoints;
         if (showPoints){
             pointsToggleButton.setScaleX(1.15);
@@ -239,9 +239,11 @@ public class MainController extends CallPop implements Initializable {
         diagram.paint(canvas,showPoints);
     }
     
-    //No necesario aún
+    /**
+     * Botón que al ser presionado permite editar figuras en el "canvas"
+     */
     @FXML
-    private void edit (MouseEvent event) throws IOException{       
+    private void buttonEditClicked(ActionEvent event) throws IOException{       
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
@@ -261,10 +263,24 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
+     * Botón que al ser presionado permite eliminar figuras en el "canvas"
+     */
+    @FXML
+    private void buttonDeleteFigureClicked(ActionEvent event){
+        deleteToggleButton.setSelected(true);
+        relationToggleButton.setSelected(false);
+        entityToggleButton.setSelected(false);
+        moveToggleButton.setSelected(false);
+        pointsToggleButton.setSelected(false);
+        editToggleButton.setSelected(false);
+        canvas.setCursor(Cursor.OPEN_HAND);
+    }
+    
+    /**
      * Limpia la pantalla y el interior del objeto "diagram"
      */
     @FXML
-    private void cleanScreen(ActionEvent event) {
+    private void buttonCleanScreenClicked(ActionEvent event) {
         Accion accion=new Accion(TipoDeAccion.LimpiarPantalla,null);
         Diagram diagrama1= new Diagram();
         ArrayList <Entity> entities= (ArrayList<Entity>) diagram.getEntities().clone();
@@ -297,7 +313,7 @@ public class MainController extends CallPop implements Initializable {
      * Metodo para guardar dibujo hecho en canvas como "imagen.png"
      */
     @FXML
-    private void exportImagePng(ActionEvent event) {
+    private void buttonExportImagePngClicked(ActionEvent event) {
         saveDiagramPng(canvas);
     }
     
@@ -306,7 +322,7 @@ public class MainController extends CallPop implements Initializable {
      * @throws com.itextpdf.text.DocumentException
      */
     @FXML
-    private void exportImagePdf(ActionEvent event) throws DocumentException {
+    private void buttonExportImagePdfClicked(ActionEvent event) throws DocumentException {
         saveDiagramPdf(canvas);
     }
     
@@ -343,18 +359,16 @@ public class MainController extends CallPop implements Initializable {
         }
         if(editToggleButton.isSelected()){
             diagram.selectElementEdit(event, canvas, showPoints);
-        }  
+        }
+        if(deleteToggleButton.isSelected()){
+            if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){
+                diagram.delete(event, canvas, showPoints);
+            }
+        }
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
         }
-           
-        /*
-        if(deleteToggleButton.isSelected()){
-            diagram.delete(event, canvas, showPoints);
-        }
-        */
-        
     }
     
     /**
@@ -369,8 +383,8 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Método que mueve el elemento que haya sido seleccionado en el "canvas" cuando el mouse se
-     * mueva
+     * Método que mueve el elemento que haya sido seleccionado en el "canvas" 
+     * cuando el mouse se mueva
      */
     @FXML
     private void mouseDragged(MouseEvent event){
