@@ -351,7 +351,6 @@ public class MainController extends CallPop implements Initializable {
         if(deleteToggleButton.isSelected()){
             if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){
                 diagram.delete(event, canvas, showPoints);
-                System.out.println("sali");
             }
         }
         
