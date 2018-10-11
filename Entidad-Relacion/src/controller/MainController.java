@@ -141,6 +141,7 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
+        deleteToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         entityToggleButton.setScaleX(1.15);
         entityToggleButton.setScaleY(1.15);
@@ -166,6 +167,7 @@ public class MainController extends CallPop implements Initializable {
         entityToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
+        deleteToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         relationToggleButton.setScaleX(1.15);
         relationToggleButton.setScaleY(1.15);
@@ -191,6 +193,7 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
+        deleteToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         moveToggleButton.setScaleX(1.15);
         moveToggleButton.setScaleY(1.15);
@@ -249,6 +252,7 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setSelected(false);
         pointsToggleButton.setSelected(false);
         editToggleButton.setSelected(true);
+        deleteToggleButton.setSelected(false);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
@@ -296,6 +300,7 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
         pointsToggleButton.setSelected(false);
+        deleteToggleButton.setSelected(false);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
@@ -335,9 +340,9 @@ public class MainController extends CallPop implements Initializable {
         if(entityToggleButton.isSelected()){
             popAddEntity();
         }
-        if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0){
+        else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0){
             diagram.selectElement(event, canvas, showPoints);
-                if (diagram.getSelectedElement()!=null){
+            if (diagram.getSelectedElement()!=null){
                 Element element = diagram.getSelectedElement();
                 String type = element.getClass().getName().substring(6);
                 if("Relation".equals(type)){
@@ -346,7 +351,7 @@ public class MainController extends CallPop implements Initializable {
                 }
                 if (!element.isInFigure(event)){
                     entitiesSelect=diagram.entitiesSelect();
-                    if(entitiesSelect.size()>7){
+                    if(entitiesSelect.size()>6){
                         alertEntities();
                         diagram.deselectAllEntities();
                         entitiesSelect.clear();
@@ -357,14 +362,15 @@ public class MainController extends CallPop implements Initializable {
                 }   
             }
         }
-        if(editToggleButton.isSelected()){
+        else if(editToggleButton.isSelected()){
             diagram.selectElementEdit(event, canvas, showPoints);
         }
-        if(deleteToggleButton.isSelected()){
+        else if(deleteToggleButton.isSelected()){
             if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){
                 diagram.delete(event, canvas, showPoints);
             }
         }
+        
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
