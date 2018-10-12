@@ -40,4 +40,28 @@ public class Relation extends Element {
         this.entities = entities;
     }
     
+    /**
+     * Método para saber si la relación contiene la entidad ingresada
+     * @param entity
+     */
+    public boolean hasThisEntity (Entity entity){
+        for (int i = 0; i < this.entities.size(); i++) {
+            if(entity.equals(this.entities.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Método para eliminar la entidad ingresada
+     * @param la entidad a eliminar
+     */
+    public void removeEntity (Entity entity){
+        for (int i = 0; i < this.entities.size(); i++) {
+            if(entity.equals(this.entities.get(i))){
+                this.entities.remove(i);
+            }
+        }
+    }
 }

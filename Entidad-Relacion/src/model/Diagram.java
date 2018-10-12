@@ -412,30 +412,6 @@ public class Diagram extends CallPop {
         }
     }
     
-    /**
-     *
-     * @return entities
-     */
-    public ArrayList<Entity> getEntities() {
-        return entities;
-    }
-
-    /**
-     *
-     * @return relations
-     */
-    public ArrayList<Relation> getRelations() {
-        return relations;
-    }
-
-    /**
-     *
-     * @return connectors
-     */
-    public ArrayList<Connector> getConnectors() {
-        return connectors;
-    }
-    
     public void selectElementEdit(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
         for (Entity entity : entities) {
             if(entity.isInFigure(event)){
@@ -469,15 +445,85 @@ public class Diagram extends CallPop {
         paint(canvas, showPoints);
     }
     
+    
+    /**
+     * Método para eliminar alguna entidad o relación presente en el canvas
+     * @param event con las coordenadas donde se ha hecho click
+     * @param canvas donde se dibujan las figuras
+     * @param showPoints variable para mostrar los puntos de control
+     */
     public void delete(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        //Eliminar una Relación
         for (int i = 0; i < this.relations.size(); i++) {
             if(this.relations.get(i).isInFigure(event)){
                 System.out.println(this.relations.get(i).figure.getName());
                 this.relations.remove(i);
             }
         }
+        //Eliminar una entidad
+        for (int i = 0; i < this.entities.size(); i++) {
+            if(this.entities.get(i).isInFigure(event)){
+                Entity entity = this.entities.get(i);
+                while(hasAnyRelation(entity)){
+                    for (int j = 0; j <this.relations.size(); j++) {
+                        if(this.relations.get(j).hasThisEntity(entity)){
+                            Relation relation = this.relations.get(j);
+                            if (relation.getEntities().size()<=1){
+                                this.relations.remove(j);                      
+                            }
+                            else{
+                                relation.removeEntity(entity);
+                                ArrayList<Entity> entitiesCopy = new ArrayList<>();
+                                entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy));
+                                paint(canvas, showPoints); 
+                            }
+                            j=0;
+                        }
+                    }
+                }
+                if (!hasAnyRelation(this.entities.get(i))){
+                    this.entities.remove(i);
+                }
+            }
+        }
         paint(canvas, showPoints);
     }
     
+    /**
+     * Método para saber si la entidad escogida existe dentro de una relación
+     * @param la entidad a buscar
+     */
+    public boolean hasAnyRelation (Entity entity){
+        for (int i = 0; i < this.relations.size(); i++) {
+            if(this.relations.get(i).hasThisEntity(entity)){
+                return true;
+            }
+        }
+        return false;
+    }
     
+    /**
+     *
+     * @return entities
+     */
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
+
+    /**
+     *
+     * @return relations
+     */
+    public ArrayList<Relation> getRelations() {
+        return relations;
+    }
+
+    /**
+     *
+     * @return connectors
+     */
+    public ArrayList<Connector> getConnectors() {
+        return connectors;
+    }
 }

@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="root" gridLinesVisible="true" minHeight="550.0" minWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<GridPane fx:id="root" gridLinesVisible="true" minHeight="550.0" minWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" percentWidth="100.0" />
    </columnConstraints>
@@ -266,7 +266,7 @@
                <content>
                   <AnchorPane style="-fx-border-color: BLACK;" styleClass="anchor" stylesheets="@../css/styleCanvas.css">
                      <children>
-                        <Canvas fx:id="canvas" height="477.0" onMouseClicked="#canvasClicked" onMouseDragged="#mouseDragged" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" width="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Canvas fx:id="canvas" height="477.0" onMouseClicked="#canvasClicked" onMouseDragged="#mouseDragged" onMouseMoved="#handle" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" width="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>
