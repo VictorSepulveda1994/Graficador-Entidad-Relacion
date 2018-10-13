@@ -235,7 +235,6 @@ public class MainController extends CallPop implements Initializable {
         entityToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
-        pointsToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
@@ -243,8 +242,6 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
-        pointsToggleButton.setScaleX(1);
-        pointsToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1);
         deleteToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.DEFAULT);
@@ -431,12 +428,8 @@ public class MainController extends CallPop implements Initializable {
             pointsToggleButton.setScaleY(1);
         }
         //Cambios para desactivar los otros botones
-        entityToggleButton.setScaleX(1);
-        entityToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
-        relationToggleButton.setScaleX(1);
-        relationToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1);
         deleteToggleButton.setScaleY(1);
         relationToggleButton.setSelected(false);
