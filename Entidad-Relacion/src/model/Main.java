@@ -1,5 +1,6 @@
 package model;
 
+import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,7 @@ import javafx.stage.StageStyle;
  * @author Equipo Rocket
  */
 public class Main extends Application {
+    public static Stage screen;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -21,7 +23,7 @@ public class Main extends Application {
 
         stage.resizableProperty().set(false);
         stage.initStyle(StageStyle.TRANSPARENT);
-        //stage.setFullScreen(true);
+        stage.setFullScreen(true);
         stage.setScene(scene);
         stage.show();
     }

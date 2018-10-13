@@ -21,6 +21,7 @@ import model.Accion;
 import model.Diagram;
 import model.Element;
 import model.Entity;
+import model.Main;
 import model.Relation;
 import model.TipoDeAccion;
 
@@ -29,7 +30,7 @@ import model.TipoDeAccion;
  * @author Equipo Rocket
  */
 public class MainController extends CallPop implements Initializable {
-
+    
     /**
      * "ToggleButtons" y "Buttons" creados para seleccionar la accion que se desea hacer
      */
@@ -420,6 +421,7 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      * Método que resalta la figura sobre la cual se posicione el mouse
+     * @param event
      */
     @FXML
     public void handle(MouseEvent event) {
@@ -449,6 +451,7 @@ public class MainController extends CallPop implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        adjustNodes();
         minWidth = (int) (85*root.getMinWidth())/100;
         minHeight = (int) (90*root.getMinHeight())/100;
         diagram = new Diagram();
@@ -456,10 +459,14 @@ public class MainController extends CallPop implements Initializable {
         canvas.setCursor(Cursor.DEFAULT);
     }
     
+    private void adjustNodes(){
+        //Stage stage = (Stage) root.getParent().getScene().getWindow();
+        System.out.println( Main.screen.getWidth() );
+        
+    }
     
     
-    
-    //No necesario aún
+    /*No necesario aún
     @FXML
     private void deshacerAccion(){       
         if(diagram.getAcciones().size()>0){
@@ -494,7 +501,7 @@ public class MainController extends CallPop implements Initializable {
                 diagram.setEntities(diagram.getAcciones().get(diagram.getAcciones().size()-1).getDiagram().getEntities());
                 diagram.setRelations(diagram.getAcciones().get(diagram.getAcciones().size()-1).getDiagram().getRelations());
             }
-            /*
+            
             if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
                     .equals(TipoDeAccion.MoverElemento)){
                 System.out.println("Mover elemento");
@@ -509,9 +516,9 @@ public class MainController extends CallPop implements Initializable {
                     }
                 }
             }
-            */
+            
             diagram.paint(canvas, showPoints);
             diagram.getAcciones().remove(diagram.getAcciones().size()-1);
-        }
-    }
+        } 
+    }*/
 }

@@ -44,6 +44,7 @@ public class PopChangeName extends CallPop implements Initializable{
         enteredName=newName.textProperty().get();
         if(enteredName.isEmpty() || enteredName.length()>12){
             alertName();
+            enteredName = "";
         }
         else{
             ((Stage)root.getScene().getWindow()).close();
