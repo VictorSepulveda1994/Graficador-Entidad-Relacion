@@ -412,17 +412,12 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Metodo para guardar una imagen como "imagen.png"
+     * Metodo para exportar el diagrama.
      */
-    public void exportImagePng() {
-        saveDiagramPng(canvas);
+    public void exportDiagram() throws DocumentException {
+        export(canvas);
     }
-    
-    public void exportImagePdf() throws DocumentException {
-        saveDiagramPdf(canvas);
-    }
-   
-    
+
     /**
      *
      * Metodo para cuando se deseen mostrar/ocultar los puntos de control
