@@ -99,14 +99,14 @@
                               </ImageView>
                            </graphic>
                         </ToggleButton>
-                        <ToggleButton fx:id="editToggleButton" layoutX="11.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#edit" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
+                        <ToggleButton fx:id="deleteToggleButton" layoutX="11.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#deleteFigure" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                            <graphic>
-                              <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="34.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../icons/edit.png" />
+                                    <Image url="@../icons/delete.png" />
                                  </image>
                                  <viewport>
                                     <Rectangle2D />
@@ -159,14 +159,14 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <ToggleButton fx:id="deleteToggleButton" layoutX="414.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#deleteFigure" prefHeight="48.0" prefWidth="115.0" style="-fx-background-color: #eae8e8;" text="Eliminar">
+                  <ToggleButton fx:id="editToggleButton" layoutX="415.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#edit" prefHeight="48.0" prefWidth="115.0" style="-fx-background-color: #eae8e8;" text="   Editar">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <graphic>
-                        <ImageView fitHeight="38.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/delete.png" />
+                              <Image url="@../icons/edit.png" />
                            </image>
                            <viewport>
                               <Rectangle2D />

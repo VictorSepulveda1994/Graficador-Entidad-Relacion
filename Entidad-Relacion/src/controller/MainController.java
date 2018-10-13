@@ -157,8 +157,8 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
-        editToggleButton.setScaleX(1);
-        editToggleButton.setScaleY(1);
+        deleteToggleButton.setScaleX(1);
+        deleteToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.CROSSHAIR);
         //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
         diagram.deselectAllEntities();
@@ -182,8 +182,8 @@ public class MainController extends CallPop implements Initializable {
         entityToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
-        editToggleButton.setScaleX(1);
-        editToggleButton.setScaleY(1);
+        deleteToggleButton.setScaleX(1);
+        deleteToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.HAND);
         //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
         diagram.deselectAllEntities();
@@ -207,8 +207,8 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
-        editToggleButton.setScaleX(1);
-        editToggleButton.setScaleY(1);
+        deleteToggleButton.setScaleX(1);
+        deleteToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.MOVE);
         //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
         diagram.deselectAllEntities();
@@ -245,8 +245,8 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setScaleY(1);
         pointsToggleButton.setScaleX(1);
         pointsToggleButton.setScaleY(1);
-        editToggleButton.setScaleX(1);
-        editToggleButton.setScaleY(1);
+        deleteToggleButton.setScaleX(1);
+        deleteToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.DEFAULT);
     }
     
@@ -264,10 +264,8 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
-        pointsToggleButton.setScaleX(1);
-        pointsToggleButton.setScaleY(1);
-        editToggleButton.setScaleX(1.15);
-        editToggleButton.setScaleY(1.15);
+        deleteToggleButton.setScaleX(1);
+        deleteToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.TEXT);
     }
     
@@ -285,8 +283,8 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
-        editToggleButton.setScaleX(1);
-        editToggleButton.setScaleY(1);
+        deleteToggleButton.setScaleX(1.15);
+        deleteToggleButton.setScaleY(1.15);
         canvas.setCursor(Cursor.DEFAULT);
     }
     
@@ -439,8 +437,8 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
-        editToggleButton.setScaleX(1);
-        editToggleButton.setScaleY(1);
+        deleteToggleButton.setScaleX(1);
+        deleteToggleButton.setScaleY(1);
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);

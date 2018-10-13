@@ -42,7 +42,7 @@ public class PopChangeName extends CallPop implements Initializable{
      */
     public void addToScreen(){
         enteredName=newName.textProperty().get();
-        if(enteredName.isEmpty() || enteredName.length()>12){
+        if(enteredName.isEmpty() || enteredName.length()>12 || MainController.diagram.thisNameExists(enteredName)){
             alertName();
         }
         else{
