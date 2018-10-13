@@ -51,7 +51,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
      */
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
-        if(nameOfEntity.isEmpty() || nameOfEntity.length()>12){
+        if(nameOfEntity.isEmpty() || nameOfEntity.length()>12 || MainController.diagram.thisNameExists(nameOfEntity)){
             alertName();
         }
         else{

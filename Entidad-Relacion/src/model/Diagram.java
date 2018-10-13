@@ -520,6 +520,19 @@ public class Diagram extends CallPop {
         return false;
     }
     
-    
+    public boolean thisNameExists (String name){
+        for (Entity entitie : this.entities) {
+            if (entitie.getName().equals(name)){
+                return true;                
+            }
+        }
+        
+        for (Relation relation : this.relations) {
+            if (relation.getName().equals(name)){
+                return true;                
+            }
+        }
+        return false;
+    }
     
 }

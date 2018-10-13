@@ -107,7 +107,7 @@ public class CallPop {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error al ingresar nombre");
         alert.setHeaderText("Se encontró un error en el nombre,"
-                + " es vació o tiene mas de 12 caracteres. Debe ingresar el nombre nuevamente.");
+                + " esta vació, tiene mas de 12 caracteres o esta repetido. Debe ingresar el nombre nuevamente.");
         alert.showAndWait();
     }
     
