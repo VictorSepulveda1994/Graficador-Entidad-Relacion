@@ -1,9 +1,11 @@
 package controller;
 
 import com.itextpdf.text.DocumentException;
+import java.awt.Dimension;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +23,6 @@ import model.Accion;
 import model.Diagram;
 import model.Element;
 import model.Entity;
-import model.Main;
 import model.Relation;
 import model.TipoDeAccion;
 
@@ -53,10 +54,11 @@ public class MainController extends CallPop implements Initializable {
     @FXML
     private Button exportPdfButton;
     
+    /**
+     * Contenedor principal de todos los nodos del programa
+     */
     @FXML
     private GridPane root;
-    @FXML
-    private ScrollPane scrollPane;
 
     /**
      * Lugar donde se dibujaran las figuras
@@ -83,8 +85,8 @@ public class MainController extends CallPop implements Initializable {
     /**
      * Variables que establecen el ancho mínimo y el alto mínimo del "canvas"
      */
-    private int minWidth = 765;
-    private int minHeight = 481;
+    private int minWidth;
+    private int minHeight;
     
     public static ArrayList<Entity> entitiesSelect = new ArrayList<>();
     
@@ -112,24 +114,6 @@ public class MainController extends CallPop implements Initializable {
     @FXML
     private void helpMe(MouseEvent event) throws IOException {
         popShowHelp();
-    }
-    
-    /**
-     * Permite arrastrar la ventana
-     */
-    @FXML
-    void dragWindow(MouseEvent event) {
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.setX(event.getScreenX() - MainController.event.getX());
-        stage.setY(event.getScreenY() - MainController.event.getY());
-    }
-    
-    /**
-     * Detecta cuando la ventana es presionada y guarda el "MouseEvent"
-     */
-    @FXML
-    void pressedWindow(MouseEvent event) {
-        MainController.event = event;
     }
     
     /**
@@ -341,7 +325,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Metodo para administrar las acciones cuando el canvas sea "clickeado"
+     * Mátodo para administrar las acciones cuando el canvas sea presionado
      */
     @FXML
     private void canvasClicked(MouseEvent event) throws IOException {
@@ -379,10 +363,14 @@ public class MainController extends CallPop implements Initializable {
                 diagram.delete(event, canvas, showPoints);
             }
         }
-        
+        //Hecha la acción correspondiente, actualizamos el canvas
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
+        }
+        else{
+            canvas.setWidth(minWidth);
+            canvas.setHeight(minHeight);
         }
     }
     
@@ -452,17 +440,50 @@ public class MainController extends CallPop implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         adjustNodes();
-        minWidth = (int) (85*root.getMinWidth())/100;
-        minHeight = (int) (90*root.getMinHeight())/100;
         diagram = new Diagram();
         showPoints = false;
         canvas.setCursor(Cursor.DEFAULT);
     }
     
     private void adjustNodes(){
-        //Stage stage = (Stage) root.getParent().getScene().getWindow();
-        System.out.println( Main.screen.getWidth() );
-        
+        //Obtenemos ancho y largo de la pantalla que se utilice para ejecutar el programa
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        //Ingresamos el ancho y largo deseado de la ventana del programa
+        root.setMinWidth(screenSize.width);
+        root.setMinHeight((screenSize.height*93)/100);
+        //Cálculo e ingreso de ancho y alto de "canvas"
+        minWidth = (int) (85*root.getMinWidth())/100;
+        minHeight = (int) (83.5*root.getMinHeight())/100;
+        canvas.setWidth(minWidth);
+        canvas.setHeight(minHeight);
+        //Creación de "ArrayList" con "buttons" y "togglebuttons"
+        ArrayList<ToggleButton> toggleButtons = new ArrayList<>();
+        ArrayList<Button> buttons = new ArrayList<>();
+        toggleButtons.add(entityToggleButton);
+        toggleButtons.add(relationToggleButton);
+        toggleButtons.add(moveToggleButton);
+        toggleButtons.add(pointsToggleButton);
+        toggleButtons.add(editToggleButton);
+        toggleButtons.add(deleteToggleButton);
+        buttons.add(cleanButton);
+        buttons.add(exportPngButton);
+        buttons.add(exportPdfButton);
+        //Ajuste del tamaño de todos los botones
+        for (ToggleButton toggleButton : toggleButtons) {
+            int widthPercent = (int) ((toggleButton.getPrefWidth()*100)/900);
+            toggleButton.setPrefWidth( (root.getMinWidth()*widthPercent)/100 );
+            int heightPercent = (int) ((toggleButton.getPrefHeight()*100)/550);
+            toggleButton.setPrefHeight( (root.getMinHeight()*heightPercent)/100 );
+            if("relationToggleButton".equals(toggleButton.getId())){
+                toggleButton.setPrefWidth( (root.getMinHeight()*heightPercent)/100 );
+            }
+        }
+        for (Button button : buttons) {
+            int widthPercent = (int) ((button.getPrefWidth()*100)/900);
+            button.setPrefWidth( (root.getMinWidth()*widthPercent)/100 );
+            int heightPercent = (int) ((button.getPrefHeight()*100)/550);
+            button.setPrefHeight((root.getMinHeight()*heightPercent)/100 );
+        }
     }
     
     

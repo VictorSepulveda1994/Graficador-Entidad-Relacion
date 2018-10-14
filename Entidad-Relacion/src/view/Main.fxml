@@ -28,7 +28,7 @@
       <RowConstraints percentHeight="94.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Pane nodeOrientation="RIGHT_TO_LEFT" onMouseDragged="#dragWindow" onMousePressed="#pressedWindow" style="-fx-background-color: #000000 #b8b4b4;">
+      <Pane nodeOrientation="RIGHT_TO_LEFT" style="-fx-background-color: #000000 #b8b4b4;">
          <children>
             <HBox alignment="CENTER" spacing="5.0">
                <children>
@@ -86,7 +86,7 @@
                   <RowConstraints percentHeight="34.0" vgrow="SOMETIMES" />
                   <RowConstraints percentHeight="12.0" vgrow="SOMETIMES" />
                   <RowConstraints percentHeight="38.0" vgrow="SOMETIMES" />
-                  <RowConstraints percentHeight="3.0" vgrow="SOMETIMES" />
+                  <RowConstraints percentHeight="4.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                   <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
@@ -100,11 +100,11 @@
                   </VBox>
                   <VBox alignment="CENTER" spacing="25.0" style="-fx-background-color: #eae8e8;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <children>
-                        <ToggleButton fx:id="entityToggleButton" minHeight="39.0" minWidth="83.0" mnemonicParsing="false" onAction="#buttonEntityClicked" style="-fx-background-color: #5798d6;" VBox.vgrow="ALWAYS">
+                        <ToggleButton fx:id="entityToggleButton" mnemonicParsing="false" onAction="#buttonEntityClicked" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" VBox.vgrow="ALWAYS">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></ToggleButton>
-                        <ToggleButton fx:id="relationToggleButton" minHeight="55.0" minWidth="55.0" mnemonicParsing="false" onAction="#buttonRelationClicked" rotate="45.0" style="-fx-background-color: #5798d6;" VBox.vgrow="ALWAYS">
+                        <ToggleButton fx:id="relationToggleButton" mnemonicParsing="false" onAction="#buttonRelationClicked" prefHeight="55.0" prefWidth="55.0" rotate="45.0" style="-fx-background-color: #5798d6;" VBox.vgrow="ALWAYS">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor></ToggleButton>
@@ -121,7 +121,7 @@
                   </VBox>
                   <VBox alignment="CENTER" spacing="8.0" style="-fx-background-color: #eae8e8;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <children>
-                        <ToggleButton fx:id="moveToggleButton" minHeight="44.0" minWidth="90.0" mnemonicParsing="false" onAction="#buttonMoveClicked" style="-fx-background-color: #5798d6;">
+                        <ToggleButton fx:id="moveToggleButton" mnemonicParsing="false" onAction="#buttonMoveClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
                            <graphic>
                               <ImageView fitHeight="37.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -133,7 +133,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ToggleButton>
-                        <ToggleButton fx:id="pointsToggleButton" minHeight="44.0" minWidth="90.0" mnemonicParsing="false" onAction="#buttonShowPointsClicked" style="-fx-background-color: #5798d6;">
+                        <ToggleButton fx:id="pointsToggleButton" mnemonicParsing="false" onAction="#buttonShowPointsClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
                            <graphic>
                               <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -145,7 +145,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ToggleButton>
-                        <ToggleButton fx:id="editToggleButton" minHeight="44.0" minWidth="90.0" mnemonicParsing="false" onAction="#buttonEditClicked" style="-fx-background-color: #5798d6;">
+                        <ToggleButton fx:id="editToggleButton" mnemonicParsing="false" onAction="#buttonEditClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
                            <graphic>
                               <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -169,7 +169,7 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="10.0" style="-fx-background-color: #5798d6;" GridPane.columnIndex="1">
                <children>
-                  <ToggleButton fx:id="deleteToggleButton" mnemonicParsing="false" onAction="#buttonDeleteFigureClicked" prefHeight="45.0" prefWidth="115.0" text="Eliminar">
+                  <ToggleButton fx:id="deleteToggleButton" mnemonicParsing="false" onAction="#buttonDeleteFigureClicked" prefHeight="45.0" prefWidth="115.0" text="Eliminar" wrapText="true">
                      <graphic>
                         <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -184,7 +184,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ToggleButton>
-                  <Button fx:id="cleanButton" mnemonicParsing="false" onAction="#buttonCleanScreenClicked" prefHeight="45.0" prefWidth="115.0" text="Limpiar">
+                  <Button fx:id="cleanButton" mnemonicParsing="false" onAction="#buttonCleanScreenClicked" prefHeight="45.0" prefWidth="115.0" text="Limpiar" wrapText="true">
                      <graphic>
                         <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -262,7 +262,7 @@
                   </Button>
                </children>
             </VBox>
-            <ScrollPane fx:id="scrollPane" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ScrollPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                <content>
                   <AnchorPane style="-fx-border-color: BLACK;" styleClass="anchor" stylesheets="@../css/styleCanvas.css">
                      <children>

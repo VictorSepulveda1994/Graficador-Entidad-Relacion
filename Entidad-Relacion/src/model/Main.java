@@ -13,18 +13,17 @@ import javafx.stage.StageStyle;
  * @author Equipo Rocket
  */
 public class Main extends Application {
-    public static Stage screen;
     
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/view/Main.fxml"));
 
         Scene scene = new Scene(root);
-
+        
+        stage.setScene(scene);
         stage.resizableProperty().set(false);
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.setFullScreen(true);
-        stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
