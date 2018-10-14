@@ -114,9 +114,71 @@ public class CallPop {
     public void alertEntities(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Exceso de entidades");
-        alert.setHeaderText("Puedes seleccionar hasta 7 entidades para relacionarlas");
+        alert.setHeaderText("Puedes seleccionar hasta 6 entidades para relacionarlas");
         alert.showAndWait();
     }
+    
+    /**
+     * Exportar diagrama en formato "PNG" ´ó "PDF".
+     */
+    public void export (Canvas canvas) throws DocumentException{
+        FileChooser fileChooser = new FileChooser();
+                 
+        //Ingreso de filtro de extensión PNG
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
+        fileChooser.getExtensionFilters().add(extFilter);
+         
+        //Ingreso de filtro de extensión PDF
+        extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.PDF", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Mostrar diálogo de guardar archivo
+        final Stage stage = new Stage();
+        File file = fileChooser.showSaveDialog(stage);
+        
+        if(file != null){
+            if(file.getName().contains(".png")){
+                try {
+                    WritableImage writableImage = canvas.snapshot(new SnapshotParameters(), null);
+                    canvas.snapshot(null, writableImage);
+                    RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
+                    ImageIO.write(renderedImage, "png", file);
+                } catch (IOException ex) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else if(file.getName().contains(".pdf") || file.getName().contains(".PDF")){
+                try {
+                    Document document = new Document();
+
+                    PdfWriter.getInstance(document, new FileOutputStream(file));
+
+                    //open
+                    document.open();
+
+                    ByteArrayOutputStream  byteOutput = new ByteArrayOutputStream();
+
+                    ImageIO.write( SwingFXUtils.fromFXImage( canvas.snapshot(new SnapshotParameters(), null), null ), "png", byteOutput );
+
+                    com.itextpdf.text.Image  graph;
+                    graph = com.itextpdf.text.Image.getInstance( byteOutput.toByteArray() );
+                    graph.scaleToFit(document.getPageSize());
+
+                    graph.setAlignment(Image.ALIGN_CENTER);
+                    graph.setAlignment(Image.MIDDLE);
+
+                    document.add(graph);
+
+                    //close
+                    document.close();
+
+                } catch (IOException ex) {
+                    Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
     /**
      *
      * Guardar una imagen como "imagen.png"

@@ -119,20 +119,8 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" spacing="8.0" style="-fx-background-color: #eae8e8;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <VBox alignment="CENTER" spacing="14.0" style="-fx-background-color: #eae8e8;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <children>
-                        <ToggleButton fx:id="moveToggleButton" mnemonicParsing="false" onAction="#buttonMoveClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
-                           <graphic>
-                              <ImageView fitHeight="37.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icons/move.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ToggleButton>
                         <ToggleButton fx:id="pointsToggleButton" mnemonicParsing="false" onAction="#buttonShowPointsClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
                            <graphic>
                               <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
@@ -145,23 +133,35 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ToggleButton>
-                        <ToggleButton fx:id="editToggleButton" mnemonicParsing="false" onAction="#buttonEditClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
+                        <ToggleButton fx:id="moveToggleButton" mnemonicParsing="false" onAction="#buttonMoveClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
                            <graphic>
-                              <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="37.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../icons/edit.png" />
+                                    <Image url="@../icons/move.png" />
                                  </image>
-                                 <viewport>
-                                    <Rectangle2D />
-                                 </viewport>
                               </ImageView>
                            </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ToggleButton>
+                        <ToggleButton fx:id="deleteToggleButton" layoutX="33.0" layoutY="134.0" mnemonicParsing="false" onAction="#buttonDeleteFigureClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
                            <font>
                               <Font name="Century Gothic Bold" size="13.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <graphic>
+                              <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/delete.png" />
+                                 </image>
+                                 <viewport>
+                                    <Rectangle2D />
+                                 </viewport>
+                              </ImageView>
+                           </graphic>
                         </ToggleButton>
                      </children>
                   </VBox>
@@ -169,11 +169,11 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="10.0" style="-fx-background-color: #5798d6;" GridPane.columnIndex="1">
                <children>
-                  <ToggleButton fx:id="deleteToggleButton" mnemonicParsing="false" onAction="#buttonDeleteFigureClicked" prefHeight="45.0" prefWidth="115.0" text="Eliminar" wrapText="true">
+                  <ToggleButton fx:id="editToggleButton" layoutX="400.0" layoutY="22.0" mnemonicParsing="false" onAction="#buttonEditClicked" prefHeight="45.0" prefWidth="115.0" text="Editar" wrapText="true">
                      <graphic>
                         <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/delete.png" />
+                              <Image url="@../icons/edit.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -199,26 +199,11 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="exportPngButton" mnemonicParsing="false" onAction="#buttonExportImagePngClicked" prefHeight="45.0" prefWidth="115.0" text="Exportar Imagen" wrapText="true">
+                  <Button fx:id="exportButton" mnemonicParsing="false" onAction="#buttonExportClicked" prefHeight="45.0" prefWidth="115.0" text="Exportar" wrapText="true">
                      <graphic>
                         <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/image.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="exportPdfButton" mnemonicParsing="false" onAction="#buttonExportImagePdfClicked" prefHeight="45.0" prefWidth="115.0" text="Exportar PDF" wrapText="true">
-                     <graphic>
-                        <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/pdf.png" />
+                              <Image url="@../icons/export.png" />
                            </image>
                         </ImageView>
                      </graphic>
