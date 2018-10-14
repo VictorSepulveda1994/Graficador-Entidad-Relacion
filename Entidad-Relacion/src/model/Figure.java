@@ -27,6 +27,9 @@ public class Figure {
     /**
      * Constructor para crear polígonos
      * @param name,sides,posX,posY
+     * @param sides
+     * @param posX
+     * @param posY
      */
     public Figure(String name, int sides, int posX, int posY) {
         points = new ArrayList<>();
@@ -36,12 +39,14 @@ public class Figure {
         this.sides = sides;
         createPointsPolygon();
     }
-    
-    /* Constructor para crear rectangulos
-     * @param name,posX,posY
+
+    /**
+     *Constructor para crear rectangulos
+     * @param name
      * @param posX
      * @param posY
      */
+
     public Figure(String name, int posX, int posY) {
         points = new ArrayList<>();
         this.posX = posX;
@@ -50,12 +55,22 @@ public class Figure {
         createPointsRectangle();
     }
     
+    /**
+     *Constructor para crear lineas
+     * @param point1
+     * @param point2
+     */
     public Figure(Point point1,Point point2){
         points = new ArrayList<>();
         createPointsLine(point1,point2);
         
     }
 
+    /**
+     *Crea los puntos de las lineas para despues marcar los puntos de control
+     * @param point1
+     * @param point2
+     */
     public void createPointsLine(Point point1,Point point2){
         points.add(point1);
         points.add(point2);
@@ -64,6 +79,7 @@ public class Figure {
     /**
      * Pinta las lineas en el "canvas" segun los puntos que hayan en "points"
      * @param canvas
+     * @param selected
      */
     public void paintLines(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -93,6 +109,7 @@ public class Figure {
     
     /**
      * Método que realiza un circulo en cada punto para resaltarlo
+     * @param canvas
      */
     public void paintPoints(Canvas canvas){
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -203,34 +220,66 @@ public class Figure {
         return sides;
     }
     
+    /**
+     *
+     * @param sides
+     */
     public void setSides(int sides) {
         this.sides = sides;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Point> getPoints() {
         return points;
     }  
     
+    /**
+     *
+     * @return
+     */
     public int getPosX() {
         return posX;
     }
 
+    /**
+     *
+     * @param posX
+     */
     public void setPosX(int posX) {
         this.posX = posX;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPosY() {
         return posY;
     }
 
+    /**
+     *
+     * @param posY
+     */
     public void setPosY(int posY) {
         this.posY = posY;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }

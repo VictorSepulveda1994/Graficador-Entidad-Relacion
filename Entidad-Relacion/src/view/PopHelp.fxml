@@ -14,7 +14,7 @@
             <Font size="26.0" />
          </font>
       </Text>
-      <ComboBox fx:id="opciones" layoutX="14.0" layoutY="100.0" onAction="#decifrarOpciones" prefHeight="25.0" prefWidth="176.0" />
+      <ComboBox fx:id="options" layoutX="14.0" layoutY="100.0" onAction="#changeOfOption" prefHeight="25.0" prefWidth="176.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2269ab" height="347.0" layoutX="204.0" layoutY="84.0" stroke="BLACK" strokeType="INSIDE" width="323.0" />
       <Text fx:id="title" fill="WHITE" layoutX="217.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="297.0">
          <font>

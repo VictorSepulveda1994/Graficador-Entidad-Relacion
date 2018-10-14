@@ -78,7 +78,7 @@ public class CallPop {
     }
     /**
      *
-     * Abre ventana para agregar el nombre de la relacion y crear la relacion
+     * Abre ventana para agregar el nombre de la relación y crear la relación
      * @throws java.io.IOException
      */
     public void popAddRelation()throws IOException {
@@ -111,6 +111,9 @@ public class CallPop {
         alert.showAndWait();
     }
     
+    /**
+     *Muestra un mensaje de error al seleccionar más de 6 entidades
+     */
     public void alertEntities(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Exceso de entidades");
@@ -120,6 +123,8 @@ public class CallPop {
     
     /**
      * Exportar diagrama en formato "PNG" ´ó "PDF".
+     * @param canvas
+     * @throws com.itextpdf.text.DocumentException
      */
     public void export (Canvas canvas) throws DocumentException{
         FileChooser fileChooser = new FileChooser();
@@ -182,6 +187,7 @@ public class CallPop {
     /**
      *
      * Guardar una imagen como "imagen.png"
+     * @param canvas
      */
     public void saveDiagramPng(Canvas canvas) {
         FileChooser fileChooser = new FileChooser();
@@ -207,6 +213,11 @@ public class CallPop {
         }
     }
     
+    /**
+     *Guarda un diagrama como .pdf
+     * @param canvas
+     * @throws DocumentException
+     */
     public void saveDiagramPdf(Canvas canvas) throws DocumentException {
         FileChooser fileChooser = new FileChooser();
                  
@@ -250,6 +261,10 @@ public class CallPop {
         }
     }
     
+    /**
+     *Muestra información sobre el funcionamiento del programa
+     * @throws IOException
+     */
     public void popShowHelp()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Ayuda");

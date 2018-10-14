@@ -11,7 +11,7 @@ public class Relation extends Element {
     private ArrayList <Entity> entities;
     
     /**
-     *
+     *Constructor de la relación
      * @param name
      * @param sides
      * @param posX

@@ -292,7 +292,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Mátodo para administrar las acciones cuando el canvas sea presionado
+     * Método para administrar las acciones cuando el canvas sea presionado
      */
     @FXML
     private void canvasClicked(MouseEvent event) throws IOException {
@@ -390,7 +390,7 @@ public class MainController extends CallPop implements Initializable {
                     diagram.getEntities().get(i).setSelected(false);
                 }
             }
-            //Pintar Relacion
+            //Pintar Relación
             for (int i = 0; i <diagram.getRelations().size(); i++) {
                 if(diagram.getRelations().get(i).isInFigure(event)){
                     diagram.getRelations().get(i).setSelected(true);

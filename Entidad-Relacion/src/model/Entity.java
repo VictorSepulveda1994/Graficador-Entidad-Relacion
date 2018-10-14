@@ -7,7 +7,7 @@ package model;
 public class Entity extends Element {
     
     /**
-     *
+     *Constructor de entidad
      * @param name
      * @param posX
      * @param posY

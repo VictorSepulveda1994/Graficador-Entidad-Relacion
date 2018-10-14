@@ -21,6 +21,9 @@ public class Diagram extends CallPop {
     private Element selectedElement;
     private int iElement;
 
+    /**
+     *Constructor del diagrama
+     */
     public Diagram() {
         entities = new ArrayList <>();
         relations = new ArrayList <>();
@@ -52,18 +55,34 @@ public class Diagram extends CallPop {
         this.connectors.add(connector);
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Accion> getAcciones() {
         return acciones;
     }
 
+    /**
+     *
+     * @param accion
+     */
     public void addAcciones(Accion accion) {
         this.acciones.add(accion);
     }
 
+    /**
+     *
+     * @param entities
+     */
     public void setEntities(ArrayList<Entity> entities) {
         this.entities = entities;
     }
 
+    /**
+     *
+     * @param relations
+     */
     public void setRelations(ArrayList<Relation> relations) {
         this.relations = relations;
     }
@@ -71,6 +90,7 @@ public class Diagram extends CallPop {
     /**
      * Método que recorre "entities","relations","connectors" y dibuja dichos objetos en el "canvas"
      * @param canvas
+     * @param showPoints
      */
     public void paint(Canvas canvas, boolean showPoints){
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -89,6 +109,7 @@ public class Diagram extends CallPop {
     
     /**
      * Método que retorna el punto mínimo presente en "diagram"
+     * @return 
      */
     public Point minPoint(){
         int minX,minY;
@@ -121,6 +142,7 @@ public class Diagram extends CallPop {
     
     /**
      * Método que retorna el punto máximo presente en "diagram"
+     * @return 
      */
     public Point maxPoint(){
         int maxX,maxY;
@@ -154,6 +176,9 @@ public class Diagram extends CallPop {
     /**
      * Método que guarda en "selectedElement" el objeto que contiene al punto de "event"
      * Además, guarda el indice de dicho elemento en "iElement"
+     * @param event
+     * @param canvas
+     * @param showPoints
      */
     public void selectElement(MouseEvent event, Canvas canvas, boolean showPoints){
         int iE = 0;
@@ -213,6 +238,11 @@ public class Diagram extends CallPop {
         }
     }
     
+    /**
+     *Busca una entidad dentro de un Array y devuelve su ubicación
+     * @param entity
+     * @return
+     */
     public int search(Entity entity){
         for(int i=0; i<entities.size();i++){
             if(entities.get(i).getName().equals(entity.getName())){
@@ -284,6 +314,10 @@ public class Diagram extends CallPop {
         canvas.setHeight(minHeight);
     }
     
+    /**
+     *Devuelve el numero de entidades seleccionadas
+     * @return
+     */
     public int numberOfEntitiesSelect (){
         int count = 0;
         for (Entity entitie : this.entities) {
@@ -294,6 +328,10 @@ public class Diagram extends CallPop {
         return count;
     }
     
+    /**
+     *Devuelve un ArrayList con las entidades seleccionadas
+     * @return
+     */
     public ArrayList<Entity> entitiesSelect (){
         ArrayList<Entity> entities= new ArrayList<>();
         for (Entity entitie : this.entities) {
@@ -304,6 +342,9 @@ public class Diagram extends CallPop {
         return entities;
     }
     
+    /**
+     *Deselecciona todas las entidades seleccionadas
+     */
     public void deselectAllEntities (){
         for (Entity entitie : this.entities) {
             entitie.setSelected(false);
@@ -311,18 +352,33 @@ public class Diagram extends CallPop {
         selectedElement=null;
     }
     
+    /**
+     *
+     * @return
+     */
     public Element getSelectedElement() {
         return selectedElement;
     }
 
+    /**
+     *
+     * @param selectedElement
+     */
     public void setSelectedElement(Element selectedElement) {
         this.selectedElement = selectedElement;
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean isSomethingSelect (){
         return this.selectedElement!=null;
     }
     
+    /**
+     *Método que crea los conectores entre relaciones y entidades para dibujar las lineas
+     */
     public void createConnectors(){
         int j=0;
         for(int i=0;i<relations.size();i++){
@@ -369,12 +425,27 @@ public class Diagram extends CallPop {
         }
     }
 
+    /**
+     *Busca el punto medio entre dos puntos
+     * @param point1
+     * @param point2
+     * @return
+     */
     public Point middlePoint(Point point1, Point point2){
         int x= (point1.getX()+point2.getX())/2;
         int y= (point1.getY()+point2.getY())/2;
         return new Point(x,y);
     }
     
+    /**
+     *Busca el punto mas cercano de la relación con los 4 puntos de la entidad
+     * @param pointRelation
+     * @param p1
+     * @param p2
+     * @param p3
+     * @param p4
+     * @return
+     */
     public Point puntoMasCercano(Point pointRelation,Point p1,Point p2, Point p3,Point p4){
         int restax=p1.getX()-pointRelation.getX();
         int restay=p1.getY()-pointRelation.getY();
@@ -402,6 +473,10 @@ public class Diagram extends CallPop {
         }
     }
 
+    /**
+     *Dibuja en la pantalla los conectores
+     * @param canvas
+     */
     public void paintConnector(Canvas canvas){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(3);
@@ -412,6 +487,13 @@ public class Diagram extends CallPop {
         }
     }
     
+    /**
+     *Identifica el elemento que se desea editar y lo modifica
+     * @param event
+     * @param canvas
+     * @param showPoints
+     * @throws IOException
+     */
     public void selectElementEdit(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
         for (Entity entity : entities) {
             if(entity.isInFigure(event)){
@@ -451,6 +533,7 @@ public class Diagram extends CallPop {
      * @param event con las coordenadas donde se ha hecho click
      * @param canvas donde se dibujan las figuras
      * @param showPoints variable para mostrar los puntos de control
+     * @throws java.io.IOException
      */
     public void delete(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
         //Eliminar una Relación
@@ -493,6 +576,7 @@ public class Diagram extends CallPop {
     /**
      * Método para saber si ya existe, dentro del sistema, el nombre ingresado
      * @param name es el nombre a buscar
+     * @return 
      */
     public boolean thisNameExists (String name){
         for (Entity entitie : this.entities) {
@@ -511,7 +595,8 @@ public class Diagram extends CallPop {
     
     /**
      * Método para saber si la entidad escogida existe dentro de una relación
-     * @param la entidad a buscar
+     * @param entity
+     * @return 
      */
     public boolean hasAnyRelation (Entity entity){
         for (int i = 0; i < this.relations.size(); i++) {
