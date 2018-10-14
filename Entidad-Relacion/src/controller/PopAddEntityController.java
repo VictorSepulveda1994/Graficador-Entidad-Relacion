@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.net.URL;
@@ -51,7 +46,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
      */
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
-        if(nameOfEntity.isEmpty() || nameOfEntity.length()>12){
+        if( nameOfEntity.isEmpty() || nameOfEntity.length()>12 || MainController.diagram.thisNameExists(nameOfEntity) ){
             alertName();
         }
         else{

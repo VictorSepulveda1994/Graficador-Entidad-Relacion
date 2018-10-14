@@ -491,6 +491,25 @@ public class Diagram extends CallPop {
     }
     
     /**
+     * Método para saber si ya existe, dentro del sistema, el nombre ingresado
+     * @param name es el nombre a buscar
+     */
+    public boolean thisNameExists (String name){
+        for (Entity entitie : this.entities) {
+            if (entitie.getName().equals(name)){
+                return true;                
+            }
+        }
+        
+        for (Relation relation : this.relations) {
+            if (relation.getName().equals(name)){
+                return true;                
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Método para saber si la entidad escogida existe dentro de una relación
      * @param la entidad a buscar
      */

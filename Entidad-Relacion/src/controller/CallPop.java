@@ -107,14 +107,14 @@ public class CallPop {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error al ingresar nombre");
         alert.setHeaderText("Se encontró un error en el nombre,"
-                + " es vació o tiene mas de 12 caracteres. Debe ingresar el nombre nuevamente.");
+                + " es vacío, tiene mas de 12 caracteres o está repetido. Debe ingresar el nombre nuevamente.");
         alert.showAndWait();
     }
     
     public void alertEntities(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Exceso de entidades");
-        alert.setHeaderText("Puedes seleccionar hasta 6 entidades para relacionarlas");
+        alert.setHeaderText("Puede seleccionar hasta 6 entidades para relacionarlas");
         alert.showAndWait();
     }
     

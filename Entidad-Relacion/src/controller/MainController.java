@@ -330,7 +330,7 @@ public class MainController extends CallPop implements Initializable {
                 diagram.delete(event, canvas, showPoints);
             }
         }
-        //Hecha la acción correspondiente, actualizamos el canvas
+        //Una vez realizada la acción correspondiente, actualizamos el canvas
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
