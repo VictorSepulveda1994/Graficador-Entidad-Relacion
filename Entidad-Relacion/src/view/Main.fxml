@@ -168,7 +168,7 @@
                         </ToggleButton>
                         <ToggleButton fx:id="deleteToggleButton" layoutX="33.0" layoutY="134.0" mnemonicParsing="false" onAction="#buttonDeleteFigureClicked" prefHeight="44.0" prefWidth="99.0" style="-fx-background-color: #5798d6;" text="Borrar">
                            <font>
-                              <Font name="System Bold Italic" size="13.0" />
+                              <Font name="System Bold Italic" size="12.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
