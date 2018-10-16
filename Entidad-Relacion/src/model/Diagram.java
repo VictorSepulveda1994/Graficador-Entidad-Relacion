@@ -19,6 +19,7 @@ public class Diagram extends CallPop {
     private ArrayList <Connector> connectors;
     private ArrayList <Accion> acciones;
     private Element selectedElement;
+    private Element auxElement;
     private int iElement;
 
     /**
@@ -182,8 +183,10 @@ public class Diagram extends CallPop {
      */
     public void selectElement(MouseEvent event, Canvas canvas, boolean showPoints){
         int iE = 0;
+        boolean ready = false;
         for (Entity entity : entities) {
-            if(entity.isInFigure(event)){
+            if(entity.isInFigure(event) && ready == false){
+                ready = true;
                 selectedElement = entity;
                 selectedElement.setSelected(true);
                 iElement = iE;
@@ -194,7 +197,8 @@ public class Diagram extends CallPop {
         }
         iE = 0;
         for (Relation relation : relations) {
-            if(relation.isInFigure(event)){
+            if(relation.isInFigure(event) && ready == false){
+                ready = true;
                 selectedElement = relation;
                 selectedElement.setSelected(true);
                 iElement = iE;
@@ -203,6 +207,7 @@ public class Diagram extends CallPop {
             }
             iE++;
         }
+        ready = false;
     }
     
     /**
@@ -214,16 +219,17 @@ public class Diagram extends CallPop {
      * @param minHeight
      */
     public void moveElement(MouseEvent event, Canvas canvas, boolean showPoints, int minWidth, int minHeight){
-        if( selectedElement != null ){
+        if( selectedElement != null && event.getX()-70 > 0  && event.getY()-40 > 0){
             String type = selectedElement.getClass().getName().substring(6);
             if( "Entity".equals(type) ){
                 entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected));
-               
+                selectedElement = entities.get(iElement);
             }
-            if( "Relation".equals(type) ){
+            else if( "Relation".equals(type) ){
                 ArrayList<Entity> entitiesCopy= new ArrayList<>();
                 entitiesCopy=(ArrayList<Entity>) relations.get(iElement).getEntities().clone();
                 relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy));
+                selectedElement = relations.get(iElement);
             }
             for (int i=0; i<relations.size();i++) {
                 for (int a=0; a<relations.get(i).getEntities().size();a++) {
@@ -232,7 +238,7 @@ public class Diagram extends CallPop {
                         relations.get(i).getEntities().set(a, entities.get(nElement));
                     }
                 }
-            }           
+            }
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
         }
@@ -495,9 +501,11 @@ public class Diagram extends CallPop {
      * @throws IOException
      */
     public void selectElementEdit(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        boolean ready = false;
         for (Entity entity : entities) {
-            if(entity.isInFigure(event)){
+            if(entity.isInFigure(event) && ready == false){
                 popEditElement();
+                ready = true;
                 if(!"".equals(enteredName)){
                     Accion accion= new Accion(TipoDeAccion.EditarNombreEntidad,new Entity(entity.getName(),entity.figure.getPosX(),entity.figure.getPosY(),entity.selected));
                     entity.setName(enteredName);
@@ -511,8 +519,9 @@ public class Diagram extends CallPop {
             }
         }
         for (Relation relation : relations) {
-            if(relation.isInFigure(event)){
+            if(relation.isInFigure(event) && ready == false){
                 popEditElement();
+                ready = true ;
                 if(!"".equals(enteredName)){
                     Accion accion= new Accion(TipoDeAccion.EditarNombreRelacion,new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,relation.getEntities())); 
                     relation.setName(enteredName);
@@ -523,7 +532,8 @@ public class Diagram extends CallPop {
                 }
                 break;
             }
-        }       
+        }
+        ready = false;
         paint(canvas, showPoints);
     }
     
@@ -536,16 +546,18 @@ public class Diagram extends CallPop {
      * @throws java.io.IOException
      */
     public void delete(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        boolean ready = false;
         //Eliminar una Relación
         for (int i = 0; i < this.relations.size(); i++) {
-            if(this.relations.get(i).isInFigure(event)){
-                System.out.println(this.relations.get(i).figure.getName());
+            if(this.relations.get(i).isInFigure(event) && ready == false){
                 this.relations.remove(i);
+                ready = true;
             }
         }
         //Eliminar una entidad
         for (int i = 0; i < this.entities.size(); i++) {
-            if(this.entities.get(i).isInFigure(event)){
+            if(this.entities.get(i).isInFigure(event) && ready == false){
+                ready = true;
                 Entity entity = this.entities.get(i);
                 while(hasAnyRelation(entity)){
                     for (int j = 0; j <this.relations.size(); j++) {
@@ -570,6 +582,7 @@ public class Diagram extends CallPop {
                 }
             }
         }
+        ready = false;
         paint(canvas, showPoints);
     }
     

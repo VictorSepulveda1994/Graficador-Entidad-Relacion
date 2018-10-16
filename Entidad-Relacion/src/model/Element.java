@@ -54,6 +54,10 @@ public abstract class Element {
         return figure.maxPoint();
     }
     
+    /**
+     * Método que retorna true si las coordenadas del evento estan dentro de la figura o false como caso contrario
+     * @return true o false dependiendo de la ocación
+     */
     public boolean isInFigure(MouseEvent event){
         return figure.isInFigure(event);
     }

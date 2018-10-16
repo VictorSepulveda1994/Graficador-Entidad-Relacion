@@ -98,17 +98,32 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" spacing="25.0" style="-fx-background-color: #eae8e8;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <VBox alignment="CENTER" spacing="27.0" style="-fx-background-color: #eae8e8;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <children>
-                        <ToggleButton fx:id="entityToggleButton" mnemonicParsing="false" onAction="#buttonEntityClicked" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" VBox.vgrow="ALWAYS">
+                        <ToggleButton fx:id="entityToggleButton" mnemonicParsing="false" onAction="#buttonEntityClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;" text="Entidad" VBox.vgrow="ALWAYS">
                            <cursor>
                               <Cursor fx:constant="HAND" />
-                           </cursor></ToggleButton>
-                        <ToggleButton fx:id="relationToggleButton" mnemonicParsing="false" onAction="#buttonRelationClicked" prefHeight="55.0" prefWidth="55.0" rotate="45.0" style="-fx-background-color: #5798d6;" VBox.vgrow="ALWAYS">
+                           </cursor>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></ToggleButton>
+                        <ToggleButton fx:id="relationToggleButton" mnemonicParsing="false" onAction="#buttonRelationClicked" prefHeight="63.0" prefWidth="68.0" rotate="45.0" style="-fx-background-color: #5798d6;" VBox.vgrow="ALWAYS">
                            <cursor>
                               <Cursor fx:constant="HAND" />
-                           </cursor></ToggleButton>
+                           </cursor>
+                           <graphic>
+                              <Label rotate="-45.0" text="Relación">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font></Label>
+                           </graphic>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></ToggleButton>
                      </children>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
                   </VBox>
                   <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <children>
@@ -121,7 +136,7 @@
                   </VBox>
                   <VBox alignment="CENTER" spacing="14.0" style="-fx-background-color: #eae8e8;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <children>
-                        <ToggleButton fx:id="pointsToggleButton" mnemonicParsing="false" onAction="#buttonShowPointsClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
+                        <ToggleButton fx:id="pointsToggleButton" mnemonicParsing="false" onAction="#buttonShowPointsClicked" prefHeight="44.0" prefWidth="99.0" style="-fx-background-color: #5798d6;" text="Puntos">
                            <graphic>
                               <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -132,8 +147,11 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="moveToggleButton" mnemonicParsing="false" onAction="#buttonMoveClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
+                        <ToggleButton fx:id="moveToggleButton" mnemonicParsing="false" onAction="#buttonMoveClicked" prefHeight="44.0" prefWidth="99.0" style="-fx-background-color: #5798d6;" text="Mover">
                            <graphic>
                               <ImageView fitHeight="37.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -144,10 +162,13 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
-                        </ToggleButton>
-                        <ToggleButton fx:id="deleteToggleButton" layoutX="33.0" layoutY="134.0" mnemonicParsing="false" onAction="#buttonDeleteFigureClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;">
                            <font>
-                              <Font name="Century Gothic Bold" size="13.0" />
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </ToggleButton>
+                        <ToggleButton fx:id="deleteToggleButton" layoutX="33.0" layoutY="134.0" mnemonicParsing="false" onAction="#buttonDeleteFigureClicked" prefHeight="44.0" prefWidth="99.0" style="-fx-background-color: #5798d6;" text="Borrar">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
