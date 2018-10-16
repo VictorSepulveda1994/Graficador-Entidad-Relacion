@@ -297,10 +297,10 @@ public class MainController extends CallPop implements Initializable {
     @FXML
     private void canvasClicked(MouseEvent event) throws IOException {
         MainController.event = event;
-        if(entityToggleButton.isSelected()){
+        if(entityToggleButton.isSelected() && event.getX()-75 > 0  && event.getY()-45 > 0){
             popAddEntity();
         }
-        else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0){
+        else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
             if (diagram.getSelectedElement()!=null){
                 Element element = diagram.getSelectedElement();
@@ -347,7 +347,7 @@ public class MainController extends CallPop implements Initializable {
      */
     @FXML
     private void mousePressed(MouseEvent event){
-        if(moveToggleButton.isSelected()){
+        if(moveToggleButton.isSelected() && diagram.getSelectedElement() == null){
             diagram.selectElement(event, canvas, showPoints);
         }
     }
@@ -371,6 +371,8 @@ public class MainController extends CallPop implements Initializable {
     private void mouseReleased(MouseEvent event){
         if(moveToggleButton.isSelected()){
             diagram.deselectElement(event);
+            diagram.deselectAllEntities();
+            diagram.paint(canvas, showPoints);
         }
     }
     
@@ -385,16 +387,18 @@ public class MainController extends CallPop implements Initializable {
             for (int i = 0; i <diagram.getEntities().size(); i++) {
                 if(diagram.getEntities().get(i).isInFigure(event)){
                     diagram.getEntities().get(i).setSelected(true);
+                    break;
                 }
                 else{
                     diagram.getEntities().get(i).setSelected(false);
                 }
+                
             }
             //Pintar Relación
             for (int i = 0; i <diagram.getRelations().size(); i++) {
                 if(diagram.getRelations().get(i).isInFigure(event)){
                     diagram.getRelations().get(i).setSelected(true);
-                   
+                    break;
                 }
                 else{
                     diagram.getRelations().get(i).setSelected(false);
