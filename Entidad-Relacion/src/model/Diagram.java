@@ -17,7 +17,6 @@ public class Diagram extends CallPop {
     private ArrayList <Entity> entities;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
-    private ArrayList <Accion> acciones;
     private Element selectedElement;
     private Element auxElement;
     private int iElement;
@@ -29,7 +28,6 @@ public class Diagram extends CallPop {
         entities = new ArrayList <>();
         relations = new ArrayList <>();
         connectors = new ArrayList <>();
-        acciones = new ArrayList <>();
     }
     
     /**
@@ -54,22 +52,6 @@ public class Diagram extends CallPop {
      */
     public void addConnector (Connector connector){
         this.connectors.add(connector);
-    }
-    
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Accion> getAcciones() {
-        return acciones;
-    }
-
-    /**
-     *
-     * @param accion
-     */
-    public void addAcciones(Accion accion) {
-        this.acciones.add(accion);
     }
 
     /**
@@ -393,7 +375,7 @@ public class Diagram extends CallPop {
                     point.setDisponible(true);
                 }
                 if(relations.get(i).getEntities().size()==1){                 
-                    Point punto=puntoMasCercano(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
+                    Point punto=closestPoint(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
                             relations.get(i).getEntities().get(a).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a).getFigure().getPoints().get(2),
                             relations.get(i).getEntities().get(a).getFigure().getPoints().get(3));
                     for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
@@ -404,7 +386,7 @@ public class Diagram extends CallPop {
                     Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a),punto,"",false);
                     connectors.add(connector); 
                     
-                    Point punto2=puntoMasCercano(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
+                    Point punto2=closestPoint(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
                             relations.get(i).getEntities().get(a).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a).getFigure().getPoints().get(2),
                             relations.get(i).getEntities().get(a).getFigure().getPoints().get(3));
                     for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
@@ -416,7 +398,7 @@ public class Diagram extends CallPop {
                     connectors.add(connector2);         
                 }
                 if(relations.get(i).getEntities().size()>=2){
-                    Point punto=puntoMasCercano(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
+                    Point punto=closestPoint(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
                             relations.get(i).getEntities().get(a).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a).getFigure().getPoints().get(2),
                             relations.get(i).getEntities().get(a).getFigure().getPoints().get(3));
                     for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
@@ -452,7 +434,7 @@ public class Diagram extends CallPop {
      * @param p4
      * @return
      */
-    public Point puntoMasCercano(Point pointRelation,Point p1,Point p2, Point p3,Point p4){
+    public Point closestPoint(Point pointRelation,Point p1,Point p2, Point p3,Point p4){
         int restax=p1.getX()-pointRelation.getX();
         int restay=p1.getY()-pointRelation.getY();
         int d1=(int) Math.sqrt(restax*restax + restay*restay);
@@ -507,12 +489,8 @@ public class Diagram extends CallPop {
                 popEditElement();
                 ready = true;
                 if(!"".equals(enteredName)){
-                    Accion accion= new Accion(TipoDeAccion.EditarNombreEntidad,new Entity(entity.getName(),entity.figure.getPosX(),entity.figure.getPosY(),entity.selected));
                     entity.setName(enteredName);
                     entity.figure.setName(enteredName); 
-                    enteredName="";
-                    accion.setElemento2(entity);
-                    MainController.diagram.addAcciones(accion);
                     enteredName="";
                 }
                 break;
@@ -523,11 +501,8 @@ public class Diagram extends CallPop {
                 popEditElement();
                 ready = true ;
                 if(!"".equals(enteredName)){
-                    Accion accion= new Accion(TipoDeAccion.EditarNombreRelacion,new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,relation.getEntities())); 
                     relation.setName(enteredName);
                     relation.figure.setName(enteredName);
-                    accion.setElemento2(relation);
-                    MainController.diagram.addAcciones(accion);
                     enteredName="";
                 }
                 break;

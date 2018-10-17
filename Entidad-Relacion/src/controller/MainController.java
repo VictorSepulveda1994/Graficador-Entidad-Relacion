@@ -17,12 +17,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
-import model.Accion;
 import model.Diagram;
 import model.Element;
 import model.Entity;
 import model.Relation;
-import model.TipoDeAccion;
 
 /**
  *
@@ -257,14 +255,6 @@ public class MainController extends CallPop implements Initializable {
      */
     @FXML
     private void buttonCleanScreenClicked(ActionEvent event) {
-        Accion accion=new Accion(TipoDeAccion.LimpiarPantalla,null);
-        Diagram diagrama1= new Diagram();
-        ArrayList <Entity> entities= (ArrayList<Entity>) diagram.getEntities().clone();
-        ArrayList <Relation> relations= (ArrayList<Relation>) diagram.getRelations().clone();
-        diagrama1.setEntities(entities);
-        diagrama1.setRelations(relations);
-        accion.setDiagram(diagrama1);
-        diagram.addAcciones(accion);
         diagram.clearAll(canvas, minWidth, minHeight);
         //Se restablecen los botones
         relationToggleButton.setSelected(false);
