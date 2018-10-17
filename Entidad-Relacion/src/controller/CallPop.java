@@ -190,6 +190,7 @@ public class CallPop {
     /**
      *Muestra información sobre el funcionamiento del programa
      * @throws IOException
+     * 
      */
     public void popShowHelp()throws IOException {
         final Stage dialog = new Stage();
