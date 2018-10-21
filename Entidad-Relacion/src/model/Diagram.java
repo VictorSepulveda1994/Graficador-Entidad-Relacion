@@ -2,12 +2,16 @@ package model;
 
 import controller.CallPop;
 import controller.MainController;
+import static controller.PopAddAttributeController.attributeType;
+import static controller.PopAddAttributeController.nameAttribute;
 import static controller.PopChangeName.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
 
 /**
  *
@@ -17,6 +21,7 @@ public class Diagram extends CallPop {
     private ArrayList <Entity> entities;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
+    private ArrayList <Attribute> attributes;
     private Element selectedElement;
     private Element auxElement;
     private int iElement;
@@ -28,6 +33,7 @@ public class Diagram extends CallPop {
         entities = new ArrayList <>();
         relations = new ArrayList <>();
         connectors = new ArrayList <>();
+        attributes = new ArrayList<>();
     }
     
     /**
@@ -69,6 +75,14 @@ public class Diagram extends CallPop {
     public void setRelations(ArrayList<Relation> relations) {
         this.relations = relations;
     }
+
+    public ArrayList<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Attribute attribute) {
+        this.attributes.add(attribute);
+    }
     
     /**
      * Método que recorre "entities","relations","connectors" y dibuja dichos objetos en el "canvas"
@@ -88,6 +102,7 @@ public class Diagram extends CallPop {
         for (Connector connector : connectors) {
             connector.paint(canvas,showPoints);
         }
+        paintAttributes(canvas);
     }
     
     /**
@@ -460,7 +475,40 @@ public class Diagram extends CallPop {
             }
         }
     }
-
+    //Agrega un atributo a una relacion o entidad y al diagrama, pero tiene problemas con el click hay que solucionarlo
+    public void agregarAtributo(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        boolean ready = false;
+        for (Entity entity : entities) {
+            if(entity.isInFigure(event) && ready == false){
+                popAddAttribute();
+                ready = true;
+                if(!"".equals(nameAttribute)){
+                    System.out.println("agregueeeee");
+                    entity.addAttribute(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    System.out.println(" "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getName()+
+                            " "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getTipo().name());
+                    nameAttribute="";
+                }
+                break;
+            }
+        }
+        for (Relation relation : relations) {
+            if(relation.isInFigure(event) && ready == false){
+                popAddAttribute();
+                ready = true ;
+                if(!"".equals(nameAttribute)){
+                    System.out.println("agregueeeee");
+                    relation.addAttribute(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    nameAttribute="";
+                }
+                break;
+            }
+        }
+        ready = false;
+        paint(canvas, showPoints);
+    }
     /**
      *Dibuja en la pantalla los conectores
      * @param canvas
@@ -474,7 +522,15 @@ public class Diagram extends CallPop {
                    getY(), connectors.get(i).getPointElement2().getX(), connectors.get(i).getPointElement2().getY());
         }
     }
-    
+    //pinta los atributos dentro del canvas
+    public void paintAttributes(Canvas canvas){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(3);
+        gc.setFill(Color.BLUEVIOLET);
+        for(int i=0;i<attributes.size();i++){
+            gc.fillArc(attributes.get(i).figure.getPosX(), attributes.get(i).figure.getPosY(), 200, 100, 300, 400, ArcType.ROUND);
+        }
+    }
     /**
      *Identifica el elemento que se desea editar y lo modifica
      * @param event

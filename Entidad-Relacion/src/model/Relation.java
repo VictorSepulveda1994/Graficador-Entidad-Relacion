@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Relation extends Element {
 
     private ArrayList <Entity> entities;
+    private ArrayList<Attribute> attributes = new ArrayList<>();
     
     /**
      *Constructor de la relación
@@ -40,6 +41,17 @@ public class Relation extends Element {
         this.entities = entities;
     }
     
+    public ArrayList<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(ArrayList<Attribute> attribute) {
+        this.attributes = attribute;
+    }
+    
+    public void addAttribute(Attribute attribute){
+        this.attributes.add(attribute);
+    }
     /**
      * Método para saber si la relación contiene la entidad ingresada
      * @param entity

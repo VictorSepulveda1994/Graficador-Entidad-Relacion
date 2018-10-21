@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="314.0" prefWidth="482.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopAddAttributeController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#eae8e8" height="68.0" stroke="#eae8e8" strokeType="INSIDE" width="482.0" />
+      <Text layoutX="178.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar Atributo">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="nameNewAttribute" layoutX="13.0" layoutY="110.0" prefHeight="31.0" prefWidth="440.0" style="-fx-border-color: #5798d6;" />
+      <Text layoutX="13.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de atributo">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="options" layoutX="151.0" layoutY="153.0" onAction="#changeOfOption" prefHeight="27.0" prefWidth="193.0" />
+      <Button layoutX="261.0" layoutY="263.0" mnemonicParsing="false" onAction="#addToScreen" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Agregar">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="361.0" layoutY="263.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cancelar">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

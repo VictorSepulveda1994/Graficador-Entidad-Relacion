@@ -14,9 +14,13 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
+import model.Attribute;
 import model.Diagram;
 import model.Element;
 import model.Entity;
@@ -43,6 +47,8 @@ public class MainController extends CallPop implements Initializable {
     private ToggleButton editToggleButton;
     @FXML
     private ToggleButton deleteToggleButton;
+    @FXML
+    private ToggleButton attributeToggleButton;
     @FXML
     private Button cleanButton;
     @FXML
@@ -188,7 +194,10 @@ public class MainController extends CallPop implements Initializable {
         diagram.paint(canvas,showPoints);
         
     }
-    
+    @FXML
+    private void buttonDrawElipse(ActionEvent event){
+        System.out.println("prendi el boton");
+    }
     /**
      * Método para cuando se deseen mostrar/ocultar los puntos de control
      */
@@ -314,6 +323,9 @@ public class MainController extends CallPop implements Initializable {
         }
         else if(editToggleButton.isSelected()){
             diagram.selectElementEdit(event, canvas, showPoints);
+        }
+        else if(attributeToggleButton.isSelected()){
+            diagram.agregarAtributo(event, canvas, showPoints);
         }
         else if(deleteToggleButton.isSelected()){
             if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){

@@ -102,6 +102,26 @@ public class CallPop {
         dialog.close();    
         
     }
+    //Muestra la ventana para agregar informacion al atributo
+    public void popAddAttribute()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Agregar relación");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddAttribute.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.setResizable(false);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.setResizable(false);
+        dialog.resizableProperty().setValue(Boolean.FALSE);
+        dialog.close();    
+        
+    }
     
     /**
      *Muestra un mensaje de error al ingresar nombre invalido
