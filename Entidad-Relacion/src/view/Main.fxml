@@ -91,7 +91,7 @@
                <children>
                   <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Elementos" textAlignment="CENTER" textFill="#0d0101" VBox.vgrow="ALWAYS">
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Elementos" textAlignment="CENTER" textFill="#030000" VBox.vgrow="ALWAYS">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -99,31 +99,54 @@
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" spacing="27.0" style="-fx-background-color: #eae8e8;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                     <children>
-                        <ToggleButton fx:id="entityToggleButton" mnemonicParsing="false" onAction="#buttonEntityClicked" prefHeight="44.0" prefWidth="90.0" style="-fx-background-color: #5798d6;" text="Entidad" VBox.vgrow="ALWAYS">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font></ToggleButton>
-                        <ToggleButton fx:id="relationToggleButton" mnemonicParsing="false" onAction="#buttonRelationClicked" prefHeight="63.0" prefWidth="68.0" rotate="45.0" style="-fx-background-color: #5798d6;" VBox.vgrow="ALWAYS">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <graphic>
-                              <Label rotate="-45.0" text="Relación">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font></Label>
-                           </graphic>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font></ToggleButton>
-                     </children>
                      <padding>
                         <Insets bottom="10.0" />
                      </padding>
+                     <children>
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="152.0" prefWidth="144.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="163.0" prefWidth="134.0">
+                                 <children>
+                                    <Pane layoutX="2.0" prefHeight="253.0" prefWidth="144.0" style="-fx-background-color: #eae8e8;">
+                                       <children>
+                                          <ToggleButton fx:id="entityToggleButton" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#buttonEntityClicked" prefHeight="44.0" prefWidth="102.0" style="-fx-background-color: #5798d6;" text="Entidad fuerte" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </ToggleButton>
+                                          <ToggleButton fx:id="relationToggleButton" layoutX="31.0" layoutY="175.0" mnemonicParsing="false" onAction="#buttonRelationClicked" prefHeight="63.0" prefWidth="68.0" rotate="45.0" style="-fx-background-color: #5798d6;">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <graphic>
+                                                <Label rotate="-45.0" text="Relación">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </graphic>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </ToggleButton>
+                                          <ToggleButton layoutX="14.0" layoutY="90.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="102.0" style="-fx-background-color: #5798d6;" text="Entidad débil" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </ToggleButton>
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
                   </VBox>
                   <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <children>
