@@ -135,6 +135,16 @@ public class CallPop {
     }
     
     /**
+     * Muestra un mensaje de error al no seleccionar un tipo de entidad en el popQuestionEntityType
+     */
+    public void alertTypeEnity(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Debe elegir un tipo de entidad para poder continuar.");
+        alert.showAndWait();
+    }
+    
+    /**
      *Muestra un mensaje de error al seleccionar más de 6 entidades
      */
     public void alertEntities(){
@@ -223,6 +233,31 @@ public class CallPop {
         dialog.setResizable(false);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.setResizable(false);
+        dialog.close();
+
+    }
+    
+    /**
+     *
+     * 
+     * @throws java.io.IOException
+     */
+    public void popQuestionEntityType()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Tipo de Entidad");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopQuestionEntityType.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.setResizable(false);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        //dialog.resizableProperty().setValue(Boolean.FALSE);
         
         dialog.setScene(xscene);
         dialog.showAndWait();

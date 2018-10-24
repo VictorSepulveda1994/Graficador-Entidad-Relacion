@@ -219,7 +219,7 @@ public class Diagram extends CallPop {
         if( selectedElement != null && event.getX()-70 > 0  && event.getY()-40 > 0){
             String type = selectedElement.getClass().getName().substring(6);
             if( "Entity".equals(type) ){
-                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected));
+                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType()));
                 selectedElement = entities.get(iElement);
             }
             else if( "Relation".equals(type) ){
@@ -313,6 +313,7 @@ public class Diagram extends CallPop {
         this.entities.clear();
         this.relations.clear();
         this.connectors.clear();
+        attributes.clear();
         canvas.setWidth(minWidth);
         canvas.setHeight(minHeight);
     }
@@ -528,7 +529,7 @@ public class Diagram extends CallPop {
         gc.setLineWidth(3);
         gc.setFill(Color.BLUEVIOLET);
         for(int i=0;i<attributes.size();i++){
-            gc.fillArc(attributes.get(i).figure.getPosX(), attributes.get(i).figure.getPosY(), 200, 100, 300, 400, ArcType.ROUND);
+            gc.strokeArc(attributes.get(i).figure.getPosX(), attributes.get(i).figure.getPosY(), 200, 100, 300, 400, ArcType.ROUND);
         }
     }
     /**

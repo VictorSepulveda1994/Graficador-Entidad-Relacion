@@ -213,7 +213,6 @@ public class MainController extends CallPop implements Initializable {
             pointsToggleButton.setScaleY(1);
         }
         //Cambios para desactivar los otros botones
-        canvas.setCursor(Cursor.DEFAULT);
         diagram.deselectAllEntities();
         diagram.paint(canvas,showPoints);
     }
@@ -297,7 +296,10 @@ public class MainController extends CallPop implements Initializable {
     private void canvasClicked(MouseEvent event) throws IOException {
         MainController.event = event;
         if(entityToggleButton.isSelected() && event.getX()-75 > 0  && event.getY()-45 > 0){
-            popAddEntity();
+            popQuestionEntityType();
+            if(PopQuestionEntityTypeController.typeChoosed!=null){
+                popAddEntity();
+            }
         }
         else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
