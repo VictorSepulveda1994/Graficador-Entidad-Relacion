@@ -23,6 +23,7 @@ public class Figure {
     private final int rectangleWidth = 70;
     private final int rectangleHeight = 40;
     private ArrayList<Point> points;
+    private ArrayList<Point> pointsInside;
 
     /**
      * Constructor para crear polígonos
@@ -33,6 +34,7 @@ public class Figure {
      */
     public Figure(String name, int sides, int posX, int posY) {
         points = new ArrayList<>();
+        pointsInside = new ArrayList<>();
         this.posX = posX;
         this.posY = posY;
         this.name = name;
@@ -49,6 +51,7 @@ public class Figure {
 
     public Figure(String name, int posX, int posY) {
         points = new ArrayList<>();
+        pointsInside = new ArrayList<>();
         this.posX = posX;
         this.posY = posY;
         this.name = name;
@@ -62,8 +65,8 @@ public class Figure {
      */
     public Figure(Point point1,Point point2){
         points = new ArrayList<>();
+        pointsInside = new ArrayList<>();
         createPointsLine(point1,point2);
-        
     }
 
     /**
@@ -105,6 +108,18 @@ public class Figure {
         Point point1 = points.get(0);
         Point point2 = points.get(size-1);
         gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+        
+        if(!pointsInside.isEmpty()){
+            size = pointsInside.size();
+            for (int i = 0; i+1 < size; i++) {
+                point1 = pointsInside.get(i);
+                point2 = pointsInside.get(i+1);
+                gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+            }
+            point1 = pointsInside.get(0);
+            point2 = pointsInside.get(size-1);
+            gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+        }  
     }
     
     /**
@@ -201,7 +216,7 @@ public class Figure {
     /**
      * Crea los puntos del rectangulo y los almacena en "points"
      */
-    private void createPointsRectangle(){
+    public void createPointsRectangle(){
         Point point;
         point = new Point ( (int)(posX + rectangleWidth), (int)(posY + rectangleHeight));
         points.add(point);
@@ -211,6 +226,21 @@ public class Figure {
         points.add(point);
         point = new Point ( (int)(posX - rectangleWidth), (int)(posY + rectangleHeight));
         points.add(point);
+    }
+    
+     /**
+     * Crea los puntos del rectangulo para hacer doble linea
+     */
+    public void addDoubleLine(){
+        Point point;
+        point = new Point ( (int)(posX + (rectangleWidth-5)), (int)(posY + (rectangleHeight-5)));
+        pointsInside.add(point);
+        point = new Point ( (int)(posX + (rectangleWidth-5)), (int)(posY - (rectangleHeight-5)));
+        pointsInside.add(point);
+        point = new Point ( (int)(posX - (rectangleWidth-5)), (int)(posY - (rectangleHeight-5)));
+        pointsInside.add(point);
+        point = new Point ( (int)(posX - (rectangleWidth-5)), (int)(posY + (rectangleHeight-5)));
+        pointsInside.add(point);  
     }
 
     /**
