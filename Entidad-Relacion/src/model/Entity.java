@@ -8,7 +8,6 @@ import java.util.ArrayList;
  */
 public class Entity extends Element {
     
-    private ArrayList<Attribute> attributes = new ArrayList<>();
 
     EntityType type;
     
@@ -29,17 +28,6 @@ public class Entity extends Element {
         }
     }
 
-    public ArrayList<Attribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(ArrayList<Attribute> attribute) {
-        this.attributes = attribute;
-    }
-    
-    public void addAttribute(Attribute attribute){
-        this.attributes.add(attribute);
-    }
     /**
      *
      * @return

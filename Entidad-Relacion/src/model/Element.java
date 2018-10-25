@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 
@@ -15,6 +16,7 @@ public abstract class Element {
     public Figure figure;
     protected String name;
     protected boolean selected;
+    private ArrayList<Attribute> attributes = new ArrayList<>();
 
     /**
      *
@@ -96,6 +98,14 @@ public abstract class Element {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public ArrayList<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void addAttribute(Attribute attribute) {
+        this.attributes.add(attribute);
     }
     
 }
