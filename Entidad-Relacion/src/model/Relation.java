@@ -21,7 +21,7 @@ public class Relation extends Element {
     public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities) {
         super(name,selected);
         this.entities = (ArrayList<Entity>) entities.clone();
-        figure = new Figure(name, sides, posX, posY);
+        figure = new Figure(name, sides, posX, posY,null);
     }
     
     /**
