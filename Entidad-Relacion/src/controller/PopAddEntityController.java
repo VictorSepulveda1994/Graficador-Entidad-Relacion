@@ -51,8 +51,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
         }
         else{
             EntityType type = PopQuestionEntityTypeController.typeChoosed;
-            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), 
-                    (int)MainController.event.getY(), false,type) );
+            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type) );
             ((Stage)root.getScene().getWindow()).close();
         }
     }

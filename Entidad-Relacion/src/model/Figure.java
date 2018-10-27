@@ -24,7 +24,6 @@ public class Figure {
     private final int rectangleHeight = 40;
     private ArrayList<Point> points;
     private ArrayList<Point> pointsInside;
-    private AttributeType type;
 
     /**
      * Constructor para crear polígonos
@@ -32,16 +31,14 @@ public class Figure {
      * @param sides
      * @param posX
      * @param posY
-     * @param type
      */
-    public Figure(String name, int sides, int posX, int posY, AttributeType type) {
+    public Figure(String name, int sides, int posX, int posY) {
         points = new ArrayList<>();
         pointsInside = new ArrayList<>();
         this.posX = posX;
         this.posY = posY;
         this.name = name;
         this.sides = sides;
-        this.type=type;
         createPointsPolygon();
     }
 
@@ -108,34 +105,26 @@ public class Figure {
             gc.fillText(name, posX, posY);
         }
         int size = points.size();
-        for (int i = 0; i+1 < size && !type.equals(AttributeType.DERIVADO); i++) {
+        for (int i = 0; i+1 < size; i++) {
             Point point1 = points.get(i);
             Point point2 = points.get(i+1);
             gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
         }
-        for (int i = 0; i+1 < size && type.equals(AttributeType.DERIVADO); i++) {
-            if(i%2==0){
-                Point point1 = points.get(i);
-                Point point2 = points.get(i+1);
+        Point point1 = points.get(0);
+        Point point2 = points.get(size-1);
+        gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+        
+        if(!pointsInside.isEmpty()){
+            size = pointsInside.size();
+            for (int i = 0; i+1 < size; i++) {
+                point1 = pointsInside.get(i);
+                point2 = pointsInside.get(i+1);
                 gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
             }
-        }
-        if(!type.equals(AttributeType.DERIVADO)){
-            Point point1 = points.get(0);
-            Point point2 = points.get(size-1);
+            point1 = pointsInside.get(0);
+            point2 = pointsInside.get(size-1);
             gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
-            if(!pointsInside.isEmpty()){
-                size = pointsInside.size();
-                for (int i = 0; i+1 < size; i++) {
-                    point1 = pointsInside.get(i);
-                    point2 = pointsInside.get(i+1);
-                    gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
-                }
-                point1 = pointsInside.get(0);
-                point2 = pointsInside.get(size-1);
-                gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
-            }  
-        }
+        }  
     }
     
     public void pintarAdentroEntidad(Canvas canvas){
@@ -163,7 +152,7 @@ public class Figure {
         int diagonal2= diamondDiagonal2;
         int radio= radiusPolygon;
         while(j<5){
-            Figure figure= new Figure(name,sides,posX,posY,null);
+            Figure figure= new Figure(name,sides,posX,posY);
             for (int i = 0; i+1 < figure.points.size(); i++) {
                 Point point1 = figure.points.get(i);
                 Point point2 = figure.points.get(i+1);
@@ -311,14 +300,6 @@ public class Figure {
         pointsInside.add(point);  
     }
 
-    public void addDoubleLineAttribute(){
-        Point point;
-        for(int i=0; i<sides; i++){
-                point = new Point ( (int)(posX + (radiusPolygon-5) * Math.cos(i * 2 * Math.PI / sides)), 
-                        (int)(posY - radiusPolygon+35 * Math.sin(i * 2 * Math.PI / sides)));
-                pointsInside.add(point);
-            }  
-    }
     /**
      * @return sides
      */

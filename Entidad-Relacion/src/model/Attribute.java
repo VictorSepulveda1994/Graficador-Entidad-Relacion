@@ -15,10 +15,7 @@ public class Attribute extends Element{
     public Attribute(AttributeType tipo, String name, boolean selected,int posX, int posY ) {
         super(name, selected);
         this.tipo = tipo;
-        this.figure= new Figure(name,20,posX,posY,tipo);
-        if(tipo.equals(AttributeType.MULTIVALUADO)){
-            figure.addDoubleLineAttribute();
-        }
+        this.figure= new Figure(name,20,posX,posY);
     }
 
     public AttributeType getTipo() {

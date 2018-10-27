@@ -11,5 +11,5 @@ package model;
  */
 public enum AttributeType {
     GENERICO, CLAVE, MULTIVALUADO, COMPUESTO,
-    DERIVADO, CLAVEPARCIAL;
+    DERIVADO;
 }
