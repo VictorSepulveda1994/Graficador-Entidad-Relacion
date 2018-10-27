@@ -2,12 +2,16 @@ package model;
 
 import controller.CallPop;
 import controller.MainController;
+import static controller.PopAddAttributeController.attributeType;
+import static controller.PopAddAttributeController.nameAttribute;
 import static controller.PopChangeName.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
 
 /**
  *
@@ -17,6 +21,7 @@ public class Diagram extends CallPop {
     private ArrayList <Entity> entities;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
+    private ArrayList <Attribute> attributes;
     private Element selectedElement;
     private Element auxElement;
     private int iElement;
@@ -28,6 +33,7 @@ public class Diagram extends CallPop {
         entities = new ArrayList <>();
         relations = new ArrayList <>();
         connectors = new ArrayList <>();
+        attributes = new ArrayList<>();
     }
     
     /**
@@ -69,6 +75,14 @@ public class Diagram extends CallPop {
     public void setRelations(ArrayList<Relation> relations) {
         this.relations = relations;
     }
+
+    public ArrayList<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Attribute attribute) {
+        this.attributes.add(attribute);
+    }
     
     /**
      * Método que recorre "entities","relations","connectors" y dibuja dichos objetos en el "canvas"
@@ -77,16 +91,21 @@ public class Diagram extends CallPop {
      */
     public void paint(Canvas canvas, boolean showPoints){
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (Entity entity : entities) {
-            entity.paint(canvas,showPoints);
-        }
-        for (Relation relation : relations) {
-            relation.paint(canvas,showPoints);
-        }
         connectors.clear();
         paintConnector(canvas);
         for (Connector connector : connectors) {
             connector.paint(canvas,showPoints);
+        }
+        for (Entity entity : entities) {
+            entity.figure.pintarAdentroEntidad(canvas);
+            entity.paint(canvas,showPoints);
+        }
+        for (Relation relation : relations) {
+            //relation.figure.pintarAdentroPoligono(canvas);
+            relation.paint(canvas,showPoints);
+        }
+        for(Attribute attribute : attributes){
+            attribute.paint(canvas, showPoints);
         }
     }
     
@@ -189,6 +208,18 @@ public class Diagram extends CallPop {
             }
             iE++;
         }
+        iE = 0;
+        for (Attribute attribute : attributes) {
+            if(attribute.isInFigure(event) && ready == false){
+                ready = true;
+                selectedElement = attribute;
+                selectedElement.setSelected(true);
+                iElement = iE;
+                paint(canvas, showPoints);
+                break;
+            }
+            iE++;
+        }
         ready = false;
     }
     
@@ -204,7 +235,7 @@ public class Diagram extends CallPop {
         if( selectedElement != null && event.getX()-70 > 0  && event.getY()-40 > 0){
             String type = selectedElement.getClass().getName().substring(6);
             if( "Entity".equals(type) ){
-                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected));
+                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType()));
                 selectedElement = entities.get(iElement);
             }
             else if( "Relation".equals(type) ){
@@ -213,11 +244,39 @@ public class Diagram extends CallPop {
                 relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy));
                 selectedElement = relations.get(iElement);
             }
+            else if( "Attribute".equals(type)){
+                attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY()));
+                selectedElement = attributes.get(iElement);
+            }
             for (int i=0; i<relations.size();i++) {
                 for (int a=0; a<relations.get(i).getEntities().size();a++) {
                     int nElement=search(relations.get(i).getEntities().get(a));
                     if(nElement!=-1){
                         relations.get(i).getEntities().set(a, entities.get(nElement));
+                    }
+                }
+            }
+            for (int i=0; i<relations.size();i++) {
+                for (int a=0; a<relations.get(i).getAttributes().size();a++) {
+                    int nElement=searchAttribute(relations.get(i).getAttributes().get(a));
+                    if(nElement!=-1){
+                        relations.get(i).getAttributes().set(a, attributes.get(nElement));
+                    }
+                }
+            }
+            for (int i=0; i<entities.size();i++) {
+                for (int a=0; a<entities.get(i).getAttributes().size();a++) {
+                    int nElement=searchAttribute(entities.get(i).getAttributes().get(a));
+                    if(nElement!=-1){
+                        entities.get(i).getAttributes().set(a, attributes.get(nElement));
+                    }
+                }
+            }
+            for (int i=0; i<attributes.size();i++) {
+                for (int a=0; a<attributes.get(i).getAttributes().size();a++) {
+                    int nElement=searchAttribute(attributes.get(i).getAttributes().get(a));
+                    if(nElement!=-1){
+                        attributes.get(i).getAttributes().set(a, attributes.get(nElement));
                     }
                 }
             }
@@ -234,6 +293,15 @@ public class Diagram extends CallPop {
     public int search(Entity entity){
         for(int i=0; i<entities.size();i++){
             if(entities.get(i).getName().equals(entity.getName())){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public int searchAttribute(Attribute attribute){
+        for(int i=0; i<attributes.size();i++){
+            if(attributes.get(i).getName().equals(attribute.getName())){
                 return i;
             }
         }
@@ -298,6 +366,7 @@ public class Diagram extends CallPop {
         this.entities.clear();
         this.relations.clear();
         this.connectors.clear();
+        attributes.clear();
         canvas.setWidth(minWidth);
         canvas.setHeight(minHeight);
     }
@@ -371,44 +440,34 @@ public class Diagram extends CallPop {
         int j=0;
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getEntities().size();a++){
-                for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
-                    point.setDisponible(true);
-                }
-                if(relations.get(i).getEntities().size()==1){                 
-                    Point punto=closestPoint(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
-                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a).getFigure().getPoints().get(2),
-                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(3));
-                    for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
-                        if(point.equals(punto)){
-                            point.setDisponible(false);
-                        }
-                    }
-                    Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a),punto,"",false);
-                    connectors.add(connector); 
-                    
-                    Point punto2=closestPoint(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
-                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a).getFigure().getPoints().get(2),
-                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(3));
-                    for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
-                        if(point.equals(punto2)){
-                            point.setDisponible(false);
-                        }
-                    }
-                    Connector connector2= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(2),relations.get(i).getEntities().get(a),punto2," ",false);
-                    connectors.add(connector2);         
-                }
-                if(relations.get(i).getEntities().size()>=2){
-                    Point punto=closestPoint(relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a).getFigure().getPoints().get(0),
-                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(1),relations.get(i).getEntities().get(a).getFigure().getPoints().get(2),
-                            relations.get(i).getEntities().get(a).getFigure().getPoints().get(3));
-                    for (Point point : relations.get(i).getEntities().get(a).getFigure().getPoints()) {
-                        if(point.equals(punto)){
-                            point.setDisponible(false);
-                        }
-                    }
-                    Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(a),relations.get(i).getEntities().get(a),punto," ",false);
-                    connectors.add(connector);
-                }
+                Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(a)
+                        ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
+                " ",false);
+                connectors.add(connector);
+            }
+        }
+        for(int i=0;i<relations.size();i++){
+            for(int a=0;a<relations.get(i).getAttributes().size();a++){
+                Connector connector= new Connector(relations.get(i),new Point(relations.get(i).figure.getPosX(),relations.get(i).figure.getPosY()),
+                    relations.get(i).getAttributes().get(a),new Point(relations.get(i).getAttributes().get(a).figure.getPosX(),relations.get(i).getAttributes().get(a).figure.getPosY()-80),
+                " ",false);
+                connectors.add(connector);
+            }
+        }
+        for(int i=0;i<entities.size();i++){
+            for(int a=0;a<entities.get(i).getAttributes().size();a++){
+                Connector connector= new Connector(entities.get(i),new Point(entities.get(i).figure.getPosX(),entities.get(i).figure.getPosY()),
+                    entities.get(i).getAttributes().get(a),new Point(entities.get(i).getAttributes().get(a).figure.getPosX(),entities.get(i).getAttributes().get(a).figure.getPosY()-80),
+                " ",false);
+                connectors.add(connector);
+            }
+        }
+        for(int i=0;i<attributes.size();i++){
+            for(int a=0;a<attributes.get(i).getAttributes().size();a++){
+                Connector connector= new Connector(attributes.get(i),new Point(attributes.get(i).figure.getPosX(),attributes.get(i).figure.getPosY()-80),
+                    attributes.get(i).getAttributes().get(a),new Point(attributes.get(i).getAttributes().get(a).figure.getPosX(),attributes.get(i).getAttributes().get(a).figure.getPosY()-80),
+                " ",false);
+                connectors.add(connector);
             }
         }
     }
@@ -460,7 +519,40 @@ public class Diagram extends CallPop {
             }
         }
     }
-
+    //Agrega un atributo a una relacion o entidad y al diagrama, pero tiene problemas con el click hay que solucionarlo
+    public void agregarAtributo(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        boolean ready = false;
+        for (Entity entity : entities) {
+            if(entity.isInFigure(event) && ready == false){
+                popAddAttribute();
+                ready = true;
+                if(!"".equals(nameAttribute)){
+                    System.out.println("agregueeeee");
+                    entity.addAttribute(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    System.out.println(" "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getName()+
+                            " "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getTipo().name());
+                    nameAttribute="";
+                }
+                break;
+            }
+        }
+        for (Relation relation : relations) {
+            if(relation.isInFigure(event) && ready == false){
+                popAddAttribute();
+                ready = true ;
+                if(!"".equals(nameAttribute)){
+                    System.out.println("agregueeeee");
+                    relation.addAttribute(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    nameAttribute="";
+                }
+                break;
+            }
+        }
+        ready = false;
+        paint(canvas, showPoints);
+    }
     /**
      *Dibuja en la pantalla los conectores
      * @param canvas

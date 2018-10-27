@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Entity;
+import model.EntityType;
 
 
 /**
@@ -49,7 +50,9 @@ public class PopAddEntityController extends CallPop implements Initializable {
             alertName();
         }
         else{
-            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false) );
+            EntityType type = PopQuestionEntityTypeController.typeChoosed;
+            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), 
+                    (int)MainController.event.getY(), false,type) );
             ((Stage)root.getScene().getWindow()).close();
         }
     }
