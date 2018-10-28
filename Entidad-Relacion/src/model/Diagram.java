@@ -453,7 +453,7 @@ public class Diagram extends CallPop {
         int j=0;
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getEntities().size();a++){
-                Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getPoints().get(a)
+                Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
                 " ",false);
                 connectors.add(connector);
@@ -477,8 +477,8 @@ public class Diagram extends CallPop {
         }
         for(int i=0;i<attributes.size();i++){
             for(int a=0;a<attributes.get(i).getAttributes().size();a++){
-                Connector connector= new Connector(attributes.get(i),new Point(attributes.get(i).figure.getPosX(),attributes.get(i).figure.getPosY()-80),
-                    attributes.get(i).getAttributes().get(a),new Point(attributes.get(i).getAttributes().get(a).figure.getPosX(),attributes.get(i).getAttributes().get(a).figure.getPosY()-80),
+                Connector connector= new Connector(attributes.get(i),new Point(attributes.get(i).figure.getPosX(),attributes.get(i).figure.getPosY()),
+                    attributes.get(i).getAttributes().get(a),new Point(attributes.get(i).getAttributes().get(a).figure.getPosX(),attributes.get(i).getAttributes().get(a).figure.getPosY()),
                 " ",false);
                 connectors.add(connector);
             }

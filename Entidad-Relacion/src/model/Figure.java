@@ -529,5 +529,9 @@ public class Figure {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public Point getCenter(){
+        return (new Point(posX, posY));
+    }
 
 }
