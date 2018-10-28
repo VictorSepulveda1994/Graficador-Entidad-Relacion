@@ -108,6 +108,12 @@ public class Diagram extends CallPop {
             if(attribute.getTipo().equals(AttributeType.DERIVADO)){
                 attribute.figure.paintLinesPunteadas(canvas, showPoints);
             }
+            else if(attribute.getTipo().equals(AttributeType.CLAVE)){
+                attribute.figure.paintTextoSubrayado(canvas, showPoints);
+            }
+            else if(attribute.getTipo().equals(AttributeType.CLAVEPARCIAL)){
+                attribute.figure.paintTextoPunteado(canvas, showPoints);
+            }
             else{
                 attribute.paint(canvas, showPoints);
             } 
