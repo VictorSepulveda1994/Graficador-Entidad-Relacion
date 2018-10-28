@@ -20,8 +20,10 @@ public class Figure {
     private int sides;
     private int diamondDiagonal1 = 80;
     private int diamondDiagonal2 = 60;
-    private final int rectangleWidth = 70;
-    private final int rectangleHeight = 40;
+    private int rectangleWidth = 70;
+    private int rectangleHeight = 40;
+    private int ellipseDiagonal1 = 80;
+    private int ellipseDiagonal2 = 40;
     private ArrayList<Point> points;
     private ArrayList<Point> pointsInside;
 
@@ -141,7 +143,7 @@ public class Figure {
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(20));
-        gc.fillText(name, posX, posY-80);
+        gc.fillText(name, posX, posY);
         int size = points.size();
         for (int i = 0; i+1 < size; i++) {
             if(i%2==0){
@@ -166,8 +168,8 @@ public class Figure {
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(20));
-        gc.fillText(name, posX, posY-80);
-        gc.strokeLine(posX+((name.length()/2)*3), posY-70, posX+(name.length()*5), posY-70);
+        gc.fillText(name, posX, posY);
+        gc.strokeLine(posX-((name.length()/2)*3), posY+12, posX+(name.length()*5), posY+12);
         int size = points.size();
         for (int i = 0; i+1 < size; i++) {
             Point point1 = points.get(i);
@@ -193,10 +195,10 @@ public class Figure {
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(20));
-        gc.fillText(name, posX, posY-80);
+        gc.fillText(name, posX, posY);
         for(int i=0;i<name.length();i++){
             if(i%2==0){
-                gc.strokeLine(posX, posY-70, posX+(i*2), posY-70);
+                gc.strokeLine(posX, posY+12, posX+(i*2), posY+12);
             }
         }
         
@@ -211,51 +213,112 @@ public class Figure {
         gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
     }
     
-    public void pintarAdentroEntidad(Canvas canvas){
+    public void fillEntity(Canvas canvas){
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setLineWidth(20);
+        gc.setLineWidth(7);
         gc.setStroke(Color.WHITE);
-        int size = points.size();
-        Point pInicio=minPoint();
-        if(size==4){
-            int i=0;
-            while(i<7){
-                gc.strokeLine(pInicio.getX()+12, pInicio.getY()+12,pInicio.getX()+(rectangleWidth*2)-12,pInicio.getY()+12);
-                i++;
-                pInicio.setY(pInicio.getY()+10);
+        ArrayList<Point> pts = points;
+        int rW = rectangleWidth;
+        int rH = rectangleHeight;
+        
+        while(rectangleWidth >= 0 && rectangleHeight>=0){
+                int size = points.size();
+                for (int i = 0; i+1 < size; i++) {
+                    Point point1 = points.get(i);
+                    Point point2 = points.get(i+1);
+                    gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+                }
+                Point point1 = points.get(0);
+                Point point2 = points.get(size-1);
+                gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+                rectangleWidth = rectangleWidth - 5;
+                rectangleHeight = rectangleHeight - 5;
+                points.clear();
+                createPointsRectangle();
             }
+            points = pts;
+            rectangleWidth = rW;
+            rectangleHeight = rH;
+            points.clear();
+            createPointsRectangle();
+    }
+    
+    public void fillPolygon(Canvas canvas){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(5);
+        gc.setStroke(Color.WHITE);
+        ArrayList<Point> pts = points;
+        int rP = radiusPolygon;
+        int dD1 = diamondDiagonal1;
+        int dD2 = diamondDiagonal2;
+        int eD1 = ellipseDiagonal1;
+        int eD2 = ellipseDiagonal2;
+        if(sides > 0 && sides < 3){
+            while(diamondDiagonal1 >= 0 && diamondDiagonal2>=0){
+                int size = points.size();
+                for (int i = 0; i+1 < size; i++) {
+                    Point point1 = points.get(i);
+                    Point point2 = points.get(i+1);
+                    gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+                }
+                Point point1 = points.get(0);
+                Point point2 = points.get(size-1);
+                gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+                diamondDiagonal1 = diamondDiagonal1 - 5;
+                diamondDiagonal2 = diamondDiagonal2 - 5;
+                points.clear();
+                createPointsPolygon();
+            }
+            points = pts;
+            diamondDiagonal1 = dD1;
+            diamondDiagonal2 = dD2;
+            points.clear();
+            createPointsPolygon();
+        } else if(sides > 2 && sides < 20){
+            while(radiusPolygon >= 0){
+                int size = points.size();
+                for (int i = 0; i+1 < size; i++) {
+                    Point point1 = points.get(i);
+                    Point point2 = points.get(i+1);
+                    gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+                }
+                Point point1 = points.get(0);
+                Point point2 = points.get(size-1);
+                gc.setLineWidth(5);
+                gc.setStroke(Color.WHITE);
+                gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+                radiusPolygon = radiusPolygon - 5;
+                points.clear();
+                createPointsPolygon();
+            }
+            points = pts;
+            radiusPolygon = rP;
+            points.clear();
+            createPointsPolygon();
+        } else if(sides >= 20){
+            while(ellipseDiagonal1 >= 0 && ellipseDiagonal2>=0){
+                int size = points.size();
+                for (int i = 0; i+1 < size; i++) {
+                    Point point1 = points.get(i);
+                    Point point2 = points.get(i+1);
+                    gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+                }
+                Point point1 = points.get(0);
+                Point point2 = points.get(size-1);
+                gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+                ellipseDiagonal1 = ellipseDiagonal1 - 5;
+                ellipseDiagonal2 = ellipseDiagonal2 - 5;
+                points.clear();
+                createPointsPolygon();
+            }
+            points = pts;
+            ellipseDiagonal1 = eD1;
+            ellipseDiagonal2 = eD2;
+            points.clear();
+            createPointsPolygon();
         }
     }
     
-    public void pintarAdentroPoligono(Canvas canvas){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setLineWidth(10);
-        gc.setStroke(Color.WHITE);
-        int j=0;
-        int diagonal= diamondDiagonal1;
-        int diagonal2= diamondDiagonal2;
-        int radio= radiusPolygon;
-        while(j<5){
-            Figure figure= new Figure(name,sides,posX,posY);
-            for (int i = 0; i+1 < figure.points.size(); i++) {
-                Point point1 = figure.points.get(i);
-                Point point2 = figure.points.get(i+1);
-                gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
-            }
-            Point point1 = points.get(0);
-            Point point2 = points.get(points.size()-1);
-            gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
-            j++;
-            diamondDiagonal1-=10;
-            diamondDiagonal2-=10;
-            radiusPolygon-=10;
-            System.out.println(" "+diamondDiagonal1+" "+diamondDiagonal2+" "+radiusPolygon);
-        }
-        diamondDiagonal1=diagonal;
-        diamondDiagonal2=diagonal2;
-        radiusPolygon=radio;
-  
-    }
     /**
      * Método que realiza un circulo en cada punto para resaltarlo
      * @param canvas
@@ -345,10 +408,10 @@ public class Figure {
                 points.add(point);
             }
         }
-        else if(sides==20){
+        else if(sides>=20){
             for(int i=0; i<sides; i++){
-                point = new Point ( (int)(posX + radiusPolygon * Math.cos(i * 2 * Math.PI / sides)), 
-                        (int)(posY - radiusPolygon+40 * Math.sin(i * 2 * Math.PI / sides)));
+                point = new Point ( (int)(posX + ellipseDiagonal1 * Math.cos(i * 2 * Math.PI / sides)), 
+                        (int)(posY - ellipseDiagonal2 * Math.sin(i * 2 * Math.PI / sides)));
                 points.add(point);
             }
         }
@@ -357,7 +420,7 @@ public class Figure {
     /**
      * Crea los puntos del rectangulo y los almacena en "points"
      */
-    public void createPointsRectangle(){
+    private void createPointsRectangle(){
         Point point;
         point = new Point ( (int)(posX + rectangleWidth), (int)(posY + rectangleHeight));
         points.add(point);
@@ -372,7 +435,7 @@ public class Figure {
      /**
      * Crea los puntos del rectangulo para hacer doble linea
      */
-    public void addDoubleLine(){
+    public void addDoubleLineRectangle(){
         Point point;
         point = new Point ( (int)(posX + (rectangleWidth-5)), (int)(posY + (rectangleHeight-5)));
         pointsInside.add(point);
@@ -384,13 +447,16 @@ public class Figure {
         pointsInside.add(point);  
     }
     
-    public void addDoubleLinePolygon(){
+    /**
+     * Crea los puntos de la elipse para hacer doble linea
+     */
+    public void addDoubleLineEllipse(){
         Point point;
         for(int i=0; i<sides; i++){
-                point = new Point ( (int)(posX + radiusPolygon * Math.cos(i * 2 * Math.PI / sides)-5), 
-                        (int)(posY - radiusPolygon+40 * Math.sin(i * 2 * Math.PI / sides)-5));
-                pointsInside.add(point);
-            }
+            point = new Point ( (int)(posX + (ellipseDiagonal1-5) * Math.cos(i * 2 * Math.PI / sides)), 
+                    (int)(posY - (ellipseDiagonal2-5) * Math.sin(i * 2 * Math.PI / sides)));
+            pointsInside.add(point);
+        }
     }
 
     /**

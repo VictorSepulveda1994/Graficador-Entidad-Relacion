@@ -97,14 +97,15 @@ public class Diagram extends CallPop {
             connector.paint(canvas,showPoints);
         }
         for (Entity entity : entities) {
-            entity.figure.pintarAdentroEntidad(canvas);
+            entity.figure.fillEntity(canvas);
             entity.paint(canvas,showPoints);
         }
         for (Relation relation : relations) {
-            //relation.figure.pintarAdentroPoligono(canvas);
+            relation.figure.fillPolygon(canvas);
             relation.paint(canvas,showPoints);
         }
         for(Attribute attribute : attributes){
+            attribute.figure.fillPolygon(canvas);
             if(attribute.getTipo().equals(AttributeType.DERIVADO)){
                 attribute.figure.paintLinesPunteadas(canvas, showPoints);
             }
@@ -461,7 +462,7 @@ public class Diagram extends CallPop {
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getAttributes().size();a++){
                 Connector connector= new Connector(relations.get(i),new Point(relations.get(i).figure.getPosX(),relations.get(i).figure.getPosY()),
-                    relations.get(i).getAttributes().get(a),new Point(relations.get(i).getAttributes().get(a).figure.getPosX(),relations.get(i).getAttributes().get(a).figure.getPosY()-80),
+                    relations.get(i).getAttributes().get(a),new Point(relations.get(i).getAttributes().get(a).figure.getPosX(),relations.get(i).getAttributes().get(a).figure.getPosY()),
                 " ",false);
                 connectors.add(connector);
             }
@@ -469,7 +470,7 @@ public class Diagram extends CallPop {
         for(int i=0;i<entities.size();i++){
             for(int a=0;a<entities.get(i).getAttributes().size();a++){
                 Connector connector= new Connector(entities.get(i),new Point(entities.get(i).figure.getPosX(),entities.get(i).figure.getPosY()),
-                    entities.get(i).getAttributes().get(a),new Point(entities.get(i).getAttributes().get(a).figure.getPosX(),entities.get(i).getAttributes().get(a).figure.getPosY()-80),
+                    entities.get(i).getAttributes().get(a),new Point(entities.get(i).getAttributes().get(a).figure.getPosX(),entities.get(i).getAttributes().get(a).figure.getPosY()),
                 " ",false);
                 connectors.add(connector);
             }

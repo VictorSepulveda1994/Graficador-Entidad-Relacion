@@ -24,7 +24,7 @@ public class Entity extends Element {
         this.type=type;
         figure = new Figure(name, posX, posY);
         if(type==EntityType.WEAK){
-            figure.addDoubleLine();
+            figure.addDoubleLineRectangle();
         }
     }
 
