@@ -540,7 +540,7 @@ public class Diagram extends CallPop {
                 ready = true;
                 if(!"".equals(nameAttribute)){
                     System.out.println("agregueeeee");
-                    entity.addAttribute(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    entity.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
                     MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
                     System.out.println(" "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getName()+
                             " "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getTipo().name());
@@ -555,7 +555,7 @@ public class Diagram extends CallPop {
                 ready = true ;
                 if(!"".equals(nameAttribute)){
                     System.out.println("agregueeeee");
-                    relation.addAttribute(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    relation.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
                     MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
                     nameAttribute="";
                 }
