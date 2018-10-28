@@ -245,7 +245,7 @@ public class Figure {
     
     public void fillPolygon(Canvas canvas){
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setLineWidth(5);
+        gc.setLineWidth(7);
         gc.setStroke(Color.WHITE);
         ArrayList<Point> pts = points;
         int rP = radiusPolygon;
