@@ -16,6 +16,9 @@ public class Attribute extends Element{
         super(name, selected);
         this.tipo = tipo;
         this.figure= new Figure(name,20,posX,posY);
+        if(tipo.equals(AttributeType.MULTIVALUADO)){
+            figure.addDoubleLinePolygon();
+        }
     }
 
     public AttributeType getTipo() {

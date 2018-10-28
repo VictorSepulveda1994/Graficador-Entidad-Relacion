@@ -41,7 +41,7 @@ public class Figure {
         this.sides = sides;
         createPointsPolygon();
     }
-
+    
     /**
      *Constructor para crear rectangulos
      * @param name
@@ -125,6 +125,90 @@ public class Figure {
             point2 = pointsInside.get(size-1);
             gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
         }  
+    }
+    
+    public void paintLinesPunteadas(Canvas canvas, boolean selected){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(3);
+        if( selected ){
+            gc.setFill(Color.BLUE);
+            gc.setStroke(Color.BLUE);
+        }
+        else{
+            gc.setFill(Color.BLACK);
+            gc.setStroke(Color.BLACK);
+        }
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(20));
+        gc.fillText(name, posX, posY-80);
+        int size = points.size();
+        for (int i = 0; i+1 < size; i++) {
+            if(i%2==0){
+                Point point1 = points.get(i);
+                Point point2 = points.get(i+1);
+                gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+            }
+        }
+    }
+    
+    public void paintTextoSubrayado(Canvas canvas, boolean selected){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(3);
+        if( selected ){
+            gc.setFill(Color.BLUE);
+            gc.setStroke(Color.BLUE);
+        }
+        else{
+            gc.setFill(Color.BLACK);
+            gc.setStroke(Color.BLACK);
+        }
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(20));
+        gc.fillText(name, posX, posY-80);
+        gc.strokeLine(posX+((name.length()/2)*3), posY-70, posX+(name.length()*5), posY-70);
+        int size = points.size();
+        for (int i = 0; i+1 < size; i++) {
+            Point point1 = points.get(i);
+            Point point2 = points.get(i+1);
+            gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+        }
+        Point point1 = points.get(0);
+        Point point2 = points.get(size-1);
+        gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+    }
+    
+    public void paintTextoPunteado(Canvas canvas, boolean selected){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(3);
+        if( selected ){
+            gc.setFill(Color.BLUE);
+            gc.setStroke(Color.BLUE);
+        }
+        else{
+            gc.setFill(Color.BLACK);
+            gc.setStroke(Color.BLACK);
+        }
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(20));
+        gc.fillText(name, posX, posY-80);
+        for(int i=0;i<name.length();i++){
+            if(i%2==0){
+                gc.strokeLine(posX, posY-70, posX+(i*2), posY-70);
+            }
+        }
+        
+        int size = points.size();
+        for (int i = 0; i+1 < size; i++) {
+            Point point1 = points.get(i);
+            Point point2 = points.get(i+1);
+            gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+        }
+        Point point1 = points.get(0);
+        Point point2 = points.get(size-1);
+        gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
     }
     
     public void pintarAdentroEntidad(Canvas canvas){
@@ -299,6 +383,15 @@ public class Figure {
         point = new Point ( (int)(posX - (rectangleWidth-5)), (int)(posY + (rectangleHeight-5)));
         pointsInside.add(point);  
     }
+    
+    public void addDoubleLinePolygon(){
+        Point point;
+        for(int i=0; i<sides; i++){
+                point = new Point ( (int)(posX + radiusPolygon * Math.cos(i * 2 * Math.PI / sides)-5), 
+                        (int)(posY - radiusPolygon+40 * Math.sin(i * 2 * Math.PI / sides)-5));
+                pointsInside.add(point);
+            }
+    }
 
     /**
      * @return sides
@@ -370,5 +463,5 @@ public class Figure {
     public void setName(String name) {
         this.name = name;
     }
-    
+
 }

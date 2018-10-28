@@ -39,7 +39,7 @@ public class PopAddAttributeController extends CallPop implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        options.getItems().addAll("Atributo Clave","Atributo Generico","Atributo Multivaluado"
+        options.getItems().addAll("Atributo Clave","Atributo Clave Parcial","Atributo Generico","Atributo Multivaluado"
                 ,"Atributo Compuesto","Atributo Derivado");
         options.setValue("Elige una opción: ");
         options.getItems();
@@ -76,6 +76,9 @@ public class PopAddAttributeController extends CallPop implements Initializable 
         }
         if("Atributo Derivado".equals(options.getValue())){
             attributeType=AttributeType.DERIVADO;
+        }
+        if("Atributo Clave Parcial".equals(options.getValue())){
+            attributeType=AttributeType.CLAVEPARCIAL;
         }
     }
 }

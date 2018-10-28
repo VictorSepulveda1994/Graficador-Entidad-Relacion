@@ -105,7 +105,18 @@ public class Diagram extends CallPop {
             relation.paint(canvas,showPoints);
         }
         for(Attribute attribute : attributes){
-            attribute.paint(canvas, showPoints);
+            if(attribute.getTipo().equals(AttributeType.DERIVADO)){
+                attribute.figure.paintLinesPunteadas(canvas, showPoints);
+            }
+            else if(attribute.getTipo().equals(AttributeType.CLAVE)){
+                attribute.figure.paintTextoSubrayado(canvas, showPoints);
+            }
+            else if(attribute.getTipo().equals(AttributeType.CLAVEPARCIAL)){
+                attribute.figure.paintTextoPunteado(canvas, showPoints);
+            }
+            else{
+                attribute.paint(canvas, showPoints);
+            } 
         }
         //paintAttributes(canvas);
     }
