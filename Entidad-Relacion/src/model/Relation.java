@@ -18,8 +18,8 @@ public class Relation extends Element {
      * @param posY
      * @param selected
      */
-    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities) {
-        super(name,selected);
+    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes) {
+        super(name,selected,attributes);
         this.entities = (ArrayList<Entity>) entities.clone();
         figure = new Figure(name, sides, posX, posY);
     }

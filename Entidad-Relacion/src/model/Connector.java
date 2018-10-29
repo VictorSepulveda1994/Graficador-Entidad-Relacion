@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Equipo Rocket
@@ -16,8 +18,8 @@ public class Connector extends Element{
     private Element element2;
     private Point pointElement2;
     
-    public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected) {
-        super(name, selected);
+    public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected,ArrayList<Attribute> attributes) {
+        super(name, selected,attributes);
         this.element1 = element1;
         this.pointElement1 = pointElement1;
         this.element2 = element2;

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Attribute;
 import model.Entity;
 import model.Relation;
 
@@ -53,7 +54,8 @@ public class PopAddRelationController extends CallPop implements Initializable {
         else{
             ArrayList<Entity> entities= new ArrayList<>();
             entities=(ArrayList<Entity>) entitiesSelect.clone();
-            Relation relation=new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false,entities);
+            ArrayList<Attribute> attributes= new ArrayList<>();
+            Relation relation=new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false,entities,attributes);
             entitiesSelect.clear();
             MainController.diagram.addRelation(relation);
             MainController.diagram.deselectAllEntities();

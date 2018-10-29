@@ -1,12 +1,14 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Attribute;
 import model.Entity;
 import model.EntityType;
 
@@ -51,7 +53,8 @@ public class PopAddEntityController extends CallPop implements Initializable {
         }
         else{
             EntityType type = PopQuestionEntityTypeController.typeChoosed;
-            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type) );
+            ArrayList<Attribute> attributes= new ArrayList<>();
+            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type,attributes));
             ((Stage)root.getScene().getWindow()).close();
         }
     }

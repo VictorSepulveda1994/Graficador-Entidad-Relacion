@@ -23,9 +23,10 @@ public abstract class Element {
      * @param name
      * @param selected
      */
-    public Element(String name,boolean selected) {
+    public Element(String name,boolean selected,ArrayList<Attribute> attributes) {
         this.name = name;
         this.selected = selected;
+        this.attributes=(ArrayList<Attribute>) attributes.clone();
     }
     
     /**

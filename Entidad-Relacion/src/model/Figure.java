@@ -100,12 +100,7 @@ public class Figure {
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(20));
-        if(points.size()==20){
-            gc.fillText(name, posX, posY-80);
-        }
-        else{
-            gc.fillText(name, posX, posY);
-        }
+        gc.fillText(name, posX, posY);
         int size = points.size();
         for (int i = 0; i+1 < size; i++) {
             Point point1 = points.get(i);
@@ -169,7 +164,7 @@ public class Figure {
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(20));
         gc.fillText(name, posX, posY);
-        gc.strokeLine(posX-((name.length()/2)*3), posY+12, posX+(name.length()*5), posY+12);
+        gc.strokeLine(posX-55, posY+12, posX+55, posY+12);
         int size = points.size();
         for (int i = 0; i+1 < size; i++) {
             Point point1 = points.get(i);
@@ -196,10 +191,12 @@ public class Figure {
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(20));
         gc.fillText(name, posX, posY);
-        for(int i=0;i<name.length();i++){
-            if(i%2==0){
-                gc.strokeLine(posX, posY+12, posX+(i*2), posY+12);
-            }
+        int posx=posX-55;
+        int posy=posY+12;
+        for(int i=0;i<12;i++){
+            gc.strokeLine(posx, posy, posx+5, posy);
+            posx+=10;
+            
         }
         
         int size = points.size();

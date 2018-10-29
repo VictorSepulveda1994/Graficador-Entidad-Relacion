@@ -248,17 +248,23 @@ public class Diagram extends CallPop {
         if( selectedElement != null && event.getX()-70 > 0  && event.getY()-40 > 0){
             String type = selectedElement.getClass().getName().substring(6);
             if( "Entity".equals(type) ){
-                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType()));
+                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                attributesCopy=(ArrayList<Attribute>) entities.get(iElement).getAttributes().clone();
+                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType(),attributesCopy));
                 selectedElement = entities.get(iElement);
             }
             else if( "Relation".equals(type) ){
                 ArrayList<Entity> entitiesCopy= new ArrayList<>();
                 entitiesCopy=(ArrayList<Entity>) relations.get(iElement).getEntities().clone();
-                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy));
+                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                attributesCopy=(ArrayList<Attribute>) relations.get(iElement).getAttributes().clone();
+                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy));
                 selectedElement = relations.get(iElement);
             }
             else if( "Attribute".equals(type)){
-                attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY()));
+                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                attributesCopy=(ArrayList<Attribute>) attributes.get(iElement).getAttributes().clone();
+                attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy));
                 selectedElement = attributes.get(iElement);
             }
             for (int i=0; i<relations.size();i++) {
@@ -451,11 +457,13 @@ public class Diagram extends CallPop {
      */
     public void createConnectors(){
         int j=0;
+        ArrayList<Attribute> attributes1=new ArrayList<>();
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getEntities().size();a++){
+                
                 Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
-                " ",false);
+                " ",false,attributes1);
                 connectors.add(connector);
             }
         }
@@ -463,7 +471,7 @@ public class Diagram extends CallPop {
             for(int a=0;a<relations.get(i).getAttributes().size();a++){
                 Connector connector= new Connector(relations.get(i),new Point(relations.get(i).figure.getPosX(),relations.get(i).figure.getPosY()),
                     relations.get(i).getAttributes().get(a),new Point(relations.get(i).getAttributes().get(a).figure.getPosX(),relations.get(i).getAttributes().get(a).figure.getPosY()),
-                " ",false);
+                " ",false,attributes1);
                 connectors.add(connector);
             }
         }
@@ -471,7 +479,7 @@ public class Diagram extends CallPop {
             for(int a=0;a<entities.get(i).getAttributes().size();a++){
                 Connector connector= new Connector(entities.get(i),new Point(entities.get(i).figure.getPosX(),entities.get(i).figure.getPosY()),
                     entities.get(i).getAttributes().get(a),new Point(entities.get(i).getAttributes().get(a).figure.getPosX(),entities.get(i).getAttributes().get(a).figure.getPosY()),
-                " ",false);
+                " ",false,attributes1);
                 connectors.add(connector);
             }
         }
@@ -479,7 +487,7 @@ public class Diagram extends CallPop {
             for(int a=0;a<attributes.get(i).getAttributes().size();a++){
                 Connector connector= new Connector(attributes.get(i),new Point(attributes.get(i).figure.getPosX(),attributes.get(i).figure.getPosY()),
                     attributes.get(i).getAttributes().get(a),new Point(attributes.get(i).getAttributes().get(a).figure.getPosX(),attributes.get(i).getAttributes().get(a).figure.getPosY()),
-                " ",false);
+                " ",false,attributes1);
                 connectors.add(connector);
             }
         }
@@ -541,8 +549,9 @@ public class Diagram extends CallPop {
                 ready = true;
                 if(!"".equals(nameAttribute)){
                     System.out.println("agregueeeee");
-                    entity.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
-                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    ArrayList<Attribute> attributes1=new ArrayList<>();
+                    entity.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
+                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
                     System.out.println(" "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getName()+
                             " "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getTipo().name());
                     nameAttribute="";
@@ -556,8 +565,9 @@ public class Diagram extends CallPop {
                 ready = true ;
                 if(!"".equals(nameAttribute)){
                     System.out.println("agregueeeee");
-                    relation.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
-                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY()));
+                    ArrayList<Attribute> attributes1=new ArrayList<>();
+                    relation.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
+                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
                     nameAttribute="";
                 }
                 break;
@@ -658,7 +668,9 @@ public class Diagram extends CallPop {
                                 relation.removeEntity(entity);
                                 ArrayList<Entity> entitiesCopy = new ArrayList<>();
                                 entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
-                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy));
+                                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                                attributesCopy=(ArrayList<Attribute>) entities.get(iElement).getAttributes().clone();
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy));
                                 paint(canvas, showPoints); 
                             }
                             j=0;

@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Equipo Rocket
@@ -12,8 +14,8 @@ package model;
 public class Attribute extends Element{
     AttributeType tipo;
 
-    public Attribute(AttributeType tipo, String name, boolean selected,int posX, int posY ) {
-        super(name, selected);
+    public Attribute(AttributeType tipo, String name, boolean selected,int posX, int posY, ArrayList<Attribute> attributes ) {
+        super(name, selected,attributes);
         this.tipo = tipo;
         this.figure= new Figure(name,30,posX,posY);
         if(tipo.equals(AttributeType.MULTIVALUADO)){

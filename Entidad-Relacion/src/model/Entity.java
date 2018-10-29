@@ -19,8 +19,8 @@ public class Entity extends Element {
      * @param selected
      * @param type
      */
-    public Entity(String name, int posX, int posY, boolean selected,EntityType type) {
-        super(name,selected);
+    public Entity(String name, int posX, int posY, boolean selected,EntityType type,ArrayList<Attribute> attributes) {
+        super(name,selected,attributes);
         this.type=type;
         figure = new Figure(name, posX, posY);
         if(type==EntityType.WEAK){
