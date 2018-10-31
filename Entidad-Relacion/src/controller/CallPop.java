@@ -144,6 +144,13 @@ public class CallPop {
         alert.showAndWait();
     }
     
+    public void alertOfTypeIncorrect(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Solo los atributos compuestos pueden contener mas atributos.");
+        alert.showAndWait();
+    }
+    
     /**
      *Muestra un mensaje de error al seleccionar más de 6 entidades
      */

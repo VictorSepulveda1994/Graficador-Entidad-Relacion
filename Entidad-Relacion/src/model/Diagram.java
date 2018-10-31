@@ -578,6 +578,25 @@ public class Diagram extends CallPop {
                 break;
             }
         }
+        for (Attribute attribute : attributes) {
+            if(attribute.isInFigure(event) && ready == false){
+                if(attribute.getTipo().equals(AttributeType.COMPOUND)){
+                    popAddAttribute();
+                    ready = true ;
+                    if(!"".equals(nameAttribute)){
+                        ArrayList<Attribute> attributes1=new ArrayList<>();
+                        attribute.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
+                        MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
+                        nameAttribute="";
+                    }
+                    break;
+                }
+                else{
+                    alertOfTypeIncorrect();
+                    break;
+                }
+            }
+        }
         ready = false;
         paint(canvas, showPoints);
     }
