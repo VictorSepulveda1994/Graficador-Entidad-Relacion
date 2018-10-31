@@ -18,7 +18,7 @@ public class Attribute extends Element{
         super(name, selected,attributes);
         this.tipo = tipo;
         this.figure= new Figure(name,30,posX,posY);
-        if(tipo.equals(AttributeType.MULTIVALUADO)){
+        if(tipo.equals(AttributeType.MULTIVALED)){
             figure.addDoubleLineEllipse();
         }
     }

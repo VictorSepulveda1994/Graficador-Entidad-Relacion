@@ -190,10 +190,17 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="10.0" style="-fx-background-color: #5798d6;" GridPane.columnIndex="1">
                <children>
-                  <ToggleButton fx:id="attributeToggleButton" mnemonicParsing="false" onAction="#buttonAttributeClicked" text="Atributo">
+                  <ToggleButton fx:id="attributeToggleButton" mnemonicParsing="false" onAction="#buttonAttributeClicked" prefHeight="45.0" prefWidth="115.0" text="Atributo">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="13.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="37.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/Ellipse.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </ToggleButton>
                   <ToggleButton fx:id="editToggleButton" layoutX="400.0" layoutY="22.0" mnemonicParsing="false" onAction="#buttonEditClicked" prefHeight="45.0" prefWidth="115.0" text="Editar" wrapText="true">
                      <graphic>

@@ -42,6 +42,42 @@ public abstract class Element {
     }
     
     /**
+     * Método que se encarga de llamar al metodo paint del atributo tipo derivado.
+     * @param canvas
+     * @param showPoints
+     */
+    public void paintDerivateAttribute(Canvas canvas, boolean showPoints){
+        figure.paintDottedLines(canvas, selected);
+        if(showPoints){
+            figure.paintPoints(canvas);
+        }
+    }
+    
+     /**
+     * Método que se encarga de llamar al metodo paint del atributo tipo clave.
+     * @param canvas
+     * @param showPoints
+     */
+    public void paintKeyAttribute(Canvas canvas, boolean showPoints){
+        figure.paintUnderlinedText(canvas, selected);
+        if(showPoints){
+            figure.paintPoints(canvas);
+        }
+    }
+    
+    /**
+    * Método que se encarga de llamar al metodo paint del atributo tipo clave parcial.
+    * @param canvas
+    * @param showPoints
+    */
+    public void paintPartialKeyAttribute(Canvas canvas, boolean showPoints){
+        figure.paintDottedText(canvas, selected);
+        if(showPoints){
+            figure.paintPoints(canvas);
+        }
+    }
+    
+    /**
      * Método que retorna el punto mínimo en la figura del elemento
      * @return Point
      */
@@ -105,8 +141,18 @@ public abstract class Element {
         return attributes;
     }
 
+    //Metodo que retorna la posicion de un atributo dentro de la lista atributos.(retorna -1 sino lo encuentra).
+    public int findAttribute(Attribute attribute){
+        for(int i=0;i<this.attributes.size();i++){
+            if(this.attributes.get(i).equals(attribute)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     public void addAttribute(Attribute attribute) {
         this.attributes.add(attribute);
     }
-    
+
 }

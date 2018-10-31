@@ -46,7 +46,6 @@ public class PopAddAttributeController extends CallPop implements Initializable 
     } 
     //cierra la ventana y agrega el nombre que este correcto
     public void addToScreen(){
-        System.out.println("presione el boton");
         nameAttribute=nameNewAttribute.textProperty().get();
         if( nameAttribute.isEmpty() || nameAttribute.length()>12 || MainController.diagram.thisNameExists(nameAttribute) ){
             alertName();
@@ -63,22 +62,22 @@ public class PopAddAttributeController extends CallPop implements Initializable 
     @FXML
     public void changeOfOption(){
         if("Atributo Clave".equals(options.getValue())){
-            attributeType=AttributeType.CLAVE;
+            attributeType=AttributeType.KEY;
         }
         if("Atributo Generico".equals(options.getValue())){
-            attributeType=AttributeType.GENERICO;
+            attributeType=AttributeType.GENERIC;
         }
         if("Atributo Multivaluado".equals(options.getValue())){
-            attributeType=AttributeType.MULTIVALUADO;
+            attributeType=AttributeType.MULTIVALED;
         }
         if("Atributo Compuesto".equals(options.getValue())){
-            attributeType=AttributeType.COMPUESTO;
+            attributeType=AttributeType.COMPOUND;
         }
         if("Atributo Derivado".equals(options.getValue())){
-            attributeType=AttributeType.DERIVADO;
+            attributeType=AttributeType.DERIVATIVE;
         }
         if("Atributo Clave Parcial".equals(options.getValue())){
-            attributeType=AttributeType.CLAVEPARCIAL;
+            attributeType=AttributeType.PARTIALKEY;
         }
     }
 }

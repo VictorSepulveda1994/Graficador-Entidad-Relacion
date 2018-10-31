@@ -106,18 +106,24 @@ public class Diagram extends CallPop {
         }
         for(Attribute attribute : attributes){
             attribute.figure.fillPolygon(canvas);
-            if(attribute.getTipo().equals(AttributeType.DERIVADO)){
-                attribute.figure.paintLinesPunteadas(canvas, showPoints);
+            if(attribute.getTipo().equals(AttributeType.DERIVATIVE)){
+                attribute.paintDerivateAttribute(canvas, showPoints);
             }
-            else if(attribute.getTipo().equals(AttributeType.CLAVE)){
-                attribute.figure.paintTextoSubrayado(canvas, showPoints);
+            else if(attribute.getTipo().equals(AttributeType.KEY)){
+                attribute.paintKeyAttribute(canvas, showPoints);
             }
-            else if(attribute.getTipo().equals(AttributeType.CLAVEPARCIAL)){
-                attribute.figure.paintTextoPunteado(canvas, showPoints);
+            else if(attribute.getTipo().equals(AttributeType.PARTIALKEY)){
+                attribute.paintPartialKeyAttribute(canvas, showPoints);
             }
             else{
                 attribute.paint(canvas, showPoints);
             } 
+        }
+        //Se vuelven a pintar los puntos de control los conectores para que se puedan visualizar.
+        for (Connector connector : connectors) {
+            if(showPoints){
+                connector.figure.paintPoints(canvas);
+            }
         }
         //paintAttributes(canvas);
     }
@@ -340,6 +346,9 @@ public class Diagram extends CallPop {
             if( "Relation".equals(type) ){
                 relations.get(iElement).setSelected(false);
             }
+            if( "Attribute".equals(type) ){
+                attributes.get(iElement).setSelected(false);
+            }
         }
         selectedElement = null;
         iElement = -1;
@@ -548,12 +557,9 @@ public class Diagram extends CallPop {
                 popAddAttribute();
                 ready = true;
                 if(!"".equals(nameAttribute)){
-                    System.out.println("agregueeeee");
                     ArrayList<Attribute> attributes1=new ArrayList<>();
                     entity.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
                     MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
-                    System.out.println(" "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getName()+
-                            " "+MainController.diagram.getAttributes().get(MainController.diagram.getAttributes().size()-1).getTipo().name());
                     nameAttribute="";
                 }
                 break;
@@ -564,7 +570,6 @@ public class Diagram extends CallPop {
                 popAddAttribute();
                 ready = true ;
                 if(!"".equals(nameAttribute)){
-                    System.out.println("agregueeeee");
                     ArrayList<Attribute> attributes1=new ArrayList<>();
                     relation.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
                     MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
@@ -648,8 +653,16 @@ public class Diagram extends CallPop {
         //Eliminar una Relación
         for (int i = 0; i < this.relations.size(); i++) {
             if(this.relations.get(i).isInFigure(event) && ready == false){
-                this.relations.remove(i);
                 ready = true;
+                Relation relation= this.relations.get(i);
+                while(!relation.getAttributes().isEmpty()){
+                    for (int j = 0; j <relation.getAttributes().size(); j++) {
+                        deleteAttribute(relation.getAttributes().get(j));
+                        relation.getAttributes().remove(j);
+                        paint(canvas, showPoints); 
+                    }
+                }
+                this.relations.remove(i);              
             }
         }
         //Eliminar una entidad
@@ -657,11 +670,20 @@ public class Diagram extends CallPop {
             if(this.entities.get(i).isInFigure(event) && ready == false){
                 ready = true;
                 Entity entity = this.entities.get(i);
+                while(!entity.getAttributes().isEmpty()){
+                    for (int j = 0; j <entity.getAttributes().size(); j++) {
+                        deleteAttribute(entity.getAttributes().get(j));
+                        entity.getAttributes().remove(j);
+                        paint(canvas, showPoints); 
+                    }
+                }
                 while(hasAnyRelation(entity)){
                     for (int j = 0; j <this.relations.size(); j++) {
                         if(this.relations.get(j).hasThisEntity(entity)){
                             Relation relation = this.relations.get(j);
                             if (relation.getEntities().size()<=1){
+                                deleteSomeAttributes(this.relations.get(i));
+                                this.relations.get(j).getAttributes().clear();
                                 this.relations.remove(j);                      
                             }
                             else{
@@ -669,7 +691,7 @@ public class Diagram extends CallPop {
                                 ArrayList<Entity> entitiesCopy = new ArrayList<>();
                                 entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
                                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
-                                attributesCopy=(ArrayList<Attribute>) entities.get(iElement).getAttributes().clone();
+                                attributesCopy=(ArrayList<Attribute>) relation.getAttributes().clone();
                                 this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy));
                                 paint(canvas, showPoints); 
                             }
@@ -680,6 +702,25 @@ public class Diagram extends CallPop {
                 if (!hasAnyRelation(this.entities.get(i))){
                     this.entities.remove(i);
                 }
+            }
+        }
+        //Eliminar un atributo
+        for (int i = 0; i < this.attributes.size(); i++) {
+            if(this.attributes.get(i).isInFigure(event) && ready == false){
+                ready = true;
+                for (int j = 0; j <this.entities.size(); j++) {
+                    int indexAttribute=this.entities.get(j).findAttribute(this.attributes.get(i));
+                    if(indexAttribute!=-1){
+                        this.entities.get(j).getAttributes().remove(indexAttribute);
+                    }
+                }
+                for (int j = 0; j <this.relations.size(); j++) {
+                    int indexAttribute=this.relations.get(j).findAttribute(this.attributes.get(i));
+                    if(indexAttribute!=-1){
+                        this.relations.get(j).getAttributes().remove(indexAttribute);
+                    }
+                }
+                this.attributes.remove(i);              
             }
         }
         ready = false;
@@ -720,6 +761,28 @@ public class Diagram extends CallPop {
         return false;
     }
     
+    //Metodo para eliminar un atributo dentro del diagrama (sin conocer su indice).
+    public void deleteAttribute (Attribute attribute){
+        for (int i = 0; i <this.attributes.size(); i++) {
+            if(this.attributes.get(i).equals(attribute)){
+                this.attributes.remove(i);
+            }
+        }
+    }
+    
+    //Metodo para eliminar algunos atributos dentro del diagrama de una relacion o entidad.
+    public void deleteSomeAttributes (Element element){
+        for (int i = 0; i <this.attributes.size(); i++) {
+            for (int j = 0; j <element.getAttributes().size(); j++) {
+                if(this.attributes.get(i).equals(element.getAttributes().get(j))){
+                    this.attributes.remove(i);
+                }
+            }
+            
+        }
+    }
+    
+  
     /**
      *
      * @return entities

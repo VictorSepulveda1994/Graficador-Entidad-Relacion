@@ -225,10 +225,7 @@ public class MainController extends CallPop implements Initializable {
         diagram.paint(canvas,showPoints);
         
     }
-    @FXML
-    private void buttonDrawElipse(ActionEvent event){
-        System.out.println("prendi el boton");
-    }
+    
     /**
      * Método para cuando se deseen mostrar/ocultar los puntos de control
      */
@@ -346,7 +343,7 @@ public class MainController extends CallPop implements Initializable {
             if (diagram.getSelectedElement()!=null){
                 Element element = diagram.getSelectedElement();
                 String type = element.getClass().getName().substring(6);
-                if("Relation".equals(type)){
+                if("Relation".equals(type) || "Attribute".equals(type)){
                     diagram.deselectElement(event);
                     diagram.deselectAllEntities();
                 }
@@ -448,6 +445,16 @@ public class MainController extends CallPop implements Initializable {
                     diagram.getRelations().get(i).setSelected(false);
                 }
             }
+            //Pintar Attribute
+            for (int i = 0; i <diagram.getAttributes().size(); i++) {
+                if(diagram.getAttributes().get(i).isInFigure(event)){
+                    diagram.getAttributes().get(i).setSelected(true);
+                    break;
+                }
+                else{
+                    diagram.getAttributes().get(i).setSelected(false);
+                }
+            }
             diagram.paint(canvas, showPoints);
         }
     }
@@ -480,6 +487,7 @@ public class MainController extends CallPop implements Initializable {
         toggleButtons.add(pointsToggleButton);
         toggleButtons.add(editToggleButton);
         toggleButtons.add(deleteToggleButton);
+        toggleButtons.add(attributeToggleButton);
         buttons.add(cleanButton);
         buttons.add(exportButton);
         //Ajuste del tamaño de todos los botones

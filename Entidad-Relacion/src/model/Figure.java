@@ -124,7 +124,7 @@ public class Figure {
         }  
     }
     
-    public void paintLinesPunteadas(Canvas canvas, boolean selected){
+    public void paintDottedLines(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(3);
         if( selected ){
@@ -149,7 +149,7 @@ public class Figure {
         }
     }
     
-    public void paintTextoSubrayado(Canvas canvas, boolean selected){
+    public void paintUnderlinedText(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(3);
         if( selected ){
@@ -176,7 +176,7 @@ public class Figure {
         gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
     }
     
-    public void paintTextoPunteado(Canvas canvas, boolean selected){
+    public void paintDottedText(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(3);
         if( selected ){
