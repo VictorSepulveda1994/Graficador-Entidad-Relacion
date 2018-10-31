@@ -636,6 +636,18 @@ public class Diagram extends CallPop {
                 break;
             }
         }
+        for (Attribute attribute : attributes) {
+            if(attribute.isInFigure(event) && ready == false){
+                popEditElement();
+                ready = true ;
+                if(!"".equals(enteredName)){
+                    attribute.setName(enteredName);
+                    attribute.figure.setName(enteredName);
+                    enteredName="";
+                }
+                break;
+            }
+        }
         ready = false;
         paint(canvas, showPoints);
     }
