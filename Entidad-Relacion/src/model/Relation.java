@@ -24,6 +24,12 @@ public class Relation extends Element {
         figure = new Figure(name, sides, posX, posY);
     }
     
+    public Relation(Relation relation){
+        super(relation.getName(),false,relation.getAttributes());
+        this.entities = relation.getEntities();
+        figure = new Figure(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY());
+    }
+    
     /**
      *
      * @param entity

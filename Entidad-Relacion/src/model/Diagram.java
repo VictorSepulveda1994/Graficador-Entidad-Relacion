@@ -4,6 +4,8 @@ import controller.CallPop;
 import controller.MainController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
+import static controller.PopChangeController.enteredNameR;
+import static controller.PopChangeController.newrelation;
 import static controller.PopChangeName.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class Diagram extends CallPop {
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
     private ArrayList <Attribute> attributes;
-    private Element selectedElement;
+    public static Element selectedElement;
     private Element auxElement;
     private int iElement;
 
@@ -643,17 +645,20 @@ public class Diagram extends CallPop {
                 break;
             }
         }
+        int iE=0;
         for (Relation relation : relations) {
             if(relation.isInFigure(event) && ready == false){
-                popEditElement();
+                selectedElement=relation;
+                enteredNameR=relation.getName();
+                popEdit();
                 ready = true ;
                 if(!"".equals(enteredName)){
-                    relation.setName(enteredName);
-                    relation.figure.setName(enteredName);
+                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes()));      
                     enteredName="";
                 }
                 break;
             }
+            iE++;
         }
         for (Attribute attribute : attributes) {
             if(attribute.isInFigure(event) && ready == false){
