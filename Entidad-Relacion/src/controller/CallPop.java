@@ -78,6 +78,26 @@ public class CallPop {
         dialog.close();
 
     }
+    
+    public void popEdit()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Editar relación");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopChange.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.setResizable(false);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.resizableProperty().setValue(Boolean.FALSE);
+        dialog.setResizable(false);
+        dialog.close();
+
+    }
     /**
      *
      * Abre ventana para agregar el nombre de la relación y crear la relación
