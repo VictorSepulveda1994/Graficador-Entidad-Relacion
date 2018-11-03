@@ -48,7 +48,6 @@ public class PopChangeController extends CallPop implements Initializable {
         // TODO
         newName.setText(enteredNameR);
         actualizarRoot();
-        System.out.println("KKSDJKSJDKSJAK");
         
     }    
     
@@ -70,7 +69,6 @@ public class PopChangeController extends CallPop implements Initializable {
                 for (int a=0;a<newrelation.getEntities().size();a++) {
                     if(cbs.get(i).getText().equals(newrelation.getEntities().get(a).getName())){
                         newrelation.getEntities().remove(newrelation.getEntities().get(a));
-                        System.out.println("tamaño: "+newrelation.getEntities().size());
                         break;
                     }
                 }

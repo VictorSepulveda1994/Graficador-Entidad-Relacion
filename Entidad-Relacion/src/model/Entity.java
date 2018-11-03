@@ -27,6 +27,14 @@ public class Entity extends Element {
             figure.addDoubleLineRectangle();
         }
     }
+    public Entity(Entity entity){
+        super(entity.getName(),false,entity.getAttributes());
+        this.type=entity.getType();
+        figure = new Figure(entity.getName(),entity.figure.getPosX(),entity.figure.getPosY());
+        if(type==EntityType.WEAK){
+            figure.addDoubleLineRectangle();
+        }
+    }
 
     /**
      *
