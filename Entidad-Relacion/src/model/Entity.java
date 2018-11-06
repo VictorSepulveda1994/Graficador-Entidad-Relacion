@@ -10,6 +10,7 @@ public class Entity extends Element {
     
 
     FigureType type;
+    public ArrayList<Entity> entities;
     
     /**
      *Constructor de entidad
@@ -26,6 +27,7 @@ public class Entity extends Element {
         if(type==FigureType.WEAK){
             figure.addDoubleLineRectangle();
         }
+        this.entities= new ArrayList<>();
     }
     public Entity(Entity entity){
         super(entity.getName(),false,entity.getAttributes());
@@ -34,6 +36,15 @@ public class Entity extends Element {
         if(type==FigureType.WEAK){
             figure.addDoubleLineRectangle();
         }
+        this.entities=entity.getEntities();
+    }
+
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
+
+    public void addEntity(Entity entiti) {
+        this.entities.add(entiti);
     }
 
     /**

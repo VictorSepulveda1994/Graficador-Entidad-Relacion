@@ -4,6 +4,7 @@ import controller.CallPop;
 import controller.MainController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
+import controller.PopChangeController;
 import static controller.PopChangeController.enteredNameR;
 import static controller.PopChangeController.newrelation;
 import controller.PopChangeEntity;
@@ -782,6 +783,12 @@ public class Diagram extends CallPop {
         
         for (Relation relation : this.relations) {
             if (relation.getName().equals(name)){
+                return true;                
+            }
+        }
+        
+        for (Attribute attribute : this.attributes) {
+            if (attribute.getName().equals(name)){
                 return true;                
             }
         }
