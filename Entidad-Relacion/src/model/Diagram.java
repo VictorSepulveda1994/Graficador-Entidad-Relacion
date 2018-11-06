@@ -7,7 +7,6 @@ import static controller.PopAddAttributeController.nameAttribute;
 import static controller.PopChangeController.enteredNameR;
 import static controller.PopChangeController.newrelation;
 import controller.PopChangeEntity;
-import static controller.PopChangeEntity.newentity;
 import static controller.PopChangeName.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
+import static controller.PopChangeEntity.newEntity;
 
 /**
  *
@@ -268,7 +268,7 @@ public class Diagram extends CallPop {
                 entitiesCopy=(ArrayList<Entity>) relations.get(iElement).getEntities().clone();
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) relations.get(iElement).getAttributes().clone();
-                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy));
+                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType()));
                 selectedElement = relations.get(iElement);
             }
             else if( "Attribute".equals(type)){
@@ -643,7 +643,7 @@ public class Diagram extends CallPop {
                 popEditEntity();
                 ready = true;
                 if(!"".equals(enteredName)){
-                    entities.set(iE, new Entity(newentity.getName(),newentity.figure.getPosX(),newentity.figure.getPosY(),false,newentity.getType(),newentity.getAttributes()));
+                    entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes()));
                     enteredName="";
                 }
                 break;
@@ -658,7 +658,7 @@ public class Diagram extends CallPop {
                 popEdit();
                 ready = true ;
                 if(!"".equals(enteredName)){
-                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes()));      
+                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType()));      
                     enteredName="";
                 }
                 break;
@@ -733,7 +733,7 @@ public class Diagram extends CallPop {
                                 entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
                                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                                 attributesCopy=(ArrayList<Attribute>) relation.getAttributes().clone();
-                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy));
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType()));
                                 paint(canvas, showPoints); 
                             }
                             j=0;
@@ -823,7 +823,25 @@ public class Diagram extends CallPop {
         }
     }
     
-  
+    public Element foundElement (MouseEvent event){
+        for (Entity entity : this.entities){
+            if(entity.figure.isInFigure(event)){
+                return entity;
+            }
+        }
+        for (Attribute attribute : this.attributes){
+            if(attribute.figure.isInFigure(event)){
+                return attribute;
+            }
+        }
+        for (Relation relation : this.relations){
+            if(relation.figure.isInFigure(event)){
+                return relation;
+            }
+        }
+        return null;
+    }
+    
     /**
      *
      * @return entities

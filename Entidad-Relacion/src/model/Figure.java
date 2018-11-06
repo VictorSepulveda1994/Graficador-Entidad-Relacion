@@ -444,6 +444,28 @@ public class Figure {
         pointsInside.add(point);  
     }
     
+    public void addDoubleLinePolygon(){
+        Point point;
+        if (sides>0 && sides<3){
+            point = new Point ( (int)(posX + diamondDiagonal1-5), (int)(posY));
+            pointsInside.add(point);
+            point = new Point ( (int)(posX), (int)(posY - diamondDiagonal2-5));
+            pointsInside.add(point);
+            point = new Point ( (int)(posX - diamondDiagonal1-5), (int)(posY));
+            pointsInside.add(point);
+            point = new Point ( (int)(posX), (int)(posY + diamondDiagonal2-5));
+            pointsInside.add(point);
+        }
+        else if (sides>2 && sides<20){
+            for(int i=0; i<sides; i++){
+                point = new Point ( (int)(posX + radiusPolygon-5 * Math.cos(i * 2 * Math.PI / sides)), 
+                        (int)(posY - radiusPolygon-5 * Math.sin(i * 2 * Math.PI / sides)));
+                pointsInside.add(point);
+            }
+        }
+    }
+    
+
     /**
      * Crea los puntos de la elipse para hacer doble linea
      */

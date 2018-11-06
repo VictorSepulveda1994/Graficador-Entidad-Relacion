@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
 import java.net.URL;
@@ -9,13 +14,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import static model.Diagram.selectedElement;
-import model.Entity;
 import model.FigureType;
+import model.Relation;
+
 /**
+ * FXML Controller class
  *
- * @author Equipo Rocket
+ * @author 
  */
-public class PopChangeEntity extends CallPop implements Initializable{
+public class PopChangeRelationController extends CallPop implements Initializable{
 /**
      * Panel donde se realizaran las acciones
      */
@@ -34,15 +41,15 @@ public class PopChangeEntity extends CallPop implements Initializable{
      */
     public static String enteredName;
     public static FigureType type;
-    public static Entity newEntity= new Entity((Entity) selectedElement);
+    public static Relation newRelation= new Relation((Relation) selectedElement);
     /**
      * Inicio de la clase controladora
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        type=newEntity.getType();
-        newName.setText(newEntity.getName());
+        type=newRelation.getType();
+        newName.setText(newRelation.getName());
         if(type.equals(FigureType.WEAK)){
             opcion.setSelected(true);
         }
@@ -59,7 +66,7 @@ public class PopChangeEntity extends CallPop implements Initializable{
         enteredName=newName.textProperty().get();
         if(enteredName.isEmpty() || enteredName.length()>12){
             alertName();
-            enteredName=newEntity.getName();
+            enteredName=newRelation.getName();
         }
         else{
             if(opcion.isSelected()){
@@ -68,8 +75,8 @@ public class PopChangeEntity extends CallPop implements Initializable{
             else{
                 type=FigureType.STRONG;
             }
-            newEntity.setName(enteredName);
-            newEntity.setType(type);
+            newRelation.setName(enteredName);
+            newRelation.setType(type);
             ((Stage)root.getScene().getWindow()).close();
             
         }
@@ -84,5 +91,3 @@ public class PopChangeEntity extends CallPop implements Initializable{
     }
     
 }
-
-    

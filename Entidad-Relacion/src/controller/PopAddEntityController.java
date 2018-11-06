@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Attribute;
 import model.Entity;
-import model.EntityType;
+import model.FigureType;
 
 
 /**
@@ -52,7 +52,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
             alertName();
         }
         else{
-            EntityType type = PopQuestionEntityTypeController.typeChoosed;
+            FigureType type = FigureType.STRONG;
             ArrayList<Attribute> attributes= new ArrayList<>();
             MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type,attributes));
             ((Stage)root.getScene().getWindow()).close();

@@ -1,6 +1,7 @@
 package controller;
 
 import com.itextpdf.text.DocumentException;
+import static controller.PopChangeName.enteredName;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.net.URL;
@@ -22,9 +23,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import model.Attribute;
 import model.Diagram;
+import static model.Diagram.selectedElement;
 import model.Element;
 import model.Entity;
 import model.Relation;
+import static controller.PopChangeEntity.newEntity;
 
 /**
  *
@@ -333,10 +336,7 @@ public class MainController extends CallPop implements Initializable {
     private void canvasClicked(MouseEvent event) throws IOException {
         MainController.event = event;
         if(entityToggleButton.isSelected() && event.getX()-75 > 0  && event.getY()-45 > 0){
-            popQuestionEntityType();
-            if(PopQuestionEntityTypeController.typeChoosed!=null){
-                popAddEntity();
-            }
+            popAddEntity();
         }
         else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
@@ -371,6 +371,11 @@ public class MainController extends CallPop implements Initializable {
                 diagram.delete(event, canvas, showPoints);
             }
         }
+        if (event.getClickCount() == 2 && !event.isConsumed()) {
+            event.consume();
+            System.out.println("doble click");           
+        }
+        
         //Una vez realizada la acción correspondiente, actualizamos el canvas
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Relation extends Element {
 
     private ArrayList <Entity> entities;
+    public FigureType type;
     
     /**
      *Constructor de la relación
@@ -18,16 +19,23 @@ public class Relation extends Element {
      * @param posY
      * @param selected
      */
-    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes) {
+    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type) {
         super(name,selected,attributes);
+        this.type=type;
         this.entities = (ArrayList<Entity>) entities.clone();
         figure = new Figure(name, sides, posX, posY);
+        if(type==FigureType.WEAK){
+            figure.addDoubleLinePolygon();
+        }
     }
     
     public Relation(Relation relation){
         super(relation.getName(),false,relation.getAttributes());
         this.entities = relation.getEntities();
         figure = new Figure(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY());
+        if(type==FigureType.WEAK){
+            figure.addDoubleLinePolygon();
+        }
     }
     
     /**
@@ -70,4 +78,13 @@ public class Relation extends Element {
             }
         }
     }
+
+    public FigureType getType() {
+        return type;
+    }
+
+    public void setType(FigureType type) {
+        this.type = type;
+    }
+    
 }
