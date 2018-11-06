@@ -785,6 +785,12 @@ public class Diagram extends CallPop {
                 return true;                
             }
         }
+        
+        for (Attribute attribute : this.attributes) {
+            if (attribute.getName().equals(name)){
+                return true;                
+            }
+        }
         return false;
     }
     

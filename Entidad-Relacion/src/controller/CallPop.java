@@ -163,6 +163,26 @@ public class CallPop {
         
     }
     
+    public void popAddHeritage()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Crear herencia");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopHeritage.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.setResizable(false);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.setResizable(false);
+        dialog.resizableProperty().setValue(Boolean.FALSE);
+        dialog.close();    
+        
+    }
+    
     /**
      *Muestra un mensaje de error al ingresar nombre invalido
      */
@@ -181,6 +201,13 @@ public class CallPop {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Debe elegir un tipo de entidad para poder continuar.");
+        alert.showAndWait();
+    }
+    
+    public void alertTypeHeritageIncorrect(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Debe elegir un tipo de herencia para poder continuar.");
         alert.showAndWait();
     }
     
