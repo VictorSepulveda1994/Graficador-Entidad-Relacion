@@ -84,7 +84,7 @@ public class PopChangeController extends CallPop implements Initializable {
             if(disponibles.get(i).isSelected()){
                 for(int a=0;a<MainController.diagram.getEntities().size();a++) {
                     if(MainController.diagram.getEntities().get(a).getName().equals(disponibles.get(i).getText())){
-                        newrelation.getEntities().add(MainController.diagram.getEntities().get(a));     
+                        newrelation.getEntities().add(MainController.diagram.getEntities().get(a));  
                         break;
                     }
                 }

@@ -2,7 +2,6 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="484.0" prefWidth="478.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopChangeController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="558.0" prefWidth="478.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopChangeController">
    <children>
       <Pane prefHeight="68.0" prefWidth="478.0" style="-fx-background-color: #eae8e8;">
          <children>
@@ -29,17 +28,16 @@
          <font>
             <Font size="18.0" />
          </font></Text>
-      <ScrollPane layoutX="24.0" layoutY="193.0" prefHeight="204.0" prefWidth="250.0">
+      <ScrollPane layoutX="24.0" layoutY="193.0" prefHeight="183.0" prefWidth="181.0">
         <content>
-          <AnchorPane fx:id="rootOpciones" minHeight="0.0" minWidth="0.0" prefHeight="204.0" prefWidth="249.0" />
+          <AnchorPane fx:id="rootOpciones" minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="165.0" />
         </content>
       </ScrollPane>
-      <Text layoutX="293.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar">
+      <Text layoutX="260.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar entidadesr">
          <font>
             <Font size="18.0" />
          </font></Text>
-      <ComboBox fx:id="entidadesDisponibles" layoutX="293.0" layoutY="230.0" onAction="#agregar" prefHeight="27.0" prefWidth="163.0" />
-      <Button layoutX="259.0" layoutY="426.0" mnemonicParsing="false" onAction="#addToScreen" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cambiar">
+      <Button layoutX="258.0" layoutY="505.0" mnemonicParsing="false" onAction="#addToScreen" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cambiar">
          <font>
             <Font name="Century Gothic Bold" size="14.0" />
          </font>
@@ -47,7 +45,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="375.0" layoutY="426.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cancelar">
+      <Button layoutX="361.0" layoutY="505.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cancelar">
          <font>
             <Font name="Century Gothic Bold" size="13.0" />
          </font>
@@ -55,7 +53,20 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="293.0" layoutY="360.0" mnemonicParsing="false" onAction="#delete" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Eliminar">
+      <ScrollPane layoutX="260.0" layoutY="193.0" prefHeight="183.0" prefWidth="181.0">
+         <content>
+            <AnchorPane fx:id="entidadesDisponibles" minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="165.0" />
+         </content>
+      </ScrollPane>
+      <Button layoutX="120.0" layoutY="389.0" mnemonicParsing="false" onAction="#delete" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Eliminar">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="354.0" layoutY="390.0" mnemonicParsing="false" onAction="#agregar" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Agregar">
          <font>
             <Font name="Century Gothic Bold" size="14.0" />
          </font>

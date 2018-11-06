@@ -4,6 +4,7 @@ import controller.CallPop;
 import controller.MainController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
+import controller.PopChangeController;
 import static controller.PopChangeController.enteredNameR;
 import static controller.PopChangeController.newrelation;
 import controller.PopChangeEntity;
@@ -657,9 +658,9 @@ public class Diagram extends CallPop {
                 enteredNameR=relation.getName();
                 popEdit();
                 ready = true ;
-                if(!"".equals(enteredName)){
+                if(!"".equals(enteredNameR)){
                     relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes()));      
-                    enteredName="";
+                    enteredNameR="";
                 }
                 break;
             }
