@@ -28,6 +28,7 @@ public class PopChangeRelationController extends CallPop implements Initializabl
      */
     @FXML
     private AnchorPane root;
+    
     @FXML
     CheckBox opcion;
     /**
@@ -49,6 +50,8 @@ public class PopChangeRelationController extends CallPop implements Initializabl
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         type=newRelation.getType();
+        System.out.println(type);
+        System.out.println(newRelation.figure.getName());
         newName.setText(newRelation.getName());
         if(type.equals(FigureType.WEAK)){
             opcion.setSelected(true);
