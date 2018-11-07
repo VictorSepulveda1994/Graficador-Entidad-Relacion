@@ -83,7 +83,7 @@ public class CallPop {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar relación");
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopChangeRelation.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopChange.fxml"));
         
         Scene xscene = new Scene(root);
         

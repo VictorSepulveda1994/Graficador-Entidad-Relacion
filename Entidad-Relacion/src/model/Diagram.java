@@ -640,7 +640,7 @@ public class Diagram extends CallPop {
         for (Entity entity : entities) {
             if(entity.isInFigure(event) && ready == false){
                 selectedElement=entity;
-                enteredName= entity.getName();
+                enteredName=entity.getName();
                 popEditEntity();
                 ready = true;
                 if(!"".equals(enteredName)){
@@ -658,9 +658,9 @@ public class Diagram extends CallPop {
                 enteredNameR=relation.getName();
                 popEdit();
                 ready = true ;
-                if(!"".equals(enteredName)){
+                if(!"".equals(enteredNameR)){
                     relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType()));      
-                    enteredName="";
+                    enteredNameR="";
                 }
                 break;
             }

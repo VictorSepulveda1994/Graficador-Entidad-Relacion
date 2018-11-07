@@ -447,13 +447,13 @@ public class Figure {
     public void addDoubleLinePolygon(){
         Point point;
         if (sides>0 && sides<3){
-            point = new Point ( (int)(posX + diamondDiagonal1-5), (int)(posY));
+            point = new Point ( (int)(posX + (diamondDiagonal1-8)), (int)(posY));
             pointsInside.add(point);
-            point = new Point ( (int)(posX), (int)(posY - diamondDiagonal2-5));
+            point = new Point ( (int)(posX), (int)(posY - (diamondDiagonal2-8)));
             pointsInside.add(point);
-            point = new Point ( (int)(posX - diamondDiagonal1-5), (int)(posY));
+            point = new Point ( (int)(posX - (diamondDiagonal1-8)), (int)(posY));
             pointsInside.add(point);
-            point = new Point ( (int)(posX), (int)(posY + diamondDiagonal2-5));
+            point = new Point ( (int)(posX), (int)(posY + (diamondDiagonal2-8)));
             pointsInside.add(point);
         }
         else if (sides>2 && sides<20){

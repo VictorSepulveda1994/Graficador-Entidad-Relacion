@@ -11,13 +11,12 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.Diagram;
 import static model.Diagram.selectedElement;
 import model.Entity;
+import model.FigureType;
 import model.Relation;
 /**
  * FXML Controller class
@@ -34,9 +33,12 @@ public class PopChangeController extends CallPop implements Initializable {
     private AnchorPane entidadesDisponibles= new AnchorPane();   
     @FXML
     public TextField newName;
+    @FXML
+    public CheckBox opcion;
     
     public int t=0;
     public static String enteredNameR;
+    public static FigureType type;
     public static Relation newrelation= new Relation((Relation) selectedElement);
     ArrayList<CheckBox> cbs = new ArrayList<>();
     ArrayList<CheckBox> disponibles = new ArrayList<>();
@@ -48,7 +50,13 @@ public class PopChangeController extends CallPop implements Initializable {
         // TODO
         newName.setText(enteredNameR);
         actualizarRoot();
-        
+        type=newrelation.getType();
+        if(type.equals(FigureType.WEAK)){
+            opcion.setSelected(true);
+        }
+        else{
+            opcion.setSelected(false);
+        }
     }    
     
     public void addToScreen(){
@@ -57,6 +65,13 @@ public class PopChangeController extends CallPop implements Initializable {
             alertName();
         }
         else{
+            if(opcion.isSelected()){
+                type=FigureType.WEAK;
+            }
+            else{
+                type=FigureType.STRONG;
+            }
+            newrelation.setType(type);
             newrelation.setName(enteredNameR);
             ((Stage)root.getScene().getWindow()).close();
         }
