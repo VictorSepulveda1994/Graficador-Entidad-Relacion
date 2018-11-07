@@ -21,18 +21,29 @@ public class Relation extends Element {
      */
     public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type) {
         super(name,selected,attributes);
-        this.type=type;
         this.entities = (ArrayList<Entity>) entities.clone();
+        if(numberOfEntitiesWeak()!=1){
+            this.type=type;
+        }
+        else{
+            this.type=FigureType.WEAK;
+        }
         figure = new Figure(name, sides, posX, posY);
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
         }
+
     }
     
     public Relation(Relation relation){
         super(relation.getName(),false,relation.getAttributes());
         this.entities = relation.getEntities();
-        this.type=relation.getType();
+        if(numberOfEntitiesWeak()!=1){
+            this.type=relation.getType();
+        }
+        else{
+            this.type=FigureType.WEAK;
+        }
         figure = new Figure(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY());
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
@@ -84,6 +95,16 @@ public class Relation extends Element {
         return type;
     }
 
+    public int numberOfEntitiesWeak(){
+        int count=0;
+        for (Entity entitie : this.entities) {
+            if(entitie.getType()==FigureType.WEAK){
+                count++;
+            }
+        }
+        return count;
+    }
+    
     public void setType(FigureType type) {
         this.type = type;
     }

@@ -474,11 +474,19 @@ public class Diagram extends CallPop {
         ArrayList<Attribute> attributes1=new ArrayList<>();
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getEntities().size();a++){
-                
                 Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
                 " ",false,attributes1);
                 connectors.add(connector);
+                if((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)){
+                    Point pointRelation = relations.get(i).getFigure().getCenter();
+                    pointRelation.setY(pointRelation.getY()-7);
+                    pointRelation.setX(pointRelation.getX()-7);
+                    connector= new Connector(relations.get(i),pointRelation
+                            ,relations.get(i).getEntities().get(a),new Point(((relations.get(i).getEntities().get(a).getFigure().getPosX()-7)),(relations.get(i).getEntities().get(a).getFigure().getPosY()-7)),
+                    " ",false,attributes1);
+                    connectors.add(connector);
+                }
             }
         }
         for(int i=0;i<relations.size();i++){

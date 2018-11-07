@@ -456,10 +456,18 @@ public class Figure {
             point = new Point ( (int)(posX), (int)(posY + (diamondDiagonal2-8)));
             pointsInside.add(point);
         }
-        else if (sides>2 && sides<20){
+        //El triangulo se hace aparte por tema de estitica. (necesita mas espacio para la doble linea).
+        if(sides==3){
             for(int i=0; i<sides; i++){
-                point = new Point ( (int)(posX + radiusPolygon-5 * Math.cos(i * 2 * Math.PI / sides)), 
-                        (int)(posY - radiusPolygon-5 * Math.sin(i * 2 * Math.PI / sides)));
+                point = new Point ( (int)(posX + (radiusPolygon-10) * Math.cos(i * 2 * Math.PI / sides)), 
+                        (int)(posY - (radiusPolygon-10) * Math.sin(i * 2 * Math.PI / sides)));
+                pointsInside.add(point);
+            }
+        }
+        else if (sides>3 && sides<20){
+            for(int i=0; i<sides; i++){
+                point = new Point ( (int)(posX + (radiusPolygon-8) * Math.cos(i * 2 * Math.PI / sides)), 
+                        (int)(posY - (radiusPolygon-8) * Math.sin(i * 2 * Math.PI / sides)));
                 pointsInside.add(point);
             }
         }
