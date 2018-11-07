@@ -39,15 +39,18 @@ public class PopChangeController extends CallPop implements Initializable {
     public int t=0;
     public static String enteredNameR;
     public static FigureType type;
-    public static Relation newrelation= new Relation((Relation) selectedElement);
-    ArrayList<CheckBox> cbs = new ArrayList<>();
-    ArrayList<CheckBox> disponibles = new ArrayList<>();
+    public static Relation newrelation;
+    ArrayList<CheckBox> cbs;
+    ArrayList<CheckBox> disponibles;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        cbs = new ArrayList<>();
+        disponibles = new ArrayList<>();
+        newrelation= new Relation((Relation) selectedElement);
         newName.setText(enteredNameR);
         actualizarRoot();
         type=newrelation.getType();
@@ -56,6 +59,9 @@ public class PopChangeController extends CallPop implements Initializable {
         }
         else{
             opcion.setSelected(false);
+        }
+        if(newrelation.numberOfEntitiesWeak()==1){
+            opcion.setDisable(true);
         }
     }    
     

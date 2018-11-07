@@ -34,13 +34,14 @@ public class PopChangeEntity extends CallPop implements Initializable{
      */
     public static String enteredName;
     public static FigureType type;
-    public static Entity newEntity= new Entity((Entity) selectedElement);
+    public static Entity newEntity;
     /**
      * Inicio de la clase controladora
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        newEntity= new Entity((Entity) selectedElement);
         type=newEntity.getType();
         newName.setText(newEntity.getName());
         if(type.equals(FigureType.WEAK)){
