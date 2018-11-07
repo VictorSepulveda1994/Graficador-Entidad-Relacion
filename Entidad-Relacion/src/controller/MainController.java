@@ -28,6 +28,10 @@ import model.Element;
 import model.Entity;
 import model.Relation;
 import static controller.PopChangeEntity.newEntity;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.input.ScrollEvent;
 
 /**
  *
@@ -562,6 +566,19 @@ public class MainController extends CallPop implements Initializable {
         }
     }
     
+    @FXML
+    private void zoom(ScrollEvent event) {
+        double zoomFactor = 1.05;
+        double deltaY = event.getDeltaY();
+        if (deltaY < 0){
+          zoomFactor = 2.0 - zoomFactor;
+        }
+        System.out.println(zoomFactor);
+        canvas.setScaleX(canvas.getScaleX() * zoomFactor);
+        canvas.setScaleY(canvas.getScaleY() * zoomFactor);
+        event.consume();
+        System.out.println("zoom");
+    }
     
     /*No necesario aún
     @FXML

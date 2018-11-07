@@ -285,7 +285,7 @@
                <content>
                   <AnchorPane style="-fx-border-color: BLACK;" styleClass="anchor" stylesheets="@../css/styleCanvas.css">
                      <children>
-                        <Canvas fx:id="canvas" height="477.0" onMouseClicked="#canvasClicked" onMouseDragged="#mouseDragged" onMouseMoved="#handle" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" width="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Canvas fx:id="canvas" height="477.0" onMouseClicked="#canvasClicked" onMouseDragged="#mouseDragged" onMouseMoved="#handle" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" onScroll="#zoom" width="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>
