@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * @author Equipo Rocket
  */
 public class Attribute extends Element{
+    
     AttributeType tipo;
 
     public Attribute(AttributeType tipo, String name, boolean selected,int posX, int posY, ArrayList<Attribute> attributes ) {

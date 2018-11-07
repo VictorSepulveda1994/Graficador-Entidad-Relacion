@@ -22,12 +22,14 @@ public class Relation extends Element {
     public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type) {
         super(name,selected,attributes);
         this.entities = (ArrayList<Entity>) entities.clone();
-        if(numberOfEntitiesWeak()!=1){
+        if((numberOfEntitiesWeak()==1 && this.entities.size()>1) || numberOfEntitiesWeak()==0){
             this.type=type;
         }
         else{
+            System.out.println("ente");
             this.type=FigureType.WEAK;
         }
+        System.out.println("dentro"+this.type);
         figure = new Figure(name, sides, posX, posY);
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
@@ -38,12 +40,14 @@ public class Relation extends Element {
     public Relation(Relation relation){
         super(relation.getName(),false,relation.getAttributes());
         this.entities = relation.getEntities();
-        if(numberOfEntitiesWeak()!=1){
+        if((numberOfEntitiesWeak()==1 && this.entities.size()>1) || numberOfEntitiesWeak()==0){
             this.type=relation.getType();
         }
         else{
+            System.out.println("entre");
             this.type=FigureType.WEAK;
         }
+        System.out.println("dentro"+this.type);
         figure = new Figure(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY());
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
@@ -102,6 +106,7 @@ public class Relation extends Element {
                 count++;
             }
         }
+        System.out.println(count);
         return count;
     }
     

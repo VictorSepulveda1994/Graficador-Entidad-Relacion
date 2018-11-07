@@ -60,7 +60,7 @@ public class PopChangeController extends CallPop implements Initializable {
         else{
             opcion.setSelected(false);
         }
-        if(newrelation.numberOfEntitiesWeak()==1){
+        if(newrelation.numberOfEntitiesWeak()==1 && newrelation.getEntities().size()<=1){
             opcion.setDisable(true);
         }
     }    
@@ -79,6 +79,7 @@ public class PopChangeController extends CallPop implements Initializable {
             }
             newrelation.setType(type);
             newrelation.setName(enteredNameR);
+            System.out.println(newrelation.getType());
             ((Stage)root.getScene().getWindow()).close();
         }
     }
