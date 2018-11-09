@@ -2,6 +2,7 @@ package model;
 
 import controller.CallPop;
 import controller.MainController;
+import controller.PopAddAttributeController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
 import controller.PopChangeController;
@@ -594,6 +595,7 @@ public class Diagram extends CallPop {
         for (Attribute attribute : attributes) {
             if(attribute.isInFigure(event) && ready == false){
                 if(attribute.getTipo().equals(AttributeType.COMPOUND)){
+                    PopAddAttributeController.onlyCompound=true;
                     popAddAttribute();
                     ready = true ;
                     if(!"".equals(nameAttribute)){
@@ -601,6 +603,7 @@ public class Diagram extends CallPop {
                         attribute.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
                         MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
                         nameAttribute="";
+                        PopAddAttributeController.onlyCompound=false;
                     }
                     break;
                 }

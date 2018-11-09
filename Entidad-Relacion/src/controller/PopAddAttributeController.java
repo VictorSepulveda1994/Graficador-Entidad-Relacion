@@ -33,16 +33,24 @@ public class PopAddAttributeController extends CallPop implements Initializable 
     public static String nameAttribute="";
     
     public static AttributeType attributeType;
+    public static boolean onlyCompound;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        options.getItems().addAll("Atributo Clave","Atributo Clave Parcial","Atributo Generico","Atributo Multivaluado"
-                ,"Atributo Compuesto","Atributo Derivado");
-        options.setValue("Elige una opción: ");
-        options.getItems();
+        if(onlyCompound==false){
+            options.getItems().addAll("Atributo Clave","Atributo Clave Parcial","Atributo Generico","Atributo Multivaluado"
+                    ,"Atributo Compuesto","Atributo Derivado");
+            options.setValue("Elige una opción: ");
+            options.getItems();
+        }
+        else{
+            options.getItems().add("Atributo Generico");
+            options.setValue("Elige una opción: ");
+            options.getItems();
+        }
     } 
     //cierra la ventana y agrega el nombre que este correcto
     public void addToScreen(){
