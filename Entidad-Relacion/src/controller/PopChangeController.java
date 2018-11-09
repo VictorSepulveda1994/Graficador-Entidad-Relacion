@@ -42,6 +42,8 @@ public class PopChangeController extends CallPop implements Initializable {
     public static Relation newrelation;
     ArrayList<CheckBox> cbs;
     ArrayList<CheckBox> disponibles;
+    ArrayList<String> nombres;
+         
     /**
      * Initializes the controller class.
      */
@@ -51,6 +53,7 @@ public class PopChangeController extends CallPop implements Initializable {
         cbs = new ArrayList<>();
         disponibles = new ArrayList<>();
         newrelation= new Relation((Relation) selectedElement);
+        nombres=new ArrayList<>();
         newName.setText(enteredNameR);
         actualizarRoot();
         type=newrelation.getType();
@@ -120,6 +123,7 @@ public class PopChangeController extends CallPop implements Initializable {
         entidadesDisponibles.getChildren().clear();
         cbs.clear();
         disponibles.clear();
+        nombres.clear();
         int tamaño=0;
         for (int i=0; i<newrelation.getEntities().size();i++) {
             CheckBox cb = new CheckBox(newrelation.getEntities().get(i).getName());
@@ -129,18 +133,19 @@ public class PopChangeController extends CallPop implements Initializable {
             rootOpciones.getChildren().add(cb);
         }
         tamaño=0;
-        for (Entity entitie1 : MainController.diagram.getEntities()) {
+        for (Entity entitie1 : MainController.diagram.getEntities()){
             if(!newrelation.getEntities().contains(entitie1)){
-                if (!disponibles.contains(entitie1.getName())){
+                if (!nombres.contains(entitie1.getName())){
                     CheckBox cb = new CheckBox(entitie1.getName());
                     cb.setLayoutY(tamaño);
-                    tamaño+=20; 
+                    tamaño+=20;
+                    nombres.add(entitie1.getName());
                     disponibles.add(cb);
                     entidadesDisponibles.getChildren().add(cb);
                 }
             }
         }
-        
+            
     }
     
     /**
