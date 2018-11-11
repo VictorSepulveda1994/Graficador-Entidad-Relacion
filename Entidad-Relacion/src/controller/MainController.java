@@ -32,6 +32,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.ScrollEvent;
+import model.FigureType;
 
 /**
  *
@@ -390,7 +391,7 @@ public class MainController extends CallPop implements Initializable {
     private void canvasClicked(MouseEvent event) throws IOException {
         MainController.event = event;
         if(entityToggleButton.isSelected() && event.getX()-75 > 0  && event.getY()-45 > 0){
-            popAddEntity();
+            popAddEntity(); 
         }
         else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
@@ -414,21 +415,34 @@ public class MainController extends CallPop implements Initializable {
                 }   
             }
         }
-        else if(editToggleButton.isSelected()){
-            diagram.selectElementEdit(event, canvas, showPoints);
-            diagram.paint(canvas,showPoints);
+        else if(heritageToggleButton.isSelected()){
+            diagram.selectElement(event, canvas, showPoints);
+            if (diagram.getSelectedElement()!=null){
+                Element element = diagram.getSelectedElement();
+                String type = element.getClass().getName().substring(6);
+                if("Relation".equals(type) || "Attribute".equals(type)){
+                    diagram.deselectElement(event);
+                    diagram.deselectAllEntities();
+                }
+                if (!element.isInFigure(event)){
+                    entitiesSelect=diagram.entitiesSelect();
+                    popAddHeritage();
+                }   
+            }
         }
         else if(attributeToggleButton.isSelected()){
             diagram.agregarAtributo(event, canvas, showPoints);
+        }
+        else if(editToggleButton.isSelected()){
+            diagram.selectElementEdit(event, canvas, showPoints);
+            diagram.paint(canvas,showPoints);
         }
         else if(deleteToggleButton.isSelected()){
             if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){
                 diagram.delete(event, canvas, showPoints);
             }
         }
-        else if(heritageToggleButton.isSelected()){
-            popAddHeritage();
-        }
+        
         //Una vez realizada la acción correspondiente, actualizamos el canvas
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);

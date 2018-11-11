@@ -54,8 +54,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
         }
         else{
             FigureType type = FigureType.STRONG;
-            ArrayList<Entity> entities= new ArrayList<>();
-            entities=(ArrayList<Entity>) entitiesSelect.clone();
+            ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
             ArrayList<Attribute> attributes= new ArrayList<>();
             Relation relation=new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false,entities,attributes,type);
             entitiesSelect.clear();

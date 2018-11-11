@@ -5,10 +5,8 @@ import controller.MainController;
 import controller.PopAddAttributeController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
-import controller.PopChangeController;
 import static controller.PopChangeController.enteredNameR;
 import static controller.PopChangeController.newrelation;
-import controller.PopChangeEntity;
 import static controller.PopChangeName.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +27,6 @@ public class Diagram extends CallPop {
     private ArrayList <Connector> connectors;
     private ArrayList <Attribute> attributes;
     public static Element selectedElement;
-    private Element auxElement;
     private int iElement;
 
     /**
@@ -81,14 +78,6 @@ public class Diagram extends CallPop {
     public void setRelations(ArrayList<Relation> relations) {
         this.relations = relations;
     }
-
-    public ArrayList<Attribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attribute attribute) {
-        this.attributes.add(attribute);
-    }
     
     /**
      * Método que recorre "entities","relations","connectors" y dibuja dichos objetos en el "canvas"
@@ -112,18 +101,20 @@ public class Diagram extends CallPop {
         }
         for(Attribute attribute : attributes){
             attribute.figure.fillPolygon(canvas);
-            if(attribute.getTipo().equals(AttributeType.DERIVATIVE)){
-                attribute.paintDerivateAttribute(canvas, showPoints);
+            switch (attribute.getTipo()) {
+                case DERIVATIVE:
+                    attribute.paintDerivateAttribute(canvas, showPoints);
+                    break;
+                case KEY:
+                    attribute.paintKeyAttribute(canvas, showPoints);
+                    break;
+                case PARTIALKEY:
+                    attribute.paintPartialKeyAttribute(canvas, showPoints);
+                    break;
+                default:
+                    attribute.paint(canvas, showPoints);
+                    break;
             }
-            else if(attribute.getTipo().equals(AttributeType.KEY)){
-                attribute.paintKeyAttribute(canvas, showPoints);
-            }
-            else if(attribute.getTipo().equals(AttributeType.PARTIALKEY)){
-                attribute.paintPartialKeyAttribute(canvas, showPoints);
-            }
-            else{
-                attribute.paint(canvas, showPoints);
-            } 
         }
         //Se vuelven a pintar los puntos de control los conectores para que se puedan visualizar.
         for (Connector connector : connectors) {
@@ -882,5 +873,13 @@ public class Diagram extends CallPop {
      */
     public ArrayList<Connector> getConnectors() {
         return connectors;
+    }
+    
+    public ArrayList<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Attribute attribute) {
+        this.attributes.add(attribute);
     }
 }

@@ -51,6 +51,7 @@ public class PopHeritageController extends CallPop implements Initializable {
             ((Stage)root.getScene().getWindow()).close();
         }      
     }
+    
     public void cancel(){
         ((Stage)root.getScene().getWindow()).close();
     }

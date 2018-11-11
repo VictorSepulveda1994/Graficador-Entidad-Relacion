@@ -7,8 +7,6 @@ import java.util.ArrayList;
  * @author Equipo Rocket
  */
 public class Entity extends Element {
-    
-
     FigureType type;
     public ArrayList<Entity> entities;
     
@@ -29,6 +27,7 @@ public class Entity extends Element {
         }
         this.entities= new ArrayList<>();
     }
+    
     public Entity(Entity entity){
         super(entity.getName(),false,entity.getAttributes());
         this.type=entity.getType();
@@ -54,7 +53,7 @@ public class Entity extends Element {
     public String getName() {
         return name;
     }
-
+    
     public FigureType getType() {
         return type;
     }
