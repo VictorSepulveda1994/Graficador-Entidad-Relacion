@@ -1,5 +1,6 @@
 package model;
 
+import static java.lang.Math.tan;
 import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
@@ -25,6 +26,7 @@ public class Figure {
     private int ellipseDiagonal1 = 80;
     private int ellipseDiagonal2 = 40;
     private ArrayList<Point> points;
+    private ArrayList<Point> pointsLines;
     private ArrayList<Point> pointsInside;
 
     /**
@@ -37,6 +39,7 @@ public class Figure {
     public Figure(String name, int sides, int posX, int posY) {
         points = new ArrayList<>();
         pointsInside = new ArrayList<>();
+        pointsLines = new ArrayList<>();
         this.posX = posX;
         this.posY = posY;
         this.name = name;
@@ -54,6 +57,7 @@ public class Figure {
     public Figure(String name, int posX, int posY) {
         points = new ArrayList<>();
         pointsInside = new ArrayList<>();
+        pointsLines = new ArrayList<>();
         this.posX = posX;
         this.posY = posY;
         this.name = name;
@@ -68,6 +72,7 @@ public class Figure {
     public Figure(Point point1,Point point2){
         points = new ArrayList<>();
         pointsInside = new ArrayList<>();
+        pointsLines = new ArrayList<>();
         createPointsLine(point1,point2);
     }
 
@@ -77,6 +82,8 @@ public class Figure {
      * @param point2
      */
     public void createPointsLine(Point point1,Point point2){
+        pointsLines.add(point1);
+        pointsLines.add(point2);
         points.add(point1);
         points.add(point2);
     }
@@ -121,7 +128,27 @@ public class Figure {
             point1 = pointsInside.get(0);
             point2 = pointsInside.get(size-1);
             gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
-        }  
+        }
+        for(int a=0;a+1<pointsLines.size();a++){
+            Point pointA = pointsLines.get(a);
+            Point pointB = pointsLines.get(a+1);
+            double pendiente= ((pointA.getY()-pointB.getY())/(pointA.getX()-pointB.getX()));
+            double angulo= tan(pendiente);
+            Point pointMiddle= middlePoint(pointA,pointB);
+            gc.strokeArc(pointMiddle.getX(), pointMiddle.getY(), 30,30 ,angulo, 240, ArcType.OPEN);
+        }
+        }
+
+    /**
+     *Busca el punto medio entre dos puntos
+     * @param point1
+     * @param point2
+     * @return
+     */
+    public Point middlePoint(Point point1, Point point2){
+        int x= (point1.getX()+point2.getX())/2;
+        int y= (point1.getY()+point2.getY())/2;
+        return new Point(x,y);
     }
     
     public void paintDottedLines(Canvas canvas, boolean selected){

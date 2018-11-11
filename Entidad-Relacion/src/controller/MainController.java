@@ -419,7 +419,7 @@ public class MainController extends CallPop implements Initializable {
             diagram.paint(canvas,showPoints);
         }
         else if(attributeToggleButton.isSelected()){
-            diagram.agregarAtributo(event, canvas, showPoints);
+            diagram.addAttribute(event, canvas, showPoints);
         }
         else if(deleteToggleButton.isSelected()){
             if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){

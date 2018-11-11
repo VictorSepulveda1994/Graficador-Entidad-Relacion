@@ -82,7 +82,6 @@ public class PopChangeController extends CallPop implements Initializable {
             }
             newrelation.setType(type);
             newrelation.setName(enteredNameR);
-            System.out.println(newrelation.getType());
             ((Stage)root.getScene().getWindow()).close();
         }
     }

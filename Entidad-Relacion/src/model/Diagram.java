@@ -515,56 +515,9 @@ public class Diagram extends CallPop {
             }
         }
     }
-
-    /**
-     *Busca el punto medio entre dos puntos
-     * @param point1
-     * @param point2
-     * @return
-     */
-    public Point middlePoint(Point point1, Point point2){
-        int x= (point1.getX()+point2.getX())/2;
-        int y= (point1.getY()+point2.getY())/2;
-        return new Point(x,y);
-    }
     
-    /**
-     *Busca el punto mas cercano de la relación con los 4 puntos de la entidad
-     * @param pointRelation
-     * @param p1
-     * @param p2
-     * @param p3
-     * @param p4
-     * @return
-     */
-    public Point closestPoint(Point pointRelation,Point p1,Point p2, Point p3,Point p4){
-        int restax=p1.getX()-pointRelation.getX();
-        int restay=p1.getY()-pointRelation.getY();
-        int d1=(int) Math.sqrt(restax*restax + restay*restay);
-        restax=p2.getX()-pointRelation.getX();
-        restay=p2.getY()-pointRelation.getY();
-        int d2=(int) Math.sqrt(restax*restax + restay*restay);
-        restax=p3.getX()-pointRelation.getX();
-        restay=p3.getY()-pointRelation.getY();
-        int d3=(int) Math.sqrt(restax*restax + restay*restay);
-        restax=p4.getX()-pointRelation.getX();
-        restay=p4.getY()-pointRelation.getY();
-        int d4=(int) Math.sqrt(restax*restax + restay*restay);
-        if(d1 < d2 && d1 < d3 && d1 < d4 && p1.isDisponible()){
-            return p1;
-        }else{
-            if(d2 < d1 && d2 < d3 && d2 < d4 && p2.isDisponible()){
-                return p2;
-            }else{
-                if(d3 < d1 && d3 < d2 && d3 < d4 && p3.isDisponible()){
-                    return p3;
-                }else
-                    return p4;
-            }
-        }
-    }
     //Agrega un atributo a una relacion o entidad y al diagrama, pero tiene problemas con el click hay que solucionarlo
-    public void agregarAtributo(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+    public void addAttribute(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
         boolean ready = false;
         for (Entity entity : entities) {
             if(entity.isInFigure(event) && ready == false){
