@@ -56,7 +56,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
             FigureType type = FigureType.STRONG;
             ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
             ArrayList<Attribute> attributes= new ArrayList<>();
-            Relation relation=new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false,entities,attributes,type);
+            Relation relation = new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false, entities, attributes, type);
             entitiesSelect.clear();
             MainController.diagram.addRelation(relation);
             MainController.diagram.deselectAllEntities();
@@ -68,6 +68,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
      * Cancela la operación
      */
     public void cancel(){
+        entitiesSelect.clear();
         MainController.diagram.deselectAllEntities();
         ((Stage)root.getScene().getWindow()).close();
     }

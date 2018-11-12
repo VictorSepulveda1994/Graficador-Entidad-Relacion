@@ -13,7 +13,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.Attribute;
 import model.AttributeType;
 
 /**
@@ -34,6 +33,7 @@ public class PopAddAttributeController extends CallPop implements Initializable 
     
     public static AttributeType attributeType;
     public static boolean onlyCompound;
+    
     /**
      * Initializes the controller class.
      */

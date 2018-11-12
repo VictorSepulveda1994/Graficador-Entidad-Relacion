@@ -26,10 +26,8 @@ public class Relation extends Element {
             this.type=type;
         }
         else{
-            System.out.println("ente");
             this.type=FigureType.WEAK;
         }
-        System.out.println("dentro"+this.type);
         figure = new Figure(name, sides, posX, posY);
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
@@ -44,10 +42,8 @@ public class Relation extends Element {
             this.type=relation.getType();
         }
         else{
-            System.out.println("entre");
             this.type=FigureType.WEAK;
         }
-        System.out.println("dentro"+this.type);
         figure = new Figure(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY());
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();

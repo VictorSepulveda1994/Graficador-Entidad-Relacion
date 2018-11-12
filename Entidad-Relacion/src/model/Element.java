@@ -16,14 +16,14 @@ public abstract class Element {
     public Figure figure;
     protected String name;
     protected boolean selected;
-    private ArrayList<Attribute> attributes = new ArrayList<>();
+    protected ArrayList<Attribute> attributes = new ArrayList<>();
 
     /**
      *
      * @param name
      * @param selected
      */
-    public Element(String name,boolean selected,ArrayList<Attribute> attributes) {
+    public Element(String name, boolean selected, ArrayList<Attribute> attributes) {
         this.name = name;
         this.selected = selected;
         this.attributes=(ArrayList<Attribute>) attributes.clone();
@@ -141,6 +141,10 @@ public abstract class Element {
         return attributes;
     }
 
+    public void setAttributes(ArrayList<Attribute> attributes) {
+        this.attributes = attributes;
+    }
+
     //Metodo que retorna la posicion de un atributo dentro de la lista atributos.(retorna -1 sino lo encuentra).
     public int findAttribute(Attribute attribute){
         for(int i=0;i<this.attributes.size();i++){
@@ -154,5 +158,5 @@ public abstract class Element {
     public void addAttribute(Attribute attribute) {
         this.attributes.add(attribute);
     }
-
+    
 }

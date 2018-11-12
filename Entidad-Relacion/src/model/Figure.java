@@ -17,6 +17,7 @@ public class Figure {
     private String name;
     private int posX,posY;
     private int radiusPolygon = 80;
+    private int radiusCircle = 15;
     private int sides;
     private int diamondDiagonal1 = 80;
     private int diamondDiagonal2 = 60;
@@ -24,8 +25,11 @@ public class Figure {
     private int rectangleHeight = 40;
     private int ellipseDiagonal1 = 80;
     private int ellipseDiagonal2 = 40;
+    private double startAngle;
     private ArrayList<Point> points;
     private ArrayList<Point> pointsInside;
+    private boolean withArc;
+    private Point posArc;
 
     /**
      * Constructor para crear polígonos
@@ -65,9 +69,10 @@ public class Figure {
      * @param point1
      * @param point2
      */
-    public Figure(Point point1,Point point2){
-        points = new ArrayList<>();
-        pointsInside = new ArrayList<>();
+    public Figure(Point point1,Point point2,boolean withArc){
+        this.points = new ArrayList<>();
+        this.pointsInside = new ArrayList<>();
+        this.withArc = withArc;
         createPointsLine(point1,point2);
     }
 
@@ -79,6 +84,7 @@ public class Figure {
     public void createPointsLine(Point point1,Point point2){
         points.add(point1);
         points.add(point2);
+        createPointsArc(point1, point2);
     }
     
     /**
@@ -121,7 +127,10 @@ public class Figure {
             point1 = pointsInside.get(0);
             point2 = pointsInside.get(size-1);
             gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
-        }  
+        }
+        if(this.withArc){
+            addArc(canvas, selected);
+        }
     }
     
     public void paintDottedLines(Canvas canvas, boolean selected){
@@ -246,6 +255,7 @@ public class Figure {
         gc.setStroke(Color.WHITE);
         ArrayList<Point> pts = points;
         int rP = radiusPolygon;
+        int rC = radiusCircle;
         int dD1 = diamondDiagonal1;
         int dD2 = diamondDiagonal2;
         int eD1 = ellipseDiagonal1;
@@ -271,7 +281,7 @@ public class Figure {
             diamondDiagonal2 = dD2;
             points.clear();
             createPointsPolygon();
-        } else if(sides > 2 && sides < 20){
+        } else if(sides > 2 && sides < 29){
             while(radiusPolygon >= 0){
                 int size = points.size();
                 for (int i = 0; i+1 < size; i++) {
@@ -292,7 +302,28 @@ public class Figure {
             radiusPolygon = rP;
             points.clear();
             createPointsPolygon();
-        } else if(sides >= 20){
+        } else if( sides == 29){
+            while(radiusCircle >= 0){
+                int size = points.size();
+                for (int i = 0; i+1 < size; i++) {
+                    Point point1 = points.get(i);
+                    Point point2 = points.get(i+1);
+                    gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+                }
+                Point point1 = points.get(0);
+                Point point2 = points.get(size-1);
+                gc.setLineWidth(5);
+                gc.setStroke(Color.WHITE);
+                gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
+                radiusCircle = radiusCircle - 5;
+                points.clear();
+                createPointsPolygon();
+            }
+            points = pts;
+            radiusCircle = rC;
+            points.clear();
+            createPointsPolygon();
+        } else if(sides >= 30){
             while(ellipseDiagonal1 >= 0 && ellipseDiagonal2>=0){
                 int size = points.size();
                 for (int i = 0; i+1 < size; i++) {
@@ -327,6 +358,10 @@ public class Figure {
             gc.setStroke(Color.ORANGERED);
             gc.strokeArc(point.getX(), point.getY(), 3, 3,360,300, ArcType.ROUND);
         }
+        /*if(withArc){
+            gc.setStroke(Color.ORANGERED);
+            gc.strokeArc(posArc.getX(), posArc.getY(), 3, 3,360,300, ArcType.ROUND);
+        }*/
         gc.setStroke(Color.BLACK);
     }
     
@@ -388,7 +423,7 @@ public class Figure {
      */
     private void createPointsPolygon(){
         Point point;
-        if (sides>0 && sides<3){
+        if (sides > 0 && sides < 3){
             point = new Point ( (int)(posX + diamondDiagonal1), (int)(posY));
             points.add(point);
             point = new Point ( (int)(posX), (int)(posY - diamondDiagonal2));
@@ -398,14 +433,21 @@ public class Figure {
             point = new Point ( (int)(posX), (int)(posY + diamondDiagonal2));
             points.add(point);
         }
-        else if (sides>2 && sides<20){
+        else if (sides > 2 && sides < 29){
             for(int i=0; i<sides; i++){
                 point = new Point ( (int)(posX + radiusPolygon * Math.cos(i * 2 * Math.PI / sides)), 
                         (int)(posY - radiusPolygon * Math.sin(i * 2 * Math.PI / sides)));
                 points.add(point);
             }
         }
-        else if(sides>=20){
+        else if(sides == 29){
+            for(int i=0; i<sides; i++){
+                point = new Point ( (int)(posX + radiusCircle * Math.cos(i * 2 * Math.PI / sides)), 
+                        (int)(posY - radiusCircle * Math.sin(i * 2 * Math.PI / sides)));
+                points.add(point);
+            }
+        }
+        else if(sides >= 30){
             for(int i=0; i<sides; i++){
                 point = new Point ( (int)(posX + ellipseDiagonal1 * Math.cos(i * 2 * Math.PI / sides)), 
                         (int)(posY - ellipseDiagonal2 * Math.sin(i * 2 * Math.PI / sides)));
@@ -456,7 +498,7 @@ public class Figure {
             point = new Point ( (int)(posX), (int)(posY + (diamondDiagonal2-8)));
             pointsInside.add(point);
         }
-        //El triangulo se hace aparte por tema de estitica. (necesita mas espacio para la doble linea).
+        //El triangulo se hace aparte por tema de estética. (necesita mas espacio para la doble linea).
         if(sides==3){
             for(int i=0; i<sides; i++){
                 point = new Point ( (int)(posX + (radiusPolygon-10) * Math.cos(i * 2 * Math.PI / sides)), 
@@ -473,7 +515,6 @@ public class Figure {
         }
     }
     
-
     /**
      * Crea los puntos de la elipse para hacer doble linea
      */
@@ -560,5 +601,25 @@ public class Figure {
     public Point getCenter(){
         return (new Point(posX, posY));
     }
+    
+    private void addArc(Canvas canvas, boolean selected){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(3);
+        if( selected ){
+            gc.setFill(Color.BLUE);
+            gc.setStroke(Color.BLUE);
+        }
+        else{
+            gc.setFill(Color.BLACK);
+            gc.setStroke(Color.BLACK);
+        }
+        gc.strokeArc(this.posArc.getX(), this.posArc.getY(), 30, 30, this.startAngle, 180, ArcType.OPEN);
+    }
 
+    private void createPointsArc(Point point1, Point point2) {
+        int x =(( point1.getX() + point2.getX() - 30) / 2);
+        int y =(( point1.getY() + point2.getY() - 30) / 2);
+        this.posArc = new Point(x, y);
+        this.startAngle = (Math.toDegrees(Math.atan2(point2.getX() - point1.getX(), point2.getY() - point1.getY())) ) + 180;
+    }
 }
