@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Equipo Rocket
  */
 public class Entity extends Element {
-    FigureType type;
+    public FigureType type;
     public ArrayList<Entity> entities;
     
     /**

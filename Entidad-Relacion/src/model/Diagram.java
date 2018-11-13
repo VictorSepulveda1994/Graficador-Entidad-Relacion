@@ -627,16 +627,6 @@ public class Diagram extends CallPop {
         paint(canvas, showPoints);
     }
     
-    //pinta los atributos dentro del canvas
-    public void paintAttributes(Canvas canvas){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setLineWidth(3);
-        gc.setFill(Color.BLUEVIOLET);
-        for(int i=0;i<attributes.size();i++){
-            gc.strokeArc(attributes.get(i).figure.getPosX(), attributes.get(i).figure.getPosY(), 200, 100, 300, 400, ArcType.ROUND);
-        }
-    }
-    
     /**
      *Identifica el elemento que se desea editar y lo modifica
      * @param event

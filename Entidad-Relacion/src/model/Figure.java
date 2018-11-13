@@ -1,6 +1,5 @@
 package model;
 
-import static java.lang.Math.tan;
 import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
@@ -140,18 +139,6 @@ public class Figure {
             addArc(canvas, selected);
         }
         }
-
-    /**
-     *Busca el punto medio entre dos puntos
-     * @param point1
-     * @param point2
-     * @return
-     */
-    public Point middlePoint(Point point1, Point point2){
-        int x= (point1.getX()+point2.getX())/2;
-        int y= (point1.getY()+point2.getY())/2;
-        return new Point(x,y);
-    }
     
     public void paintDottedLines(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();

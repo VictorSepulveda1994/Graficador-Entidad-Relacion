@@ -1,7 +1,6 @@
 package controller;
 
 import com.itextpdf.text.DocumentException;
-import static controller.PopChangeName.enteredName;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.net.URL;
@@ -599,60 +598,4 @@ public class MainController extends CallPop implements Initializable {
         }
         return false;
     }
-    
-    /*No necesario aún
-    @FXML
-    private void deshacerAccion(){       
-        if(diagram.getAcciones().size()>0){
-            if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
-                    .equals(TipoDeAccion.AgregoEntidad)){
-                diagram.getEntities().remove(diagram.getEntities().size()-1);
-            }
-            if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
-                    .equals(TipoDeAccion.AgregoRelacion)){
-                diagram.getRelations().remove(diagram.getRelations().size()-1);
-            }
-            if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
-                    .equals(TipoDeAccion.EditarNombreEntidad)){
-                for (Entity entitie : diagram.getEntities()) {
-                    if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento2().equals(entitie)){
-                        entitie.setName(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento().getName());
-                        entitie.figure.setName(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento().getName()); 
-                    }
-                }
-            }
-            if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
-                    .equals(TipoDeAccion.EditarNombreRelacion)){
-                for (Relation relation : diagram.getRelations()) {
-                    if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento2().equals(relation)){
-                        relation.setName(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento().getName());
-                        relation.figure.setName(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento().getName()); 
-                    }
-                }
-            }
-            if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
-                    .equals(TipoDeAccion.LimpiarPantalla)){
-                diagram.setEntities(diagram.getAcciones().get(diagram.getAcciones().size()-1).getDiagram().getEntities());
-                diagram.setRelations(diagram.getAcciones().get(diagram.getAcciones().size()-1).getDiagram().getRelations());
-            }
-            
-            if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getTipo()
-                    .equals(TipoDeAccion.MoverElemento)){
-                System.out.println("Mover elemento");
-                for (Entity entitie : diagram.getEntities()) {
-                    if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento2().equals(entitie)){
-                        System.out.println("desmover elemento");
-                    }
-                }
-                for (Relation relation : diagram.getRelations()) {
-                    if(diagram.getAcciones().get(diagram.getAcciones().size()-1).getElemento2().equals(relation)){
-                        System.out.println("desmover elemento");
-                    }
-                }
-            }
-            
-            diagram.paint(canvas, showPoints);
-            diagram.getAcciones().remove(diagram.getAcciones().size()-1);
-        } 
-    }*/
 }
