@@ -1,5 +1,6 @@
 package model;
 
+import static java.lang.Math.tan;
 import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
@@ -27,6 +28,7 @@ public class Figure {
     private int ellipseDiagonal2 = 40;
     private double startAngle;
     private ArrayList<Point> points;
+    private ArrayList<Point> pointsLines;
     private ArrayList<Point> pointsInside;
     private boolean withArc;
     private Point posArc;
@@ -41,6 +43,7 @@ public class Figure {
     public Figure(String name, int sides, int posX, int posY) {
         points = new ArrayList<>();
         pointsInside = new ArrayList<>();
+        pointsLines = new ArrayList<>();
         this.posX = posX;
         this.posY = posY;
         this.name = name;
@@ -58,6 +61,7 @@ public class Figure {
     public Figure(String name, int posX, int posY) {
         points = new ArrayList<>();
         pointsInside = new ArrayList<>();
+        pointsLines = new ArrayList<>();
         this.posX = posX;
         this.posY = posY;
         this.name = name;
@@ -69,10 +73,12 @@ public class Figure {
      * @param point1
      * @param point2
      */
+
     public Figure(Point point1,Point point2,boolean withArc){
         this.points = new ArrayList<>();
         this.pointsInside = new ArrayList<>();
         this.withArc = withArc;
+        pointsLines = new ArrayList<>();
         createPointsLine(point1,point2);
     }
 
@@ -82,6 +88,8 @@ public class Figure {
      * @param point2
      */
     public void createPointsLine(Point point1,Point point2){
+        pointsLines.add(point1);
+        pointsLines.add(point2);
         points.add(point1);
         points.add(point2);
         createPointsArc(point1, point2);
@@ -131,6 +139,18 @@ public class Figure {
         if(this.withArc){
             addArc(canvas, selected);
         }
+        }
+
+    /**
+     *Busca el punto medio entre dos puntos
+     * @param point1
+     * @param point2
+     * @return
+     */
+    public Point middlePoint(Point point1, Point point2){
+        int x= (point1.getX()+point2.getX())/2;
+        int y= (point1.getY()+point2.getY())/2;
+        return new Point(x,y);
     }
     
     public void paintDottedLines(Canvas canvas, boolean selected){

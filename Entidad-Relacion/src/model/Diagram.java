@@ -136,7 +136,6 @@ public class Diagram extends CallPop {
                 connector.figure.paintPoints(canvas);
             }
         }
-        //paintAttributes(canvas);
     }
     
     /**
@@ -296,6 +295,18 @@ public class Diagram extends CallPop {
                 attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy));
                 selectedElement = attributes.get(iElement);
             }
+            else if( "Heritage".equals(type)){
+                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                attributesCopy=(ArrayList<Attribute>) heritages.get(iElement).getParentEntity().getAttributes().clone();
+                ArrayList<Entity> entitiesCopy= new ArrayList<>();
+                heritages.get(iElement).getDaughtersEntities().add(0,heritages.get(iElement).getParentEntity());
+                entitiesCopy=(ArrayList<Entity>) heritages.get(iElement).getDaughtersEntities().clone();
+                HeritageType type1= heritages.get(iElement).getHeritageType();
+                heritages.set(iElement, new Heritage(selectedElement.name,(int)event.getX(),(int) event.getY(), selectedElement.selected,attributesCopy,entitiesCopy,type1));
+                selectedElement = heritages.get(iElement);
+            }
+            
+            //Guarda las entidades dentro de las relaciones
             for (int i=0; i<relations.size();i++) {
                 for (int a=0; a<relations.get(i).getEntities().size();a++) {
                     int nElement=searchEntity(relations.get(i).getEntities().get(a));
@@ -304,6 +315,7 @@ public class Diagram extends CallPop {
                     }
                 }
             }
+            //Guarda los atributos dentro de las relaciones
             for (int i=0; i<relations.size();i++) {
                 for (int a=0; a<relations.get(i).getAttributes().size();a++) {
                     int nElement=searchAttribute(relations.get(i).getAttributes().get(a));
@@ -312,6 +324,8 @@ public class Diagram extends CallPop {
                     }
                 }
             }
+            
+            //Guarda los attributos dentro de las entidades
             for (int i=0; i<entities.size();i++) {
                 for (int a=0; a<entities.get(i).getAttributes().size();a++) {
                     int nElement=searchAttribute(entities.get(i).getAttributes().get(a));
@@ -320,6 +334,8 @@ public class Diagram extends CallPop {
                     }
                 }
             }
+            
+            //Guarda los atributos dentro de los atributos
             for (int i=0; i<attributes.size();i++) {
                 for (int a=0; a<attributes.get(i).getAttributes().size();a++) {
                     int nElement=searchAttribute(attributes.get(i).getAttributes().get(a));
@@ -328,6 +344,20 @@ public class Diagram extends CallPop {
                     }
                 }
             }
+            //Guarda nuevamente los atributos y padre de la herencia
+            for (int i=0; i<heritages.size();i++) {
+                for (int a=0; a<heritages.get(i).getDaughtersEntities().size();a++) {
+                    int nElement=searchEntity(heritages.get(i).getDaughtersEntities().get(a));
+                    if(nElement!=-1){
+                        heritages.get(i).getDaughtersEntities().set(a, entities.get(nElement));
+                    }
+                }   
+                int nElement=searchEntity(heritages.get(i).getParentEntity());
+                if(nElement!=-1){
+                    heritages.get(i).setParentEntity(entities.get(nElement));  
+                }
+            }
+            
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
         }
@@ -542,9 +572,9 @@ public class Diagram extends CallPop {
             }
         }
     }
-
+    
     //Agrega un atributo a una relacion o entidad y al diagrama, pero tiene problemas con el click hay que solucionarlo
-    public void agregarAtributo(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+    public void addAttribute(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
         boolean ready = false;
         for (Entity entity : entities) {
             if(entity.isInFigure(event) && ready == false){
