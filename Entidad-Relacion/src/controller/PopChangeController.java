@@ -11,13 +11,12 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.Diagram;
 import static model.Diagram.selectedElement;
 import model.Entity;
+import model.FigureType;
 import model.Relation;
 /**
  * FXML Controller class
@@ -34,21 +33,39 @@ public class PopChangeController extends CallPop implements Initializable {
     private AnchorPane entidadesDisponibles= new AnchorPane();   
     @FXML
     public TextField newName;
+    @FXML
+    public CheckBox opcion;
     
     public int t=0;
     public static String enteredNameR;
-    public static Relation newrelation= new Relation((Relation) selectedElement);
-    ArrayList<CheckBox> cbs = new ArrayList<>();
-    ArrayList<CheckBox> disponibles = new ArrayList<>();
+    public static FigureType type;
+    public static Relation newrelation;
+    ArrayList<CheckBox> cbs;
+    ArrayList<CheckBox> disponibles;
+    ArrayList<String> nombres;
+         
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        cbs = new ArrayList<>();
+        disponibles = new ArrayList<>();
+        newrelation= new Relation((Relation) selectedElement);
+        nombres=new ArrayList<>();
         newName.setText(enteredNameR);
         actualizarRoot();
-        
+        type=newrelation.getType();
+        if(type.equals(FigureType.WEAK)){
+            opcion.setSelected(true);
+        }
+        else{
+            opcion.setSelected(false);
+        }
+        if(newrelation.numberOfEntitiesWeak()==1 && newrelation.getEntities().size()<=1){
+            opcion.setDisable(true);
+        }
     }    
     
     public void addToScreen(){
@@ -57,6 +74,13 @@ public class PopChangeController extends CallPop implements Initializable {
             alertName();
         }
         else{
+            if(opcion.isSelected()){
+                type=FigureType.WEAK;
+            }
+            else{
+                type=FigureType.STRONG;
+            }
+            newrelation.setType(type);
             newrelation.setName(enteredNameR);
             ((Stage)root.getScene().getWindow()).close();
         }
@@ -98,6 +122,7 @@ public class PopChangeController extends CallPop implements Initializable {
         entidadesDisponibles.getChildren().clear();
         cbs.clear();
         disponibles.clear();
+        nombres.clear();
         int tamaño=0;
         for (int i=0; i<newrelation.getEntities().size();i++) {
             CheckBox cb = new CheckBox(newrelation.getEntities().get(i).getName());
@@ -107,18 +132,19 @@ public class PopChangeController extends CallPop implements Initializable {
             rootOpciones.getChildren().add(cb);
         }
         tamaño=0;
-        for (Entity entitie1 : MainController.diagram.getEntities()) {
+        for (Entity entitie1 : MainController.diagram.getEntities()){
             if(!newrelation.getEntities().contains(entitie1)){
-                if (!disponibles.contains(entitie1.getName())){
+                if (!nombres.contains(entitie1.getName())){
                     CheckBox cb = new CheckBox(entitie1.getName());
                     cb.setLayoutY(tamaño);
-                    tamaño+=20; 
+                    tamaño+=20;
+                    nombres.add(entitie1.getName());
                     disponibles.add(cb);
                     entidadesDisponibles.getChildren().add(cb);
                 }
             }
         }
-        
+            
     }
     
     /**

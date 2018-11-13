@@ -2,13 +2,11 @@ package model;
 
 import controller.CallPop;
 import controller.MainController;
+import controller.PopAddAttributeController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
-import controller.PopChangeController;
 import static controller.PopChangeController.enteredNameR;
 import static controller.PopChangeController.newrelation;
-import controller.PopChangeEntity;
-import static controller.PopChangeEntity.newentity;
 import static controller.PopChangeName.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +15,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
+import static controller.PopChangeEntity.newEntity;
 
 /**
  *
@@ -27,8 +26,8 @@ public class Diagram extends CallPop {
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
     private ArrayList <Attribute> attributes;
+    private ArrayList <Heritage> heritages;
     public static Element selectedElement;
-    private Element auxElement;
     private int iElement;
 
     /**
@@ -39,6 +38,7 @@ public class Diagram extends CallPop {
         relations = new ArrayList <>();
         connectors = new ArrayList <>();
         attributes = new ArrayList<>();
+        heritages = new ArrayList<>();
     }
     
     /**
@@ -64,6 +64,14 @@ public class Diagram extends CallPop {
     public void addConnector (Connector connector){
         this.connectors.add(connector);
     }
+    
+    /**
+     *
+     * @param heritage
+     */
+    public void addHeritage (Heritage heritage){
+        this.heritages.add(heritage);
+    }
 
     /**
      *
@@ -80,14 +88,6 @@ public class Diagram extends CallPop {
     public void setRelations(ArrayList<Relation> relations) {
         this.relations = relations;
     }
-
-    public ArrayList<Attribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Attribute attribute) {
-        this.attributes.add(attribute);
-    }
     
     /**
      * Método que recorre "entities","relations","connectors" y dibuja dichos objetos en el "canvas"
@@ -97,7 +97,7 @@ public class Diagram extends CallPop {
     public void paint(Canvas canvas, boolean showPoints){
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         connectors.clear();
-        paintConnector(canvas);
+        createConnectors();
         for (Connector connector : connectors) {
             connector.paint(canvas,showPoints);
         }
@@ -109,20 +109,26 @@ public class Diagram extends CallPop {
             relation.figure.fillPolygon(canvas);
             relation.paint(canvas,showPoints);
         }
+        for (Heritage heritage : heritages) {
+            heritage.figure.fillPolygon(canvas);
+            heritage.paint(canvas, showPoints);
+        }
         for(Attribute attribute : attributes){
             attribute.figure.fillPolygon(canvas);
-            if(attribute.getTipo().equals(AttributeType.DERIVATIVE)){
-                attribute.paintDerivateAttribute(canvas, showPoints);
+            switch (attribute.getTipo()) {
+                case DERIVATIVE:
+                    attribute.paintDerivateAttribute(canvas, showPoints);
+                    break;
+                case KEY:
+                    attribute.paintKeyAttribute(canvas, showPoints);
+                    break;
+                case PARTIALKEY:
+                    attribute.paintPartialKeyAttribute(canvas, showPoints);
+                    break;
+                default:
+                    attribute.paint(canvas, showPoints);
+                    break;
             }
-            else if(attribute.getTipo().equals(AttributeType.KEY)){
-                attribute.paintKeyAttribute(canvas, showPoints);
-            }
-            else if(attribute.getTipo().equals(AttributeType.PARTIALKEY)){
-                attribute.paintPartialKeyAttribute(canvas, showPoints);
-            }
-            else{
-                attribute.paint(canvas, showPoints);
-            } 
         }
         //Se vuelven a pintar los puntos de control los conectores para que se puedan visualizar.
         for (Connector connector : connectors) {
@@ -130,7 +136,6 @@ public class Diagram extends CallPop {
                 connector.figure.paintPoints(canvas);
             }
         }
-        //paintAttributes(canvas);
     }
     
     /**
@@ -233,6 +238,18 @@ public class Diagram extends CallPop {
             iE++;
         }
         iE = 0;
+        for (Heritage heritage : heritages) {
+            if(heritage.isInFigure(event) && ready == false){
+                ready = true;
+                selectedElement = heritage;
+                selectedElement.setSelected(true);
+                iElement = iE;
+                paint(canvas, showPoints);
+                break;
+            }
+            iE++;
+        }
+        iE = 0;
         for (Attribute attribute : attributes) {
             if(attribute.isInFigure(event) && ready == false){
                 ready = true;
@@ -269,7 +286,7 @@ public class Diagram extends CallPop {
                 entitiesCopy=(ArrayList<Entity>) relations.get(iElement).getEntities().clone();
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) relations.get(iElement).getAttributes().clone();
-                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy));
+                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType()));
                 selectedElement = relations.get(iElement);
             }
             else if( "Attribute".equals(type)){
@@ -278,14 +295,27 @@ public class Diagram extends CallPop {
                 attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy));
                 selectedElement = attributes.get(iElement);
             }
+            else if( "Heritage".equals(type)){
+                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                attributesCopy=(ArrayList<Attribute>) heritages.get(iElement).getParentEntity().getAttributes().clone();
+                ArrayList<Entity> entitiesCopy= new ArrayList<>();
+                heritages.get(iElement).getDaughtersEntities().add(0,heritages.get(iElement).getParentEntity());
+                entitiesCopy=(ArrayList<Entity>) heritages.get(iElement).getDaughtersEntities().clone();
+                HeritageType type1= heritages.get(iElement).getHeritageType();
+                heritages.set(iElement, new Heritage(selectedElement.name,(int)event.getX(),(int) event.getY(), selectedElement.selected,attributesCopy,entitiesCopy,type1));
+                selectedElement = heritages.get(iElement);
+            }
+            
+            //Guarda las entidades dentro de las relaciones
             for (int i=0; i<relations.size();i++) {
                 for (int a=0; a<relations.get(i).getEntities().size();a++) {
-                    int nElement=search(relations.get(i).getEntities().get(a));
+                    int nElement=searchEntity(relations.get(i).getEntities().get(a));
                     if(nElement!=-1){
                         relations.get(i).getEntities().set(a, entities.get(nElement));
                     }
                 }
             }
+            //Guarda los atributos dentro de las relaciones
             for (int i=0; i<relations.size();i++) {
                 for (int a=0; a<relations.get(i).getAttributes().size();a++) {
                     int nElement=searchAttribute(relations.get(i).getAttributes().get(a));
@@ -294,6 +324,8 @@ public class Diagram extends CallPop {
                     }
                 }
             }
+            
+            //Guarda los attributos dentro de las entidades
             for (int i=0; i<entities.size();i++) {
                 for (int a=0; a<entities.get(i).getAttributes().size();a++) {
                     int nElement=searchAttribute(entities.get(i).getAttributes().get(a));
@@ -302,6 +334,8 @@ public class Diagram extends CallPop {
                     }
                 }
             }
+            
+            //Guarda los atributos dentro de los atributos
             for (int i=0; i<attributes.size();i++) {
                 for (int a=0; a<attributes.get(i).getAttributes().size();a++) {
                     int nElement=searchAttribute(attributes.get(i).getAttributes().get(a));
@@ -310,6 +344,20 @@ public class Diagram extends CallPop {
                     }
                 }
             }
+            //Guarda nuevamente los atributos y padre de la herencia
+            for (int i=0; i<heritages.size();i++) {
+                for (int a=0; a<heritages.get(i).getDaughtersEntities().size();a++) {
+                    int nElement=searchEntity(heritages.get(i).getDaughtersEntities().get(a));
+                    if(nElement!=-1){
+                        heritages.get(i).getDaughtersEntities().set(a, entities.get(nElement));
+                    }
+                }   
+                int nElement=searchEntity(heritages.get(i).getParentEntity());
+                if(nElement!=-1){
+                    heritages.get(i).setParentEntity(entities.get(nElement));  
+                }
+            }
+            
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
         }
@@ -320,7 +368,7 @@ public class Diagram extends CallPop {
      * @param entity
      * @return
      */
-    public int search(Entity entity){
+    public int searchEntity(Entity entity){
         for(int i=0; i<entities.size();i++){
             if(entities.get(i).getName().equals(entity.getName())){
                 return i;
@@ -399,7 +447,10 @@ public class Diagram extends CallPop {
         this.entities.clear();
         this.relations.clear();
         this.connectors.clear();
-        attributes.clear();
+        this.heritages.clear();
+        this.attributes.clear();
+        entitiesSelect().clear();
+        MainController.entitiesSelect.clear();
         canvas.setWidth(minWidth);
         canvas.setHeight(minHeight);
     }
@@ -423,13 +474,13 @@ public class Diagram extends CallPop {
      * @return
      */
     public ArrayList<Entity> entitiesSelect (){
-        ArrayList<Entity> entities= new ArrayList<>();
+        ArrayList<Entity> entitiesAux= new ArrayList<>();
         for (Entity entitie : this.entities) {
             if(entitie.selected){
-                entities.add(entitie);
+                entitiesAux.add(entitie);
             }
         }
-        return entities;
+        return entitiesAux;
     }
     
     /**
@@ -470,15 +521,22 @@ public class Diagram extends CallPop {
      *Método que crea los conectores entre relaciones y entidades para dibujar las lineas
      */
     public void createConnectors(){
-        int j=0;
         ArrayList<Attribute> attributes1=new ArrayList<>();
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getEntities().size();a++){
-                
                 Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
                 " ",false,attributes1);
                 connectors.add(connector);
+                if((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)){
+                    Point pointRelation = relations.get(i).getFigure().getCenter();
+                    pointRelation.setY(pointRelation.getY()-7);
+                    pointRelation.setX(pointRelation.getX()-7);
+                    connector= new Connector(relations.get(i),pointRelation
+                            ,relations.get(i).getEntities().get(a),new Point(((relations.get(i).getEntities().get(a).getFigure().getPosX()-7)),(relations.get(i).getEntities().get(a).getFigure().getPosY()-7)),
+                    " ",false,attributes1);
+                    connectors.add(connector);
+                }
             }
         }
         for(int i=0;i<relations.size();i++){
@@ -499,63 +557,24 @@ public class Diagram extends CallPop {
         }
         for(int i=0;i<attributes.size();i++){
             for(int a=0;a<attributes.get(i).getAttributes().size();a++){
-                Connector connector= new Connector(attributes.get(i),new Point(attributes.get(i).figure.getPosX(),attributes.get(i).figure.getPosY()),
+                Connector connector = new Connector(attributes.get(i),new Point(attributes.get(i).figure.getPosX(),attributes.get(i).figure.getPosY()),
                     attributes.get(i).getAttributes().get(a),new Point(attributes.get(i).getAttributes().get(a).figure.getPosX(),attributes.get(i).getAttributes().get(a).figure.getPosY()),
                 " ",false,attributes1);
                 connectors.add(connector);
             }
         }
-    }
-
-    /**
-     *Busca el punto medio entre dos puntos
-     * @param point1
-     * @param point2
-     * @return
-     */
-    public Point middlePoint(Point point1, Point point2){
-        int x= (point1.getX()+point2.getX())/2;
-        int y= (point1.getY()+point2.getY())/2;
-        return new Point(x,y);
-    }
-    
-    /**
-     *Busca el punto mas cercano de la relación con los 4 puntos de la entidad
-     * @param pointRelation
-     * @param p1
-     * @param p2
-     * @param p3
-     * @param p4
-     * @return
-     */
-    public Point closestPoint(Point pointRelation,Point p1,Point p2, Point p3,Point p4){
-        int restax=p1.getX()-pointRelation.getX();
-        int restay=p1.getY()-pointRelation.getY();
-        int d1=(int) Math.sqrt(restax*restax + restay*restay);
-        restax=p2.getX()-pointRelation.getX();
-        restay=p2.getY()-pointRelation.getY();
-        int d2=(int) Math.sqrt(restax*restax + restay*restay);
-        restax=p3.getX()-pointRelation.getX();
-        restay=p3.getY()-pointRelation.getY();
-        int d3=(int) Math.sqrt(restax*restax + restay*restay);
-        restax=p4.getX()-pointRelation.getX();
-        restay=p4.getY()-pointRelation.getY();
-        int d4=(int) Math.sqrt(restax*restax + restay*restay);
-        if(d1 < d2 && d1 < d3 && d1 < d4 && p1.isDisponible()){
-            return p1;
-        }else{
-            if(d2 < d1 && d2 < d3 && d2 < d4 && p2.isDisponible()){
-                return p2;
-            }else{
-                if(d3 < d1 && d3 < d2 && d3 < d4 && p3.isDisponible()){
-                    return p3;
-                }else
-                    return p4;
+        for (Heritage heritage : heritages) {
+            Connector connector = new Connector(heritage.getParentEntity(), heritage, "", false, heritage.attributes, false);
+            connectors.add(connector);
+            for (Entity daughterEntity : heritage.getDaughtersEntities()) {
+                Connector connectorAux = new Connector(heritage, daughterEntity, "", false, heritage.attributes, true);
+                connectors.add(connectorAux);
             }
         }
     }
+    
     //Agrega un atributo a una relacion o entidad y al diagrama, pero tiene problemas con el click hay que solucionarlo
-    public void agregarAtributo(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+    public void addAttribute(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
         boolean ready = false;
         for (Entity entity : entities) {
             if(entity.isInFigure(event) && ready == false){
@@ -586,6 +605,7 @@ public class Diagram extends CallPop {
         for (Attribute attribute : attributes) {
             if(attribute.isInFigure(event) && ready == false){
                 if(attribute.getTipo().equals(AttributeType.COMPOUND)){
+                    PopAddAttributeController.onlyCompound=true;
                     popAddAttribute();
                     ready = true ;
                     if(!"".equals(nameAttribute)){
@@ -593,6 +613,7 @@ public class Diagram extends CallPop {
                         attribute.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
                         MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
                         nameAttribute="";
+                        PopAddAttributeController.onlyCompound=false;
                     }
                     break;
                 }
@@ -605,19 +626,7 @@ public class Diagram extends CallPop {
         ready = false;
         paint(canvas, showPoints);
     }
-    /**
-     *Dibuja en la pantalla los conectores
-     * @param canvas
-     */
-    public void paintConnector(Canvas canvas){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setLineWidth(3);
-        createConnectors();
-        for(int i=0;i<connectors.size();i++){
-           gc.strokeLine(connectors.get(i).getPointElement1().getX(),connectors.get(i).getPointElement1().
-                   getY(), connectors.get(i).getPointElement2().getX(), connectors.get(i).getPointElement2().getY());
-        }
-    }
+    
     //pinta los atributos dentro del canvas
     public void paintAttributes(Canvas canvas){
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -627,6 +636,7 @@ public class Diagram extends CallPop {
             gc.strokeArc(attributes.get(i).figure.getPosX(), attributes.get(i).figure.getPosY(), 200, 100, 300, 400, ArcType.ROUND);
         }
     }
+    
     /**
      *Identifica el elemento que se desea editar y lo modifica
      * @param event
@@ -640,11 +650,11 @@ public class Diagram extends CallPop {
         for (Entity entity : entities) {
             if(entity.isInFigure(event) && ready == false){
                 selectedElement=entity;
-                enteredName= entity.getName();
+                enteredName=entity.getName();
                 popEditEntity();
                 ready = true;
                 if(!"".equals(enteredName)){
-                    entities.set(iE, new Entity(newentity.getName(),newentity.figure.getPosX(),newentity.figure.getPosY(),false,newentity.getType(),newentity.getAttributes()));
+                    entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes()));
                     enteredName="";
                 }
                 break;
@@ -659,7 +669,7 @@ public class Diagram extends CallPop {
                 popEdit();
                 ready = true ;
                 if(!"".equals(enteredNameR)){
-                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes()));      
+                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType()));      
                     enteredNameR="";
                 }
                 break;
@@ -734,7 +744,7 @@ public class Diagram extends CallPop {
                                 entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
                                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                                 attributesCopy=(ArrayList<Attribute>) relation.getAttributes().clone();
-                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy));
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType()));
                                 paint(canvas, showPoints); 
                             }
                             j=0;
@@ -830,7 +840,25 @@ public class Diagram extends CallPop {
         }
     }
     
-  
+    public Element foundElement (MouseEvent event){
+        for (Entity entity : this.entities){
+            if(entity.figure.isInFigure(event)){
+                return entity;
+            }
+        }
+        for (Attribute attribute : this.attributes){
+            if(attribute.figure.isInFigure(event)){
+                return attribute;
+            }
+        }
+        for (Relation relation : this.relations){
+            if(relation.figure.isInFigure(event)){
+                return relation;
+            }
+        }
+        return null;
+    }
+    
     /**
      *
      * @return entities
@@ -853,5 +881,13 @@ public class Diagram extends CallPop {
      */
     public ArrayList<Connector> getConnectors() {
         return connectors;
+    }
+    
+    public ArrayList<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Attribute attribute) {
+        this.attributes.add(attribute);
     }
 }

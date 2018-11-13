@@ -193,24 +193,14 @@ public class CallPop {
                 + " es vacío, tiene mas de 12 caracteres o está repetido. Debe ingresar el nombre nuevamente.");
         alert.showAndWait();
     }
-    
-    /**
-     * Muestra un mensaje de error al no seleccionar un tipo de entidad en el popQuestionEntityType
-     */
-    public void alertTypeEnity(){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Debe elegir un tipo de entidad para poder continuar.");
-        alert.showAndWait();
-    }
-    
+
     public void alertTypeHeritageIncorrect(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText("Debe elegir un tipo de herencia para poder continuar.");
         alert.showAndWait();
     }
-    
+
     public void alertOfTypeIncorrect(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

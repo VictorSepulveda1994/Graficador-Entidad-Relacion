@@ -1,6 +1,7 @@
 package controller;
 
 import com.itextpdf.text.DocumentException;
+import static controller.PopChangeName.enteredName;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.net.URL;
@@ -14,17 +15,13 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-import model.Attribute;
 import model.Diagram;
 import model.Element;
 import model.Entity;
-import model.Relation;
+import javafx.scene.input.ScrollEvent;
 
 /**
  *
@@ -90,7 +87,7 @@ public class MainController extends CallPop implements Initializable {
     private int minWidth;
     private int minHeight;
     
-    public static ArrayList<Entity> entitiesSelect = new ArrayList<>();
+    public static ArrayList<Entity> entitiesSelect;
     
     /**
      * Accion para cerrar la ventana
@@ -124,6 +121,7 @@ public class MainController extends CallPop implements Initializable {
      */
     @FXML
     private void buttonEntityClicked(ActionEvent event){
+        entitiesSelect.clear();
         attributeToggleButton.setSelected(false);
         entityToggleButton.setSelected(true);
         relationToggleButton.setSelected(false);
@@ -151,6 +149,7 @@ public class MainController extends CallPop implements Initializable {
     }
     @FXML
     private void buttonAttributeClicked(ActionEvent event){
+        entitiesSelect.clear();
         attributeToggleButton.setSelected(true);
         entityToggleButton.setSelected(false);
         relationToggleButton.setSelected(false);
@@ -177,7 +176,7 @@ public class MainController extends CallPop implements Initializable {
     
     @FXML
     private void buttonHeritageClicked(ActionEvent event){
-        
+        entitiesSelect.clear();
         attributeToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
         relationToggleButton.setSelected(false);
@@ -208,6 +207,7 @@ public class MainController extends CallPop implements Initializable {
      */
     @FXML
     private void buttonRelationClicked(ActionEvent event){
+        entitiesSelect.clear();
         attributeToggleButton.setSelected(false);
         relationToggleButton.setSelected(true);
         entityToggleButton.setSelected(false);
@@ -240,6 +240,7 @@ public class MainController extends CallPop implements Initializable {
      */
     @FXML
     private void buttonMoveClicked(ActionEvent event){
+        entitiesSelect.clear();
         attributeToggleButton.setSelected(false);
         moveToggleButton.setSelected(true);
         relationToggleButton.setSelected(false);
@@ -291,6 +292,7 @@ public class MainController extends CallPop implements Initializable {
      */
     @FXML
     private void buttonDeleteFigureClicked(ActionEvent event){
+        entitiesSelect.clear();
         attributeToggleButton.setSelected(false);
         deleteToggleButton.setSelected(true);
         relationToggleButton.setSelected(false);
@@ -383,10 +385,7 @@ public class MainController extends CallPop implements Initializable {
     private void canvasClicked(MouseEvent event) throws IOException {
         MainController.event = event;
         if(entityToggleButton.isSelected() && event.getX()-75 > 0  && event.getY()-45 > 0){
-            popQuestionEntityType();
-            if(PopQuestionEntityTypeController.typeChoosed!=null){
-                popAddEntity();
-            }
+            popAddEntity(); 
         }
         else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
@@ -410,11 +409,29 @@ public class MainController extends CallPop implements Initializable {
                 }   
             }
         }
-        else if(editToggleButton.isSelected()){
-            diagram.selectElementEdit(event, canvas, showPoints);
+        else if(heritageToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
+            diagram.selectElement(event, canvas, showPoints);
+            if (diagram.getSelectedElement()!=null){
+                Element element = diagram.getSelectedElement();
+                String type = element.getClass().getName().substring(6);
+                if("Relation".equals(type) || "Attribute".equals(type)){
+                    diagram.deselectElement(event);
+                    diagram.deselectAllEntities();
+                }
+                if("Entity".equals(type) && !searchEntity((Entity) element)){
+                    entitiesSelect.add((Entity) element);
+                }
+                if (!element.isInFigure(event) && entitiesSelect.size()>1){
+                    popAddHeritage();
+                }   
+            }
         }
         else if(attributeToggleButton.isSelected()){
-            diagram.agregarAtributo(event, canvas, showPoints);
+            diagram.addAttribute(event, canvas, showPoints);
+        }
+        else if(editToggleButton.isSelected()){
+            diagram.selectElementEdit(event, canvas, showPoints);
+            diagram.paint(canvas,showPoints);        
         }
         else if(deleteToggleButton.isSelected()){
             if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){
@@ -422,9 +439,6 @@ public class MainController extends CallPop implements Initializable {
             }
         }
         
-        else if(heritageToggleButton.isSelected()){
-            popAddHeritage();
-        }
         //Una vez realizada la acción correspondiente, actualizamos el canvas
         if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
@@ -517,6 +531,7 @@ public class MainController extends CallPop implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         adjustNodes();
         diagram = new Diagram();
+        entitiesSelect = new ArrayList<>();
         showPoints = false;
         canvas.setCursor(Cursor.DEFAULT);
     }
@@ -562,6 +577,28 @@ public class MainController extends CallPop implements Initializable {
         }
     }
     
+    @FXML
+    private void zoom(ScrollEvent event) {
+        double zoomFactor = 1.05;
+        double deltaY = event.getDeltaY();
+        if (deltaY < 0){
+          zoomFactor = 2.0 - zoomFactor;
+        }
+        System.out.println(zoomFactor);
+        canvas.setScaleX(canvas.getScaleX() * zoomFactor);
+        canvas.setScaleY(canvas.getScaleY() * zoomFactor);
+        event.consume();
+        System.out.println("zoom");
+    }
+    
+    private boolean searchEntity(Entity entity2){
+        for (Entity entity : entitiesSelect) {
+            if(entity.getName().equals(entity2.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
     
     /*No necesario aún
     @FXML

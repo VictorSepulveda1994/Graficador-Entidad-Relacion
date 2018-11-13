@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import static model.Diagram.selectedElement;
 import model.Entity;
-import model.EntityType;
+import model.FigureType;
 /**
  *
  * @author Equipo Rocket
@@ -22,9 +22,7 @@ public class PopChangeEntity extends CallPop implements Initializable{
     @FXML
     private AnchorPane root;
     @FXML
-    CheckBox opcion1;
-    @FXML
-    CheckBox opcion2;
+    CheckBox opcion;
     /**
      * Recibe el nombre de la entidad
      */
@@ -35,21 +33,22 @@ public class PopChangeEntity extends CallPop implements Initializable{
      *Guarda el nombre
      */
     public static String enteredName;
-    public static EntityType type;
-    public static Entity newentity= new Entity((Entity) selectedElement);
+    public static FigureType type;
+    public static Entity newEntity;
     /**
      * Inicio de la clase controladora
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        type=newentity.getType();
-        newName.setText(newentity.getName());
-        if(type.equals(EntityType.WEAK)){
-            opcion1.setSelected(true);
+        newEntity= new Entity((Entity) selectedElement);
+        type=newEntity.getType();
+        newName.setText(newEntity.getName());
+        if(type.equals(FigureType.WEAK)){
+            opcion.setSelected(true);
         }
         else{
-            opcion2.setSelected(true);
+            opcion.setSelected(false);
         }
     }
     
@@ -61,23 +60,19 @@ public class PopChangeEntity extends CallPop implements Initializable{
         enteredName=newName.textProperty().get();
         if(enteredName.isEmpty() || enteredName.length()>12){
             alertName();
-            enteredName=newentity.getName();
+            enteredName=newEntity.getName();
         }
         else{
-            if((opcion1.isSelected() && opcion2.isSelected()) || (!opcion1.isSelected() && !opcion2.isSelected())){
-                alertTypeEnity();
+            if(opcion.isSelected()){
+                type=FigureType.WEAK;
             }
             else{
-                if(opcion1.isSelected()){
-                    type=EntityType.WEAK;
-                }
-                else{
-                    type=EntityType.STRONG;
-                }
-                newentity.setName(enteredName);
-                newentity.setType(type);
-                ((Stage)root.getScene().getWindow()).close();
+                type=FigureType.STRONG;
             }
+            newEntity.setName(enteredName);
+            newEntity.setType(type);
+            ((Stage)root.getScene().getWindow()).close();
+            
         }
     }
     

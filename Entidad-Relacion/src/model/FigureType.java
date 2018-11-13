@@ -10,6 +10,6 @@ package model;
  * @author Equipo Rocket
  */
 
-public enum EntityType {
+public enum FigureType {
     STRONG, WEAK;
 }

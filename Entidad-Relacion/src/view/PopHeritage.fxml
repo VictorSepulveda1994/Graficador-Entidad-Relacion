@@ -22,7 +22,7 @@
          <font>
             <Font size="17.0" />
          </font></CheckBox>
-      <Button layoutX="195.0" layoutY="224.0" mnemonicParsing="false" onAction="#options" style="-fx-background-color: #5798d6;" text="Seleccionar entidades">
+      <Button layoutX="262.0" layoutY="224.0" mnemonicParsing="false" onAction="#options" style="-fx-background-color: #5798d6;" text="Crear herencia">
          <font>
             <Font size="17.0" />
          </font></Button>
@@ -30,7 +30,7 @@
          <font>
             <Font size="17.0" />
          </font></Button>
-      <Text layoutX="195.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar herencia">
+      <Text layoutX="201.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nueva Herencia">
          <font>
             <Font size="20.0" />
          </font>
