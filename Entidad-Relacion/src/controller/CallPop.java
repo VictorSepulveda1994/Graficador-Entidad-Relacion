@@ -218,6 +218,13 @@ public class CallPop {
         alert.showAndWait();
     }
     
+    public void alertInvalid(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Herencia invalida");
+        alert.setHeaderText("Un hijo no puede ser hijo de su padre o un padre no puede ser padre de su padre");
+        alert.showAndWait();
+    }
+    
     /**
      * Exportar diagrama en formato "PNG" ´ó "PDF".
      * @param canvas
