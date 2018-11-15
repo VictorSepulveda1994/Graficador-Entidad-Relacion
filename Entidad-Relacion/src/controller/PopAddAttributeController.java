@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.AttributeType;
+import static model.Diagram.contador;
 
 /**
  * FXML Controller class
@@ -55,7 +56,15 @@ public class PopAddAttributeController extends CallPop implements Initializable 
     //cierra la ventana y agrega el nombre que este correcto
     public void addToScreen(){
         nameAttribute=nameNewAttribute.textProperty().get();
-        if( nameAttribute.isEmpty() || nameAttribute.length()>12 || MainController.diagram.thisNameExists(nameAttribute) ){
+        if( nameAttribute.isEmpty()){
+            nameAttribute="a"+contador;
+            contador++;
+            if(attributeType==null){
+                attributeType=AttributeType.GENERIC;
+            }
+            ((Stage)root.getScene().getWindow()).close();
+        }
+        else if(nameAttribute.length()>12 || MainController.diagram.thisNameExists(nameAttribute) ){
             alertName();
         }
         else{

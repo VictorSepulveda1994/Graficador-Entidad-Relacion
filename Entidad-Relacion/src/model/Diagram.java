@@ -28,6 +28,7 @@ public class Diagram extends CallPop {
     private ArrayList <Attribute> attributes;
     private ArrayList <Heritage> heritages;
     public static Element selectedElement;
+    public static int contador;
     private int iElement;
 
     /**
@@ -39,6 +40,7 @@ public class Diagram extends CallPop {
         connectors = new ArrayList <>();
         attributes = new ArrayList<>();
         heritages = new ArrayList<>();
+        contador=0;
     }
     
     /**

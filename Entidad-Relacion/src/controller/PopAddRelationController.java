@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Attribute;
+import static model.Diagram.contador;
 import model.Entity;
 import model.FigureType;
 import model.Relation;
@@ -49,7 +50,19 @@ public class PopAddRelationController extends CallPop implements Initializable {
      */
     public void addToScreen(){
         nameOfRelation=nameRelation.textProperty().get();
-        if(nameOfRelation.isEmpty() || nameOfRelation.length()>12 || MainController.diagram.thisNameExists(nameOfRelation)){
+        if(nameOfRelation.isEmpty()){
+            nameOfRelation="r"+contador;
+            contador++;
+            FigureType type = FigureType.STRONG;
+            ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
+            ArrayList<Attribute> attributes= new ArrayList<>();
+            Relation relation = new Relation(nameOfRelation, MainController.diagram.numberOfEntitiesSelect(), (int)MainController.event.getX(), (int)MainController.event.getY(), false, entities, attributes, type);
+            entitiesSelect.clear();
+            MainController.diagram.addRelation(relation);
+            MainController.diagram.deselectAllEntities();
+            ((Stage)root.getScene().getWindow()).close();
+        }    
+        else if(nameOfRelation.length()>12 || MainController.diagram.thisNameExists(nameOfRelation)){
             alertName();
         }
         else{
