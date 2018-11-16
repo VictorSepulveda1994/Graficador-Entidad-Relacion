@@ -65,6 +65,7 @@ public class PopChangeEntity extends CallPop implements Initializable{
         else{
             if(opcion.isSelected()){
                 type=FigureType.WEAK;
+                
             }
             else{
                 type=FigureType.STRONG;

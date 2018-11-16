@@ -106,6 +106,11 @@ public class Relation extends Element {
         return count;
     }
     
+    public void updateType (){
+        if((numberOfEntitiesWeak()!=1 && this.entities.size()<=1) || numberOfEntitiesWeak()!=0){
+            this.type=FigureType.WEAK;
+        }
+    }
     public void setType(FigureType type) {
         this.type = type;
     }

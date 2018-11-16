@@ -392,6 +392,15 @@ public class Diagram extends CallPop {
         return -1;
     }
     
+    public int searchRelation(Relation relation){
+        for(int i=0; i<relations.size();i++){
+            if(relations.get(i).getName().equals(relation.getName())){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     /**
      * Método que limpia "selectedElement" y el índice "iElement"
      * @param event
@@ -885,5 +894,14 @@ public class Diagram extends CallPop {
 
     public void setAttributes(Attribute attribute) {
         this.attributes.add(attribute);
+    }
+    
+    public void updateRelations (Canvas canvas,Boolean showPoints){
+        for (int i = 0; i <relations.size(); i++) {
+            Relation relation = relations.get(i);
+            this.relations.set(i,new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure
+            .getPosX(),relation.selected,relation.getEntities(),relation.getAttributes(),relation.getType()));
+        }
+        paint(canvas, showPoints);
     }
 }
