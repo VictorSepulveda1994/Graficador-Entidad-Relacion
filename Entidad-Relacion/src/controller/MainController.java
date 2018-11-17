@@ -86,6 +86,9 @@ public class MainController extends CallPop implements Initializable {
     private int minWidth;
     private int minHeight;
     
+    /**
+     * Lista que guarda las entidades seleccionadas por el usuario.
+     */
     public static ArrayList<Entity> entitiesSelect;
     
     /**

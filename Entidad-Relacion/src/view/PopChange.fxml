@@ -31,7 +31,7 @@
          </font></Text>
       <ScrollPane layoutX="24.0" layoutY="232.0" prefHeight="183.0" prefWidth="181.0">
         <content>
-          <AnchorPane fx:id="rootOpciones" minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="165.0" />
+          <AnchorPane fx:id="rootOptions" minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="165.0" />
         </content>
       </ScrollPane>
       <Text layoutX="258.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar entidadesr">
@@ -56,7 +56,7 @@
       </Button>
       <ScrollPane layoutX="258.0" layoutY="232.0" prefHeight="183.0" prefWidth="181.0">
          <content>
-            <AnchorPane fx:id="entidadesDisponibles" minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="165.0" />
+            <AnchorPane fx:id="entitiesAvaliables" minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="165.0" />
          </content>
       </ScrollPane>
       <Button layoutX="120.0" layoutY="428.0" mnemonicParsing="false" onAction="#delete" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Eliminar">
@@ -75,6 +75,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <CheckBox fx:id="opcion" layoutX="24.0" layoutY="152.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="209.0" text="Relación débil" />
+      <CheckBox fx:id="option" layoutX="24.0" layoutY="152.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="209.0" text="Relación débil" />
    </children>
 </AnchorPane>

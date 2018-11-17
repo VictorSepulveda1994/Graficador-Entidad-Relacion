@@ -19,30 +19,37 @@ import model.HeritageType;
 /**
  * FXML Controller class
  *
- * @author Reinalda Contreras
+ * @author Equipo Rocket
  */
 public class PopChangeHeritageController extends CallPop implements Initializable {
     /**
-    * Panel donde se realizaran las acciones
+    * Panel donde se realizaran las acciones.
     */
     @FXML
     private AnchorPane root;
     
     /**
-    * Opcion para escoger herencia tipo disyunción
+    * Opcion para escoger herencia tipo disyunción.
     */
     @FXML
     CheckBox option1;
     
     /**
-    * Opcion para escoger herencia tipo solapamiento
+    * Opcion para escoger herencia tipo solapamiento.
     */
     @FXML
     CheckBox option2;
     
-
+    /**
+     * Donde se guarda el tipo de herencia escogida por el usuario.
+     */
     public static HeritageType type;
+    
+    /**
+     * Donde se guarda la nueva herencia con los cambios escogidos.
+     */
     public static Heritage newHeritage;
+    
     /**
      * Inicio de la clase controladora
      */
@@ -60,8 +67,7 @@ public class PopChangeHeritageController extends CallPop implements Initializabl
     }
     
     /**
-     * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío y
-     * crea un objeto "relation" y es agregado a "diagram"
+     * Obtiene el tipo de herencia escogido y verifica si es una opcion valida, luego genera los cambios en la herencia.
      */
     public void addToScreen(){
         if((option1.isSelected()==false && option2.isSelected()==false) || (option1.isSelected()==true && option2.isSelected()==true)){
@@ -83,7 +89,7 @@ public class PopChangeHeritageController extends CallPop implements Initializabl
     
     
     /**
-     * Cancela la operación
+     * Cancela la operación.
      */
     public void cancel(){
         ((Stage)root.getScene().getWindow()).close();

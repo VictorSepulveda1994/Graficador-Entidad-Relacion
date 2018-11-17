@@ -9,9 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Attribute;
-import static model.Diagram.contador;
 import model.Entity;
 import model.FigureType;
+import static model.Diagram.count;
 
 
 /**
@@ -35,6 +35,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
     
     
     public static String nameOfEntity = "";
+    
     /**
      * Inicio de la clase controladora
      */
@@ -50,8 +51,8 @@ public class PopAddEntityController extends CallPop implements Initializable {
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
         if( nameOfEntity.isEmpty()){
-            nameOfEntity="e"+contador;
-            contador++;
+            nameOfEntity="e"+count;
+            count++;
             FigureType type = FigureType.STRONG;
             ArrayList<Attribute> attributes= new ArrayList<>();
             MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type,attributes));

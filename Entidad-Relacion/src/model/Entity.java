@@ -50,6 +50,7 @@ public class Entity extends Element {
      *
      * @return
      */
+    @Override
     public String getName() {
         return name;
     }

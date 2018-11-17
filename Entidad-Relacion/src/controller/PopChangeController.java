@@ -28,21 +28,21 @@ public class PopChangeController extends CallPop implements Initializable {
     @FXML
     private AnchorPane root;
     @FXML
-    private AnchorPane rootOpciones = new AnchorPane();
+    private AnchorPane rootOptions = new AnchorPane();
     @FXML
-    private AnchorPane entidadesDisponibles= new AnchorPane();   
+    private AnchorPane entitiesAvaliables = new AnchorPane();   
     @FXML
     public TextField newName;
     @FXML
-    public CheckBox opcion;
+    public CheckBox option;
     
     public int t=0;
     public static String enteredNameR;
     public static FigureType type;
     public static Relation newrelation;
     ArrayList<CheckBox> cbs;
-    ArrayList<CheckBox> disponibles;
-    ArrayList<String> nombres;
+    ArrayList<CheckBox> avaliables;
+    ArrayList<String> names;
          
     /**
      * Initializes the controller class.
@@ -51,20 +51,20 @@ public class PopChangeController extends CallPop implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         cbs = new ArrayList<>();
-        disponibles = new ArrayList<>();
+        avaliables = new ArrayList<>();
         newrelation= new Relation((Relation) selectedElement);
-        nombres=new ArrayList<>();
+        names=new ArrayList<>();
         newName.setText(enteredNameR);
         actualizarRoot();
         type=newrelation.getType();
         if(type.equals(FigureType.WEAK)){
-            opcion.setSelected(true);
+            option.setSelected(true);
         }
         else{
-            opcion.setSelected(false);
+            option.setSelected(false);
         }
         if(newrelation.numberOfEntitiesWeak()==1 && newrelation.getEntities().size()<=1){
-            opcion.setDisable(true);
+            option.setDisable(true);
         }
     }    
     
@@ -74,7 +74,7 @@ public class PopChangeController extends CallPop implements Initializable {
             alertName();
         }
         else{
-            if(opcion.isSelected()){
+            if(option.isSelected()){
                 type=FigureType.WEAK;
             }
             else{
@@ -104,10 +104,10 @@ public class PopChangeController extends CallPop implements Initializable {
     
     @FXML
     public void agregar(){
-        for(int i=0;i<disponibles.size();i++){
-            if(disponibles.get(i).isSelected()){
+        for(int i=0;i<avaliables.size();i++){
+            if(avaliables.get(i).isSelected()){
                 for(int a=0;a<MainController.diagram.getEntities().size();a++) {
-                    if(MainController.diagram.getEntities().get(a).getName().equals(disponibles.get(i).getText())){
+                    if(MainController.diagram.getEntities().get(a).getName().equals(avaliables.get(i).getText())){
                         newrelation.getEntities().add(MainController.diagram.getEntities().get(a));  
                         break;
                     }
@@ -118,29 +118,29 @@ public class PopChangeController extends CallPop implements Initializable {
     }
      
     public void actualizarRoot(){
-        rootOpciones.getChildren().clear();
-        entidadesDisponibles.getChildren().clear();
+        rootOptions.getChildren().clear();
+        entitiesAvaliables.getChildren().clear();
         cbs.clear();
-        disponibles.clear();
-        nombres.clear();
+        avaliables.clear();
+        names.clear();
         int tamaño=0;
         for (int i=0; i<newrelation.getEntities().size();i++) {
             CheckBox cb = new CheckBox(newrelation.getEntities().get(i).getName());
             cb.setLayoutY(tamaño);
             tamaño+=20; 
             cbs.add(cb);
-            rootOpciones.getChildren().add(cb);
+            rootOptions.getChildren().add(cb);
         }
         tamaño=0;
         for (Entity entitie1 : MainController.diagram.getEntities()){
             if(!newrelation.getEntities().contains(entitie1)){
-                if (!nombres.contains(entitie1.getName())){
+                if (!names.contains(entitie1.getName())){
                     CheckBox cb = new CheckBox(entitie1.getName());
                     cb.setLayoutY(tamaño);
                     tamaño+=20;
-                    nombres.add(entitie1.getName());
-                    disponibles.add(cb);
-                    entidadesDisponibles.getChildren().add(cb);
+                    names.add(entitie1.getName());
+                    avaliables.add(cb);
+                    entitiesAvaliables.getChildren().add(cb);
                 }
             }
         }

@@ -18,7 +18,7 @@ import model.HeritageType;
 /**
  * FXML Controller class
  *
- * @author Alejandra
+ * @author Equipo Rocket
  */
 public class PopHeritageController extends CallPop implements Initializable {
     @FXML

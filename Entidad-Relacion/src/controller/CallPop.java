@@ -25,7 +25,7 @@ import javax.imageio.ImageIO;
 /*
 
 /**
- *
+ * Esta clase se encarga de llamar a todos los Pop y mensajes de advertencia.
  * @author Equipo Rocket
  */
 public class CallPop {
@@ -79,6 +79,10 @@ public class CallPop {
 
     }
     
+    /**
+    * Abre ventana para editar una relación.
+    * @throws java.io.IOException
+    */
     public void popEdit()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar relación");
@@ -99,7 +103,11 @@ public class CallPop {
 
     }
     
-     public void popEditHeritage()throws IOException {
+    /**
+    * Abre ventana para editar una herencia.
+    * @throws java.io.IOException
+    */
+    public void popEditHeritage()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar herencia");
         
@@ -119,7 +127,10 @@ public class CallPop {
 
     }
     
-    
+    /**
+    * Abre ventana para editar una entidad.
+    * @throws java.io.IOException
+    */
     public void popEditEntity()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar entidad");
@@ -163,7 +174,11 @@ public class CallPop {
         dialog.close();    
         
     }
-    //Muestra la ventana para agregar informacion al atributo
+    
+    /**
+    * Abre ventana para agregar un atributo.
+    * @throws java.io.IOException
+    */
     public void popAddAttribute()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar relación");
@@ -184,6 +199,10 @@ public class CallPop {
         
     }
     
+     /**
+     * Abre ventana para agregar una herencia entre entidades.
+     * @throws java.io.IOException
+     */
     public void popAddHeritage()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar herencia");
@@ -215,6 +234,9 @@ public class CallPop {
         alert.showAndWait();
     }
 
+    /**
+     * Muestra un mensaje de error al intentar seleccionar dos tipos de herencia a la misma vez o ninguno tipo.
+     */
     public void alertTypeHeritageIncorrect(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -222,6 +244,9 @@ public class CallPop {
         alert.showAndWait();
     }
 
+    /**
+     * Muestra un mensaje de error al intentar agregarle atributos a un atributo que no es del tipo "COMPOUND".
+     */
     public void alertOfTypeIncorrect(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -239,6 +264,9 @@ public class CallPop {
         alert.showAndWait();
     }
     
+    /**
+     * Muestra un mensaje de eror al intentar una herencia con una entidad debil o un herencia tipo hijo-padre.
+     */
     public void alertInvalid(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Herencia invalida");

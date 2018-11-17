@@ -63,6 +63,7 @@ public class Heritage extends Element{
         return selected;
     }
 
+    @Override
     public void setSelected(boolean selected) {
         this.selected = selected;
     }

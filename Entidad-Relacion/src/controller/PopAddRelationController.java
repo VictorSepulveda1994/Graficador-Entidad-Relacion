@@ -10,10 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Attribute;
-import static model.Diagram.contador;
 import model.Entity;
 import model.FigureType;
 import model.Relation;
+import static model.Diagram.count;
 
 /**
  * FXML Controller class
@@ -51,8 +51,8 @@ public class PopAddRelationController extends CallPop implements Initializable {
     public void addToScreen(){
         nameOfRelation=nameRelation.textProperty().get();
         if(nameOfRelation.isEmpty()){
-            nameOfRelation="r"+contador;
-            contador++;
+            nameOfRelation="r"+count;
+            count++;
             FigureType type = FigureType.STRONG;
             ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
             ArrayList<Attribute> attributes= new ArrayList<>();

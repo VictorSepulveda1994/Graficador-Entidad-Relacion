@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.AttributeType;
-import static model.Diagram.contador;
+import static model.Diagram.count;
 
 /**
  * FXML Controller class
@@ -23,16 +23,37 @@ import static model.Diagram.contador;
  */
 public class PopAddAttributeController extends CallPop implements Initializable {
     
+    /**
+     * Panel donde se realizaran las acciones.
+     */
     @FXML
     private AnchorPane root;
+    
+    /**
+     * Entrada por donde se recibe el nombre del atributo a crear.
+     */
     @FXML
     private TextField nameNewAttribute;
+    
+    /**
+     * Lista de opciones, para que el usuario elija el tipo de atributo a crear.
+     */
     @FXML
     ComboBox<String> options= new ComboBox<String>(); 
     
+    /**
+     * Inicialización del nombre del atributo.
+     */
     public static String nameAttribute="";
     
+    /**
+     * Donde se guarda el tipo de atributo escogido por el usuario.
+     */
     public static AttributeType attributeType;
+    
+    /**
+     * Se verifica si el atributo es "Compound" para que usuario pueda agregarle mas atributos.
+     */
     public static boolean onlyCompound;
     
     /**
@@ -57,8 +78,8 @@ public class PopAddAttributeController extends CallPop implements Initializable 
     public void addToScreen(){
         nameAttribute=nameNewAttribute.textProperty().get();
         if( nameAttribute.isEmpty()){
-            nameAttribute="a"+contador;
-            contador++;
+            nameAttribute="a"+count;
+            count++;
             if(attributeType==null){
                 attributeType=AttributeType.GENERIC;
             }

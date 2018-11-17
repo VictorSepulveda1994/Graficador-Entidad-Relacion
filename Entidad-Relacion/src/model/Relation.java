@@ -18,6 +18,9 @@ public class Relation extends Element {
      * @param posX
      * @param posY
      * @param selected
+     * @param entities
+     * @param attributes
+     * @param type
      */
     public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type) {
         super(name,selected,attributes);
@@ -73,6 +76,7 @@ public class Relation extends Element {
     /**
      * Método para saber si la relación contiene la entidad ingresada
      * @param entity
+     * @return verdadero si la relacion contiene esa entidad, falso en caso contrario.
      */
     public boolean hasThisEntity (Entity entity){
         for (int i = 0; i < this.entities.size(); i++) {
@@ -84,8 +88,8 @@ public class Relation extends Element {
     }
     
     /**
-     * Método para eliminar la entidad ingresada
-     * @param la entidad a eliminar
+     * Método para eliminar la entidad ingresada.
+     * @param entity la entidad a eliminar
      */
     public void removeEntity (Entity entity){
         for (int i = 0; i < this.entities.size(); i++) {
