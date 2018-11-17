@@ -211,14 +211,14 @@ public class CallPop {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error al ingresar nombre");
         alert.setHeaderText("Se encontró un error en el nombre,"
-                + " es vacío, tiene mas de 12 caracteres o está repetido. Debe ingresar el nombre nuevamente.");
+                + "tiene mas de 12 caracteres o está repetido. Debe ingresar el nombre nuevamente.");
         alert.showAndWait();
     }
 
     public void alertTypeHeritageIncorrect(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
-        alert.setHeaderText("Debe elegir un tipo de herencia para poder continuar.");
+        alert.setHeaderText("Debe elegir solo un tipo de herencia para poder continuar.");
         alert.showAndWait();
     }
 
@@ -242,10 +242,10 @@ public class CallPop {
     public void alertInvalid(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Herencia invalida");
-        alert.setHeaderText("Un hijo no puede ser hijo de su padre o un padre no puede ser padre de su padre");
+        alert.setHeaderText("Un hijo no puede ser hijo de su padre o un padre no puede ser padre de su padre,"
+                + "No puede crear herencia con entidades debiles.");
         alert.showAndWait();
     }
-    
     /**
      * Exportar diagrama en formato "PNG" ´ó "PDF".
      * @param canvas

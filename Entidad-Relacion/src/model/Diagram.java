@@ -407,14 +407,17 @@ public class Diagram extends CallPop {
     public void deselectElement(MouseEvent event){
         if( selectedElement != null ){
             String type = selectedElement.getClass().getName().substring(6);
-            if( "Entity".equals(type) ){
+            if( "Entity".equals(type)){
                 entities.get(iElement).setSelected(false);
             }
-            if( "Relation".equals(type) ){
+            if( "Relation".equals(type)){
                 relations.get(iElement).setSelected(false);
             }
-            if( "Attribute".equals(type) ){
+            if( "Attribute".equals(type)){
                 attributes.get(iElement).setSelected(false);
+            }
+            if( "Heritage".equals(type)){
+                heritages.get(iElement).setSelected(false);
             }
         }
         selectedElement = null;

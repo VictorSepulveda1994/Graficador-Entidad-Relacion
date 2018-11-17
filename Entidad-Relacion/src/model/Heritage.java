@@ -58,6 +58,13 @@ public class Heritage extends Element{
     public void setDaughtersEntities(ArrayList<Entity> daughtersEntities) {
         this.daughtersEntities = daughtersEntities;
     }
-    
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
     
 }

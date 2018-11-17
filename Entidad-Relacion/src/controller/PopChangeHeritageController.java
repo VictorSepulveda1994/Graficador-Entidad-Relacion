@@ -32,13 +32,13 @@ public class PopChangeHeritageController extends CallPop implements Initializabl
     * Opcion para escoger herencia tipo disyunción
     */
     @FXML
-    CheckBox opcion1;
+    CheckBox option1;
     
     /**
     * Opcion para escoger herencia tipo solapamiento
     */
     @FXML
-    CheckBox opcion2;
+    CheckBox option2;
     
 
     public static HeritageType type;
@@ -52,10 +52,10 @@ public class PopChangeHeritageController extends CallPop implements Initializabl
         newHeritage= (Heritage) selectedElement;
         type=newHeritage.getHeritageType();
         if(type.equals(HeritageType.DISJUNCTION)){
-            opcion1.setSelected(true);
+            option1.setSelected(true);
         }
         else{
-            opcion2.setSelected(true);
+            option2.setSelected(true);
         }
     }
     
@@ -64,12 +64,12 @@ public class PopChangeHeritageController extends CallPop implements Initializabl
      * crea un objeto "relation" y es agregado a "diagram"
      */
     public void addToScreen(){
-        if((opcion1.isSelected()==false && opcion2.isSelected()==false) || (opcion1.isSelected()==true && opcion2.isSelected()==true)){
+        if((option1.isSelected()==false && option2.isSelected()==false) || (option1.isSelected()==true && option2.isSelected()==true)){
             alertTypeHeritageIncorrect();
             type=null;
         }
         else{
-            if(opcion1.isSelected()){
+            if(option1.isSelected()){
                 type=HeritageType.DISJUNCTION;
 
             }

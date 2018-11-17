@@ -51,7 +51,7 @@
             <Font name="Century Gothic Bold" size="17.0" />
          </font>
       </Text>
-      <CheckBox fx:id="opcion" layoutX="22.0" layoutY="176.0" mnemonicParsing="false" text="Entidad Debil">
+      <CheckBox fx:id="option" layoutX="22.0" layoutY="176.0" mnemonicParsing="false" text="Entidad Debil">
          <font>
             <Font size="17.0" />
          </font>

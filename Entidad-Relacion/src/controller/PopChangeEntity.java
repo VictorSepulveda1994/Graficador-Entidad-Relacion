@@ -17,14 +17,19 @@ import model.FigureType;
  */
 public class PopChangeEntity extends CallPop implements Initializable{
     /**
-     * Panel donde se realizaran las acciones
+     * Panel donde se realizaran las acciones.
      */
     @FXML
     private AnchorPane root;
-    @FXML
-    CheckBox opcion;
+    
     /**
-     * Recibe el nombre de la entidad
+     * Opcion para cambiar el tipo de entidad (Debil/Fuerte).
+     */
+    @FXML
+    CheckBox option;
+    
+    /**
+     * Recibe el nombre de la entidad.
      */
     @FXML
     public TextField newName;
@@ -45,10 +50,10 @@ public class PopChangeEntity extends CallPop implements Initializable{
         type=newEntity.getType();
         newName.setText(newEntity.getName());
         if(type.equals(FigureType.WEAK)){
-            opcion.setSelected(true);
+            option.setSelected(true);
         }
         else{
-            opcion.setSelected(false);
+            option.setSelected(false);
         }
     }
     
@@ -63,9 +68,8 @@ public class PopChangeEntity extends CallPop implements Initializable{
             enteredName=newEntity.getName();
         }
         else{
-            if(opcion.isSelected()){
-                type=FigureType.WEAK;
-                
+            if(option.isSelected()){
+                type=FigureType.WEAK;   
             }
             else{
                 type=FigureType.STRONG;
@@ -76,8 +80,7 @@ public class PopChangeEntity extends CallPop implements Initializable{
             
         }
     }
-    
-    
+        
     /**
      * Cancela la operación
      */

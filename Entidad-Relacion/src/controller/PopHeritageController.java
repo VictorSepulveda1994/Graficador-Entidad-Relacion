@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Attribute;
 import model.Entity;
+import model.FigureType;
 import model.Heritage;
 import model.HeritageType;
 
@@ -23,9 +24,9 @@ public class PopHeritageController extends CallPop implements Initializable {
     @FXML
     private AnchorPane root;
     @FXML
-    private CheckBox opcion1;
+    private CheckBox option1;
     @FXML
-    private CheckBox opcion2;
+    private CheckBox option2;
 
     public static HeritageType type;
     
@@ -38,18 +39,18 @@ public class PopHeritageController extends CallPop implements Initializable {
     }    
     
     public void options(){
-        if((opcion1.isSelected()==false && opcion2.isSelected()==false) || (opcion1.isSelected()==true && opcion2.isSelected()==true)){
+        if((option1.isSelected()==false && option2.isSelected()==false) || (option1.isSelected()==true && option2.isSelected()==true)){
             alertTypeHeritageIncorrect();
             type=null;
         }
         else{
-            if(opcion2.isSelected()){
+            if(option2.isSelected()){
                 type=HeritageType.DISJUNCTION;
             }
             else{
                 type=HeritageType.OVERLAP;
             }
-            if(validFather() && validBrother()){
+            if(validFather() && validBrother() && validEntities()){
                 ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
                 ArrayList<Attribute> attributes= new ArrayList<>();
                 Heritage heritage = new Heritage(null, (int)MainController.event.getX(), (int)MainController.event.getY(),false, attributes, entities, type);
@@ -102,6 +103,16 @@ public class PopHeritageController extends CallPop implements Initializable {
             }          
         }
         return valid1;
+    }
+    
+    public boolean validEntities (){
+        ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
+        for (Entity entitie : entities) {
+            if(entitie.type.equals(FigureType.WEAK)){
+                return false;
+            }
+        }
+        return true;
     }
     public void cancel(){
         entitiesSelect.clear();

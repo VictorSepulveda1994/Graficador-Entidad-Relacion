@@ -40,12 +40,12 @@
             <Font name="Century Gothic Bold" size="17.0" />
          </font>
       </Text>
-      <CheckBox fx:id="opcion2" layoutX="22.0" layoutY="82.0" mnemonicParsing="false" text="Disyunción">
+      <CheckBox fx:id="option2" layoutX="22.0" layoutY="82.0" mnemonicParsing="false" text="Disyunción">
          <font>
             <Font size="17.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="opcion1" layoutX="22.0" layoutY="115.0" mnemonicParsing="false" text="Solapamiento">
+      <CheckBox fx:id="option1" layoutX="22.0" layoutY="115.0" mnemonicParsing="false" text="Solapamiento">
          <font>
             <Font size="17.0" />
          </font>
