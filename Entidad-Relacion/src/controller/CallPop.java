@@ -99,6 +99,27 @@ public class CallPop {
 
     }
     
+     public void popEditHeritage()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Editar herencia");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopChangeHeritage.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.setResizable(false);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.resizableProperty().setValue(Boolean.FALSE);
+        dialog.setResizable(false);
+        dialog.close();
+
+    }
+    
+    
     public void popEditEntity()throws IOException {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar entidad");
@@ -165,7 +186,7 @@ public class CallPop {
     
     public void popAddHeritage()throws IOException {
         final Stage dialog = new Stage();
-        dialog.setTitle("Crear herencia");
+        dialog.setTitle("Agregar herencia");
         
         Parent root = FXMLLoader.load(getClass().getResource("/view/PopHeritage.fxml"));
         

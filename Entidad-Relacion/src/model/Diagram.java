@@ -13,9 +13,8 @@ import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
 import static controller.PopChangeEntity.newEntity;
+import static controller.PopChangeHeritageController.newHeritage;
 
 /**
  *
@@ -693,6 +692,20 @@ public class Diagram extends CallPop {
                 break;
             }
         }
+        iE=0;
+        for (Heritage heritage : heritages) {
+            if(heritage.isInFigure(event) && ready == false){
+                selectedElement=heritage;
+                popEditHeritage();
+                ready = true ;
+                ArrayList<Entity> entitiesCopy= new ArrayList<>();
+                newHeritage.getDaughtersEntities().add(0,newHeritage.getParentEntity());
+                entitiesCopy=(ArrayList<Entity>) newHeritage.getDaughtersEntities().clone();
+                heritages.set(iE,new Heritage(newHeritage.getName(),heritage.figure.getPosX(),heritage.figure.getPosY(),heritage.selected,heritage.getParentEntity().getAttributes(),entitiesCopy,heritage.getHeritageType()));
+                break;
+            }
+            iE++;
+        }
         ready = false;
         paint(canvas, showPoints);
     }
@@ -897,10 +910,8 @@ public class Diagram extends CallPop {
     }
     
     public void updateRelations (Canvas canvas,Boolean showPoints){
-        for (int i = 0; i <relations.size(); i++) {
-            Relation relation = relations.get(i);
-            this.relations.set(i,new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure
-            .getPosX(),relation.selected,relation.getEntities(),relation.getAttributes(),relation.getType()));
+        for (Relation relation : this.relations) {
+            relation.updateType();
         }
         paint(canvas, showPoints);
     }

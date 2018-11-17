@@ -16,7 +16,7 @@ import model.FigureType;
  * @author Equipo Rocket
  */
 public class PopChangeEntity extends CallPop implements Initializable{
-/**
+    /**
      * Panel donde se realizaran las acciones
      */
     @FXML

@@ -25,7 +25,7 @@ public class Heritage extends Element{
         assignName();
         figure = new Figure(this.name, 29, posX, posY);
     }
-    
+       
     private void assignName() {
         if(this.heritageType == HeritageType.DISJUNCTION){
             this.name = "d";

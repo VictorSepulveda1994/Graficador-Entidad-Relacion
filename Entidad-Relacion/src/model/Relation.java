@@ -58,6 +58,10 @@ public class Relation extends Element {
         this.entities.add(entity);
     }
     
+    public void setDoubleLines(){
+        this.figure.addDoubleLinePolygon();
+    }
+        
     public ArrayList<Entity> getEntities() {
         return entities;
     }
@@ -102,15 +106,21 @@ public class Relation extends Element {
                 count++;
             }
         }
-        System.out.println(count);
         return count;
     }
     
     public void updateType (){
-        if((numberOfEntitiesWeak()!=1 && this.entities.size()<=1) || numberOfEntitiesWeak()!=0){
+        if((numberOfEntitiesWeak()==1 && this.entities.size()>1) || numberOfEntitiesWeak()==0){
+            this.type=type;
+        }
+        else{
             this.type=FigureType.WEAK;
         }
+        if(type==FigureType.WEAK){
+            figure.addDoubleLinePolygon();
+        }
     }
+    
     public void setType(FigureType type) {
         this.type = type;
     }
