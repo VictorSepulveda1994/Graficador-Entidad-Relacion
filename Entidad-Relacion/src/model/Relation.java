@@ -102,7 +102,6 @@ public class Relation extends Element {
                 count++;
             }
         }
-        System.out.println(count);
         return count;
     }
     

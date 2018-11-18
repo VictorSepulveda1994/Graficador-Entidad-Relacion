@@ -586,7 +586,6 @@ public class MainController extends CallPop implements Initializable {
         canvas.setScaleX(canvas.getScaleX() * zoomFactor);
         canvas.setScaleY(canvas.getScaleY() * zoomFactor);
         event.consume();
-        System.out.println("zoom");
     }
     
     private boolean searchEntity(Entity entity2){
