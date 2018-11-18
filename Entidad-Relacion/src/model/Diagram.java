@@ -730,6 +730,11 @@ public class Diagram extends CallPop {
                 Relation relation= this.relations.get(i);
                 while(!relation.getAttributes().isEmpty()){
                     for (int j = 0; j <relation.getAttributes().size(); j++) {
+                        if((relation.getAttributes().get(j).type.equals(AttributeType.COMPOUND)) && (!relation.getAttributes().get(j).attributes.isEmpty())){
+                            for (int k = 0; k < relation.getAttributes().get(j).attributes.size(); k++) {
+                                deleteAttribute(relation.getAttributes().get(j).attributes.get(k));
+                            }
+                        } 
                         deleteAttribute(relation.getAttributes().get(j));
                         relation.getAttributes().remove(j);
                         paint(canvas, showPoints); 
@@ -745,9 +750,15 @@ public class Diagram extends CallPop {
                 Entity entity = this.entities.get(i);
                 while(!entity.getAttributes().isEmpty()){
                     for (int j = 0; j <entity.getAttributes().size(); j++) {
+                        if((entity.getAttributes().get(j).type.equals(AttributeType.COMPOUND)) && (!entity.getAttributes().get(j).attributes.isEmpty())){
+                            for (int k = 0; k < entity.getAttributes().get(j).attributes.size(); k++) {
+                                deleteAttribute(entity.getAttributes().get(j).attributes.get(k));
+                            }
+                        }                      
                         deleteAttribute(entity.getAttributes().get(j));
                         entity.getAttributes().remove(j);
-                        paint(canvas, showPoints); 
+                        paint(canvas, showPoints);
+                        
                     }
                 }
                 while(hasAnyRelation(entity)){
@@ -793,15 +804,31 @@ public class Diagram extends CallPop {
                         this.relations.get(j).getAttributes().remove(indexAttribute);
                     }
                 }
-                for (int j = 0; j <this.attributes.size(); j++) {
-                    if(!this.attributes.get(j).attributes.isEmpty()){
-                        for (int k = 0; k <this.attributes.get(j).attributes.size(); k++) {
-                            deleteAttribute (this.attributes.get(j).attributes.get(k));
-                        }
-                        this.attributes.get(j).attributes.clear();
-                    }  
+                if((this.attributes.get(i).type.equals(AttributeType.COMPOUND)) && (!this.attributes.get(i).attributes.isEmpty())){
+                    System.out.println("entre");
+                    for (int k = 0; k <this.attributes.get(i).attributes.size(); k++) {
+                        System.out.println("elimino el atrbuto"+this.attributes.get(i).attributes.get(k).name);
+                        deleteAttribute (this.attributes.get(i).attributes.get(k));
+                    }
+                    this.attributes.get(i).attributes.clear(); 
                 }
+                for (int j = 0; j <this.attributes.size(); j++) {
+                    int indexAttribute=this.attributes.get(j).findAttribute(this.attributes.get(i));
+                    if(indexAttribute!=-1){
+                        this.attributes.get(j).attributes.remove(indexAttribute);
+                    }
+                }
+                        
                 this.attributes.remove(i);              
+            }
+        }
+        
+        //Eliminar Herencia
+        for (int i = 0; i <heritages.size(); i++) {
+            if(heritages.get(i).isInFigure(event) && ready == false){
+                ready = true;
+                
+                          
             }
         }
         ready = false;
@@ -862,6 +889,11 @@ public class Diagram extends CallPop {
         for (int i = 0; i <this.attributes.size(); i++) {
             for (int j = 0; j <element.getAttributes().size(); j++) {
                 if(this.attributes.get(i).equals(element.getAttributes().get(j))){
+                    if(this.attributes.get(i).type.equals(AttributeType.COMPOUND) && !this.attributes.get(i).attributes.isEmpty()){
+                        for (int k = 0; k <this.attributes.get(i).attributes.size(); k++) {
+                            deleteAttribute(this.attributes.get(i).attributes.get(k));
+                        }
+                    }
                     this.attributes.remove(i);
                 }
             }
