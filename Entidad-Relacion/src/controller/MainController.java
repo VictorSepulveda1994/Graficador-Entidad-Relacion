@@ -495,7 +495,7 @@ public class MainController extends CallPop implements Initializable {
     @FXML
     public void handle(MouseEvent event) {
         if(deleteToggleButton.isSelected()){
-            //Pintar Entidad
+            //Pintar Entidad           
             for (int i = 0; i <diagram.getEntities().size(); i++) {
                 if(diagram.getEntities().get(i).isInFigure(event)){
                     diagram.getEntities().get(i).setSelected(true);

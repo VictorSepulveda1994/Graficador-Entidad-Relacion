@@ -793,6 +793,14 @@ public class Diagram extends CallPop {
                         this.relations.get(j).getAttributes().remove(indexAttribute);
                     }
                 }
+                for (int j = 0; j <this.attributes.size(); j++) {
+                    if(!this.attributes.get(j).attributes.isEmpty()){
+                        for (int k = 0; k <this.attributes.get(j).attributes.size(); k++) {
+                            deleteAttribute (this.attributes.get(j).attributes.get(k));
+                        }
+                        this.attributes.get(j).attributes.clear();
+                    }  
+                }
                 this.attributes.remove(i);              
             }
         }
