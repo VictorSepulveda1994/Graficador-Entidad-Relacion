@@ -570,6 +570,7 @@ public class MainController extends CallPop implements Initializable {
         toggleButtons.add(editToggleButton);
         toggleButtons.add(deleteToggleButton);
         toggleButtons.add(attributeToggleButton);
+        toggleButtons.add(heritageToggleButton);
         buttons.add(cleanButton);
         buttons.add(exportButton);
         //Ajuste del tamaño de todos los botones

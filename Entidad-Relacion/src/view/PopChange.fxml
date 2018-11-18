@@ -10,35 +10,35 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="558.0" prefWidth="478.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopChangeController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="539.0" prefWidth="451.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopChangeController">
    <children>
-      <Pane prefHeight="68.0" prefWidth="478.0" style="-fx-background-color: #eae8e8;">
+      <Pane prefHeight="59.0" prefWidth="478.0" style="-fx-background-color: #eae8e8;">
          <children>
-            <Text layoutX="191.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editar relación">
+            <Text layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editar relación" textAlignment="CENTER" wrappingWidth="478.00000167876715">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Century Gothic Bold" size="20.0" />
                </font></Text>
          </children>
       </Pane>
       <Text layoutX="24.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo nombre">
          <font>
-            <Font size="18.0" />
+            <Font name="Century Gothic Bold" size="18.0" />
          </font></Text>
       <TextField fx:id="newName" layoutX="24.0" layoutY="109.0" prefHeight="36.0" prefWidth="400.0" />
-      <Text layoutX="24.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entidades relacionadas">
+      <Text layoutX="24.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entidades relacionadas" underline="true">
          <font>
-            <Font size="18.0" />
+            <Font name="Century Gothic Bold" size="17.0" />
          </font></Text>
       <ScrollPane layoutX="24.0" layoutY="232.0" prefHeight="183.0" prefWidth="181.0">
         <content>
           <AnchorPane fx:id="rootOptions" minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="165.0" />
         </content>
       </ScrollPane>
-      <Text layoutX="258.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar entidadesr">
+      <Text layoutX="258.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Agregar entidades" textAlignment="CENTER" underline="true" wrappingWidth="180.99999503046274">
          <font>
-            <Font size="18.0" />
+            <Font name="Century Gothic Bold" size="17.0" />
          </font></Text>
-      <Button layoutX="258.0" layoutY="505.0" mnemonicParsing="false" onAction="#addToScreen" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cambiar">
+      <Button layoutX="258.0" layoutY="491.0" mnemonicParsing="false" onAction="#addToScreen" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cambiar">
          <font>
             <Font name="Century Gothic Bold" size="14.0" />
          </font>
@@ -46,7 +46,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="361.0" layoutY="505.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cancelar">
+      <Button layoutX="356.0" layoutY="491.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cancelar">
          <font>
             <Font name="Century Gothic Bold" size="13.0" />
          </font>
@@ -59,7 +59,7 @@
             <AnchorPane fx:id="entitiesAvaliables" minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="165.0" />
          </content>
       </ScrollPane>
-      <Button layoutX="120.0" layoutY="428.0" mnemonicParsing="false" onAction="#delete" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Eliminar">
+      <Button layoutX="120.0" layoutY="428.0" mnemonicParsing="false" onAction="#delete" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #f1eeee;" text="Eliminar">
          <font>
             <Font name="Century Gothic Bold" size="14.0" />
          </font>
@@ -67,7 +67,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button layoutX="352.0" layoutY="429.0" mnemonicParsing="false" onAction="#agregar" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Agregar">
+      <Button layoutX="352.0" layoutY="429.0" mnemonicParsing="false" onAction="#agregar" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #f1eeee;" text="Agregar">
          <font>
             <Font name="Century Gothic Bold" size="14.0" />
          </font>
@@ -75,6 +75,9 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <CheckBox fx:id="option" layoutX="24.0" layoutY="152.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="209.0" text="Relación débil" />
+      <CheckBox fx:id="option" layoutX="24.0" layoutY="152.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="209.0" text="Relación débil">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font></CheckBox>
    </children>
 </AnchorPane>

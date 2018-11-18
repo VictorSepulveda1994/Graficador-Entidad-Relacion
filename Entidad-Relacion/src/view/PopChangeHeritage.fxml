@@ -26,7 +26,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <HBox alignment="CENTER" layoutY="15.0" prefHeight="37.0" prefWidth="482.0" style="-fx-background-color: #eae8e8;" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+      <HBox alignment="CENTER" layoutY="-2.0" prefHeight="52.0" prefWidth="482.0" style="-fx-background-color: #eae8e8;" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Editar Herencia" textAlignment="CENTER" wrappingWidth="475.0">
                <font>
