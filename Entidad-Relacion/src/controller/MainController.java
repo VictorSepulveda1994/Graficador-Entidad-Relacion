@@ -583,7 +583,6 @@ public class MainController extends CallPop implements Initializable {
         if (deltaY < 0){
           zoomFactor = 2.0 - zoomFactor;
         }
-        System.out.println(zoomFactor);
         canvas.setScaleX(canvas.getScaleX() * zoomFactor);
         canvas.setScaleY(canvas.getScaleY() * zoomFactor);
         event.consume();
