@@ -783,6 +783,18 @@ public class Diagram extends CallPop {
                         }
                     }
                 }
+                while(isInAHeritage(entity)){
+                    for (int j = 0; j <heritages.size(); j++) {
+                        if(heritages.get(j).hasThisEntity(entity)){
+                            if(heritages.get(j).getParentEntity().equals(entity) || heritages.get(j).getDaughtersEntities().size()<=1){
+                                heritages.remove(j);
+                            }
+                            else{
+                                heritages.get(j).removeDaughterEntitie(entity);
+                            }
+                        }
+                    }
+                }
                 if (!hasAnyRelation(this.entities.get(i))){
                     this.entities.remove(i);
                 }
@@ -827,8 +839,7 @@ public class Diagram extends CallPop {
         for (int i = 0; i <heritages.size(); i++) {
             if(heritages.get(i).isInFigure(event) && ready == false){
                 ready = true;
-                
-                          
+                heritages.remove(i);                          
             }
         }
         ready = false;
@@ -958,4 +969,18 @@ public class Diagram extends CallPop {
         }
         paint(canvas, showPoints);
     }
+    
+    /**
+     * Metodo para saber si una entidadd esta dentro de una herencia en el diagrama.
+     * @return verdadero la entidad ingresada esta en una herencia dentro del diagrama o falso en caso contrario.
+     */
+    public boolean isInAHeritage(Entity entity){
+        for (Heritage heritage : heritages) {
+            if(heritage.hasThisEntity(entity)){
+                return true;                
+            }
+        }
+        return false;
+    }
+    
 }

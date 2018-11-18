@@ -68,4 +68,25 @@ public class Heritage extends Element{
         this.selected = selected;
     }
     
+    public boolean hasThisEntity(Entity entity){
+        if(this.parentEntity.equals(entity)){
+            return true;
+        }
+        else{
+            for (Entity daughtersEntitie : this.daughtersEntities) {
+                if(daughtersEntitie.equals(entity)){
+                    return true;
+                }
+            }
+        }
+        return false;        
+    }
+    
+    public void removeDaughterEntitie (Entity entity){
+        for (int i = 0; i <this.daughtersEntities.size(); i++) {   
+            if(this.daughtersEntities.get(i).equals(entity)){
+                this.daughtersEntities.remove(i);
+            }
+        }   
+    }
 }

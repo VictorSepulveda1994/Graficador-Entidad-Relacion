@@ -526,6 +526,16 @@ public class MainController extends CallPop implements Initializable {
                     diagram.getAttributes().get(i).setSelected(false);
                 }
             }
+            //Pintar Herencia
+            for (int i = 0; i <diagram.getHeritages().size(); i++) {
+                if(diagram.getHeritages().get(i).isInFigure(event)){
+                    diagram.getHeritages().get(i).setSelected(true);
+                    break;
+                }
+                else{
+                    diagram.getHeritages().get(i).setSelected(false);
+                }
+            }
             diagram.paint(canvas, showPoints);
         }
     }
