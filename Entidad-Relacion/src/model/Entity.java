@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * @author Equipo Rocket
  */
 public class Entity extends Element {
+
     public FigureType type;
     public ArrayList<Entity> entities;
     
@@ -17,6 +18,7 @@ public class Entity extends Element {
      * @param posY
      * @param selected
      * @param type
+     * @param attributes
      */
     public Entity(String name, int posX, int posY, boolean selected,FigureType type,ArrayList<Attribute> attributes) {
         super(name,selected,attributes);
@@ -28,6 +30,10 @@ public class Entity extends Element {
         this.entities= new ArrayList<>();
     }
     
+    /**
+     *Constructor que crea una entidad igual a otra
+     * @param entity
+     */
     public Entity(Entity entity){
         super(entity.getName(),false,entity.getAttributes());
         this.type=entity.getType();
@@ -38,10 +44,18 @@ public class Entity extends Element {
         this.entities=entity.getEntities();
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Entity> getEntities() {
         return entities;
     }
 
+    /**
+     *
+     * @param entiti
+     */
     public void addEntity(Entity entiti) {
         this.entities.add(entiti);
     }
@@ -54,10 +68,18 @@ public class Entity extends Element {
         return name;
     }
     
+    /**
+     *
+     * @return
+     */
     public FigureType getType() {
         return type;
     }
 
+    /**
+     *
+     * @param type
+     */
     public void setType(FigureType type) {
         this.type = type;
     }

@@ -9,6 +9,10 @@ import java.util.ArrayList;
 public class Relation extends Element {
 
     private ArrayList <Entity> entities;
+
+    /**
+     *
+     */
     public FigureType type;
     
     /**
@@ -18,6 +22,9 @@ public class Relation extends Element {
      * @param posX
      * @param posY
      * @param selected
+     * @param entities
+     * @param attributes
+     * @param type
      */
     public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type) {
         super(name,selected,attributes);
@@ -35,6 +42,10 @@ public class Relation extends Element {
 
     }
     
+    /**
+     *Constructor para crear una relacion en base a otra
+     * @param relation
+     */
     public Relation(Relation relation){
         super(relation.getName(),false,relation.getAttributes());
         this.entities = relation.getEntities();
@@ -58,10 +69,18 @@ public class Relation extends Element {
         this.entities.add(entity);
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Entity> getEntities() {
         return entities;
     }
 
+    /**
+     *
+     * @param entities
+     */
     public void setEntities(ArrayList<Entity> entities) {
         this.entities = entities;
     }
@@ -69,6 +88,7 @@ public class Relation extends Element {
     /**
      * Método para saber si la relación contiene la entidad ingresada
      * @param entity
+     * @return 
      */
     public boolean hasThisEntity (Entity entity){
         for (int i = 0; i < this.entities.size(); i++) {
@@ -81,6 +101,7 @@ public class Relation extends Element {
     
     /**
      * Método para eliminar la entidad ingresada
+     * @param entity
      * @param la entidad a eliminar
      */
     public void removeEntity (Entity entity){
@@ -91,10 +112,18 @@ public class Relation extends Element {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public FigureType getType() {
         return type;
     }
 
+    /**
+     *Devuelve el numero de entidades debiles 
+     * @return
+     */
     public int numberOfEntitiesWeak(){
         int count=0;
         for (Entity entitie : this.entities) {
@@ -105,6 +134,10 @@ public class Relation extends Element {
         return count;
     }
     
+    /**
+     *
+     * @param type
+     */
     public void setType(FigureType type) {
         this.type = type;
     }

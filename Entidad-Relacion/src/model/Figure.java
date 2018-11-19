@@ -71,6 +71,7 @@ public class Figure {
      *Constructor para crear lineas
      * @param point1
      * @param point2
+     * @param withArc
      */
 
     public Figure(Point point1,Point point2,boolean withArc){
@@ -140,6 +141,11 @@ public class Figure {
         }
         }
     
+    /**
+     *Dibuja lineas punteadas
+     * @param canvas
+     * @param selected
+     */
     public void paintDottedLines(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(3);
@@ -165,6 +171,11 @@ public class Figure {
         }
     }
     
+    /**
+     *Dibuja una linea debajo del texto 
+     * @param canvas
+     * @param selected
+     */
     public void paintUnderlinedText(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(3);
@@ -192,6 +203,11 @@ public class Figure {
         gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
     }
     
+    /**
+     *Dibuja una linea punteada debajo del texto
+     * @param canvas
+     * @param selected
+     */
     public void paintDottedText(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(3);
@@ -226,6 +242,10 @@ public class Figure {
         gc.strokeLine(point2.getX(), point2.getY(), point1.getX(), point1.getY());
     }
     
+    /**
+     *Pinta interior de entidades 
+     * @param canvas
+     */
     public void fillEntity(Canvas canvas){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(7);
@@ -256,6 +276,10 @@ public class Figure {
             createPointsRectangle();
     }
     
+    /**
+     *Pinta interior de poligonos
+     * @param canvas
+     */
     public void fillPolygon(Canvas canvas){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(7);
@@ -493,6 +517,9 @@ public class Figure {
         pointsInside.add(point);  
     }
     
+    /**
+     *Crea lineas dobles en los poligonos
+     */
     public void addDoubleLinePolygon(){
         Point point;
         if (sides>0 && sides<3){
@@ -605,10 +632,18 @@ public class Figure {
         this.name = name;
     }
     
+    /**
+     *
+     * @return
+     */
     public Point getCenter(){
         return (new Point(posX, posY));
     }
     
+    /**
+     *
+     *Dibuja los arcos en las lineas correspondientes
+     */
     private void addArc(Canvas canvas, boolean selected){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setLineWidth(3);
@@ -623,6 +658,10 @@ public class Figure {
         gc.strokeArc(this.posArc.getX(), this.posArc.getY(), 30, 30, this.startAngle, 180, ArcType.OPEN);
     }
 
+    /**
+     *
+     *Crea los puntos de los arcos
+     */
     private void createPointsArc(Point point1, Point point2) {
         int x =(( point1.getX() + point2.getX() - 30) / 2);
         int y =(( point1.getY() + point2.getY() - 30) / 2);

@@ -11,6 +11,16 @@ public class Heritage extends Element{
     private Entity parentEntity;
     private ArrayList<Entity> daughtersEntities;
     
+    /**
+     *Constructor para crear una herencia 
+     * @param name
+     * @param posX
+     * @param posY
+     * @param selected
+     * @param attributes
+     * @param entities
+     * @param heritageType
+     */
     public Heritage(String name, int posX, int posY, boolean selected, ArrayList<Attribute> attributes, ArrayList<Entity> entities, HeritageType heritageType) {
         super(name, selected, attributes);
         this.heritageType = heritageType;
@@ -26,6 +36,10 @@ public class Heritage extends Element{
         figure = new Figure(this.name, 29, posX, posY);
     }
     
+    /**
+     *
+     * Se le asigna el nombre que llevara el circulo de la herencia segun el tipo
+     */
     private void assignName() {
         if(this.heritageType == HeritageType.DISJUNCTION){
             this.name = "d";
@@ -35,26 +49,50 @@ public class Heritage extends Element{
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public HeritageType getHeritageType() {
         return heritageType;
     }
 
+    /**
+     *
+     * @param heritageType
+     */
     public void setHeritageType(HeritageType heritageType) {
         this.heritageType = heritageType;
     }
 
+    /**
+     *
+     * @return
+     */
     public Entity getParentEntity() {
         return parentEntity;
     }
 
+    /**
+     *
+     * @param parentEntity
+     */
     public void setParentEntity(Entity parentEntity) {
         this.parentEntity = parentEntity;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Entity> getDaughtersEntities() {
         return daughtersEntities;
     }
 
+    /**
+     *
+     * @param daughtersEntities
+     */
     public void setDaughtersEntities(ArrayList<Entity> daughtersEntities) {
         this.daughtersEntities = daughtersEntities;
     }
