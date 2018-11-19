@@ -15,6 +15,15 @@ public class Attribute extends Element{
     
     AttributeType type;
 
+    /**
+     *Constructor para crear atributos 
+     * @param tipo
+     * @param name
+     * @param selected
+     * @param posX
+     * @param posY
+     * @param attributes
+     */
     public Attribute(AttributeType tipo, String name, boolean selected,int posX, int posY, ArrayList<Attribute> attributes ) {
         super(name, selected,attributes);
         this.type = tipo;
@@ -24,10 +33,18 @@ public class Attribute extends Element{
         }
     }
 
+    /**
+     *Entrega el tipo de atributo
+     * @return
+     */
     public AttributeType getTipo() {
         return type;
     }
 
+    /**
+     *Agrega el tipo de atributo
+     * @param tipo
+     */
     public void setTipo(AttributeType tipo) {
         this.type = tipo;
     }

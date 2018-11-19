@@ -274,6 +274,14 @@ public class CallPop {
                 + "No puede crear herencia con entidades debiles.");
         alert.showAndWait();
     }
+
+    public void alertEntitiesEmpty(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Edición invalida");
+        alert.setHeaderText("Haz dejado la relación sin entidades");
+        alert.showAndWait();
+    }
+
     /**
      * Exportar diagrama en formato "PNG" ´ó "PDF".
      * @param canvas

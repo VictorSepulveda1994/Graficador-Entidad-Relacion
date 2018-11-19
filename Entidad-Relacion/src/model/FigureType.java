@@ -11,5 +11,14 @@ package model;
  */
 
 public enum FigureType {
-    STRONG, WEAK;
+
+    /**
+     *
+     */
+    STRONG,
+
+    /**
+     *
+     */
+    WEAK;
 }

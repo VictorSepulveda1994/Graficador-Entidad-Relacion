@@ -18,6 +18,16 @@ public class Connector extends Element{
     private Point pointElement2;
     private boolean withArc;
     
+    /**
+     *Constructor para crear un conector
+     * @param element1
+     * @param pointElement1
+     * @param element2
+     * @param pointElement2
+     * @param name
+     * @param selected
+     * @param attributes
+     */
     public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected,ArrayList<Attribute> attributes) {
         super(name, selected,attributes);
         this.element1 = element1;
@@ -28,6 +38,15 @@ public class Connector extends Element{
         figure = new Figure(this.pointElement1,this.pointElement2,this.withArc);
     }
 
+    /**
+     *Constructor para crear conectores de herencia
+     * @param element1
+     * @param element2
+     * @param name
+     * @param selected
+     * @param attributes
+     * @param withArc
+     */
     public Connector(Element element1, Element element2, String name, boolean selected, ArrayList<Attribute> attributes, boolean withArc) {
         super(name, selected, attributes);
         this.element1 = element1;
@@ -38,18 +57,34 @@ public class Connector extends Element{
         figure = new Figure(element1.getFigure().getCenter(), element2.getFigure().getCenter(),this.withArc);
     }
 
+    /**
+     *
+     * @return
+     */
     public Point getPointElement1() {
         return pointElement1;
     }
 
+    /**
+     *
+     * @param pointElement1
+     */
     public void setPointElement1(Point pointElement1) {
         this.pointElement1 = pointElement1;
     }
 
+    /**
+     *
+     * @return
+     */
     public Point getPointElement2() {
         return pointElement2;
     }
 
+    /**
+     *
+     * @param pointElement2
+     */
     public void setPointElement2(Point pointElement2) {
         this.pointElement2 = pointElement2;
     }

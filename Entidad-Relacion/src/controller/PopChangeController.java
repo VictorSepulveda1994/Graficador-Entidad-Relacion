@@ -79,10 +79,10 @@ public class PopChangeController extends CallPop implements Initializable {
             }
             else{
                 type=FigureType.STRONG;
-            }
+            }  
             newrelation.setType(type);
             newrelation.setName(enteredNameR);
-            ((Stage)root.getScene().getWindow()).close();
+            ((Stage)root.getScene().getWindow()).close();                  
         }
     }
     
@@ -92,7 +92,12 @@ public class PopChangeController extends CallPop implements Initializable {
             if(cbs.get(i).isSelected()){
                 for (int a=0;a<newrelation.getEntities().size();a++) {
                     if(cbs.get(i).getText().equals(newrelation.getEntities().get(a).getName())){
-                        newrelation.getEntities().remove(newrelation.getEntities().get(a));
+                        if(newrelation.getEntities().size()==1){
+                            alertEntitiesEmpty();
+                        }
+                        else{
+                            newrelation.getEntities().remove(newrelation.getEntities().get(a));
+                        }
                         break;
                     }
                 }

@@ -26,7 +26,15 @@ public class Diagram extends CallPop {
     private ArrayList <Connector> connectors;
     private ArrayList <Attribute> attributes;
     public static ArrayList <Heritage> heritages;
+
+    /**
+     *Elemento seleccionad
+     */
     public static Element selectedElement;
+
+    /**
+     *Contador para el nombre automatico
+     */
     public static int count;
     private int iElement;
 
@@ -82,6 +90,10 @@ public class Diagram extends CallPop {
         this.entities = entities;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Heritage> getHeritages() {
         return heritages;
     }
@@ -102,22 +114,28 @@ public class Diagram extends CallPop {
     public void paint(Canvas canvas, boolean showPoints){
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         connectors.clear();
+        //crea los conectores
         createConnectors();
+        //dibuja los conectores
         for (Connector connector : connectors) {
             connector.paint(canvas,showPoints);
         }
+        //dibuja las entidades
         for (Entity entity : entities) {
             entity.figure.fillEntity(canvas);
             entity.paint(canvas,showPoints);
         }
+        //dibuja las relaciones
         for (Relation relation : relations) {
             relation.figure.fillPolygon(canvas);
             relation.paint(canvas,showPoints);
         }
+        //dibuja la herencia
         for (Heritage heritage : heritages) {
             heritage.figure.fillPolygon(canvas);
             heritage.paint(canvas, showPoints);
         }
+        //dibuja los atributos correspondientes
         for(Attribute attribute : attributes){
             attribute.figure.fillPolygon(canvas);
             switch (attribute.getTipo()) {
@@ -382,6 +400,11 @@ public class Diagram extends CallPop {
         return -1;
     }
     
+    /**
+     *Busca un atributo dentro del Arrays de atributos y devuelve su ubicacion
+     * @param attribute
+     * @return
+     */
     public int searchAttribute(Attribute attribute){
         for(int i=0; i<attributes.size();i++){
             if(attributes.get(i).getName().equals(attribute.getName())){
@@ -527,7 +550,7 @@ public class Diagram extends CallPop {
     }
     
     /**
-     *
+     *Ve si a sido seleccionado algun objeto
      * @return
      */
     public boolean isSomethingSelect (){
@@ -589,8 +612,15 @@ public class Diagram extends CallPop {
             }
         }
     }
-    
-    //Agrega un atributo a una relacion o entidad y al diagrama, pero tiene problemas con el click hay que solucionarlo
+   
+
+    /**
+     *Se agrega un atributo a una entidad, relacion o atributo compuesto seleccionado
+     * @param event
+     * @param canvas
+     * @param showPoints
+     * @throws IOException
+     */
     public void addAttribute(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
         boolean ready = false;
         for (Entity entity : entities) {
@@ -886,7 +916,11 @@ public class Diagram extends CallPop {
         return false;
     }
     
-    //Metodo para eliminar un atributo dentro del diagrama (sin conocer su indice).
+
+    /**
+     *Metodo para eliminar un atributo dentro del diagrama (sin conocer su indice)
+     * @param attribute
+     */
     public void deleteAttribute (Attribute attribute){
         for (int i = 0; i <this.attributes.size(); i++) {
             if(this.attributes.get(i).equals(attribute)){
@@ -894,8 +928,11 @@ public class Diagram extends CallPop {
             }
         }
     }
-    
-    //Metodo para eliminar algunos atributos dentro del diagrama de una relacion o entidad.
+
+    /**
+     *Metodo para eliminar algunos atributos dentro del diagrama de una relacion o entidad.
+     * @param element
+     */
     public void deleteSomeAttributes (Element element){
         for (int i = 0; i <this.attributes.size(); i++) {
             for (int j = 0; j <element.getAttributes().size(); j++) {
@@ -912,6 +949,11 @@ public class Diagram extends CallPop {
         }
     }
     
+    /**
+     *
+     * @param event
+     * @return
+     */
     public Element foundElement (MouseEvent event){
         for (Entity entity : this.entities){
             if(entity.figure.isInFigure(event)){
@@ -955,10 +997,18 @@ public class Diagram extends CallPop {
         return connectors;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Attribute> getAttributes() {
         return attributes;
     }
 
+    /**
+     *
+     * @param attribute
+     */
     public void setAttributes(Attribute attribute) {
         this.attributes.add(attribute);
     }
