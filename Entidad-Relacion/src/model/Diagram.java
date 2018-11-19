@@ -847,9 +847,7 @@ public class Diagram extends CallPop {
                     }
                 }
                 if((this.attributes.get(i).type.equals(AttributeType.COMPOUND)) && (!this.attributes.get(i).attributes.isEmpty())){
-                    System.out.println("entre");
                     for (int k = 0; k <this.attributes.get(i).attributes.size(); k++) {
-                        System.out.println("elimino el atrbuto"+this.attributes.get(i).attributes.get(k).name);
                         deleteAttribute (this.attributes.get(i).attributes.get(k));
                     }
                     this.attributes.get(i).attributes.clear(); 
@@ -860,7 +858,6 @@ public class Diagram extends CallPop {
                         this.attributes.get(j).attributes.remove(indexAttribute);
                     }
                 }
-                        
                 this.attributes.remove(i);              
             }
         }

@@ -26,10 +26,10 @@ public class Heritage extends Element{
         this.heritageType = heritageType;
         this.parentEntity = entities.get(0);
         this.attributes = this.parentEntity.attributes;
-        this.daughtersEntities = new ArrayList<>();
+        this.daughtersEntities = new ArrayList<>(); 
         for (int i = 1; i < entities.size(); i++) {
             Entity entityAux = entities.get(i);
-            entityAux.setAttributes( this.parentEntity.getAttributes() );
+            //entityAux.setAttributes( this.parentEntity.getAttributes() );
             this.daughtersEntities.add(entityAux);
         }
         assignName();
