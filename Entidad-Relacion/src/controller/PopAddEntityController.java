@@ -16,24 +16,26 @@ import static model.Diagram.count;
 
 /**
  * FXML Controller class
- *
+ * Esta clase se encarga de agregar una entidad.
  * @author Equipo Rocket
  */
 public class PopAddEntityController extends CallPop implements Initializable {
 
     /**
-     * Panel donde se realizaran las acciones
+     * Panel donde se realizaran las acciones.
      */
     @FXML
     private AnchorPane root;
 
     /**
-     * Recibe el nombre de la entidad
+     * Entrada por donde se recibe el nombre de la entidad a crear.
      */
     @FXML
     private TextField nameEntity;
     
-    
+    /**
+    * Inicialización del nombre de la entidad.
+    */
     public static String nameOfEntity = "";
     
     /**
@@ -46,7 +48,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
     
     /**
      * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío
-     * Crea un objeto "entity" y es agregado a "diagram"
+     * Crea un objeto "entity" y es agregado a "diagram".
      */
     public void addToScreen(){
         nameOfEntity=nameEntity.textProperty().get();
@@ -70,7 +72,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
     }
     
     /**
-     * Cancela la operación
+     * Metodo que se encarga de cancelar la operación
      */
     public void cancel(){
         ((Stage)root.getScene().getWindow()).close();

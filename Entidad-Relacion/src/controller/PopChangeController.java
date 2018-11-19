@@ -18,30 +18,72 @@ import static model.Diagram.selectedElement;
 import model.Entity;
 import model.FigureType;
 import model.Relation;
+
 /**
  * FXML Controller class
- *
+ * Esta clase permite editar una relación.
  * @author Equipo Rocket
  */
 public class PopChangeController extends CallPop implements Initializable {
     
+    /**
+     * Panel donde se realizaran las acciones.
+     */
     @FXML
     private AnchorPane root;
+    
+    /**
+     * Panel donde se muestran las opciones disponibles.
+     */ 
     @FXML
     private AnchorPane rootOptions = new AnchorPane();
+    
+    /**
+     * Panel donde se muestran las entidades disponibles.
+     */
     @FXML
-    private AnchorPane entitiesAvaliables = new AnchorPane();   
+    private AnchorPane entitiesAvaliables = new AnchorPane();  
+    
+    /**
+     * Entrada por donde se recibe el nombre de la relación a editar.
+     */
     @FXML
     public TextField newName;
+    
+    /**
+     * Casilla donde se elige si la relación es debil o no.
+     */
     @FXML
     public CheckBox option;
     
-    public int t=0;
+    /**
+     * Donde se guarda el nombre editado de la relación.
+     */
     public static String enteredNameR;
+    
+    /**
+     * Donde se guarda el tipo editado de la relación (Debil/Fuerte).
+     */
     public static FigureType type;
+    
+    /**
+     * Donde se guarda la nueva relación con los cambios de edición.
+     */
     public static Relation newrelation;
+    
+    /**
+     * Lista en donde se guardan los CheckBox a utilizar.
+     */
     ArrayList<CheckBox> cbs;
+    
+    /**
+     * Lista en donde se guardan las entidades disponibles.
+     */
     ArrayList<CheckBox> avaliables;
+    
+    /**
+     * Lista en donde se guardan los nombres de las entidades disponibles.
+     */
     ArrayList<String> names;
          
     /**
@@ -68,6 +110,9 @@ public class PopChangeController extends CallPop implements Initializable {
         }
     }    
     
+    /**
+     * Metodo que se encarga de guardar los cambios de edición.
+     */
     public void addToScreen(){
         enteredNameR=newName.textProperty().get();
         if(enteredNameR.isEmpty() || enteredNameR.length()>12){
@@ -86,6 +131,9 @@ public class PopChangeController extends CallPop implements Initializable {
         }
     }
     
+    /**
+     * Metodo para borrar entidades dentro de la relación.
+     */
     @FXML
     public void delete(){
         for(int i=0;i<cbs.size();i++){
@@ -107,6 +155,9 @@ public class PopChangeController extends CallPop implements Initializable {
         actualizarRoot();
     }
     
+    /**
+     * Metodo para agregar entidades dentro de la relación.
+     */
     @FXML
     public void agregar(){
         for(int i=0;i<avaliables.size();i++){
@@ -122,6 +173,9 @@ public class PopChangeController extends CallPop implements Initializable {
         actualizarRoot();
     }
      
+    /**
+     * Metodo que se encarga de limpiar y actualizar todos los datos para poder editar la relación.
+     */
     public void actualizarRoot(){
         rootOptions.getChildren().clear();
         entitiesAvaliables.getChildren().clear();

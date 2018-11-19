@@ -18,7 +18,7 @@ import model.HeritageType;
 
 /**
  * FXML Controller class
- *
+ * Esta clase permite editar una Herencia.
  * @author Equipo Rocket
  */
 public class PopChangeHeritageController extends CallPop implements Initializable {
@@ -86,7 +86,6 @@ public class PopChangeHeritageController extends CallPop implements Initializabl
             ((Stage)root.getScene().getWindow()).close();
         }
     }
-    
     
     /**
      * Cancela la operación.

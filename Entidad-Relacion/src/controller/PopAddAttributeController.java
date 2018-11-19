@@ -18,7 +18,7 @@ import static model.Diagram.count;
 
 /**
  * FXML Controller class
- *
+ * Esta clase se encarga de agregar un atributo.
  * @author Equipo Rocket
  */
 public class PopAddAttributeController extends CallPop implements Initializable {
@@ -56,8 +56,9 @@ public class PopAddAttributeController extends CallPop implements Initializable 
      */
     public static boolean onlyCompound;
     
+    
     /**
-     * Initializes the controller class.
+     * Incializacion de la clase controler.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -74,7 +75,10 @@ public class PopAddAttributeController extends CallPop implements Initializable 
             options.getItems();
         }
     } 
-    //cierra la ventana y agrega el nombre que este correcto
+    
+    /**
+     * Metodo que guarda el nombre del atributo y el tipo para poder crearlo.
+     */
     public void addToScreen(){
         nameAttribute=nameNewAttribute.textProperty().get();
         if( nameAttribute.isEmpty()){
@@ -93,10 +97,16 @@ public class PopAddAttributeController extends CallPop implements Initializable 
         }
     }
  
+    /**
+     * Metodo que cancela la operación.
+     */
     public void cancel(){
         ((Stage)root.getScene().getWindow()).close();
     }
-    //cambia la opcion del tipo de atributo
+    
+    /**
+     * Metodo que le permite al asuario cambiar el tipo de atributo.
+     */
     @FXML
     public void changeOfOption(){
         if("Atributo Clave".equals(options.getValue())){

@@ -23,13 +23,14 @@ import model.Entity;
 import javafx.scene.input.ScrollEvent;
 
 /**
- *
+ * FXML Controller class
+ * Esta clase se encarga de generar la interracción con el usuario.
  * @author Equipo Rocket
  */
 public class MainController extends CallPop implements Initializable {
     
     /**
-     * "ToggleButtons" y "Buttons" creados para seleccionar la accion que se desea hacer
+     * "ToggleButtons" y "Buttons" creados para seleccionar la accion que se desea hacer.
      */
     @FXML
     private ToggleButton entityToggleButton;
@@ -53,30 +54,30 @@ public class MainController extends CallPop implements Initializable {
     private Button exportButton;
     
     /**
-     * Contenedor principal de todos los nodos del programa
+     * Contenedor principal de todos los nodos del programa.
      */
     @FXML
     private GridPane root;
 
     /**
-     * Lugar donde se dibujaran las figuras
+     * Lugar donde se dibujaran las figuras.
      */
     @FXML
     private Canvas canvas;
 
     /**
-     * Clase static para guardar las coordenadas del mouse
+     * Clase static para guardar las coordenadas del mouse.
      */
     public static MouseEvent event;
     
     /**
      * Clase static para guardar y gestionar los elementos "Entities", 
-     * "Relations" y "Connectors" que se crearan por el usuario
+     * "Relations" y "Connectors" que se crearan por el usuario.
      */
     public static Diagram diagram;
     
     /**
-     * Variable que gestionará si se muestran los puntos en el "canvas"
+     * Variable que gestionará si se muestran los puntos en el "canvas".
      */
     private boolean showPoints;
     
@@ -92,7 +93,7 @@ public class MainController extends CallPop implements Initializable {
     public static ArrayList<Entity> entitiesSelect;
     
     /**
-     * Accion para cerrar la ventana
+     * Accion para cerrar la ventana.
      */
     @FXML
     private void close(MouseEvent event) {
@@ -101,7 +102,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Accion para Minimizar Ventana
+     * Accion para Minimizar Ventana.
      */
     @FXML
     private void min(MouseEvent event) {
@@ -110,7 +111,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Accion para abrir la ventana de ayuda
+     * Accion para abrir la ventana de ayuda.
      */
     @FXML
     private void helpMe(MouseEvent event) throws IOException {
@@ -119,7 +120,7 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      * Si el "entityToggleButton" es presionado, se activará y desactivará los demás.
-     * Permite crear "entities" en el canvas
+     * Permite crear "entities" en el canvas.
      */
     @FXML
     private void buttonEntityClicked(ActionEvent event){
@@ -149,6 +150,11 @@ public class MainController extends CallPop implements Initializable {
         diagram.deselectAllEntities();
         diagram.paint(canvas,showPoints);
     }
+    
+    /**
+     * Si el "attributeToggleButton" es presionado, se activará y desactivará los demás.
+     * Permite crear "Atritbutes" en el canvas.
+     */
     @FXML
     private void buttonAttributeClicked(ActionEvent event){
         entitiesSelect.clear();
@@ -176,6 +182,10 @@ public class MainController extends CallPop implements Initializable {
         diagram.paint(canvas,showPoints);
     }
     
+    /**
+     * Si el "heritageToggleButton" es presionado, se activará y desactivará los demás.
+     * Permite crear "heritages" entre entidades dentro del canvas.
+     */
     @FXML
     private void buttonHeritageClicked(ActionEvent event){
         entitiesSelect.clear();
@@ -271,7 +281,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Método para cuando se deseen mostrar/ocultar los puntos de control
+     * Método para cuando se deseen mostrar/ocultar los puntos de control.
      */
     @FXML
     private void buttonShowPointsClicked(ActionEvent event) {
@@ -290,7 +300,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Botón que al ser presionado permite eliminar figuras en el "canvas"
+     * Botón que al ser presionado permite eliminar figuras en el "canvas".
      */
     @FXML
     private void buttonDeleteFigureClicked(ActionEvent event){
@@ -319,7 +329,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Botón que al ser presionado permite editar figuras en el "canvas"
+     * Botón que al ser presionado permite editar figuras en el "canvas".
      */
     @FXML
     private void buttonEditClicked(ActionEvent event) throws IOException{  
@@ -344,7 +354,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Limpia la pantalla y el interior del objeto "diagram"
+     * Limpia la pantalla y el interior del objeto "diagram".
      */
     @FXML
     private void buttonCleanScreenClicked(ActionEvent event) {
@@ -373,7 +383,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Metodo para guardar dibujo hecho en canvas como "imagen.png" o "archivo.pdf"
+     * Metodo para guardar dibujo hecho en canvas como "imagen.png" o "archivo.pdf".
      */
     @FXML
     private void buttonExportClicked(ActionEvent event) throws DocumentException {
@@ -381,7 +391,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Método para administrar las acciones cuando el canvas sea presionado
+     * Método para administrar las acciones cuando el canvas sea presionado.
      */
     @FXML
     private void canvasClicked(MouseEvent event) throws IOException {
@@ -433,7 +443,6 @@ public class MainController extends CallPop implements Initializable {
         }
         else if(editToggleButton.isSelected()){
             diagram.selectElementEdit(event, canvas, showPoints);
-            //diagram.updateRelations(canvas, showPoints);
             diagram.paint(canvas,showPoints);        
         }
         else if(deleteToggleButton.isSelected()){
@@ -455,7 +464,7 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      * Método que guarda el "MouseEvent" cuando se presione el mouse en el "canvas"
-     * y selecciona el elemento que haya en esa posición
+     * y selecciona el elemento que haya en esa posición.
      */
     @FXML
     private void mousePressed(MouseEvent event){
@@ -466,7 +475,7 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      * Método que mueve el elemento que haya sido seleccionado en el "canvas" 
-     * cuando el mouse se mueva
+     * cuando el mouse se mueva.
      */
     @FXML
     private void mouseDragged(MouseEvent event){
@@ -477,7 +486,7 @@ public class MainController extends CallPop implements Initializable {
     
     /**
      * Método que deselecciona el elemento que haya sido seleccionado en el "canvas"
-     * cuando se suelte el botón del mouse
+     * cuando se suelte el botón del mouse.
      */
     @FXML
     private void mouseReleased(MouseEvent event){
@@ -489,7 +498,7 @@ public class MainController extends CallPop implements Initializable {
     }
     
     /**
-     * Método que resalta la figura sobre la cual se posicione el mouse
+     * Método que resalta la figura sobre la cual se posicione el mouse.
      * @param event
      */
     @FXML
@@ -549,6 +558,9 @@ public class MainController extends CallPop implements Initializable {
         canvas.setCursor(Cursor.DEFAULT);
     }
     
+    /**
+     * Método que se encarga de ajustar todos los componenetes "Main.fxml" al tamaño de la pantalla.
+     */
     private void adjustNodes(){
         //Obtenemos ancho y largo de la pantalla que se utilice para ejecutar el programa
         Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -591,6 +603,10 @@ public class MainController extends CallPop implements Initializable {
         }
     }
     
+    /**
+     * Método que realiza el zoom al canvas por medio del ScrollEvent.
+     * @param event
+     */
     @FXML
     private void zoom(ScrollEvent event) {
         double zoomFactor = 1.05;
@@ -603,6 +619,10 @@ public class MainController extends CallPop implements Initializable {
         event.consume();
     }
     
+    /**
+     * Método que se encarga de buscar una entidad dentro de las entidades seleccionadas en el canvas.
+     * @param entity2
+     */
     private boolean searchEntity(Entity entity2){
         for (Entity entity : entitiesSelect) {
             if(entity.getName().equals(entity2.getName())){

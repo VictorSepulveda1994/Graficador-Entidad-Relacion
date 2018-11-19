@@ -17,27 +17,46 @@ import model.HeritageType;
 
 /**
  * FXML Controller class
- *
+ * Esta clase se encarga de agregar una herencia.
  * @author Equipo Rocket
  */
 public class PopHeritageController extends CallPop implements Initializable {
+    
+    /**
+     * Panel donde se realizaran las acciones.
+     */
     @FXML
     private AnchorPane root;
+    
+    /**
+     * Casilla para escoger el tipo de la herencia (Disyunción).
+     */
     @FXML
     private CheckBox option1;
+    
+    /**
+     * Casilla para escoger el tipo de la herencia (Solapamiento).
+     */
     @FXML
     private CheckBox option2;
-
+    
+    /**
+     * Donde se guarda el tipo de la herencia.
+     */
     public static HeritageType type;
     
     /**
-     * Initializes the controller class.
+     * Iniacializa la clase controler.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
     
+    /**
+     * Metodo que se encarga de guardar todos los cambios realizados en la herencia.
+     * También muestra mensaje de error en caso de realizar una accion incorrecta. 
+     */
     public void options(){
         if((option1.isSelected()==false && option2.isSelected()==false) || (option1.isSelected()==true && option2.isSelected()==true)){
             alertTypeHeritageIncorrect();
@@ -68,6 +87,10 @@ public class PopHeritageController extends CallPop implements Initializable {
         }      
     }
     
+    /**
+     * Metodo que se encarga de validar si el padre escogido para la herencia.
+     * @return verdadero si el padre es valido, falso en caso contrario.
+     */
     public boolean validFather(){
         boolean valid1=true;
         boolean valid2=true;
@@ -93,6 +116,10 @@ public class PopHeritageController extends CallPop implements Initializable {
         }
     }
     
+    /**
+     * Metodo que se encarga de validar si el padre no es hermano.
+     * @return verdadero si el hermano es valido, falso en caso contrario.
+     */
     public boolean validBrother(){
         boolean valid1=true;
         for(int i=0; i< MainController.diagram.getHeritages().size();i++){
@@ -105,6 +132,10 @@ public class PopHeritageController extends CallPop implements Initializable {
         return valid1;
     }
     
+    /**
+     * Metodo que se encarga de validar los hijos de la herencia.
+     * @return Verdadero si los hijos son validos, falso en caso contrario.
+     */
     public boolean validEntities (){
         ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
         for (Entity entitie : entities) {
@@ -114,10 +145,13 @@ public class PopHeritageController extends CallPop implements Initializable {
         }
         return true;
     }
+    
+    /**
+     * Metodo que cancela la operación.
+     */
     public void cancel(){
         entitiesSelect.clear();
         MainController.diagram.deselectAllEntities();
         ((Stage)root.getScene().getWindow()).close();
-    }
-    
+    } 
 }

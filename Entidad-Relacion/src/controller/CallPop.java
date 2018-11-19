@@ -13,7 +13,6 @@ import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
@@ -56,7 +55,7 @@ public class CallPop {
     }
     
     /**
-     * Edita el nombre de un elemento
+     * Abre ventana para editar un atributo.
      * @throws IOException
      */
     public void popEditElement()throws IOException {
@@ -152,7 +151,7 @@ public class CallPop {
     }
     /**
      *
-     * Abre ventana para agregar el nombre de la relación y crear la relación
+     * Abre ventana para agregar una relación.
      * @throws java.io.IOException
      */
     public void popAddRelation()throws IOException {
@@ -200,7 +199,7 @@ public class CallPop {
     }
     
      /**
-     * Abre ventana para agregar una herencia entre entidades.
+     * Abre ventana para agregar el tipo de una herencia entre entidades.
      * @throws java.io.IOException
      */
     public void popAddHeritage()throws IOException {
@@ -224,7 +223,7 @@ public class CallPop {
     }
     
     /**
-     *Muestra un mensaje de error al ingresar nombre invalido
+     * Muestra un mensaje de error al ingresar nombre invalido.
      */
     public void alertName(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -255,7 +254,7 @@ public class CallPop {
     }
     
     /**
-     *Muestra un mensaje de error al seleccionar más de 6 entidades
+     * Muestra un mensaje de error al seleccionar más de 6 entidades.
      */
     public void alertEntities(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -265,7 +264,7 @@ public class CallPop {
     }
     
     /**
-     * Muestra un mensaje de eror al intentar una herencia con una entidad debil o un herencia tipo hijo-padre.
+     * Muestra un mensaje de error al intentar hacer herencia con una entidad debil o un herencia tipo hijo-padre.
      */
     public void alertInvalid(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -275,6 +274,9 @@ public class CallPop {
         alert.showAndWait();
     }
 
+    /**
+     * Muestra un mensaje de error al borrar todas las entidades de una relación por medio del popChangeController.
+     */
     public void alertEntitiesEmpty(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Edición invalida");
@@ -346,9 +348,8 @@ public class CallPop {
     }
     
     /**
-     *Muestra información sobre el funcionamiento del programa
-     * @throws IOException
-     * 
+     * Muestra información sobre el funcionamiento del programa.
+     * @throws IOException 
      */
     public void popShowHelp()throws IOException {
         final Stage dialog = new Stage();
@@ -368,30 +369,5 @@ public class CallPop {
         dialog.close();
 
     }
-    
-    /**
-     *
-     * 
-     * @throws java.io.IOException
-     */
-    public void popQuestionEntityType()throws IOException {
-        final Stage dialog = new Stage();
-        dialog.setTitle("Tipo de Entidad");
-        
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopQuestionEntityType.fxml"));
-        
-        Scene xscene = new Scene(root);
-        
-        dialog.setResizable(false);
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner((Stage) root.getScene().getWindow());
-        //dialog.resizableProperty().setValue(Boolean.FALSE);
-        
-        dialog.setScene(xscene);
-        dialog.showAndWait();
-        dialog.setResizable(false);
-        dialog.close();
-
-    }
-    
+   
 }

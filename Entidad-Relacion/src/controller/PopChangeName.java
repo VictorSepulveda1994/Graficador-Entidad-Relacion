@@ -7,27 +7,31 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
 /**
- *
+ * FXML Controller class
+ * Esta clase permite editar un atrbuto.
  * @author Equipo Rocket
  */
 public class PopChangeName extends CallPop implements Initializable{
-/**
-     * Panel donde se realizaran las acciones
+    
+    /**
+     * Panel donde se realizaran las acciones.
      */
     @FXML
     private AnchorPane root;
 
     /**
-     * Recibe el nombre de la entidad
+     * Entrada por donde se recibe el nombre de el atributo a crear.
      */
     @FXML
     public TextField newName;
 
     /**
-     *Guarda el nombre
+     * Donde se guarda el nombre editado del atributo.
      */
     public static String enteredName="";
+    
     /**
      * Inicio de la clase controladora
      */
@@ -37,8 +41,8 @@ public class PopChangeName extends CallPop implements Initializable{
     }
     
     /**
-     * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío y
-     * crea un objeto "relation" y es agregado a "diagram"
+     * Metodo que se encarga de guardar todos los cambios realizados en el atributo.
+     * También muestra mensaje de error en caso de realizar una accion incorrecta.
      */
     public void addToScreen(){
         enteredName=newName.textProperty().get();
@@ -50,7 +54,6 @@ public class PopChangeName extends CallPop implements Initializable{
             ((Stage)root.getScene().getWindow()).close();
         }
     }
-    
     
     /**
      * Cancela la operación
