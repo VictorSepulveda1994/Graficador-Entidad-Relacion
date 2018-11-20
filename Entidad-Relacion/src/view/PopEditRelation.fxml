@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="539.0" prefWidth="451.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopChangeController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="539.0" prefWidth="451.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopEditRelationController">
    <children>
       <Pane prefHeight="59.0" prefWidth="478.0" style="-fx-background-color: #eae8e8;">
          <children>

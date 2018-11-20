@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="254.0" prefWidth="482.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopChangeEntity">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="254.0" prefWidth="482.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopEditEntityController">
    <children>
       <TextField fx:id="newName" layoutX="22.0" layoutY="89.0" prefHeight="31.0" prefWidth="428.0" style="-fx-border-color: #5798d6;">
          <font>
