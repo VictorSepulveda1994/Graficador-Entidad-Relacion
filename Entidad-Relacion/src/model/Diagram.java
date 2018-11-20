@@ -5,16 +5,16 @@ import controller.MainController;
 import controller.PopAddAttributeController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
-import static controller.PopChangeController.enteredNameR;
-import static controller.PopChangeController.newrelation;
-import static controller.PopChangeName.enteredName;
+import static controller.PopEditRelationController.enteredNameR;
+import static controller.PopEditRelationController.newrelation;
+import static controller.PopEditAttributeController.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
-import static controller.PopChangeEntity.newEntity;
-import static controller.PopChangeHeritageController.newHeritage;
+import static controller.PopEditEntityController.newEntity;
+import static controller.PopEditHeritageController.newHeritage;
 
 /**
  *

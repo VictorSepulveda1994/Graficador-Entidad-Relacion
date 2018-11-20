@@ -17,7 +17,7 @@ import model.FigureType;
  * Esta clase permite editar una entidad.
  * @author Equipo Rocket
  */
-public class PopChangeEntity extends CallPop implements Initializable{
+public class PopEditEntityController extends CallPop implements Initializable{
     
     /**
      * Panel donde se realizaran las acciones.

@@ -24,7 +24,7 @@ import model.Relation;
  * Esta clase permite editar una relación.
  * @author Equipo Rocket
  */
-public class PopChangeController extends CallPop implements Initializable {
+public class PopEditRelationController extends CallPop implements Initializable {
     
     /**
      * Panel donde se realizaran las acciones.

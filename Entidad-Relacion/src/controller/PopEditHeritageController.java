@@ -21,7 +21,7 @@ import model.HeritageType;
  * Esta clase permite editar una Herencia.
  * @author Equipo Rocket
  */
-public class PopChangeHeritageController extends CallPop implements Initializable {
+public class PopEditHeritageController extends CallPop implements Initializable {
     /**
     * Panel donde se realizaran las acciones.
     */

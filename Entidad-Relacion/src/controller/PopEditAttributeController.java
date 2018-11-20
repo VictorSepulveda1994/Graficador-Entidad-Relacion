@@ -13,7 +13,7 @@ import javafx.stage.Stage;
  * Esta clase permite editar un atrbuto.
  * @author Equipo Rocket
  */
-public class PopChangeName extends CallPop implements Initializable{
+public class PopEditAttributeController extends CallPop implements Initializable{
     
     /**
      * Panel donde se realizaran las acciones.

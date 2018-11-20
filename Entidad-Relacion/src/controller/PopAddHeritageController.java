@@ -20,7 +20,7 @@ import model.HeritageType;
  * Esta clase se encarga de agregar una herencia.
  * @author Equipo Rocket
  */
-public class PopHeritageController extends CallPop implements Initializable {
+public class PopAddHeritageController extends CallPop implements Initializable {
     
     /**
      * Panel donde se realizaran las acciones.
