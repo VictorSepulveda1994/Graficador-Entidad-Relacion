@@ -62,7 +62,7 @@ public class CallPop {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar nombre");
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopChangeName.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopEditAttribute.fxml"));
         
         Scene xscene = new Scene(root);
         
@@ -86,7 +86,7 @@ public class CallPop {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar relación");
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopChange.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopEditRelation.fxml"));
         
         Scene xscene = new Scene(root);
         
@@ -110,7 +110,7 @@ public class CallPop {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar herencia");
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopChangeHeritage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopEditHeritage.fxml"));
         
         Scene xscene = new Scene(root);
         
@@ -134,7 +134,7 @@ public class CallPop {
         final Stage dialog = new Stage();
         dialog.setTitle("Editar entidad");
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopChangeEntity.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopEditEntity.fxml"));
         
         Scene xscene = new Scene(root);
         
@@ -206,7 +206,7 @@ public class CallPop {
         final Stage dialog = new Stage();
         dialog.setTitle("Agregar herencia");
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/PopHeritage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddHeritage.fxml"));
         
         Scene xscene = new Scene(root);
         
