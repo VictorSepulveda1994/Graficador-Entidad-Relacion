@@ -48,6 +48,14 @@ public class Attribute extends Element{
     public void setTipo(AttributeType tipo) {
         this.type = tipo;
     }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
     
     
 }

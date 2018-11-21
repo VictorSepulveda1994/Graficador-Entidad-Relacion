@@ -7,7 +7,8 @@ import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
 import static controller.PopEditRelationController.enteredNameR;
 import static controller.PopEditRelationController.newrelation;
-import static controller.PopEditAttributeController.enteredName;
+import static controller.PopEditAttributeController.enteredNameA;
+import static controller.PopEditEntityController.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
@@ -715,12 +716,26 @@ public class Diagram extends CallPop {
         }
         for (Attribute attribute : attributes) {
             if(attribute.isInFigure(event) && ready == false){
+                selectedElement=attribute;
+                String oldNameA=attribute.getName();
+                enteredNameR=attribute.getName();
                 popEditElement();
                 ready = true ;
-                if(!"".equals(enteredName)){
-                    attribute.setName(enteredName);
-                    attribute.figure.setName(enteredName);
-                    enteredName="";
+                if(!"".equals(enteredNameA)){
+                    for (int i = 0; i < relations.size(); i++) {
+                        updateNameAttribute(relations.get(i),attribute,oldNameA);
+                    }
+                    for (int i = 0; i < entities.size(); i++) {
+                        updateNameAttribute(entities.get(i),attribute,oldNameA);
+                    }
+                    for (int i = 0; i <attributes.size(); i++) {
+                        if(attributes.get(i).type.equals(AttributeType.COMPOUND) && !attributes.get(i).getAttributes().isEmpty()){
+                            updateNameAttribute(attributes.get(i),attribute,oldNameA);
+                        }
+                    }               
+                    attribute.setName(enteredNameA);
+                    attribute.figure.setName(enteredNameA);
+                    enteredNameA="";
                 }
                 break;
             }
@@ -1030,4 +1045,12 @@ public class Diagram extends CallPop {
         return false;
     }
     
+    public void updateNameAttribute(Element element,Attribute attribute,String oldName){
+        for (int i = 0; i <element.getAttributes().size(); i++) {
+            if(element.getAttributes().get(i).name.equals(oldName)){
+                element.getAttributes().get(i).setName(attribute.getName());
+                element.getAttributes().get(i).figure.setName(attribute.getName());
+            }
+        } 
+    }
 }

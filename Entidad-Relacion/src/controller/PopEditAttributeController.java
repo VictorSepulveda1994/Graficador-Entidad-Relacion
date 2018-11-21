@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Attribute;
+import static model.Diagram.selectedElement;
 
 /**
  * FXML Controller class
@@ -30,14 +32,16 @@ public class PopEditAttributeController extends CallPop implements Initializable
     /**
      * Donde se guarda el nombre editado del atributo.
      */
-    public static String enteredName="";
+    public static String enteredNameA;
     
+    public static Attribute newAttribute;
     /**
      * Inicio de la clase controladora
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO   
+        newAttribute = (Attribute)selectedElement;
+        newName.setText(newAttribute.getName());
     }
     
     /**
@@ -45,12 +49,13 @@ public class PopEditAttributeController extends CallPop implements Initializable
      * También muestra mensaje de error en caso de realizar una accion incorrecta.
      */
     public void addToScreen(){
-        enteredName=newName.textProperty().get();
-        if(enteredName.isEmpty() || enteredName.length()>12 || MainController.diagram.thisNameExists(enteredName)){
+        enteredNameA=newName.textProperty().get();
+        if(enteredNameA.isEmpty() || enteredNameA.length()>12 || MainController.diagram.thisNameExists(enteredNameA)){
             alertName();
-            enteredName = "";
+            enteredNameA=newAttribute.getName();
         }
         else{
+            newAttribute.setName(enteredNameA);
             ((Stage)root.getScene().getWindow()).close();
         }
     }
