@@ -307,7 +307,7 @@
             </GridPane>
             <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #5798d6;">
                <children>
-                  <Button disable="true" mnemonicParsing="false" prefHeight="18.0" prefWidth="105.0" style="-fx-background-color: #eae8e8;" text="Deshacer">
+                  <Button mnemonicParsing="false" onAction="#undo" prefHeight="18.0" prefWidth="105.0" style="-fx-background-color: #eae8e8;" text="Deshacer">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -319,7 +319,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button cancelButton="true" disable="true" mnemonicParsing="false" prefHeight="28.0" prefWidth="105.0" style="-fx-background-color: #eae8e8;" text="Rehacer">
+                  <Button mnemonicParsing="false" onAction="#redo" prefHeight="28.0" prefWidth="105.0" style="-fx-background-color: #eae8e8;" text="Rehacer">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>

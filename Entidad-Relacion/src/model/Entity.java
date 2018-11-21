@@ -52,6 +52,10 @@ public class Entity extends Element {
         return entities;
     }
 
+    public void setEntities(ArrayList<Entity> entities) {
+        this.entities = entities;
+    }
+    
     /**
      *
      * @param entiti

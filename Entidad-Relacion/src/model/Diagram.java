@@ -2,6 +2,7 @@ package model;
 
 import controller.CallPop;
 import controller.MainController;
+import static controller.MainController.copiar;
 import controller.PopAddAttributeController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
@@ -21,15 +22,15 @@ import static controller.PopEditHeritageController.newHeritage;
  *
  * @author Equipo Rocket
  */
-public class Diagram extends CallPop {
+public class Diagram extends CallPop implements Cloneable {
     private ArrayList <Entity> entities;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
     private ArrayList <Attribute> attributes;
-    public static ArrayList <Heritage> heritages;
+    public ArrayList <Heritage> heritages;
 
     /**
-     *Elemento seleccionad
+     *Elemento seleccionado
      */
     public static Element selectedElement;
 
@@ -50,6 +51,55 @@ public class Diagram extends CallPop {
         heritages = new ArrayList<>();
         count=0;
     }
+    
+    public Diagram getClone() { 
+        try { 
+            Diagram diagram= (Diagram) super.clone(); 
+            diagram.attributes= (ArrayList<Attribute>) attributes.clone();
+            for(int i=0; i<diagram.getAttributes().size();i++){
+                diagram.getAttributes().get(i).setAttributes
+                    ((ArrayList<Attribute>) attributes.get(i).getAttributes().clone());
+            }
+            diagram.entities= (ArrayList<Entity>) entities.clone();
+            for(int i=0; i<diagram.getEntities().size();i++){
+                diagram.getEntities().get(i).setAttributes
+                    ((ArrayList<Attribute>) entities.get(i).getAttributes().clone());
+                diagram.getEntities().get(i).setEntities
+                    ((ArrayList<Entity>) entities.get(i).getEntities().clone());
+            }
+            diagram.relations= (ArrayList<Relation>) relations.clone();
+            for(int i=0; i<diagram.getRelations().size();i++){
+                diagram.getRelations().get(i).setAttributes
+                    ((ArrayList<Attribute>) relations.get(i).getAttributes().clone());
+                diagram.getRelations().get(i).setEntities
+                    ((ArrayList<Entity>) relations.get(i).getEntities().clone());
+            }
+            diagram.heritages= (ArrayList<Heritage>) heritages.clone();
+            for(int i=0; i<diagram.getHeritages().size();i++){
+                diagram.getHeritages().get(i).setAttributes
+                    ((ArrayList<Attribute>) heritages.get(i).getAttributes().clone());
+                diagram.getHeritages().get(i).setDaughtersEntities
+                    ((ArrayList<Entity>) heritages.get(i).getDaughtersEntities().clone());
+            }
+            diagram.connectors= new ArrayList<>();
+            diagram.setCount(count);
+            diagram.selectedElement= selectedElement;
+            return diagram;
+        } catch (CloneNotSupportedException e) { 
+            System.out.println (" Cloning not allowed. " );
+            return this; 
+        } 
+    }
+    
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        Diagram.count = count;
+    }
+    
+    
     
     /**
      *
@@ -313,6 +363,7 @@ public class Diagram extends CallPop {
      * @param minHeight
      */
     public void moveElement(MouseEvent event, Canvas canvas, boolean showPoints, int minWidth, int minHeight){
+        copiar();
         if( selectedElement != null && event.getX()-70 > 0  && event.getY()-40 > 0){
             String type = selectedElement.getClass().getName().substring(6);
             if( "Entity".equals(type) ){
@@ -401,6 +452,60 @@ public class Diagram extends CallPop {
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
         }
+    }
+    
+    public void actualizar(){
+        //Guarda las entidades dentro de las relaciones
+            for (int i=0; i<relations.size();i++) {
+                for (int a=0; a<relations.get(i).getEntities().size();a++) {
+                    int nElement=searchEntity(relations.get(i).getEntities().get(a));
+                    if(nElement!=-1){
+                        relations.get(i).getEntities().set(a, entities.get(nElement));
+                    }
+                }
+            }
+            //Guarda los atributos dentro de las relaciones
+            for (int i=0; i<relations.size();i++) {
+                for (int a=0; a<relations.get(i).getAttributes().size();a++) {
+                    int nElement=searchAttribute(relations.get(i).getAttributes().get(a));
+                    if(nElement!=-1){
+                        relations.get(i).getAttributes().set(a, attributes.get(nElement));
+                    }
+                }
+            }
+            
+            //Guarda los attributos dentro de las entidades
+            for (int i=0; i<entities.size();i++) {
+                for (int a=0; a<entities.get(i).getAttributes().size();a++) {
+                    int nElement=searchAttribute(entities.get(i).getAttributes().get(a));
+                    if(nElement!=-1){
+                        entities.get(i).getAttributes().set(a, attributes.get(nElement));
+                    }
+                }
+            }
+            
+            //Guarda los atributos dentro de los atributos
+            for (int i=0; i<attributes.size();i++) {
+                for (int a=0; a<attributes.get(i).getAttributes().size();a++) {
+                    int nElement=searchAttribute(attributes.get(i).getAttributes().get(a));
+                    if(nElement!=-1){
+                        attributes.get(i).getAttributes().set(a, attributes.get(nElement));
+                    }
+                }
+            }
+            //Guarda nuevamente los atributos y padre de la herencia
+            for (int i=0; i<heritages.size();i++) {
+                for (int a=0; a<heritages.get(i).getDaughtersEntities().size();a++) {
+                    int nElement=searchEntity(heritages.get(i).getDaughtersEntities().get(a));
+                    if(nElement!=-1){
+                        heritages.get(i).getDaughtersEntities().set(a, entities.get(nElement));
+                    }
+                }   
+                int nElement=searchEntity(heritages.get(i).getParentEntity());
+                if(nElement!=-1){
+                    heritages.get(i).setParentEntity(entities.get(nElement));  
+                }
+            }
     }
     
     /**
@@ -1033,12 +1138,16 @@ public class Diagram extends CallPop {
         return attributes;
     }
 
-    /**
-     *
-     * @param attribute
-     */
-    public void setAttributes(Attribute attribute) {
-        this.attributes.add(attribute);
+    public void setConnectors(ArrayList<Connector> connectors) {
+        this.connectors = connectors;
+    }
+
+    public void setAttributes(ArrayList<Attribute> attributes) {
+        this.attributes = attributes;
+    }
+
+    public void setHeritages(ArrayList<Heritage> heritages) {
+        this.heritages = heritages;
     }
     
     public void updateRelations (Canvas canvas,Boolean showPoints){

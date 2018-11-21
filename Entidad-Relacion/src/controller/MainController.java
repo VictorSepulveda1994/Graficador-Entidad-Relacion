@@ -27,7 +27,7 @@ import javafx.scene.input.ScrollEvent;
  * Esta clase se encarga de generar la interracción con el usuario.
  * @author Equipo Rocket
  */
-public class MainController extends CallPop implements Initializable {
+public class MainController extends CallPop implements Initializable{
     
     /**
      * "ToggleButtons" y "Buttons" creados para seleccionar la accion que se desea hacer.
@@ -91,6 +91,9 @@ public class MainController extends CallPop implements Initializable {
      * Lista que guarda las entidades seleccionadas por el usuario.
      */
     public static ArrayList<Entity> entitiesSelect;
+    public static ArrayList<Diagram> diagramsUndo;
+    public static ArrayList<Diagram> diagramsRedo;
+    public static Diagram copy;
     
     /**
      * Accion para cerrar la ventana.
@@ -374,6 +377,7 @@ public class MainController extends CallPop implements Initializable {
      */
     @FXML
     private void buttonCleanScreenClicked(ActionEvent event) {
+        copiar();
         diagram.clearAll(canvas, minWidth, minHeight);
         //Se restablecen los botones
         attributeToggleButton.setSelected(false);
@@ -414,6 +418,7 @@ public class MainController extends CallPop implements Initializable {
         MainController.event = event;
         if(entityToggleButton.isSelected() && event.getX()-75 > 0  && event.getY()-45 > 0){
             popAddEntity(); 
+            copiar();
         }
         else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
@@ -433,6 +438,7 @@ public class MainController extends CallPop implements Initializable {
                     }
                     else{
                         popAddRelation();
+                        copiar();
                     }
                 }   
             }
@@ -451,19 +457,23 @@ public class MainController extends CallPop implements Initializable {
                 }
                 if (!element.isInFigure(event) && entitiesSelect.size()>1){
                     popAddHeritage();
+                    copiar();
                 }   
             }
         }
         else if(attributeToggleButton.isSelected()){
             diagram.addAttribute(event, canvas, showPoints);
+            copiar();
         }
         else if(editToggleButton.isSelected()){
             diagram.selectElementEdit(event, canvas, showPoints);
             diagram.paint(canvas,showPoints);        
+            copiar();
         }
         else if(deleteToggleButton.isSelected()){
             if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){
                 diagram.delete(event, canvas, showPoints);
+                copiar();
             }
         }
         
@@ -570,6 +580,10 @@ public class MainController extends CallPop implements Initializable {
         adjustNodes();
         diagram = new Diagram();
         entitiesSelect = new ArrayList<>();
+        diagramsUndo= new ArrayList<>();
+        diagramsRedo= new ArrayList<>();
+        copiar();
+        copy= new Diagram();
         showPoints = false;
         canvas.setCursor(Cursor.DEFAULT);
     }
@@ -643,5 +657,34 @@ public class MainController extends CallPop implements Initializable {
             }
         }
         return false;
+    }
+    
+    @FXML
+    public void undo(){
+        if(!diagramsUndo.isEmpty()){
+            diagram=diagramsUndo.get(diagramsUndo.size()-1).getClone(); 
+            copy=diagram.getClone();
+            diagramsRedo.add(copy);
+            diagramsUndo.remove(diagramsUndo.size()-1);
+        }
+        diagram.actualizar();
+        diagram.paint(canvas, showPoints);     
+    }
+    
+    @FXML
+    public void redo(){
+        if(!diagramsRedo.isEmpty()){
+            diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();      
+            diagramsRedo.remove(diagramsRedo.size()-1);
+        }
+        diagram.actualizar();
+        diagram.paint(canvas, showPoints);
+        
+    }
+    
+    
+    public static void copiar(){
+        copy = diagram.getClone();
+        diagramsUndo.add(copy);
     }
 }
