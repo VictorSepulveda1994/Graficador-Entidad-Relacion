@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="root" prefHeight="194.0" prefWidth="482.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopAddRelationController">
    <children>
-      <TextField fx:id="nameRelation" layoutX="22.0" layoutY="89.0" prefHeight="31.0" prefWidth="428.0" style="-fx-border-color: #5798d6;">
+      <TextField fx:id="nameRelation" disable="true" layoutX="22.0" layoutY="89.0" prefHeight="31.0" prefWidth="428.0" style="-fx-border-color: #5798d6;">
          <font>
             <Font size="13.0" />
          </font>

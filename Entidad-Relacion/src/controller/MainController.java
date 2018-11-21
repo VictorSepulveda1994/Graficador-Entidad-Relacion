@@ -145,6 +145,8 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1);
         deleteToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.CROSSHAIR);
         //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
         diagram.deselectAllEntities();
@@ -177,6 +179,8 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1);
         deleteToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.CROSSHAIR);
         diagram.deselectAllEntities();
         diagram.paint(canvas,showPoints);
@@ -208,6 +212,8 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1);
         deleteToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.CROSSHAIR);
         diagram.deselectAllEntities();
         diagram.paint(canvas,showPoints);
@@ -240,6 +246,8 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1);
         deleteToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.HAND);
         //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
         diagram.deselectAllEntities();
@@ -273,6 +281,8 @@ public class MainController extends CallPop implements Initializable {
         entityToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1);
         deleteToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.MOVE);
         //Deselecciono las entidades, para que al apretar "Relacion" no se tomen en cuenta las anteriores
         diagram.deselectAllEntities();
@@ -325,6 +335,8 @@ public class MainController extends CallPop implements Initializable {
         relationToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1.15);
         deleteToggleButton.setScaleY(1.15);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.OPEN_HAND);
     }
     
@@ -350,6 +362,10 @@ public class MainController extends CallPop implements Initializable {
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
+        deleteToggleButton.setScaleX(1);
+        deleteToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1.15);
+        editToggleButton.setScaleY(1.15);
         canvas.setCursor(Cursor.TEXT);
     }
     
@@ -591,9 +607,6 @@ public class MainController extends CallPop implements Initializable {
             toggleButton.setPrefWidth( (root.getMinWidth()*widthPercent)/100 );
             int heightPercent = (int) ((toggleButton.getPrefHeight()*100)/550);
             toggleButton.setPrefHeight( (root.getMinHeight()*heightPercent)/100 );
-            if("relationToggleButton".equals(toggleButton.getId())){
-                toggleButton.setPrefWidth( (root.getMinHeight()*heightPercent)/100 );
-            }
         }
         for (Button button : buttons) {
             int widthPercent = (int) ((button.getPrefWidth()*100)/900);

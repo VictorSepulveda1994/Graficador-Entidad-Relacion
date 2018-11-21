@@ -192,6 +192,14 @@ public class Diagram extends CallPop {
                 minY = relation.minPoint().getY();
             }
         }
+        for (Attribute attribute : attributes) {
+            if(minX > attribute.minPoint().getX()){
+                minX = attribute.minPoint().getX();
+            }
+            if(minY > attribute.minPoint().getY()){
+                minY = attribute.minPoint().getY();
+            }
+        }
         return (new Point(minX, minY));
     }
     
@@ -223,6 +231,14 @@ public class Diagram extends CallPop {
             }
             if(maxY < relation.maxPoint().getY()){
                 maxY = relation.maxPoint().getY();
+            }
+        }
+        for (Attribute attribute : attributes) {
+            if(maxX < attribute.maxPoint().getX()){
+                maxX = attribute.maxPoint().getX();
+            }
+            if(maxY < attribute.maxPoint().getY()){
+                maxY = attribute.maxPoint().getY();
             }
         }
         return (new Point(maxX, maxY));
