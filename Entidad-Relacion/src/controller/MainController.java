@@ -674,7 +674,8 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     public void redo(){
         if(!diagramsRedo.isEmpty()){
-            diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();      
+            diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();
+            diagramsUndo.add(diagram);
             diagramsRedo.remove(diagramsRedo.size()-1);
         }
         diagram.actualizar();
