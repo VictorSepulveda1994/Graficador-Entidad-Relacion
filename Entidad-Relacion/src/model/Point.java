@@ -15,6 +15,11 @@ public class Point {
     private int posY;
     private boolean disponible;
 
+    /**
+     *Constructor para crear un punto
+     * @param x
+     * @param y
+     */
     public Point(int x, int y) {
         this.posX = x;
         this.posY = y;
@@ -53,10 +58,18 @@ public class Point {
         this.posY = y;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isDisponible() {
         return disponible;
     }
 
+    /**
+     *
+     * @param disponible
+     */
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }

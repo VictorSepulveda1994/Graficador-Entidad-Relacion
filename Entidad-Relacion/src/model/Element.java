@@ -10,18 +10,16 @@ import javafx.scene.input.MouseEvent;
  */
 public abstract class Element {
     
-    /**
-     *
-     */
     public Figure figure;
     protected String name;
     protected boolean selected;
     protected ArrayList<Attribute> attributes = new ArrayList<>();
 
     /**
-     *
+     *Constructor para crear un elemento
      * @param name
      * @param selected
+     * @param attributes
      */
     public Element(String name, boolean selected, ArrayList<Attribute> attributes) {
         this.name = name;
@@ -95,6 +93,7 @@ public abstract class Element {
     
     /**
      * Método que retorna true si las coordenadas del evento estan dentro de la figura o false como caso contrario
+     * @param event
      * @return true o false dependiendo de la ocación
      */
     public boolean isInFigure(MouseEvent event){
@@ -133,19 +132,37 @@ public abstract class Element {
         this.name = name;
     }
 
+    /**
+     *
+     * @param selected
+     */
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Attribute> getAttributes() {
         return attributes;
     }
 
+    /**
+     *
+     * @param attributes
+     */
     public void setAttributes(ArrayList<Attribute> attributes) {
         this.attributes = attributes;
     }
 
     //Metodo que retorna la posicion de un atributo dentro de la lista atributos.(retorna -1 sino lo encuentra).
+
+    /**
+     *Encuentra un atributo dentro del diagrama y retorna su ubicacion
+     * @param attribute
+     * @return
+     */
     public int findAttribute(Attribute attribute){
         for(int i=0;i<this.attributes.size();i++){
             if(this.attributes.get(i).equals(attribute)){
@@ -155,6 +172,10 @@ public abstract class Element {
         return -1;
     }
     
+    /**
+     *
+     * @param attribute
+     */
     public void addAttribute(Attribute attribute) {
         this.attributes.add(attribute);
     }

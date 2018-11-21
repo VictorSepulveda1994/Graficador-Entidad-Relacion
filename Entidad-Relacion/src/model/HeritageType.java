@@ -11,5 +11,14 @@ package model;
  */
 
 public enum HeritageType {
-    OVERLAP, DISJUNCTION;
+
+    /**
+     *
+     */
+    OVERLAP,
+
+    /**
+     *
+     */
+    DISJUNCTION;
 }

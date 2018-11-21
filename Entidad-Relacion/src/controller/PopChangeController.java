@@ -18,31 +18,73 @@ import static model.Diagram.selectedElement;
 import model.Entity;
 import model.FigureType;
 import model.Relation;
+
 /**
  * FXML Controller class
- *
+ * Esta clase permite editar una relación.
  * @author Equipo Rocket
  */
 public class PopChangeController extends CallPop implements Initializable {
     
+    /**
+     * Panel donde se realizaran las acciones.
+     */
     @FXML
     private AnchorPane root;
+    
+    /**
+     * Panel donde se muestran las opciones disponibles.
+     */ 
     @FXML
-    private AnchorPane rootOpciones = new AnchorPane();
+    private AnchorPane rootOptions = new AnchorPane();
+    
+    /**
+     * Panel donde se muestran las entidades disponibles.
+     */
     @FXML
-    private AnchorPane entidadesDisponibles= new AnchorPane();   
+    private AnchorPane entitiesAvaliables = new AnchorPane();  
+    
+    /**
+     * Entrada por donde se recibe el nombre de la relación a editar.
+     */
     @FXML
     public TextField newName;
-    @FXML
-    public CheckBox opcion;
     
-    public int t=0;
+    /**
+     * Casilla donde se elige si la relación es debil o no.
+     */
+    @FXML
+    public CheckBox option;
+    
+    /**
+     * Donde se guarda el nombre editado de la relación.
+     */
     public static String enteredNameR;
+    
+    /**
+     * Donde se guarda el tipo editado de la relación (Debil/Fuerte).
+     */
     public static FigureType type;
+    
+    /**
+     * Donde se guarda la nueva relación con los cambios de edición.
+     */
     public static Relation newrelation;
+    
+    /**
+     * Lista en donde se guardan los CheckBox a utilizar.
+     */
     ArrayList<CheckBox> cbs;
-    ArrayList<CheckBox> disponibles;
-    ArrayList<String> nombres;
+    
+    /**
+     * Lista en donde se guardan las entidades disponibles.
+     */
+    ArrayList<CheckBox> avaliables;
+    
+    /**
+     * Lista en donde se guardan los nombres de las entidades disponibles.
+     */
+    ArrayList<String> names;
          
     /**
      * Initializes the controller class.
@@ -51,30 +93,33 @@ public class PopChangeController extends CallPop implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         cbs = new ArrayList<>();
-        disponibles = new ArrayList<>();
+        avaliables = new ArrayList<>();
         newrelation= new Relation((Relation) selectedElement);
-        nombres=new ArrayList<>();
+        names=new ArrayList<>();
         newName.setText(enteredNameR);
         actualizarRoot();
         type=newrelation.getType();
         if(type.equals(FigureType.WEAK)){
-            opcion.setSelected(true);
+            option.setSelected(true);
         }
         else{
-            opcion.setSelected(false);
+            option.setSelected(false);
         }
         if(newrelation.numberOfEntitiesWeak()==1 && newrelation.getEntities().size()<=1){
-            opcion.setDisable(true);
+            option.setDisable(true);
         }
     }    
     
+    /**
+     * Metodo que se encarga de guardar los cambios de edición.
+     */
     public void addToScreen(){
         enteredNameR=newName.textProperty().get();
         if(enteredNameR.isEmpty() || enteredNameR.length()>12){
             alertName();
         }
         else{
-            if(opcion.isSelected()){
+            if(option.isSelected()){
                 type=FigureType.WEAK;
             }
             else{
@@ -86,6 +131,9 @@ public class PopChangeController extends CallPop implements Initializable {
         }
     }
     
+    /**
+     * Metodo para borrar entidades dentro de la relación.
+     */
     @FXML
     public void delete(){
         for(int i=0;i<cbs.size();i++){
@@ -107,12 +155,15 @@ public class PopChangeController extends CallPop implements Initializable {
         actualizarRoot();
     }
     
+    /**
+     * Metodo para agregar entidades dentro de la relación.
+     */
     @FXML
     public void agregar(){
-        for(int i=0;i<disponibles.size();i++){
-            if(disponibles.get(i).isSelected()){
+        for(int i=0;i<avaliables.size();i++){
+            if(avaliables.get(i).isSelected()){
                 for(int a=0;a<MainController.diagram.getEntities().size();a++) {
-                    if(MainController.diagram.getEntities().get(a).getName().equals(disponibles.get(i).getText())){
+                    if(MainController.diagram.getEntities().get(a).getName().equals(avaliables.get(i).getText())){
                         newrelation.getEntities().add(MainController.diagram.getEntities().get(a));  
                         break;
                     }
@@ -122,30 +173,33 @@ public class PopChangeController extends CallPop implements Initializable {
         actualizarRoot();
     }
      
+    /**
+     * Metodo que se encarga de limpiar y actualizar todos los datos para poder editar la relación.
+     */
     public void actualizarRoot(){
-        rootOpciones.getChildren().clear();
-        entidadesDisponibles.getChildren().clear();
+        rootOptions.getChildren().clear();
+        entitiesAvaliables.getChildren().clear();
         cbs.clear();
-        disponibles.clear();
-        nombres.clear();
+        avaliables.clear();
+        names.clear();
         int tamaño=0;
         for (int i=0; i<newrelation.getEntities().size();i++) {
             CheckBox cb = new CheckBox(newrelation.getEntities().get(i).getName());
             cb.setLayoutY(tamaño);
             tamaño+=20; 
             cbs.add(cb);
-            rootOpciones.getChildren().add(cb);
+            rootOptions.getChildren().add(cb);
         }
         tamaño=0;
         for (Entity entitie1 : MainController.diagram.getEntities()){
             if(!newrelation.getEntities().contains(entitie1)){
-                if (!nombres.contains(entitie1.getName())){
+                if (!names.contains(entitie1.getName())){
                     CheckBox cb = new CheckBox(entitie1.getName());
                     cb.setLayoutY(tamaño);
                     tamaño+=20;
-                    nombres.add(entitie1.getName());
-                    disponibles.add(cb);
-                    entidadesDisponibles.getChildren().add(cb);
+                    names.add(entitie1.getName());
+                    avaliables.add(cb);
+                    entitiesAvaliables.getChildren().add(cb);
                 }
             }
         }

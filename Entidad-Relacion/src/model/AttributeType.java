@@ -6,10 +6,38 @@
 package model;
 
 /**
- *
+ *Tipos de atributo
  * @author Equipo Rocket
  */
 public enum AttributeType {
-    GENERIC, KEY, MULTIVALED, COMPOUND,
-    DERIVATIVE, PARTIALKEY;
+
+    /**
+     *
+     */
+    GENERIC,
+
+    /**
+     *
+     */
+    KEY,
+
+    /**
+     *
+     */
+    MULTIVALED,
+
+    /**
+     *
+     */
+    COMPOUND,
+
+    /**
+     *
+     */
+    DERIVATIVE,
+
+    /**
+     *
+     */
+    PARTIALKEY;
 }

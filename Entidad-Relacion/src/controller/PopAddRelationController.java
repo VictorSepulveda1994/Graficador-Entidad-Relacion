@@ -10,32 +10,35 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Attribute;
-import static model.Diagram.contador;
 import model.Entity;
 import model.FigureType;
 import model.Relation;
+import static model.Diagram.count;
 
 /**
  * FXML Controller class
- *
+ * Esta clase se encarga de agregar una relación.
  * @author Equipo Rocket
  */
 public class PopAddRelationController extends CallPop implements Initializable {
     
     /**
-     * Panel donde se realizaran las acciones
+     * Panel donde se realizaran las acciones.
      */
     @FXML
     private AnchorPane root;
 
     /**
-     * Recibe el nombre de la entidad
+     * Entrada por donde se recibe el nombre de la relación a crear.
      */
     @FXML
     public TextField nameRelation;
 
-    
+    /**
+    * Inicialización del nombre de la relación.
+    */
     public static String nameOfRelation = "";
+    
     /**
      * Inicio de la clase controladora
      */
@@ -46,13 +49,13 @@ public class PopAddRelationController extends CallPop implements Initializable {
     
     /**
      * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío y
-     * crea un objeto "relation" y es agregado a "diagram"
+     * crea un objeto "relation" y es agregado a "diagram".
      */
     public void addToScreen(){
         nameOfRelation=nameRelation.textProperty().get();
         if(nameOfRelation.isEmpty()){
-            nameOfRelation="r"+contador;
-            contador++;
+            nameOfRelation="r"+count;
+            count++;
             FigureType type = FigureType.STRONG;
             ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
             ArrayList<Attribute> attributes= new ArrayList<>();

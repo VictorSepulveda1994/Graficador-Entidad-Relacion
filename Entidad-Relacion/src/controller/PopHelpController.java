@@ -15,22 +15,37 @@ import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
- *
+ * Esta clase se encarga de mostrar información de ayuda sobre el programa.
  * @author Equipo Rocket
  */
 public class PopHelpController implements Initializable {
     
+    /**
+     * Panel donde se realizaran las acciones.
+     */
     @FXML
     AnchorPane root;
+    
+    /**
+     * Lista en donde se guardan las opciones de información.
+     */
     @FXML
     ComboBox<String> options= new ComboBox<String>(); 
+    
+    /**
+     * Titulo del tema que se esta leyendo.
+     */
     @FXML
     Text title;
+    
+    /**
+     * La información que se relaciona con el tema escogido.
+     */
     @FXML
     Text information;
 
     /**
-     *Este método muestra lo que obtiene de las opciones del ComboBox
+     * Este método muestra lo que obtiene de las opciones del ComboBox.
      */
     @FXML
     public void changeOfOption(){
@@ -90,7 +105,7 @@ public class PopHelpController implements Initializable {
     }
     
     /**
-     * Initializes the controller class.
+     * Inicializa la clase controler.
      * @param url
      * @param rb
      */

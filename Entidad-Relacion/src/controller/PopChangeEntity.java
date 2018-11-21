@@ -11,30 +11,47 @@ import javafx.stage.Stage;
 import static model.Diagram.selectedElement;
 import model.Entity;
 import model.FigureType;
+
 /**
- *
+ * FXML Controller 
+ * Esta clase permite editar una entidad.
  * @author Equipo Rocket
  */
 public class PopChangeEntity extends CallPop implements Initializable{
-/**
-     * Panel donde se realizaran las acciones
+    
+    /**
+     * Panel donde se realizaran las acciones.
      */
     @FXML
     private AnchorPane root;
-    @FXML
-    CheckBox opcion;
+    
     /**
-     * Recibe el nombre de la entidad
+     * Opcion para cambiar el tipo de entidad (Debil/Fuerte).
+     */
+    @FXML
+    CheckBox option;
+    
+    /**
+     * Recibe el nombre de la entidad.
      */
     @FXML
     public TextField newName;
 
     /**
-     *Guarda el nombre
+     * Guarda el nombre editado de la entidad.
      */
     public static String enteredName;
+    
+    /**
+     * Guarda el tipo editado de la entidad.
+     */
     public static FigureType type;
+    
+    /**
+     * Guarda la nueva entidad con los cambios de edición.
+     */
     public static Entity newEntity;
+    
     /**
      * Inicio de la clase controladora
      */
@@ -45,16 +62,16 @@ public class PopChangeEntity extends CallPop implements Initializable{
         type=newEntity.getType();
         newName.setText(newEntity.getName());
         if(type.equals(FigureType.WEAK)){
-            opcion.setSelected(true);
+            option.setSelected(true);
         }
         else{
-            opcion.setSelected(false);
+            option.setSelected(false);
         }
     }
     
     /**
-     * Obtiene el nombre ingresado, verifica el tamaño correcto o si esta vacío y
-     * crea un objeto "relation" y es agregado a "diagram"
+     * Metodo que se encarga de guardar todos los cambios realizados a la entidad.
+     * También muestra mensaje de error en caso de realizar una accion incorrecta.
      */
     public void addToScreen(){
         enteredName=newName.textProperty().get();
@@ -63,8 +80,8 @@ public class PopChangeEntity extends CallPop implements Initializable{
             enteredName=newEntity.getName();
         }
         else{
-            if(opcion.isSelected()){
-                type=FigureType.WEAK;
+            if(option.isSelected()){
+                type=FigureType.WEAK;   
             }
             else{
                 type=FigureType.STRONG;
@@ -75,8 +92,7 @@ public class PopChangeEntity extends CallPop implements Initializable{
             
         }
     }
-    
-    
+        
     /**
      * Cancela la operación
      */

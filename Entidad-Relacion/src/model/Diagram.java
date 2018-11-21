@@ -14,6 +14,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import static controller.PopChangeEntity.newEntity;
+import static controller.PopChangeHeritageController.newHeritage;
 
 /**
  *
@@ -25,8 +26,16 @@ public class Diagram extends CallPop {
     private ArrayList <Connector> connectors;
     private ArrayList <Attribute> attributes;
     public static ArrayList <Heritage> heritages;
+
+    /**
+     *Elemento seleccionad
+     */
     public static Element selectedElement;
-    public static int contador;
+
+    /**
+     *Contador para el nombre automatico
+     */
+    public static int count;
     private int iElement;
 
     /**
@@ -38,7 +47,7 @@ public class Diagram extends CallPop {
         connectors = new ArrayList <>();
         attributes = new ArrayList<>();
         heritages = new ArrayList<>();
-        contador=0;
+        count=0;
     }
     
     /**
@@ -81,6 +90,10 @@ public class Diagram extends CallPop {
         this.entities = entities;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Heritage> getHeritages() {
         return heritages;
     }
@@ -101,22 +114,28 @@ public class Diagram extends CallPop {
     public void paint(Canvas canvas, boolean showPoints){
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         connectors.clear();
+        //crea los conectores
         createConnectors();
+        //dibuja los conectores
         for (Connector connector : connectors) {
             connector.paint(canvas,showPoints);
         }
+        //dibuja las entidades
         for (Entity entity : entities) {
             entity.figure.fillEntity(canvas);
             entity.paint(canvas,showPoints);
         }
+        //dibuja las relaciones
         for (Relation relation : relations) {
             relation.figure.fillPolygon(canvas);
             relation.paint(canvas,showPoints);
         }
+        //dibuja la herencia
         for (Heritage heritage : heritages) {
             heritage.figure.fillPolygon(canvas);
             heritage.paint(canvas, showPoints);
         }
+        //dibuja los atributos correspondientes
         for(Attribute attribute : attributes){
             attribute.figure.fillPolygon(canvas);
             switch (attribute.getTipo()) {
@@ -381,9 +400,23 @@ public class Diagram extends CallPop {
         return -1;
     }
     
+    /**
+     *Busca un atributo dentro del Arrays de atributos y devuelve su ubicacion
+     * @param attribute
+     * @return
+     */
     public int searchAttribute(Attribute attribute){
         for(int i=0; i<attributes.size();i++){
             if(attributes.get(i).getName().equals(attribute.getName())){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public int searchRelation(Relation relation){
+        for(int i=0; i<relations.size();i++){
+            if(relations.get(i).getName().equals(relation.getName())){
                 return i;
             }
         }
@@ -397,14 +430,17 @@ public class Diagram extends CallPop {
     public void deselectElement(MouseEvent event){
         if( selectedElement != null ){
             String type = selectedElement.getClass().getName().substring(6);
-            if( "Entity".equals(type) ){
+            if( "Entity".equals(type)){
                 entities.get(iElement).setSelected(false);
             }
-            if( "Relation".equals(type) ){
+            if( "Relation".equals(type)){
                 relations.get(iElement).setSelected(false);
             }
-            if( "Attribute".equals(type) ){
+            if( "Attribute".equals(type)){
                 attributes.get(iElement).setSelected(false);
+            }
+            if( "Heritage".equals(type)){
+                heritages.get(iElement).setSelected(false);
             }
         }
         selectedElement = null;
@@ -514,7 +550,7 @@ public class Diagram extends CallPop {
     }
     
     /**
-     *
+     *Ve si a sido seleccionado algun objeto
      * @return
      */
     public boolean isSomethingSelect (){
@@ -576,8 +612,15 @@ public class Diagram extends CallPop {
             }
         }
     }
-    
-    //Agrega un atributo a una relacion o entidad y al diagrama, pero tiene problemas con el click hay que solucionarlo
+   
+
+    /**
+     *Se agrega un atributo a una entidad, relacion o atributo compuesto seleccionado
+     * @param event
+     * @param canvas
+     * @param showPoints
+     * @throws IOException
+     */
     public void addAttribute(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
         boolean ready = false;
         for (Entity entity : entities) {
@@ -682,6 +725,20 @@ public class Diagram extends CallPop {
                 break;
             }
         }
+        iE=0;
+        for (Heritage heritage : heritages) {
+            if(heritage.isInFigure(event) && ready == false){
+                selectedElement=heritage;
+                popEditHeritage();
+                ready = true ;
+                ArrayList<Entity> entitiesCopy= new ArrayList<>();
+                newHeritage.getDaughtersEntities().add(0,newHeritage.getParentEntity());
+                entitiesCopy=(ArrayList<Entity>) newHeritage.getDaughtersEntities().clone();
+                heritages.set(iE,new Heritage(newHeritage.getName(),heritage.figure.getPosX(),heritage.figure.getPosY(),heritage.selected,heritage.getParentEntity().getAttributes(),entitiesCopy,heritage.getHeritageType()));
+                break;
+            }
+            iE++;
+        }
         ready = false;
         paint(canvas, showPoints);
     }
@@ -703,6 +760,11 @@ public class Diagram extends CallPop {
                 Relation relation= this.relations.get(i);
                 while(!relation.getAttributes().isEmpty()){
                     for (int j = 0; j <relation.getAttributes().size(); j++) {
+                        if((relation.getAttributes().get(j).type.equals(AttributeType.COMPOUND)) && (!relation.getAttributes().get(j).attributes.isEmpty())){
+                            for (int k = 0; k < relation.getAttributes().get(j).attributes.size(); k++) {
+                                deleteAttribute(relation.getAttributes().get(j).attributes.get(k));
+                            }
+                        } 
                         deleteAttribute(relation.getAttributes().get(j));
                         relation.getAttributes().remove(j);
                         paint(canvas, showPoints); 
@@ -718,9 +780,15 @@ public class Diagram extends CallPop {
                 Entity entity = this.entities.get(i);
                 while(!entity.getAttributes().isEmpty()){
                     for (int j = 0; j <entity.getAttributes().size(); j++) {
+                        if((entity.getAttributes().get(j).type.equals(AttributeType.COMPOUND)) && (!entity.getAttributes().get(j).attributes.isEmpty())){
+                            for (int k = 0; k < entity.getAttributes().get(j).attributes.size(); k++) {
+                                deleteAttribute(entity.getAttributes().get(j).attributes.get(k));
+                            }
+                        }                      
                         deleteAttribute(entity.getAttributes().get(j));
                         entity.getAttributes().remove(j);
-                        paint(canvas, showPoints); 
+                        paint(canvas, showPoints);
+                        
                     }
                 }
                 while(hasAnyRelation(entity)){
@@ -745,6 +813,18 @@ public class Diagram extends CallPop {
                         }
                     }
                 }
+                while(isInAHeritage(entity)){
+                    for (int j = 0; j <heritages.size(); j++) {
+                        if(heritages.get(j).hasThisEntity(entity)){
+                            if(heritages.get(j).getParentEntity().equals(entity) || heritages.get(j).getDaughtersEntities().size()<=1){
+                                heritages.remove(j);
+                            }
+                            else{
+                                heritages.get(j).removeDaughterEntitie(entity);
+                            }
+                        }
+                    }
+                }
                 if (!hasAnyRelation(this.entities.get(i))){
                     this.entities.remove(i);
                 }
@@ -766,7 +846,27 @@ public class Diagram extends CallPop {
                         this.relations.get(j).getAttributes().remove(indexAttribute);
                     }
                 }
+                if((this.attributes.get(i).type.equals(AttributeType.COMPOUND)) && (!this.attributes.get(i).attributes.isEmpty())){
+                    for (int k = 0; k <this.attributes.get(i).attributes.size(); k++) {
+                        deleteAttribute (this.attributes.get(i).attributes.get(k));
+                    }
+                    this.attributes.get(i).attributes.clear(); 
+                }
+                for (int j = 0; j <this.attributes.size(); j++) {
+                    int indexAttribute=this.attributes.get(j).findAttribute(this.attributes.get(i));
+                    if(indexAttribute!=-1){
+                        this.attributes.get(j).attributes.remove(indexAttribute);
+                    }
+                }
                 this.attributes.remove(i);              
+            }
+        }
+        
+        //Eliminar Herencia
+        for (int i = 0; i <heritages.size(); i++) {
+            if(heritages.get(i).isInFigure(event) && ready == false){
+                ready = true;
+                heritages.remove(i);                          
             }
         }
         ready = false;
@@ -813,7 +913,11 @@ public class Diagram extends CallPop {
         return false;
     }
     
-    //Metodo para eliminar un atributo dentro del diagrama (sin conocer su indice).
+
+    /**
+     *Metodo para eliminar un atributo dentro del diagrama (sin conocer su indice)
+     * @param attribute
+     */
     public void deleteAttribute (Attribute attribute){
         for (int i = 0; i <this.attributes.size(); i++) {
             if(this.attributes.get(i).equals(attribute)){
@@ -821,12 +925,20 @@ public class Diagram extends CallPop {
             }
         }
     }
-    
-    //Metodo para eliminar algunos atributos dentro del diagrama de una relacion o entidad.
+
+    /**
+     *Metodo para eliminar algunos atributos dentro del diagrama de una relacion o entidad.
+     * @param element
+     */
     public void deleteSomeAttributes (Element element){
         for (int i = 0; i <this.attributes.size(); i++) {
             for (int j = 0; j <element.getAttributes().size(); j++) {
                 if(this.attributes.get(i).equals(element.getAttributes().get(j))){
+                    if(this.attributes.get(i).type.equals(AttributeType.COMPOUND) && !this.attributes.get(i).attributes.isEmpty()){
+                        for (int k = 0; k <this.attributes.get(i).attributes.size(); k++) {
+                            deleteAttribute(this.attributes.get(i).attributes.get(k));
+                        }
+                    }
                     this.attributes.remove(i);
                 }
             }
@@ -834,6 +946,11 @@ public class Diagram extends CallPop {
         }
     }
     
+    /**
+     *
+     * @param event
+     * @return
+     */
     public Element foundElement (MouseEvent event){
         for (Entity entity : this.entities){
             if(entity.figure.isInFigure(event)){
@@ -877,11 +994,40 @@ public class Diagram extends CallPop {
         return connectors;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Attribute> getAttributes() {
         return attributes;
     }
 
+    /**
+     *
+     * @param attribute
+     */
     public void setAttributes(Attribute attribute) {
         this.attributes.add(attribute);
     }
+    
+    public void updateRelations (Canvas canvas,Boolean showPoints){
+        for (Relation relation : this.relations) {
+            relation.updateType();
+        }
+        paint(canvas, showPoints);
+    }
+    
+    /**
+     * Metodo para saber si una entidadd esta dentro de una herencia en el diagrama.
+     * @return verdadero la entidad ingresada esta en una herencia dentro del diagrama o falso en caso contrario.
+     */
+    public boolean isInAHeritage(Entity entity){
+        for (Heritage heritage : heritages) {
+            if(heritage.hasThisEntity(entity)){
+                return true;                
+            }
+        }
+        return false;
+    }
+    
 }
