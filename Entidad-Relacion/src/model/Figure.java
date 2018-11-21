@@ -1,5 +1,8 @@
 package model;
 
+import controller.MainController;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
@@ -389,10 +392,10 @@ public class Figure {
             gc.setStroke(Color.ORANGERED);
             gc.strokeArc(point.getX(), point.getY(), 3, 3,360,300, ArcType.ROUND);
         }
-        /*if(withArc){
+        if(withArc){
             gc.setStroke(Color.ORANGERED);
             gc.strokeArc(posArc.getX(), posArc.getY(), 3, 3,360,300, ArcType.ROUND);
-        }*/
+        }
         gc.setStroke(Color.BLACK);
     }
     
@@ -638,6 +641,45 @@ public class Figure {
      */
     public Point getCenter(){
         return (new Point(posX, posY));
+    }
+    
+    /**
+     *
+     * Agrega un conector más para las relaciones unitarias
+     */
+    public void addLineConnector(Point point1, Point point2, Element e){
+        int x = 0;
+        int y = 0;
+        createPointsArc(point1, point2);
+        if(point1.getX() <= point2.getX()){
+            x = point2.getX() - rectangleWidth;
+        }
+        if(point1.getX() > point2.getX()){
+            x = point2.getX() + rectangleWidth;
+        }
+        if(point1.getY() <= point2.getY()){
+            y = point2.getY()- rectangleHeight;
+        }
+        if(point1.getY()> point2.getY()){
+            y = point2.getY()+ rectangleHeight;
+        }
+        if(startAngle>50 && startAngle<70){
+            x = point2.getX() + rectangleWidth;
+            y = point2.getY()- rectangleHeight;
+        }
+        if(startAngle>110 && startAngle<130){
+            x = point2.getX() - rectangleWidth;
+            y = point2.getY()- rectangleHeight;
+        }
+        if(startAngle>230 && startAngle<250){
+            x = point2.getX() - rectangleWidth;
+            y = point2.getY()+ rectangleHeight;
+        }
+        if(startAngle>290 && startAngle<310){
+            x = point2.getX() + rectangleWidth;
+            y = point2.getY()+ rectangleHeight;
+        }
+        this.points.add(new Point(x, y));
     }
     
     /**
