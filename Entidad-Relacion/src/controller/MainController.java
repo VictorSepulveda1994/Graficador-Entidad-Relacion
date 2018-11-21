@@ -653,7 +653,6 @@ public class MainController extends CallPop implements Initializable{
             diagramsRedo.add(copy);
             diagramsUndo.remove(diagramsUndo.size()-1);
         }
-        diagram.adjustScreen(canvas, minWidth, minHeight);
         diagram.paint(canvas, showPoints);     
     }
     
@@ -663,7 +662,6 @@ public class MainController extends CallPop implements Initializable{
             diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();      
             diagramsRedo.remove(diagramsRedo.size()-1);
         }
-        diagram.adjustScreen(canvas, minWidth, minHeight);
         diagram.paint(canvas, showPoints);
         
     }
