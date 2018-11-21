@@ -361,6 +361,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonCleanScreenClicked(ActionEvent event) {
+        copiar();
         diagram.clearAll(canvas, minWidth, minHeight);
         //Se restablecen los botones
         attributeToggleButton.setSelected(false);
@@ -653,6 +654,7 @@ public class MainController extends CallPop implements Initializable{
             diagramsRedo.add(copy);
             diagramsUndo.remove(diagramsUndo.size()-1);
         }
+        diagram.actualizar();
         diagram.paint(canvas, showPoints);     
     }
     
@@ -662,6 +664,7 @@ public class MainController extends CallPop implements Initializable{
             diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();      
             diagramsRedo.remove(diagramsRedo.size()-1);
         }
+        diagram.actualizar();
         diagram.paint(canvas, showPoints);
         
     }
