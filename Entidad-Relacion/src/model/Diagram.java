@@ -2,6 +2,7 @@ package model;
 
 import controller.CallPop;
 import controller.MainController;
+import static controller.MainController.copiar;
 import controller.PopAddAttributeController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
@@ -54,10 +55,32 @@ public class Diagram extends CallPop implements Cloneable {
         try { 
             Diagram diagram= (Diagram) super.clone(); 
             diagram.attributes= (ArrayList<Attribute>) attributes.clone();
+            for(int i=0; i<diagram.getAttributes().size();i++){
+                diagram.getAttributes().get(i).setAttributes
+                    ((ArrayList<Attribute>) attributes.get(i).getAttributes().clone());
+            }
             diagram.connectors= (ArrayList<Connector>) connectors.clone();
             diagram.entities= (ArrayList<Entity>) entities.clone();
+            for(int i=0; i<diagram.getEntities().size();i++){
+                diagram.getEntities().get(i).setAttributes
+                    ((ArrayList<Attribute>) entities.get(i).getAttributes().clone());
+                diagram.getEntities().get(i).setEntities
+                    ((ArrayList<Entity>) entities.get(i).getEntities().clone());
+            }
             diagram.relations= (ArrayList<Relation>) relations.clone();
+            for(int i=0; i<diagram.getRelations().size();i++){
+                diagram.getRelations().get(i).setAttributes
+                    ((ArrayList<Attribute>) relations.get(i).getAttributes().clone());
+                diagram.getRelations().get(i).setEntities
+                    ((ArrayList<Entity>) relations.get(i).getEntities().clone());
+            }
             diagram.heritages= (ArrayList<Heritage>) heritages.clone();
+            for(int i=0; i<diagram.getHeritages().size();i++){
+                diagram.getHeritages().get(i).setAttributes
+                    ((ArrayList<Attribute>) heritages.get(i).getAttributes().clone());
+                diagram.getHeritages().get(i).setDaughtersEntities
+                    ((ArrayList<Entity>) heritages.get(i).getDaughtersEntities().clone());
+            }
             diagram.setCount(count);
             diagram.iElement= iElement;
             return diagram;
@@ -410,6 +433,7 @@ public class Diagram extends CallPop implements Cloneable {
             
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
+            copiar();
         }
     }
     

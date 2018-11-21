@@ -91,9 +91,9 @@ public class MainController extends CallPop implements Initializable{
      * Lista que guarda las entidades seleccionadas por el usuario.
      */
     public static ArrayList<Entity> entitiesSelect;
-    public ArrayList<Diagram> diagramsUndo;
-    public ArrayList<Diagram> diagramsRedo;
-    public Diagram copy;
+    public static ArrayList<Diagram> diagramsUndo;
+    public static ArrayList<Diagram> diagramsRedo;
+    public static Diagram copy;
     
     /**
      * Accion para cerrar la ventana.
@@ -653,6 +653,7 @@ public class MainController extends CallPop implements Initializable{
             diagramsRedo.add(copy);
             diagramsUndo.remove(diagramsUndo.size()-1);
         }
+        diagram.adjustScreen(canvas, minWidth, minHeight);
         diagram.paint(canvas, showPoints);     
     }
     
@@ -662,12 +663,13 @@ public class MainController extends CallPop implements Initializable{
             diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();      
             diagramsRedo.remove(diagramsRedo.size()-1);
         }
+        diagram.adjustScreen(canvas, minWidth, minHeight);
         diagram.paint(canvas, showPoints);
         
     }
     
     
-    public void copiar(){
+    public static void copiar(){
         copy = diagram.getClone();
         diagramsUndo.add(copy);
     }

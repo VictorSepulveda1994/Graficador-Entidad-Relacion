@@ -48,6 +48,15 @@ public class Attribute extends Element{
     public void setTipo(AttributeType tipo) {
         this.type = tipo;
     }
-    
+
+    @Override
+    public ArrayList<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public void setAttributes(ArrayList<Attribute> attributes) {
+        this.attributes = attributes;
+    }
     
 }
