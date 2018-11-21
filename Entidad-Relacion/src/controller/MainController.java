@@ -377,7 +377,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonCleanScreenClicked(ActionEvent event) {
-        copiar();
+        copy();
         diagram.clearAll(canvas, minWidth, minHeight);
         //Se restablecen los botones
         attributeToggleButton.setSelected(false);
@@ -418,7 +418,7 @@ public class MainController extends CallPop implements Initializable{
         MainController.event = event;
         if(entityToggleButton.isSelected() && event.getX()-75 > 0  && event.getY()-45 > 0){
             popAddEntity(); 
-            copiar();
+            copy();
         }
         else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
@@ -438,7 +438,7 @@ public class MainController extends CallPop implements Initializable{
                     }
                     else{
                         popAddRelation();
-                        copiar();
+                        copy();
                     }
                 }   
             }
@@ -457,23 +457,23 @@ public class MainController extends CallPop implements Initializable{
                 }
                 if (!element.isInFigure(event) && entitiesSelect.size()>1){
                     popAddHeritage();
-                    copiar();
+                    copy();
                 }   
             }
         }
         else if(attributeToggleButton.isSelected()){
             diagram.addAttribute(event, canvas, showPoints);
-            copiar();
+            copy();
         }
         else if(editToggleButton.isSelected()){
             diagram.selectElementEdit(event, canvas, showPoints);
             diagram.paint(canvas,showPoints);        
-            copiar();
+            copy();
         }
         else if(deleteToggleButton.isSelected()){
             if(!diagram.getEntities().isEmpty() || !diagram.getRelations().isEmpty()){
                 diagram.delete(event, canvas, showPoints);
-                copiar();
+                copy();
             }
         }
         
@@ -582,7 +582,7 @@ public class MainController extends CallPop implements Initializable{
         entitiesSelect = new ArrayList<>();
         diagramsUndo= new ArrayList<>();
         diagramsRedo= new ArrayList<>();
-        copiar();
+        copy();
         copy= new Diagram();
         showPoints = false;
         canvas.setCursor(Cursor.DEFAULT);
@@ -684,7 +684,7 @@ public class MainController extends CallPop implements Initializable{
     }
     
     
-    public static void copiar(){
+    public static void copy(){
         copy = diagram.getClone();
         diagramsUndo.add(copy);
     }

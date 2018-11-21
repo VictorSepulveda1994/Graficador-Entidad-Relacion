@@ -40,7 +40,7 @@ public class Attribute extends Element{
      * Entrega el tipo de atributo
      * @return
      */
-    public AttributeType getTipo() {
+    public AttributeType getType() {
         return type;
     }
 
@@ -48,7 +48,7 @@ public class Attribute extends Element{
      * Agrega el tipo de atributo
      * @param tipo
      */
-    public void setTipo(AttributeType tipo) {
+    public void setType(AttributeType tipo) {
         this.type = tipo;
     }
 
