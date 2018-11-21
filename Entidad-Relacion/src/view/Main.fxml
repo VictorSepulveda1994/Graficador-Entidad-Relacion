@@ -190,6 +190,8 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="10.0" style="-fx-background-color: #5798d6;" GridPane.columnIndex="1">
                <children>
+                  <Button mnemonicParsing="false" onAction="#redo" text="Re" />
+                  <Button mnemonicParsing="false" onAction="#undo" text="Des" />
                   <ToggleButton fx:id="heritageToggleButton" mnemonicParsing="false" onAction="#buttonHeritageClicked" prefHeight="45.0" prefWidth="115.0" text="Herencia">
                      <font>
                         <Font size="13.0" />
@@ -277,7 +279,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button cancelButton="true" disable="true" mnemonicParsing="false" prefHeight="28.0" prefWidth="105.0" style="-fx-background-color: #eae8e8;" text="Rehacer">
+                  <Button disable="true" mnemonicParsing="false" prefHeight="28.0" prefWidth="105.0" style="-fx-background-color: #eae8e8;" text="Rehacer">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>

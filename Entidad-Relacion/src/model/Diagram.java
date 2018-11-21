@@ -20,7 +20,7 @@ import static controller.PopChangeHeritageController.newHeritage;
  *
  * @author Equipo Rocket
  */
-public class Diagram extends CallPop {
+public class Diagram extends CallPop implements Cloneable {
     private ArrayList <Entity> entities;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
@@ -28,7 +28,7 @@ public class Diagram extends CallPop {
     public static ArrayList <Heritage> heritages;
 
     /**
-     *Elemento seleccionad
+     *Elemento seleccionado
      */
     public static Element selectedElement;
 
@@ -49,6 +49,32 @@ public class Diagram extends CallPop {
         heritages = new ArrayList<>();
         count=0;
     }
+    
+    public Diagram getClone() { 
+        try { 
+            Diagram diagram= (Diagram) super.clone(); 
+            diagram.attributes= (ArrayList<Attribute>) attributes.clone();
+            diagram.connectors= (ArrayList<Connector>) connectors.clone();
+            diagram.entities= (ArrayList<Entity>) entities.clone();
+            diagram.relations= (ArrayList<Relation>) relations.clone();
+            diagram.setCount(count);
+            diagram.iElement= iElement;
+            return diagram;
+        } catch (CloneNotSupportedException e) { 
+            System.out.println (" Cloning not allowed. " );
+            return this; 
+        } 
+    }
+    
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        Diagram.count = count;
+    }
+    
+    
     
     /**
      *
@@ -1002,12 +1028,16 @@ public class Diagram extends CallPop {
         return attributes;
     }
 
-    /**
-     *
-     * @param attribute
-     */
-    public void setAttributes(Attribute attribute) {
-        this.attributes.add(attribute);
+    public void setConnectors(ArrayList<Connector> connectors) {
+        this.connectors = connectors;
+    }
+
+    public void setAttributes(ArrayList<Attribute> attributes) {
+        this.attributes = attributes;
+    }
+
+    public static void setHeritages(ArrayList<Heritage> heritages) {
+        Diagram.heritages = heritages;
     }
     
     public void updateRelations (Canvas canvas,Boolean showPoints){
