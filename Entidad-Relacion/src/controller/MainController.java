@@ -629,6 +629,10 @@ public class MainController extends CallPop implements Initializable {
         }
         canvas.setScaleX(canvas.getScaleX() * zoomFactor);
         canvas.setScaleY(canvas.getScaleY() * zoomFactor);
+        canvas.setWidth(canvas.getWidth()*zoomFactor);
+        canvas.setHeight(canvas.getHeight()*zoomFactor);
+        canvas.setLayoutX(0);
+        canvas.setLayoutY(0);
         event.consume();
     }
     
