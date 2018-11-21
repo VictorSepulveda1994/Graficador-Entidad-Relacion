@@ -11,7 +11,7 @@ public class Relation extends Element {
     private ArrayList <Entity> entities;
 
     /**
-     *
+     * El tipo de la relación, débil o fuerte.
      */
     public FigureType type;
     
@@ -92,11 +92,7 @@ public class Relation extends Element {
     /**
      * Método para saber si la relación contiene la entidad ingresada
      * @param entity
-<<<<<<< HEAD
      * @return verdadero si la relacion contiene esa entidad, falso en caso contrario.
-=======
-     * @return 
->>>>>>> master
      */
     public boolean hasThisEntity (Entity entity){
         for (int i = 0; i < this.entities.size(); i++) {
@@ -108,14 +104,8 @@ public class Relation extends Element {
     }
     
     /**
-<<<<<<< HEAD
      * Método para eliminar la entidad ingresada.
      * @param entity la entidad a eliminar
-=======
-     * Método para eliminar la entidad ingresada
-     * @param entity
-     * @param la entidad a eliminar
->>>>>>> master
      */
     public void removeEntity (Entity entity){
         for (int i = 0; i < this.entities.size(); i++) {
@@ -134,7 +124,7 @@ public class Relation extends Element {
     }
 
     /**
-     *Devuelve el numero de entidades debiles 
+     * Devuelve el numero de entidades debiles 
      * @return
      */
     public int numberOfEntitiesWeak(){
@@ -147,6 +137,9 @@ public class Relation extends Element {
         return count;
     }
     
+    /***
+     * Este metodo se encarga de actualizar el tipo (débil o fuerte) de la relación.
+     */
     public void updateType (){
         if((numberOfEntitiesWeak()==1 && this.entities.size()>1) || numberOfEntitiesWeak()==0){
             this.type=type;

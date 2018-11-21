@@ -1045,6 +1045,12 @@ public class Diagram extends CallPop {
         return false;
     }
     
+    /***
+     * Este metodo se encarga de actualizar el nombre de un attributo dentro de la lista de un elemento del diagrama.
+     * @param element El elemento en donde se va a buscar el attributo.
+     * @param attribute El attributo con el nuevo nombre.
+     * @param oldName  El antiguo nombre que tenia el attributo.
+     */
     public void updateNameAttribute(Element element,Attribute attribute,String oldName){
         for (int i = 0; i <element.getAttributes().size(); i++) {
             if(element.getAttributes().get(i).name.equals(oldName)){

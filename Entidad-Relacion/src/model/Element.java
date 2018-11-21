@@ -156,10 +156,8 @@ public abstract class Element {
         this.attributes = attributes;
     }
 
-    //Metodo que retorna la posicion de un atributo dentro de la lista atributos.(retorna -1 sino lo encuentra).
-
     /**
-     *Encuentra un atributo dentro del diagrama y retorna su ubicacion
+     * Encuentra un atributo dentro del diagrama y retorna su ubicacion
      * @param attribute
      * @return
      */

@@ -13,6 +13,9 @@ import java.util.ArrayList;
  */
 public class Attribute extends Element{
     
+    /**
+     * El tipo de atributo.
+     */
     AttributeType type;
 
     /**
@@ -34,7 +37,7 @@ public class Attribute extends Element{
     }
 
     /**
-     *Entrega el tipo de atributo
+     * Entrega el tipo de atributo
      * @return
      */
     public AttributeType getTipo() {
@@ -42,7 +45,7 @@ public class Attribute extends Element{
     }
 
     /**
-     *Agrega el tipo de atributo
+     * Agrega el tipo de atributo
      * @param tipo
      */
     public void setTipo(AttributeType tipo) {

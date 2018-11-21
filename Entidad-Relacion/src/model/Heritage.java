@@ -120,6 +120,10 @@ public class Heritage extends Element{
         return false;        
     }
     
+    /**
+     * Este metodo se encarga de eliminar una entidad dentro de la lista de entidades hijas.
+     * @param entity La entidad a eliminar.
+     */
     public void removeDaughterEntitie (Entity entity){
         for (int i = 0; i <this.daughtersEntities.size(); i++) {   
             if(this.daughtersEntities.get(i).equals(entity)){
