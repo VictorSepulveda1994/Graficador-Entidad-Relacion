@@ -653,8 +653,7 @@ public class MainController extends CallPop implements Initializable{
             diagramsRedo.add(copy);
             diagramsUndo.remove(diagramsUndo.size()-1);
         }
-        diagram.paint(canvas, showPoints);
-        
+        diagram.paint(canvas, showPoints);     
     }
     
     @FXML

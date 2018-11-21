@@ -57,6 +57,7 @@ public class Diagram extends CallPop implements Cloneable {
             diagram.connectors= (ArrayList<Connector>) connectors.clone();
             diagram.entities= (ArrayList<Entity>) entities.clone();
             diagram.relations= (ArrayList<Relation>) relations.clone();
+            diagram.heritages= (ArrayList<Heritage>) heritages.clone();
             diagram.setCount(count);
             diagram.iElement= iElement;
             return diagram;
