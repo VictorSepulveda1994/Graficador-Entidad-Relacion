@@ -93,6 +93,7 @@ public class MainController extends CallPop implements Initializable{
     public static ArrayList<Entity> entitiesSelect;
     public static ArrayList<Diagram> diagramsUndo;
     public static ArrayList<Diagram> diagramsRedo;
+    public static boolean rehacer;
     public static Diagram copy;
     
     /**
@@ -582,6 +583,7 @@ public class MainController extends CallPop implements Initializable{
         entitiesSelect = new ArrayList<>();
         diagramsUndo= new ArrayList<>();
         diagramsRedo= new ArrayList<>();
+        rehacer=false;
         copy();
         copy= new Diagram();
         showPoints = false;
@@ -674,9 +676,12 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     public void redo(){
         if(!diagramsRedo.isEmpty()){
+            System.out.println("entre al rehacer");
+            rehacer=true;
             diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();
             diagramsUndo.add(diagram);
             diagramsRedo.remove(diagramsRedo.size()-1);
+          
         }
         diagram.actualizar();
         diagram.paint(canvas, showPoints);
@@ -685,7 +690,14 @@ public class MainController extends CallPop implements Initializable{
     
     
     public static void copy(){
+        if(rehacer==true){
+            System.out.println("entre al false");
+            rehacer=false;
+            diagramsRedo.clear();
+        }      
         copy = diagram.getClone();
         diagramsUndo.add(copy);
+        System.out.println("d" + diagramsUndo.size());
+        
     }
 }
