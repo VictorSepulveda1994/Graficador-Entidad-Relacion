@@ -91,11 +91,35 @@ public class MainController extends CallPop implements Initializable{
      * Lista que guarda las entidades seleccionadas por el usuario.
      */
     public static ArrayList<Entity> entitiesSelect;
+
+    /**
+     *
+     */
     public static ArrayList<Diagram> diagramsUndo;
+
+    /**
+     *
+     */
     public static ArrayList<Diagram> diagramsRedo;
+
+    /**
+     *
+     */
     public static boolean rehacer;
+
+    /**
+     *
+     */
     public static boolean deshacer;
+
+    /**
+     *
+     */
     public static Diagram copy;
+
+    /**
+     *
+     */
     public static Diagram copy2;
     
     /**
@@ -663,16 +687,20 @@ public class MainController extends CallPop implements Initializable{
         return false;
     }
     
+    /**
+     *Método que deshace acciones dentro del diagrama 
+     */
     @FXML
     public void undo(){
         rehacer=false;
-        //primer deshacer no lo pesca
+        //primer deshacer al aire
         if(deshacer==false){
             deshacer=true;
             copy=diagram.getClone();
             diagramsRedo.add(copy);
             diagramsUndo.remove(diagramsUndo.size()-1);
         }
+        //si el arrays no esta vacio que muestre y guarde en redo
         if(!diagramsUndo.isEmpty()){
             diagram=diagramsUndo.get(diagramsUndo.size()-1).getClone(); 
             copy=diagram.getClone();
@@ -680,72 +708,46 @@ public class MainController extends CallPop implements Initializable{
             diagramsUndo.remove(diagramsUndo.size()-1);
             
         }
+        //actualiza y muestra el diagrama
         diagram.actualizar();
         diagram.paint(canvas, showPoints);     
     }
     
+    /**
+     *Método que rehace acciones dentro del diagrama
+     */
     @FXML
     public void redo(){   
         deshacer=false;
+        //primer rehacer al aire
         if(rehacer==false){
             rehacer=true;
             diagramsUndo.add(diagram);
             diagramsRedo.remove(diagramsRedo.size()-1);
         }
+        //si el arrays no esta vacio muestra y guarda en undo
         if(!diagramsRedo.isEmpty()){
             rehacer=true;
             diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();
             diagramsUndo.add(diagram);
             diagramsRedo.remove(diagramsRedo.size()-1);
         }
+        //actualiza y pinta el diagrama nuevo
         diagram.actualizar();
         diagram.paint(canvas, showPoints);
         
     }
     
+    /**
+     *Copia las acciones realizadas en el diagrama y las guarda en deshacer
+     */
     public static void copy(){
         deshacer=false;
         if(rehacer==true){
-            System.out.println("entre al false");
             rehacer=false;
             diagramsRedo.clear();
         } 
         copy = diagram.getClone();
-        diagramsUndo.add(copy);
-        System.out.println("d" + diagramsUndo.size());        
+        diagramsUndo.add(copy);     
     }
-    /*
-    @FXML
-    public void undo(){
-        if(deshacer==false){
-            deshacer=true;
-            copy=diagram.getClone();
-            diagramsRedo.add(copy);
-            diagramsUndo.remove(diagramsUndo.size()-1);
-        }
-        if(!diagramsUndo.isEmpty()){
-            diagram=diagramsUndo.get(diagramsUndo.size()-1).getClone(); 
-            copy=diagram.getClone();
-            diagramsRedo.add(copy);
-            diagramsUndo.remove(diagramsUndo.size()-1); 
-        }
-        else{
-            diagram= new Diagram();
-        }
-        diagram.actualizar();
-        diagram.paint(canvas, showPoints);     
-    }
-    
-    @FXML
-    public void redo(){   
-        deshacer=false;
-        if(!diagramsRedo.isEmpty()){
-            rehacer=true;
-            diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();
-            diagramsUndo.add(diagram);
-            diagramsRedo.remove(diagramsRedo.size()-1);
-        }
-        diagram.actualizar();
-        diagram.paint(canvas, showPoints);
-    }*/
 }
