@@ -106,6 +106,8 @@ public class MainController extends CallPop implements Initializable{
      *
      */
     public static boolean rehacer;
+    
+    public static boolean rehacer2;
 
     /**
      *
@@ -610,6 +612,7 @@ public class MainController extends CallPop implements Initializable{
         diagramsUndo= new ArrayList<>();
         diagramsRedo= new ArrayList<>();
         rehacer=false;
+        rehacer2=false;
         copy= new Diagram();
         copy();
         showPoints = false;
@@ -692,7 +695,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     public void undo(){
-        rehacer=false;
+        rehacer2=false;
         //primer deshacer al aire
         if(deshacer==false){
             deshacer=true;
@@ -720,8 +723,8 @@ public class MainController extends CallPop implements Initializable{
     public void redo(){   
         deshacer=false;
         //primer rehacer al aire
-        if(rehacer==false){
-            rehacer=true;
+        if(rehacer2==false){
+            rehacer2=true;
             diagramsUndo.add(diagram);
             diagramsRedo.remove(diagramsRedo.size()-1);
         }
@@ -743,6 +746,7 @@ public class MainController extends CallPop implements Initializable{
      */
     public static void copy(){
         deshacer=false;
+        rehacer2=false;
         if(rehacer==true){
             rehacer=false;
             diagramsRedo.clear();
