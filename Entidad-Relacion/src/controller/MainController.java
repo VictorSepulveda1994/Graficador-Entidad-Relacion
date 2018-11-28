@@ -93,7 +93,10 @@ public class MainController extends CallPop implements Initializable{
     public static ArrayList<Entity> entitiesSelect;
     public static ArrayList<Diagram> diagramsUndo;
     public static ArrayList<Diagram> diagramsRedo;
+    public static boolean rehacer;
+    public static boolean deshacer;
     public static Diagram copy;
+    public static Diagram copy2;
     
     /**
      * Accion para cerrar la ventana.
@@ -582,8 +585,9 @@ public class MainController extends CallPop implements Initializable{
         entitiesSelect = new ArrayList<>();
         diagramsUndo= new ArrayList<>();
         diagramsRedo= new ArrayList<>();
-        copy();
+        rehacer=false;
         copy= new Diagram();
+        copy();
         showPoints = false;
         canvas.setCursor(Cursor.DEFAULT);
     }
@@ -661,19 +665,35 @@ public class MainController extends CallPop implements Initializable{
     
     @FXML
     public void undo(){
+        rehacer=false;
+        //primer deshacer no lo pesca
+        if(deshacer==false){
+            deshacer=true;
+            copy=diagram.getClone();
+            diagramsRedo.add(copy);
+            diagramsUndo.remove(diagramsUndo.size()-1);
+        }
         if(!diagramsUndo.isEmpty()){
             diagram=diagramsUndo.get(diagramsUndo.size()-1).getClone(); 
             copy=diagram.getClone();
             diagramsRedo.add(copy);
             diagramsUndo.remove(diagramsUndo.size()-1);
+            
         }
         diagram.actualizar();
         diagram.paint(canvas, showPoints);     
     }
     
     @FXML
-    public void redo(){
+    public void redo(){   
+        deshacer=false;
+        if(rehacer==false){
+            rehacer=true;
+            diagramsUndo.add(diagram);
+            diagramsRedo.remove(diagramsRedo.size()-1);
+        }
         if(!diagramsRedo.isEmpty()){
+            rehacer=true;
             diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();
             diagramsUndo.add(diagram);
             diagramsRedo.remove(diagramsRedo.size()-1);
@@ -683,9 +703,49 @@ public class MainController extends CallPop implements Initializable{
         
     }
     
-    
     public static void copy(){
+        deshacer=false;
+        if(rehacer==true){
+            System.out.println("entre al false");
+            rehacer=false;
+            diagramsRedo.clear();
+        } 
         copy = diagram.getClone();
         diagramsUndo.add(copy);
+        System.out.println("d" + diagramsUndo.size());        
     }
+    /*
+    @FXML
+    public void undo(){
+        if(deshacer==false){
+            deshacer=true;
+            copy=diagram.getClone();
+            diagramsRedo.add(copy);
+            diagramsUndo.remove(diagramsUndo.size()-1);
+        }
+        if(!diagramsUndo.isEmpty()){
+            diagram=diagramsUndo.get(diagramsUndo.size()-1).getClone(); 
+            copy=diagram.getClone();
+            diagramsRedo.add(copy);
+            diagramsUndo.remove(diagramsUndo.size()-1); 
+        }
+        else{
+            diagram= new Diagram();
+        }
+        diagram.actualizar();
+        diagram.paint(canvas, showPoints);     
+    }
+    
+    @FXML
+    public void redo(){   
+        deshacer=false;
+        if(!diagramsRedo.isEmpty()){
+            rehacer=true;
+            diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();
+            diagramsUndo.add(diagram);
+            diagramsRedo.remove(diagramsRedo.size()-1);
+        }
+        diagram.actualizar();
+        diagram.paint(canvas, showPoints);
+    }*/
 }
