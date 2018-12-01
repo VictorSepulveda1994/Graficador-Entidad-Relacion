@@ -107,6 +107,9 @@ public class MainController extends CallPop implements Initializable{
      */
     public static boolean rehacer;
     
+    /**
+     *
+     */
     public static boolean rehacer2;
 
     /**
@@ -696,14 +699,13 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     public void undo(){
         rehacer2=false;
-        //primer deshacer al aire
+        //primer deshacer no lo pesca
         if(deshacer==false){
             deshacer=true;
             copy=diagram.getClone();
             diagramsRedo.add(copy);
             diagramsUndo.remove(diagramsUndo.size()-1);
         }
-        //si el arrays no esta vacio que muestre y guarde en redo
         if(!diagramsUndo.isEmpty()){
             diagram=diagramsUndo.get(diagramsUndo.size()-1).getClone(); 
             copy=diagram.getClone();
@@ -711,45 +713,46 @@ public class MainController extends CallPop implements Initializable{
             diagramsUndo.remove(diagramsUndo.size()-1);
             
         }
-        //actualiza y muestra el diagrama
         diagram.actualizar();
         diagram.paint(canvas, showPoints);     
     }
     
-    /**
+    /** 
      *Método que rehace acciones dentro del diagrama
      */
     @FXML
     public void redo(){   
         deshacer=false;
-        //primer rehacer al aire
         if(rehacer2==false){
             rehacer2=true;
             diagramsUndo.add(diagram);
             diagramsRedo.remove(diagramsRedo.size()-1);
         }
-        //si el arrays no esta vacio muestra y guarda en undo
         if(!diagramsRedo.isEmpty()){
             rehacer=true;
             diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();
             diagramsUndo.add(diagram);
             diagramsRedo.remove(diagramsRedo.size()-1);
         }
-        //actualiza y pinta el diagrama nuevo
         diagram.actualizar();
         diagram.paint(canvas, showPoints);
         
     }
     
     /**
-     *Copia las acciones realizadas en el diagrama y las guarda en deshacer
+     *Método que copia el diagrama dentro del arrays de deshacer 
      */
     public static void copy(){
         deshacer=false;
         rehacer2=false;
         if(rehacer==true){
+            System.out.println("entre al false");
             rehacer=false;
-            diagramsRedo.clear();
+            diagramsUndo.add(diagramsRedo.get(diagramsRedo.size()-1).getClone());
+            diagramsRedo.clear(); 
         } 
+        copy = diagram.getClone();
+        diagramsUndo.add(copy);
+        System.out.println("d" + diagramsUndo.size());        
     }
 }
