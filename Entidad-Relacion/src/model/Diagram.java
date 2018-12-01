@@ -2,6 +2,7 @@ package model;
 
 import controller.CallPop;
 import controller.MainController;
+import static controller.MainController.copy;
 import controller.PopAddAttributeController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
@@ -16,7 +17,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import static controller.PopEditEntityController.newEntity;
 import static controller.PopEditHeritageController.newHeritage;
-import static controller.MainController.copy;
 
 /**
  *
@@ -189,7 +189,7 @@ public class Diagram extends CallPop implements Cloneable {
         //dibuja los atributos correspondientes
         for(Attribute attribute : attributes){
             attribute.figure.fillPolygon(canvas);
-            switch (attribute.getType()) {
+            switch (attribute.getTipo()) {
                 case DERIVATIVE:
                     attribute.paintDerivateAttribute(canvas, showPoints);
                     break;
@@ -383,7 +383,7 @@ public class Diagram extends CallPop implements Cloneable {
             else if( "Attribute".equals(type)){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) attributes.get(iElement).getAttributes().clone();
-                attributes.set(iElement, new Attribute(((Attribute)selectedElement).getType(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy));
+                attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy));
                 selectedElement = attributes.get(iElement);
             }
             else if( "Heritage".equals(type)){
@@ -773,7 +773,7 @@ public class Diagram extends CallPop implements Cloneable {
         }
         for (Attribute attribute : attributes) {
             if(attribute.isInFigure(event) && ready == false){
-                if(attribute.getType().equals(AttributeType.COMPOUND)){
+                if(attribute.getTipo().equals(AttributeType.COMPOUND)){
                     PopAddAttributeController.onlyCompound=true;
                     popAddAttribute();
                     ready = true ;

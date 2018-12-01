@@ -751,7 +751,5 @@ public class MainController extends CallPop implements Initializable{
             rehacer=false;
             diagramsRedo.clear();
         } 
-        copy = diagram.getClone();
-        diagramsUndo.add(copy);     
     }
 }
