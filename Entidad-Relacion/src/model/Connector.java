@@ -37,7 +37,8 @@ public class Connector extends Element{
         this.withArc = false;
         figure = new Figure(this.pointElement1,this.pointElement2,this.withArc);
         String nameE1 = element1.getClass().getName().substring(6);
-        if("Relation".equals(nameE1)){
+        String nameE2 = element2.getClass().getName().substring(6);
+        if("Relation".equals(nameE1) && "Entity".equals(nameE2)){
             Relation rAux = (Relation) element1;
             if(rAux.getEntities().size()==1){
                 figure.addLineConnector(pointElement1, pointElement2, this.element2);
