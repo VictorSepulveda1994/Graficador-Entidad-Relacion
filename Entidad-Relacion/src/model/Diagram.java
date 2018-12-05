@@ -888,6 +888,7 @@ public class Diagram extends CallPop implements Cloneable {
      * @throws java.io.IOException
      */
     public void delete(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        actualizar();
         boolean ready = false;
         //Eliminar una Relación
         for (int i = 0; i < this.relations.size(); i++) {

@@ -96,7 +96,7 @@ public class Relation extends Element {
      */
     public boolean hasThisEntity (Entity entity){
         for (int i = 0; i < this.entities.size(); i++) {
-            if(entity.equals(this.entities.get(i))){
+            if(entity.getName().equals(this.entities.get(i).getName())){
                 return true;
             }
         }
