@@ -15,7 +15,8 @@ public abstract class Element {
     protected boolean selected;
     protected ArrayList<Attribute> attributes = new ArrayList<>();
     public boolean doubleConnector;
-    
+    protected ArrayList<Element> elements;
+
     /**
      *Constructor para crear un elemento
      * @param name
@@ -27,6 +28,14 @@ public abstract class Element {
         this.selected = selected;
         this.attributes=(ArrayList<Attribute>) attributes.clone();
         this.doubleConnector=false;
+    }
+    
+    /**
+     *Constructor para crear agregaciones
+     * 
+     */
+    public Element(ArrayList<Element> elements) {
+        this.elements = elements;
     }
     
     /**

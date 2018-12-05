@@ -10,7 +10,6 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -333,13 +332,9 @@
                   </Button>
                </children>
             </VBox>
-            <ScrollPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ScrollPane stylesheets="@../css/styleCanvas.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <content>
-                  <AnchorPane style="-fx-border-color: BLACK;" styleClass="anchor" stylesheets="@../css/styleCanvas.css">
-                     <children>
-                        <Canvas fx:id="canvas" height="506.0" onMouseClicked="#canvasClicked" onMouseDragged="#mouseDragged" onMouseMoved="#handle" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" onScroll="#zoom" width="760.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
+                  <Canvas fx:id="canvas" height="506.0" onMouseClicked="#canvasClicked" onMouseDragged="#mouseDragged" onMouseMoved="#handle" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" onScroll="#zoom" width="760.0" />
                </content>
             </ScrollPane>
          </children>

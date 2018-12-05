@@ -43,7 +43,7 @@ public class Entity extends Element {
         }
         this.entities=entity.getEntities();
     }
-
+    
     /**
      *
      * @return
@@ -97,6 +97,14 @@ public class Entity extends Element {
         this.doubleConnector = doubleConnector;
     }
     
-    
+    public boolean haveAttributeParcial(){
+        for(int i=0;i<attributes.size();i++){
+            if(attributes.get(i).getTipo()== AttributeType.PARTIALKEY){
+                return true;
+            }
+        }
+        return false;
+    }
+            
     
 }
