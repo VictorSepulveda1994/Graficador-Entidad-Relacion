@@ -9,6 +9,7 @@ import static controller.PopAddAttributeController.nameAttribute;
 import static controller.PopEditRelationController.enteredNameR;
 import static controller.PopEditRelationController.newrelation;
 import static controller.PopEditAttributeController.enteredNameA;
+import static controller.PopEditConnectorController.newConnector;
 import static controller.PopEditEntityController.enteredName;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -690,7 +691,7 @@ public class Diagram extends CallPop implements Cloneable {
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
                 " ",false,attributes1);
                 connectors.add(connector);
-                if((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)){
+                if(((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)) || isDoubleConnector(relations.get(i),relations.get(i).getEntities().get(a))){
                     Point pointRelation = relations.get(i).getFigure().getCenter();
                     pointRelation.setY(pointRelation.getY()-7);
                     pointRelation.setX(pointRelation.getX()-7);
@@ -871,6 +872,27 @@ public class Diagram extends CallPop implements Cloneable {
                 newHeritage.getDaughtersEntities().add(0,newHeritage.getParentEntity());
                 entitiesCopy=(ArrayList<Entity>) newHeritage.getDaughtersEntities().clone();
                 heritages.set(iE,new Heritage(newHeritage.getName(),heritage.figure.getPosX(),heritage.figure.getPosY(),heritage.selected,heritage.getParentEntity().getAttributes(),entitiesCopy,heritage.getHeritageType()));
+                break;
+            }
+            iE++;
+        }
+        iE=0;
+        for (Connector connector : connectors) {
+            if(connector.isInFigure(event) && ready == false){
+                selectedElement=connector;
+                popEditConnector();
+                ready = true ;
+                /*
+                Element element1=newConnector.getElement1();
+                if(element1.getClass().getName().substring(6).equals("Entity")){
+                    element1=((Entity)element1);
+                    this.entities.set(foundIndexElement(element1),new Entity(element1.getName(),element1.getFigure().getPosX(),element1.figure.getPosY(),element1.selected,element1.))
+                }
+                else{
+                    
+                }
+                */
+                connectors.set(iE, new Connector(newConnector.getElement1(),newConnector.getPointElement1(),newConnector.getElement2(),newConnector.getPointElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes()));
                 break;
             }
             iE++;
@@ -1082,7 +1104,35 @@ public class Diagram extends CallPop implements Cloneable {
             
         }
     }
-    
+     
+    public int foundIndexElement (Element element){
+        for (int i = 0; i <this.entities.size();i++) {
+            if(this.entities.get(i).getName().equals(element.getName())){
+                return i;
+            }
+        }
+        for (int i = 0; i <this.relations.size();i++) {
+            if(this.relations.get(i).getName().equals(element.getName())){
+                return i;
+            }
+        }
+        for (int i = 0; i <this.attributes.size();i++) {
+            if(this.attributes.get(i).getName().equals(element.getName())){
+                return i;
+            }
+        }
+        for (int i = 0; i <this.heritages.size();i++) {
+            if(this.heritages.get(i).getName().equals(element.getName())){
+                return i;
+            }
+        }
+        for (int i = 0; i <this.connectors.size();i++) {
+            if(this.connectors.get(i).getName().equals(element.getName())){
+                return i;
+            }
+        }
+        return 0;
+    }
     /**
      *
      * @param event
@@ -1184,5 +1234,12 @@ public class Diagram extends CallPop implements Cloneable {
                 element.getAttributes().get(i).figure.setName(attribute.getName());
             }
         } 
+    }
+    
+    public boolean isDoubleConnector (Element element1, Element element2){
+        if(element1.doubleConnector==true && element2.doubleConnector==true){
+            return true;
+        }
+        return false;
     }
 }

@@ -1,11 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopEditConnectorController">
-    
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="176.0" prefWidth="482.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopEditConnectorController">
+   <children>
+      <Button layoutX="265.0" layoutY="141.0" mnemonicParsing="false" onAction="#addToScreen" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cambiar">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button layoutX="363.0" layoutY="141.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="83.0" style="-fx-background-color: #5798d6;" text="Cancelar">
+         <font>
+            <Font name="Century Gothic Bold" size="13.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <HBox alignment="CENTER" layoutY="-1.0" prefHeight="47.0" prefWidth="482.0" style="-fx-background-color: #eae8e8;" AnchorPane.bottomAnchor="147.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Editar conector" textAlignment="CENTER" wrappingWidth="482.0">
+               <font>
+                  <Font name="Century Gothic Bold" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
+      <Text layoutX="22.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo: ">
+         <font>
+            <Font name="Century Gothic Bold" size="17.0" />
+         </font>
+      </Text>
+      <CheckBox fx:id="option" layoutX="22.0" layoutY="101.0" mnemonicParsing="false" text="Doble">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </CheckBox>
+      <Text fx:id="alertEntity" fill="RED" layoutX="22.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La entidad necesita estar relacionada con una entidad fuerte para poder ser debíl" visible="false">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Text>
+   </children>
 </AnchorPane>
