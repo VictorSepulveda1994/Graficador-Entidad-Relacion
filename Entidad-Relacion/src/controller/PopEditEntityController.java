@@ -111,20 +111,14 @@ public class PopEditEntityController extends CallPop implements Initializable{
         int numberOfStrongEntities=0;
         for (int i = 0; i <MainController.diagram.getRelations().size(); i++) {
             Relation relation = MainController.diagram.getRelations().get(i);
-            System.out.println(relation.figure.getName());
-            System.out.println(newEntity.figure.getName());
             if(relation.hasThisEntity(newEntity)){
-                System.out.println("entre");
                 for (int j = 0; j <relation.getEntities().size(); j++) {
-                    System.out.println(relation.getEntities().get(j).getType());
                     if(relation.getEntities().get(j).getType().equals(FigureType.STRONG) && !relation.getEntities().get(j).getName().equals(newEntity.getName())){
-                        System.out.println(relation.getEntities().get(j).figure.getName());
                         numberOfStrongEntities+=1;
                     }
                 }
             }
         }
-        System.out.println(numberOfStrongEntities);
         return numberOfStrongEntities>=1;
     }
     
