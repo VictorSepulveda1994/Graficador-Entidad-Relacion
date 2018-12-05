@@ -263,6 +263,13 @@ public class CallPop {
         alert.showAndWait();
     }
     
+    public void alertParcialKey(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Las entidades debiles deben tener asociado un attributo clave parcial.");
+        alert.showAndWait();
+    }
+    
     /**
      * Muestra un mensaje de error al intentar hacer herencia con una entidad debil o un herencia tipo hijo-padre.
      */

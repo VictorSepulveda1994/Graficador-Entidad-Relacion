@@ -89,6 +89,14 @@ public class Entity extends Element {
         this.type = type;
     }
     
-    
+    public boolean haveAttributeParcial(){
+        for(int i=0;i<attributes.size();i++){
+            if(attributes.get(i).getTipo()== AttributeType.PARTIALKEY){
+                return true;
+            }
+        }
+        return false;
+    }
+            
     
 }
