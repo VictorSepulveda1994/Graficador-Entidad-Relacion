@@ -2,3 +2,8 @@
     -fx-background-image: url('../icons/background.jpg');
     -fx-background-repeat: repeat;
 }
+
+.scroll-pane > .viewport{
+    -fx-background-image: url('../icons/background.jpg');
+    -fx-background-repeat: repeat;
+}

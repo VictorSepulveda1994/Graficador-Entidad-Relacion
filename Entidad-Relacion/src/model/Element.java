@@ -14,6 +14,7 @@ public abstract class Element {
     protected String name;
     protected boolean selected;
     protected ArrayList<Attribute> attributes = new ArrayList<>();
+    protected ArrayList<Element> elements;
 
     /**
      *Constructor para crear un elemento
@@ -25,6 +26,14 @@ public abstract class Element {
         this.name = name;
         this.selected = selected;
         this.attributes=(ArrayList<Attribute>) attributes.clone();
+    }
+    
+    /**
+     *Constructor para crear agregaciones
+     * 
+     */
+    public Element(ArrayList<Element> elements) {
+        this.elements = elements;
     }
     
     /**
