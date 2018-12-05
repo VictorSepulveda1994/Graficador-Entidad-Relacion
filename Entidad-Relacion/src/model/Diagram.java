@@ -882,17 +882,27 @@ public class Diagram extends CallPop implements Cloneable {
                 selectedElement=connector;
                 popEditConnector();
                 ready = true ;
+                connectors.set(iE, new Connector(newConnector.getElement1(),newConnector.getPointElement1(),newConnector.getElement2(),newConnector.getPointElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes()));
                 /*
                 Element element1=newConnector.getElement1();
-                if(element1.getClass().getName().substring(6).equals("Entity")){
-                    element1=((Entity)element1);
-                    this.entities.set(foundIndexElement(element1),new Entity(element1.getName(),element1.getFigure().getPosX(),element1.figure.getPosY(),element1.selected,element1.))
-                }
-                else{
+                Element element2=newConnector.getElement2();
+                if((element1 instanceof Entity) && (element2 instanceof Relation)){
+                    Entity entity=(Entity)element1;
+                    Relation relation=(Relation)element2;
+                    this.entities.set(foundIndexElement(entity),entity);
+                    this.relations.set(foundIndexElement(relation),relation);
                     
                 }
-                */
-                connectors.set(iE, new Connector(newConnector.getElement1(),newConnector.getPointElement1(),newConnector.getElement2(),newConnector.getPointElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes()));
+                if((element1 instanceof Relation) && (element2 instanceof Entity)){
+                    Entity entity=(Entity)element2;
+                    Relation relation=(Relation)element1;
+                    this.entities.set(foundIndexElement(entity),entity);
+                    this.relations.set(foundIndexElement(relation),relation);
+                    
+                    this.entities.set(foundIndexElement(entity),new Entity (entity.getName(),entity.figure.getPosX(),entity.figure.getPosY(),entity.selected,entity.getType(),entity.getAttributes()));
+                    this.relations.set(foundIndexElement(relation),new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,relation.getEntities(),relation.getAttributes(),relation.getType()));
+                    
+                }*/
                 break;
             }
             iE++;
