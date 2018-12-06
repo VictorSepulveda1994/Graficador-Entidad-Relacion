@@ -726,7 +726,9 @@ public class MainController extends CallPop implements Initializable{
         if(rehacer2==false){
             rehacer2=true;
             diagramsUndo.add(diagram);
-            diagramsRedo.remove(diagramsRedo.size()-1);
+            if(!diagramsRedo.isEmpty()){
+                diagramsRedo.remove(diagramsRedo.size()-1);
+            }         
         }
         if(!diagramsRedo.isEmpty()){
             rehacer=true;
@@ -747,7 +749,10 @@ public class MainController extends CallPop implements Initializable{
         rehacer2=false;
         if(rehacer==true){
             rehacer=false;
-            diagramsUndo.add(diagramsRedo.get(diagramsRedo.size()-1).getClone());
+            diagramsUndo.clear();
+            if(!diagramsRedo.isEmpty()){
+                diagramsUndo.add(diagramsRedo.get(diagramsRedo.size()-1).getClone());
+            }      
             diagramsRedo.clear(); 
         } 
         copy = diagram.getClone();
