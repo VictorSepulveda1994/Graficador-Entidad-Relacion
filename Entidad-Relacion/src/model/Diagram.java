@@ -164,7 +164,7 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public void paint(Canvas canvas, boolean showPoints){
         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        connectors.clear();
+        //connectors.clear();
         //crea los conectores
         createConnectors();
         //dibuja los conectores
@@ -688,16 +688,21 @@ public class Diagram extends CallPop implements Cloneable {
             for(int a=0;a<relations.get(i).getEntities().size();a++){
                 Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
-                " ",false,attributes1);
-                connectors.add(connector);
+                " ",false,attributes1,false);
+                if(!connectors.contains(connector)){
+                    connectors.add(connector);
+                } 
                 if((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)){
                     Point pointRelation = relations.get(i).getFigure().getCenter();
                     pointRelation.setY(pointRelation.getY()-7);
                     pointRelation.setX(pointRelation.getX()-7);
                     connector= new Connector(relations.get(i),pointRelation
                             ,relations.get(i).getEntities().get(a),new Point(((relations.get(i).getEntities().get(a).getFigure().getPosX()-7)),(relations.get(i).getEntities().get(a).getFigure().getPosY()-7)),
-                    " ",false,attributes1);
-                    connectors.add(connector);
+                    " ",false,attributes1,false);
+                    if(!connectors.contains(connector)){
+                        connectors.add(connector);
+                    } 
+              
                 }
             }
         }
@@ -705,24 +710,30 @@ public class Diagram extends CallPop implements Cloneable {
             for(int a=0;a<relations.get(i).getAttributes().size();a++){
                 Connector connector= new Connector(relations.get(i),new Point(relations.get(i).figure.getPosX(),relations.get(i).figure.getPosY()),
                     relations.get(i).getAttributes().get(a),new Point(relations.get(i).getAttributes().get(a).figure.getPosX(),relations.get(i).getAttributes().get(a).figure.getPosY()),
-                " ",false,attributes1);
-                connectors.add(connector);
+                " ",false,attributes1,false);
+                if(!connectors.contains(connector)){
+                    connectors.add(connector);
+                } 
             }
         }
         for(int i=0;i<entities.size();i++){
             for(int a=0;a<entities.get(i).getAttributes().size();a++){
                 Connector connector= new Connector(entities.get(i),new Point(entities.get(i).figure.getPosX(),entities.get(i).figure.getPosY()),
                     entities.get(i).getAttributes().get(a),new Point(entities.get(i).getAttributes().get(a).figure.getPosX(),entities.get(i).getAttributes().get(a).figure.getPosY()),
-                " ",false,attributes1);
-                connectors.add(connector);
+                " ",false,attributes1,false);
+                if(!connectors.contains(connector)){
+                    connectors.add(connector);
+                } 
             }
         }
         for(int i=0;i<attributes.size();i++){
             for(int a=0;a<attributes.get(i).getAttributes().size();a++){
                 Connector connector = new Connector(attributes.get(i),new Point(attributes.get(i).figure.getPosX(),attributes.get(i).figure.getPosY()),
                     attributes.get(i).getAttributes().get(a),new Point(attributes.get(i).getAttributes().get(a).figure.getPosX(),attributes.get(i).getAttributes().get(a).figure.getPosY()),
-                " ",false,attributes1);
-                connectors.add(connector);
+                " ",false,attributes1,false);
+                if(!connectors.contains(connector)){
+                    connectors.add(connector);
+                } 
             }
         }
         for (Heritage heritage : heritages) {
@@ -730,7 +741,9 @@ public class Diagram extends CallPop implements Cloneable {
             connectors.add(connector);
             for (Entity daughterEntity : heritage.getDaughtersEntities()) {
                 Connector connectorAux = new Connector(heritage, daughterEntity, "", false, heritage.attributes, true);
-                connectors.add(connectorAux);
+                if(!connectors.contains(connectorAux)){
+                    connectors.add(connectorAux);
+                } 
             }
         }
     }

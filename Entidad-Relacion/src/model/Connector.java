@@ -17,6 +17,7 @@ public class Connector extends Element{
     private Element element2;
     private Point pointElement2;
     private boolean withArc;
+    private boolean doubleLine;
     
     /**
      *Constructor para crear un conector
@@ -28,13 +29,14 @@ public class Connector extends Element{
      * @param selected
      * @param attributes
      */
-    public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected,ArrayList<Attribute> attributes) {
+    public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected,ArrayList<Attribute> attributes,boolean doubleLine) {
         super(name, selected,attributes);
         this.element1 = element1;
         this.pointElement1 = pointElement1;
         this.element2 = element2;
         this.pointElement2 = pointElement2;
         this.withArc = false;
+        this.doubleLine=doubleLine;
         figure = new Figure(this.pointElement1,this.pointElement2,this.withArc);
         String nameE1 = element1.getClass().getName().substring(6);
         String nameE2 = element2.getClass().getName().substring(6);
@@ -42,6 +44,7 @@ public class Connector extends Element{
             Relation rAux = (Relation) element1;
             if(rAux.getEntities().size()==1){
                 figure.addLineConnector(pointElement1, pointElement2, this.element2);
+                doubleLine=true;
             }
         }
     }
