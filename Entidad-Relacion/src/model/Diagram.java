@@ -813,8 +813,17 @@ public class Diagram extends CallPop implements Cloneable {
                 popEditEntity();
                 ready = true;
                 if(!"".equals(enteredName)){
+                    for(int i=0;i<relations.size();i++){
+                        for(int a=0;a<relations.get(i).getEntities().size();a++){
+                            if(relations.get(i).getEntities().get(a).equals(entities.get(iE))){
+                                System.out.println("entre aca: "+a);
+                                relations.get(i).getEntities().set(a,new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes()));
+                            }
+                        }
+                    }
                     entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes()));
                     enteredName="";
+                    actualizar();
                 }
                 break;
             }
