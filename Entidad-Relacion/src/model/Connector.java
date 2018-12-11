@@ -16,7 +16,14 @@ public class Connector extends Element{
     private Point pointElement1;
     private Element element2;
     private Point pointElement2;
+    public  String cardinalityLetter;
+    public  Cardinality cardinalityType;
     private boolean withArc;
+    
+    
+    public enum Cardinality {
+        ONE_TO_ONE, ONE_TO_MANY, MANY_TO_MANY;
+    }
     
     /**
      *Constructor para crear un conector
@@ -69,7 +76,7 @@ public class Connector extends Element{
      *
      * @return
      */
-    public Point getPointElement1() {
+    public Point getPointElement1() {  
         return pointElement1;
     }
 
