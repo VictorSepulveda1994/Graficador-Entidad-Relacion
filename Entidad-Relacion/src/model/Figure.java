@@ -144,6 +144,18 @@ public class Figure {
         }
         }
     
+    public void paintCardinality (Canvas canvas,Element element1,Element element2,String cardinality){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        int x = ((element1.figure.getCenter().getX()+element2.figure.getCenter().getX())/2);
+        int y = ((element1.figure.getCenter().getY()+element2.figure.getCenter().getY())/2)-15;
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(20));
+        if(cardinality.isEmpty()){
+            cardinality="N";
+        }
+        gc.fillText(cardinality,x,y);
+    }
     /**
      *Dibuja lineas punteadas
      * @param canvas
@@ -173,6 +185,7 @@ public class Figure {
             }
         }
     }
+    
     
     /**
      *Dibuja una linea debajo del texto 

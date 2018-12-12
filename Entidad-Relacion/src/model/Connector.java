@@ -22,7 +22,7 @@ public class Connector extends Element{
     
     
     public enum Cardinality {
-        ONE_TO_ONE, ONE_TO_MANY, MANY_TO_MANY;
+        ONE,MANY;
     }
     
     /**
@@ -35,7 +35,7 @@ public class Connector extends Element{
      * @param selected
      * @param attributes
      */
-    public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected,ArrayList<Attribute> attributes) {
+    public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected,ArrayList<Attribute> attributes/*,Cardinality type*/) {
         super(name, selected,attributes);
         this.element1 = element1;
         this.pointElement1 = pointElement1;
@@ -51,6 +51,15 @@ public class Connector extends Element{
                 figure.addLineConnector(pointElement1, pointElement2, this.element2);
             }
         }
+        this.cardinalityLetter="N";
+        /*
+        if(this.cardinalityType.equals(Cardinality.MANY)){
+            this.cardinalityLetter="N";
+        }
+        else{
+            this.cardinalityLetter="1";
+        }*/
+        
     }
 
     /**
@@ -62,7 +71,7 @@ public class Connector extends Element{
      * @param attributes
      * @param withArc
      */
-    public Connector(Element element1, Element element2, String name, boolean selected, ArrayList<Attribute> attributes, boolean withArc) {
+    public Connector(Element element1, Element element2, String name, boolean selected, ArrayList<Attribute> attributes, boolean withArc/*,Cardinality type*/) {
         super(name, selected, attributes);
         this.element1 = element1;
         this.element2 = element2;
@@ -70,6 +79,14 @@ public class Connector extends Element{
         this.pointElement2 = element2.getFigure().getCenter();
         this.withArc = withArc;
         figure = new Figure(element1.getFigure().getCenter(), element2.getFigure().getCenter(),this.withArc);
+        this.cardinalityLetter="N";
+        /*
+        if(type.equals(Cardinality.MANY)){
+            this.cardinalityLetter="N";
+        }
+        else{
+            this.cardinalityLetter="1";
+        }*/
     }
 
     /**
@@ -102,6 +119,14 @@ public class Connector extends Element{
      */
     public void setPointElement2(Point pointElement2) {
         this.pointElement2 = pointElement2;
+    }
+
+    public String getCardinalityLetter() {
+        return cardinalityLetter;
+    }
+
+    public void setCardinalityLetter(String cardinalityLetter) {
+        this.cardinalityLetter = cardinalityLetter;
     }
 
     /**

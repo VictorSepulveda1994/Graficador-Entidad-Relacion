@@ -171,6 +171,7 @@ public class Diagram extends CallPop implements Cloneable {
         //dibuja los conectores
         for (Connector connector : connectors) {
             connector.paint(canvas,showPoints);
+            connector.figure.paintCardinality(canvas, connector.getElement1(), connector.getElement2(),connector.cardinalityLetter);
         }
         //dibuja las entidades
         for (Entity entity : entities) {
