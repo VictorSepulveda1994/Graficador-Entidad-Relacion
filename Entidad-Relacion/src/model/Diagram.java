@@ -18,6 +18,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import static controller.PopEditEntityController.newEntity;
 import static controller.PopEditHeritageController.newHeritage;
+import model.Entity.CardinalityE;
 
 /**
  *
@@ -371,7 +372,7 @@ public class Diagram extends CallPop implements Cloneable {
             if( "Entity".equals(type) ){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) entities.get(iElement).getAttributes().clone();
-                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType(),attributesCopy));
+                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType(),attributesCopy,((Entity)selectedElement).getTypeCardinality()));
                 selectedElement = entities.get(iElement);
             }
             else if( "Relation".equals(type) ){
@@ -379,10 +380,8 @@ public class Diagram extends CallPop implements Cloneable {
                 entitiesCopy=(ArrayList<Entity>) relations.get(iElement).getEntities().clone();
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) relations.get(iElement).getAttributes().clone();
-                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType()));
-                selectedElement = relations.get(iElement);
-            }
-            else if( "Attribute".equals(type)){
+                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType(),((Relation)selectedElement).getTypeCardinality()));
+            }else if( "Attribute".equals(type)){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) attributes.get(iElement).getAttributes().clone();
                 attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy));
@@ -691,6 +690,14 @@ public class Diagram extends CallPop implements Cloneable {
                 Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
                 " ",false,attributes1);
+                if(relations.get(i).getEntities().size()==2){
+                    if(relations.get(i).getEntities().get(a).getTypeCardinality().equals(CardinalityE.ONE)){
+                        connector.setCardinalityLetter("1");
+                    }
+                    else{
+                        connector.setCardinalityLetter("N");
+                    }
+                }
                 connectors.add(connector);
                 if(((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)) || isDoubleConnector(relations.get(i),relations.get(i).getEntities().get(a))){
                     Point pointRelation = relations.get(i).getFigure().getCenter();
@@ -815,7 +822,7 @@ public class Diagram extends CallPop implements Cloneable {
                 popEditEntity();
                 ready = true;
                 if(!"".equals(enteredName)){
-                    entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes()));
+                    entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes(),newEntity.getTypeCardinality()));
                     enteredName="";
                 }
                 break;
@@ -830,7 +837,7 @@ public class Diagram extends CallPop implements Cloneable {
                 popEdit();
                 ready = true ;
                 if(!"".equals(enteredNameR)){
-                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType()));      
+                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType(),newrelation.getTypeCardinality()));      
                     enteredNameR="";
                 }
                 break;
@@ -976,7 +983,7 @@ public class Diagram extends CallPop implements Cloneable {
                                 entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
                                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                                 attributesCopy=(ArrayList<Attribute>) relation.getAttributes().clone();
-                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType()));
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType(),relation.typeCardinality));
                                 paint(canvas, showPoints); 
                             }
                             j=0;

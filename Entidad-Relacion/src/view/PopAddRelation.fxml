@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="root" prefHeight="194.0" prefWidth="482.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopAddRelationController">
    <children>
-      <TextField fx:id="nameRelation" disable="true" layoutX="22.0" layoutY="89.0" prefHeight="31.0" prefWidth="428.0" style="-fx-border-color: #5798d6;">
+      <TextField fx:id="nameRelation" disable="true" layoutX="22.0" layoutY="82.0" prefHeight="31.0" prefWidth="428.0" style="-fx-border-color: #5798d6;">
          <font>
             <Font size="13.0" />
          </font>
@@ -24,7 +25,7 @@
             </Text>
          </children>
       </HBox>
-      <ToggleButton layoutX="281.0" layoutY="136.0" mnemonicParsing="false" onAction="#addToScreen" prefHeight="37.0" prefWidth="83.0" selected="true" style="-fx-background-color: #5798d6;" text="Agregar">
+      <ToggleButton layoutX="282.0" layoutY="143.0" mnemonicParsing="false" onAction="#addToScreen" prefHeight="37.0" prefWidth="83.0" selected="true" style="-fx-background-color: #5798d6;" text="Agregar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -32,7 +33,7 @@
             <Font name="Century Gothic Bold" size="15.0" />
          </font>
       </ToggleButton>
-      <ToggleButton layoutX="377.0" layoutY="136.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="83.0" selected="true" style="-fx-background-color: #5798d6;" text="Cancelar">
+      <ToggleButton layoutX="379.0" layoutY="143.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="83.0" selected="true" style="-fx-background-color: #5798d6;" text="Cancelar">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -40,7 +41,13 @@
             <Font name="Century Gothic Bold" size="13.0" />
          </font>
       </ToggleButton>
-      <Text layoutX="22.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
+      <Text layoutX="22.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
+         <font>
+            <Font name="Century Gothic Bold" size="17.0" />
+         </font>
+      </Text>
+      <ChoiceBox fx:id="optionsCardinality" layoutX="22.0" layoutY="149.0" prefWidth="150.0" />
+      <Text layoutX="22.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cardinalidad">
          <font>
             <Font name="Century Gothic Bold" size="17.0" />
          </font>

@@ -12,6 +12,7 @@ import model.Attribute;
 import model.Entity;
 import model.FigureType;
 import static model.Diagram.count;
+import model.Entity.CardinalityE;
 
 
 /**
@@ -57,7 +58,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
             count++;
             FigureType type = FigureType.STRONG;
             ArrayList<Attribute> attributes= new ArrayList<>();
-            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type,attributes));
+            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type,attributes,CardinalityE.MANY));
             ((Stage)root.getScene().getWindow()).close();
         }
         else if(nameOfEntity.length()>12 || MainController.diagram.thisNameExists(nameOfEntity)){
@@ -66,7 +67,7 @@ public class PopAddEntityController extends CallPop implements Initializable {
         else{
             FigureType type = FigureType.STRONG;
             ArrayList<Attribute> attributes= new ArrayList<>();
-            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type,attributes));
+            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type,attributes,CardinalityE.MANY));
             ((Stage)root.getScene().getWindow()).close();
         }
     }

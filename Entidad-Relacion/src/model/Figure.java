@@ -11,7 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javax.swing.JTextArea;
 
 /**
  * @author Equipo Rocket
@@ -150,10 +152,11 @@ public class Figure {
         int y = ((element1.figure.getCenter().getY()+element2.figure.getCenter().getY())/2)-15;
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
-        gc.setFont(Font.font(20));
-        if(cardinality.isEmpty()){
-            cardinality="N";
-        }
+        gc.setFont(Font.font("default", FontWeight.EXTRA_BOLD, 28));
+        gc.setFill(Color.web("#FFFEFE"));
+        gc.fillText(cardinality,x,y);
+        gc.setFont(Font.font("default", FontWeight.LIGHT, 24));
+        gc.setFill(Color.web("#000000"));
         gc.fillText(cardinality,x,y);
     }
     /**

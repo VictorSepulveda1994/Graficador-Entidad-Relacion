@@ -17,14 +17,8 @@ public class Connector extends Element{
     private Element element2;
     private Point pointElement2;
     public  String cardinalityLetter;
-    public  Cardinality cardinalityType;
     private boolean withArc;
-    
-    
-    public enum Cardinality {
-        ONE,MANY;
-    }
-    
+
     /**
      *Constructor para crear un conector
      * @param element1
@@ -35,7 +29,7 @@ public class Connector extends Element{
      * @param selected
      * @param attributes
      */
-    public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected,ArrayList<Attribute> attributes/*,Cardinality type*/) {
+    public Connector(Element element1, Point pointElement1, Element element2, Point pointElement2, String name, boolean selected,ArrayList<Attribute> attributes) {
         super(name, selected,attributes);
         this.element1 = element1;
         this.pointElement1 = pointElement1;
@@ -50,16 +44,7 @@ public class Connector extends Element{
             if(rAux.getEntities().size()==1){
                 figure.addLineConnector(pointElement1, pointElement2, this.element2);
             }
-        }
-        this.cardinalityLetter="N";
-        /*
-        if(this.cardinalityType.equals(Cardinality.MANY)){
-            this.cardinalityLetter="N";
-        }
-        else{
-            this.cardinalityLetter="1";
-        }*/
-        
+        }       
     }
 
     /**
@@ -71,7 +56,7 @@ public class Connector extends Element{
      * @param attributes
      * @param withArc
      */
-    public Connector(Element element1, Element element2, String name, boolean selected, ArrayList<Attribute> attributes, boolean withArc/*,Cardinality type*/) {
+    public Connector(Element element1, Element element2, String name, boolean selected, ArrayList<Attribute> attributes, boolean withArc) {
         super(name, selected, attributes);
         this.element1 = element1;
         this.element2 = element2;
@@ -79,14 +64,6 @@ public class Connector extends Element{
         this.pointElement2 = element2.getFigure().getCenter();
         this.withArc = withArc;
         figure = new Figure(element1.getFigure().getCenter(), element2.getFigure().getCenter(),this.withArc);
-        this.cardinalityLetter="N";
-        /*
-        if(type.equals(Cardinality.MANY)){
-            this.cardinalityLetter="N";
-        }
-        else{
-            this.cardinalityLetter="1";
-        }*/
     }
 
     /**
