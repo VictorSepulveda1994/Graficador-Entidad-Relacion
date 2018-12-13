@@ -704,25 +704,6 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public void createConnectors(){
         ArrayList<Attribute> attributes1=new ArrayList<>();
-        /*
-        for(int i=0;i<relations.size();i++){
-            for(int a=0;a<relations.get(i).getEntities().size();a++){
-                Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
-                        ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
-                " ",false,attributes1);
-                connectors.add(connector);
-                if(((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)) || isDoubleConnector(relations.get(i),relations.get(i).getEntities().get(a))){
-                    Point pointRelation = relations.get(i).getFigure().getCenter();
-                    pointRelation.setY(pointRelation.getY()-7);
-                    pointRelation.setX(pointRelation.getX()-7);
-                    connector= new Connector(relations.get(i),pointRelation
-                            ,relations.get(i).getEntities().get(a),new Point(((relations.get(i).getEntities().get(a).getFigure().getPosX()-7)),(relations.get(i).getEntities().get(a).getFigure().getPosY()-7)),
-                    " ",false,attributes1);
-                    connectors.add(connector);
-                }
-            }
-        }
-        */
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getAttributes().size();a++){
                 Connector connector= new Connector(relations.get(i),new Point(relations.get(i).figure.getPosX(),relations.get(i).figure.getPosY()),
@@ -922,27 +903,6 @@ public class Diagram extends CallPop implements Cloneable {
                 popEditConnector();
                 ready = true ;
                 connectorsRelations.set(iE, new Connector(newConnector.getElement1(),newConnector.getElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes(),false,isDoubleConnector));
-                
-                /*
-                Element element1=newConnector.getElement1();
-                Element element2=newConnector.getElement2();
-                if((element1 instanceof Entity) && (element2 instanceof Relation)){
-                    Entity entity=(Entity)element1;
-                    Relation relation=(Relation)element2;
-                    this.entities.set(foundIndexElement(entity),entity);
-                    this.relations.set(foundIndexElement(relation),relation);
-                    
-                }
-                if((element1 instanceof Relation) && (element2 instanceof Entity)){
-                    Entity entity=(Entity)element2;
-                    Relation relation=(Relation)element1;
-                    this.entities.set(foundIndexElement(entity),entity);
-                    this.relations.set(foundIndexElement(relation),relation);
-                    
-                    this.entities.set(foundIndexElement(entity),new Entity (entity.getName(),entity.figure.getPosX(),entity.figure.getPosY(),entity.selected,entity.getType(),entity.getAttributes()));
-                    this.relations.set(foundIndexElement(relation),new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,relation.getEntities(),relation.getAttributes(),relation.getType()));
-                    
-                }*/
                 break;
             }
             iE++;

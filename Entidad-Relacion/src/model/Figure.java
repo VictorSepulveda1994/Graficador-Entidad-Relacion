@@ -1,8 +1,5 @@
 package model;
 
-import controller.MainController;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
