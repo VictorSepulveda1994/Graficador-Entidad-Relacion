@@ -63,6 +63,7 @@ public class PopAddAttributeController extends CallPop implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        attributeType=AttributeType.GENERIC;
         if(onlyCompound==false){
             options.getItems().addAll("Atributo Clave","Atributo Clave Parcial","Atributo Generico","Atributo Multivaluado"
                     ,"Atributo Compuesto","Atributo Derivado");
