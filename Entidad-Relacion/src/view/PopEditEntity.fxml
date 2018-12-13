@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="root" prefHeight="254.0" prefWidth="482.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopEditEntityController">
    <children>
-      <TextField fx:id="newName" layoutX="22.0" layoutY="89.0" prefHeight="31.0" prefWidth="428.0" style="-fx-border-color: #5798d6;">
+      <TextField fx:id="newName" layoutX="22.0" layoutY="80.0" prefHeight="31.0" prefWidth="428.0" style="-fx-border-color: #5798d6;">
          <font>
             <Font size="13.0" />
          </font>
@@ -41,20 +41,25 @@
             </Text>
          </children>
       </HBox>
-      <Text layoutX="22.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo nombre:">
+      <Text layoutX="22.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo nombre:">
          <font>
             <Font name="Century Gothic Bold" size="17.0" />
          </font>
       </Text>
-      <Text layoutX="23.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo: ">
+      <Text layoutX="22.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo: ">
          <font>
             <Font name="Century Gothic Bold" size="17.0" />
          </font>
       </Text>
-      <CheckBox fx:id="option" layoutX="22.0" layoutY="176.0" mnemonicParsing="false" text="Entidad Debil">
+      <CheckBox fx:id="option" layoutX="22.0" layoutY="147.0" mnemonicParsing="false" text="Entidad Debil">
          <font>
             <Font size="17.0" />
          </font>
       </CheckBox>
+      <Text fx:id="alertEntity" fill="RED" layoutX="22.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La entidad necesita estar relacionada con una entidad fuerte para poder ser debíl" visible="false">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -96,7 +96,7 @@ public class Relation extends Element {
      */
     public boolean hasThisEntity (Entity entity){
         for (int i = 0; i < this.entities.size(); i++) {
-            if(entity.equals(this.entities.get(i))){
+            if(entity.getName().equals(this.entities.get(i).getName())){
                 return true;
             }
         }
@@ -158,6 +158,14 @@ public class Relation extends Element {
      */
     public void setType(FigureType type) {
         this.type = type;
+    }
+
+    public boolean isDoubleConnector() {
+        return doubleConnector;
+    }
+
+    public void setDoubleConnector(boolean doubleConnector) {
+        this.doubleConnector = doubleConnector;
     }
     
 }

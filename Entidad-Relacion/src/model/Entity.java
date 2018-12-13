@@ -88,6 +88,14 @@ public class Entity extends Element {
     public void setType(FigureType type) {
         this.type = type;
     }
+
+    public boolean isDoubleConnector() {
+        return doubleConnector;
+    }
+
+    public void setDoubleConnector(boolean doubleConnector) {
+        this.doubleConnector = doubleConnector;
+    }
     
     public boolean haveAttributeParcial(){
         for(int i=0;i<attributes.size();i++){

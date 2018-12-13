@@ -149,6 +149,26 @@ public class CallPop {
         dialog.close();
 
     }
+    
+    public void popEditConnector()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Editar conector");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopEditConnector.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.setResizable(false);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.resizableProperty().setValue(Boolean.FALSE);
+        dialog.setResizable(false);
+        dialog.close();
+
+    }
     /**
      *
      * Abre ventana para agregar una relación.

@@ -7,10 +7,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import static model.Diagram.selectedElement;
 import model.Entity;
 import model.FigureType;
+import model.Relation;
 
 /**
  * FXML Controller 
@@ -52,6 +54,12 @@ public class PopEditEntityController extends CallPop implements Initializable{
      */
     public static Entity newEntity;
     
+    /***
+     *  Texto que le advierte al usuario que no puede poner la entidad debil sino cumple con el requisito necesario.
+     */
+    @FXML
+    public Text alertEntity;
+    
     /**
      * Inicio de la clase controladora
      */
@@ -67,6 +75,11 @@ public class PopEditEntityController extends CallPop implements Initializable{
         else{
             option.setSelected(false);
         }
+        if(!theEntityCanBeWeak()){
+            option.setDisable(true);
+            alertEntity.setVisible(true);
+        }
+
     }
     
     /**
@@ -98,7 +111,23 @@ public class PopEditEntityController extends CallPop implements Initializable{
             
         }
     }
-        
+    
+    public boolean theEntityCanBeWeak(){
+        MainController.diagram.actualizar();
+        int numberOfStrongEntities=0;
+        for (int i = 0; i <MainController.diagram.getRelations().size(); i++) {
+            Relation relation = MainController.diagram.getRelations().get(i);
+            if(relation.hasThisEntity(newEntity)){
+                for (int j = 0; j <relation.getEntities().size(); j++) {
+                    if(relation.getEntities().get(j).getType().equals(FigureType.STRONG) && !relation.getEntities().get(j).getName().equals(newEntity.getName())){
+                        numberOfStrongEntities+=1;
+                    }
+                }
+            }
+        }
+        return numberOfStrongEntities>=1;
+    }
+    
     /**
      * Cancela la operación
      */
