@@ -17,6 +17,7 @@ public class Connector extends Element{
     private Element element2;
     private Point pointElement2;
     private boolean withArc;
+    private boolean doble;
     
     /**
      *Constructor para crear un conector
@@ -64,6 +65,26 @@ public class Connector extends Element{
         this.withArc = withArc;
         figure = new Figure(element1.getFigure().getCenter(), element2.getFigure().getCenter(),this.withArc);
     }
+    
+    public Connector(Element element1, Element element2, String name, boolean selected, ArrayList<Attribute> attributes, boolean withArc,boolean doble) {
+        super(name, selected, attributes);
+        this.element1 = element1;
+        this.element2 = element2;
+        this.doble= doble;
+        this.pointElement1 = element1.getFigure().getCenter();
+        this.pointElement2 = element2.getFigure().getCenter();
+        this.withArc = withArc;
+        figure = new Figure(element1.getFigure().getCenter(), element2.getFigure().getCenter(),this.withArc,this.doble);
+    }
+
+    public boolean isDoble() {
+        return doble;
+    }
+
+    public void setDoble(boolean doble) {
+        this.doble = doble;
+    }
+   
 
     /**
      *
