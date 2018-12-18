@@ -470,6 +470,11 @@ public class MainController extends CallPop implements Initializable{
                     }
                     else{
                         popAddRelation();
+                        if(!diagram.getRelations().isEmpty()){
+                            for(int i=0;i<diagram.getRelations().get(diagram.getRelations().size()-1).getEntities().size();i++){
+                                diagram.createConnectorR(diagram.getRelations().get(diagram.getRelations().size()-1),diagram.getRelations().get(diagram.getRelations().size()-1).getEntities().get(i));
+                            }
+                        }
                         copy();
                     }
                 }   

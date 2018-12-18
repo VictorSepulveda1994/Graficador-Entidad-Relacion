@@ -9,6 +9,7 @@ import static controller.PopAddAttributeController.nameAttribute;
 import static controller.PopEditRelationController.enteredNameR;
 import static controller.PopEditRelationController.newrelation;
 import static controller.PopEditAttributeController.enteredNameA;
+import static controller.PopEditConnectorController.isDoubleConnector;
 import static controller.PopEditConnectorController.newConnector;
 import static controller.PopEditEntityController.enteredName;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import static controller.PopEditEntityController.newEntity;
 import static controller.PopEditHeritageController.newHeritage;
 import model.Entity.CardinalityE;
+import model.Relation.Cardinality;
 
 /**
  *
@@ -28,6 +30,7 @@ public class Diagram extends CallPop implements Cloneable {
     private ArrayList <Entity> entities;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
+    private ArrayList <Connector> connectorsRelations;
     private ArrayList <Attribute> attributes;
     public ArrayList <Heritage> heritages;
 
@@ -49,6 +52,7 @@ public class Diagram extends CallPop implements Cloneable {
         entities = new ArrayList <>();
         relations = new ArrayList <>();
         connectors = new ArrayList <>();
+        connectorsRelations = new ArrayList <>();
         attributes = new ArrayList<>();
         heritages = new ArrayList<>();
         count=0;
@@ -83,6 +87,7 @@ public class Diagram extends CallPop implements Cloneable {
                 diagram.getHeritages().get(i).setDaughtersEntities
                     ((ArrayList<Entity>) heritages.get(i).getDaughtersEntities().clone());
             }
+            diagram.connectorsRelations= (ArrayList<Connector>) connectorsRelations.clone();
             diagram.connectors= new ArrayList<>();
             diagram.setCount(count);
             diagram.selectedElement= selectedElement;
@@ -173,6 +178,9 @@ public class Diagram extends CallPop implements Cloneable {
         for (Connector connector : connectors) {
             connector.paint(canvas,showPoints);
             connector.figure.paintCardinality(canvas, connector.getElement1(), connector.getElement2(),connector.cardinalityLetter);
+        }
+        for (Connector connector : connectorsRelations) {
+            connector.paint(canvas,showPoints);
         }
         //dibuja las entidades
         for (Entity entity : entities) {
@@ -374,14 +382,27 @@ public class Diagram extends CallPop implements Cloneable {
                 attributesCopy=(ArrayList<Attribute>) entities.get(iElement).getAttributes().clone();
                 entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType(),attributesCopy,((Entity)selectedElement).getTypeCardinality()));
                 selectedElement = entities.get(iElement);
+                for(int i=0;i<connectorsRelations.size();i++){
+                    if(connectorsRelations.get(i).getElement2().getName().equals(entities.get(iElement).getName())){
+                        System.out.println("movi entidad y conector");
+                        connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),entities.get(iElement)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                    }
+                }
             }
             else if( "Relation".equals(type) ){
                 ArrayList<Entity> entitiesCopy= new ArrayList<>();
                 entitiesCopy=(ArrayList<Entity>) relations.get(iElement).getEntities().clone();
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) relations.get(iElement).getAttributes().clone();
-                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType(),((Relation)selectedElement).getTypeCardinality()));
-            }else if( "Attribute".equals(type)){
+                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType(),Cardinality.MANY_TO_MANY));
+                selectedElement = relations.get(iElement);
+                for(int i=0;i<connectorsRelations.size();i++){
+                    if(connectorsRelations.get(i).getElement1().getName().equals(relations.get(iElement).getName())){
+                        connectorsRelations.set(i, new Connector(relations.get(iElement),connectorsRelations.get(i).getElement2()," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                    }
+                }
+            }
+            else if( "Attribute".equals(type)){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) attributes.get(iElement).getAttributes().clone();
                 attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy));
@@ -449,6 +470,7 @@ public class Diagram extends CallPop implements Cloneable {
                     heritages.get(i).setParentEntity(entities.get(nElement));  
                 }
             }
+           
             
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
@@ -743,7 +765,12 @@ public class Diagram extends CallPop implements Cloneable {
             }
         }
     }
-   
+    
+    public void createConnectorR(Element element1, Element element2){
+        ArrayList<Attribute> attributes1=new ArrayList<>();
+        Connector conector1=new Connector(element1,element2," ",false,attributes1,false,false);
+        connectorsRelations.add(conector1);
+    }
 
     /**
      *Se agrega un atributo a una entidad, relacion o atributo compuesto seleccionado
@@ -760,8 +787,9 @@ public class Diagram extends CallPop implements Cloneable {
                 ready = true;
                 if(!"".equals(nameAttribute)){
                     ArrayList<Attribute> attributes1=new ArrayList<>();
-                    entity.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
-                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
+                    Attribute attribute= new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1);
+                    entity.getAttributes().add(attribute);
+                    MainController.diagram.getAttributes().add(attribute);
                     nameAttribute="";
                 }
                 break;
@@ -773,8 +801,9 @@ public class Diagram extends CallPop implements Cloneable {
                 ready = true ;
                 if(!"".equals(nameAttribute)){
                     ArrayList<Attribute> attributes1=new ArrayList<>();
-                    relation.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
-                    MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
+                    Attribute attribute= new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1);
+                    relation.getAttributes().add(attribute);
+                    MainController.diagram.getAttributes().add(attribute);
                     nameAttribute="";
                 }
                 break;
@@ -788,8 +817,9 @@ public class Diagram extends CallPop implements Cloneable {
                     ready = true ;
                     if(!"".equals(nameAttribute)){
                         ArrayList<Attribute> attributes1=new ArrayList<>();
-                        attribute.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
-                        MainController.diagram.getAttributes().add(new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1));
+                        Attribute attribute1= new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1);
+                        attribute.getAttributes().add(attribute1);
+                        MainController.diagram.getAttributes().add(attribute1);
                         nameAttribute="";
                         PopAddAttributeController.onlyCompound=false;
                     }
@@ -824,6 +854,11 @@ public class Diagram extends CallPop implements Cloneable {
                 if(!"".equals(enteredName)){
                     entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes(),newEntity.getTypeCardinality()));
                     enteredName="";
+                    for(int i=0;i<connectorsRelations.size();i++){
+                        if(connectorsRelations.get(i).getElement2().equals(selectedElement)){
+                            connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),entities.get(iE)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                        }
+                    }
                 }
                 break;
             }
@@ -839,6 +874,11 @@ public class Diagram extends CallPop implements Cloneable {
                 if(!"".equals(enteredNameR)){
                     relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType(),newrelation.getTypeCardinality()));      
                     enteredNameR="";
+                    for(int i=0;i<connectorsRelations.size();i++){
+                    if(connectorsRelations.get(i).getElement1().equals(selectedElement)){
+                        connectorsRelations.set(i, new Connector(relations.get(iE),connectorsRelations.get(i).getElement2()," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                    }
+                }
                 }
                 break;
             }
@@ -885,32 +925,12 @@ public class Diagram extends CallPop implements Cloneable {
             iE++;
         }
         iE=0;
-        for (Connector connector : connectors) {
+        for (Connector connector : connectorsRelations) {
             if(connector.isInFigure(event) && ready == false){
                 selectedElement=connector;
                 popEditConnector();
                 ready = true ;
-                connectors.set(iE, new Connector(newConnector.getElement1(),newConnector.getPointElement1(),newConnector.getElement2(),newConnector.getPointElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes()));
-                /*
-                Element element1=newConnector.getElement1();
-                Element element2=newConnector.getElement2();
-                if((element1 instanceof Entity) && (element2 instanceof Relation)){
-                    Entity entity=(Entity)element1;
-                    Relation relation=(Relation)element2;
-                    this.entities.set(foundIndexElement(entity),entity);
-                    this.relations.set(foundIndexElement(relation),relation);
-                    
-                }
-                if((element1 instanceof Relation) && (element2 instanceof Entity)){
-                    Entity entity=(Entity)element2;
-                    Relation relation=(Relation)element1;
-                    this.entities.set(foundIndexElement(entity),entity);
-                    this.relations.set(foundIndexElement(relation),relation);
-                    
-                    this.entities.set(foundIndexElement(entity),new Entity (entity.getName(),entity.figure.getPosX(),entity.figure.getPosY(),entity.selected,entity.getType(),entity.getAttributes()));
-                    this.relations.set(foundIndexElement(relation),new Relation(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,relation.getEntities(),relation.getAttributes(),relation.getType()));
-                    
-                }*/
+                connectorsRelations.set(iE, new Connector(newConnector.getElement1(),newConnector.getElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes(),false,isDoubleConnector));
                 break;
             }
             iE++;
@@ -945,6 +965,14 @@ public class Diagram extends CallPop implements Cloneable {
                         deleteAttribute(relation.getAttributes().get(j));
                         relation.getAttributes().remove(j);
                         paint(canvas, showPoints); 
+                    }
+                }
+                for(int a=0;a<connectorsRelations.size();a++){
+                    if(relations.get(i).equals(connectorsRelations.get(a).getElement1())){
+                        connectorsRelations.remove(a);
+                        if(!connectorsRelations.isEmpty()){
+                            a=0;
+                        }
                     }
                 }
                 this.relations.remove(i);              
@@ -1003,6 +1031,14 @@ public class Diagram extends CallPop implements Cloneable {
                     }
                 }
                 if (!hasAnyRelation(this.entities.get(i))){
+                    for(int a=0;a<connectorsRelations.size();a++){
+                        if(entities.get(i).equals(connectorsRelations.get(a).getElement2())){
+                            connectorsRelations.remove(a);
+                            if(!connectorsRelations.isEmpty()){
+                                a=0;
+                            }
+                        }
+                    }
                     this.entities.remove(i);
                 }
             }
