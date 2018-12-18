@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import static controller.PopEditEntityController.newEntity;
 import static controller.PopEditHeritageController.newHeritage;
 import model.Entity.CardinalityE;
+import model.Relation.Cardinality;
 
 /**
  *
@@ -684,18 +685,31 @@ public class Diagram extends CallPop implements Cloneable {
      *Método que crea los conectores entre relaciones y entidades para dibujar las lineas
      */
     public void createConnectors(){
+        Boolean readyCardinality=true;
         ArrayList<Attribute> attributes1=new ArrayList<>();
         for(int i=0;i<relations.size();i++){
-            for(int a=0;a<relations.get(i).getEntities().size();a++){
+            for(int a=0;a<relations.get(i).getEntities().size();a++){            
                 Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
                 " ",false,attributes1);
                 if(relations.get(i).getEntities().size()==2){
-                    if(relations.get(i).getEntities().get(a).getTypeCardinality().equals(CardinalityE.ONE)){
-                        connector.setCardinalityLetter("1");
-                    }
-                    else{
-                        connector.setCardinalityLetter("N");
+                    switch (relations.get(i).typeCardinality) {
+                        case MANY_TO_MANY:
+                            connector.setCardinalityLetter("N");
+                            break;
+                        case ONE_TO_ONE:
+                            connector.setCardinalityLetter("1");
+                            break;
+                        case ONE_TO_MANY:
+                            if(readyCardinality){
+                                connector.setCardinalityLetter("1");
+                                readyCardinality=false;
+                            }
+                            else{
+                                connector.setCardinalityLetter("N");
+                                readyCardinality=true;
+                            }
+                            break;
                     }
                 }
                 connectors.add(connector);

@@ -279,7 +279,7 @@ public class CallPop {
     public void alertEntities(){
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Exceso de entidades");
-        alert.setHeaderText("Puede seleccionar hasta 6 entidades para relacionarlas");
+        alert.setHeaderText("Puede seleccionar hasta 2 entidades para relacionarlas");
         alert.showAndWait();
     }
     
