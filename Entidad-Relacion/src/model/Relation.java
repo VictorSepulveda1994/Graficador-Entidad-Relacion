@@ -18,7 +18,7 @@ public class Relation extends Element {
     public Cardinality typeCardinality;
     
     public enum Cardinality {
-        ONE_TO_ONE,ONE_TO_MANY,MANY_TO_MANY;
+        ONE_TO_ONE,ONE_TO_MANY,MANY_TO_MANY,MANY_TO_ONE;
     }
     
     /**
@@ -138,8 +138,12 @@ public class Relation extends Element {
                 this.entities.get(0).setTypeCardinality(CardinalityE.ONE);
                 this.entities.get(1).setTypeCardinality(CardinalityE.MANY);
                 break;
-            default:
+            case ONE_TO_ONE:
                 this.entities.get(0).setTypeCardinality(CardinalityE.ONE);
+                this.entities.get(1).setTypeCardinality(CardinalityE.ONE);
+                break;
+            case MANY_TO_ONE:
+                this.entities.get(0).setTypeCardinality(CardinalityE.MANY);
                 this.entities.get(1).setTypeCardinality(CardinalityE.ONE);
                 break;
         }

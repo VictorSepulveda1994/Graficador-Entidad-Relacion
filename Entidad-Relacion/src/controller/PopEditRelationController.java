@@ -65,7 +65,7 @@ public class PopEditRelationController extends CallPop implements Initializable 
      @FXML
     public ChoiceBox optionsCardinality;
     
-    ObservableList <String> typesOfCardinality = FXCollections.observableArrayList("Uno a uno","Uno a muchos","Muchos a muchos");
+    ObservableList <String> typesOfCardinality = FXCollections.observableArrayList("Uno a uno","Uno a muchos","Muchos a muchos","Muchos a uno");
     
     public static Relation.Cardinality typeCardinality;
     /**
@@ -133,6 +133,9 @@ public class PopEditRelationController extends CallPop implements Initializable 
                 case ONE_TO_ONE:
                     optionsCardinality.setValue(typesOfCardinality.get(0));
                     break;
+                case MANY_TO_ONE:
+                    optionsCardinality.setValue(typesOfCardinality.get(3));
+                    break;
             }
         }
         else{
@@ -167,6 +170,9 @@ public class PopEditRelationController extends CallPop implements Initializable 
         }
         else if(optionsCardinality.getValue().equals("Muchos a muchos")){
             typeCardinality=Relation.Cardinality.MANY_TO_MANY;
+        }
+        else if(optionsCardinality.getValue().equals("Muchos a uno")){
+            typeCardinality=Relation.Cardinality.MANY_TO_ONE;
         }
         newrelation.setTypeCardinality(typeCardinality);
         ((Stage)root.getScene().getWindow()).close(); 

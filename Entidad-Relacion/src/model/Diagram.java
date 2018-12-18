@@ -685,7 +685,8 @@ public class Diagram extends CallPop implements Cloneable {
      *Método que crea los conectores entre relaciones y entidades para dibujar las lineas
      */
     public void createConnectors(){
-        Boolean readyCardinality=true;
+        Boolean ready1=true;
+        Boolean ready2=true;
         ArrayList<Attribute> attributes1=new ArrayList<>();
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getEntities().size();a++){            
@@ -701,13 +702,23 @@ public class Diagram extends CallPop implements Cloneable {
                             connector.setCardinalityLetter("1");
                             break;
                         case ONE_TO_MANY:
-                            if(readyCardinality){
+                            if(ready1){
                                 connector.setCardinalityLetter("1");
-                                readyCardinality=false;
+                                ready1=false;
                             }
                             else{
                                 connector.setCardinalityLetter("N");
-                                readyCardinality=true;
+                                ready1=true;
+                            }
+                            break;
+                        case MANY_TO_ONE:
+                            if(ready2){
+                                connector.setCardinalityLetter("N");
+                                ready2=false;
+                            }
+                            else{
+                                connector.setCardinalityLetter("1");
+                                ready2=true;
                             }
                             break;
                     }

@@ -41,7 +41,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
     @FXML
     public ChoiceBox optionsCardinality;
     
-    ObservableList <String> typesOfCardinality = FXCollections.observableArrayList("Uno a uno","Uno a muchos","Muchos a muchos");
+    ObservableList <String> typesOfCardinality = FXCollections.observableArrayList("Uno a uno","Uno a muchos","Muchos a muchos","Muchos a uno");
     /**
     * Inicialización del nombre de la relación.
     */
@@ -83,6 +83,9 @@ public class PopAddRelationController extends CallPop implements Initializable {
             else if(optionsCardinality.getValue().equals("Muchos a muchos")){
                 typeCardinality=Cardinality.MANY_TO_MANY;
             }
+            else if(optionsCardinality.getValue().equals("Muchos a uno")){
+                typeCardinality=Cardinality.MANY_TO_ONE;
+            }
             FigureType type = FigureType.STRONG;
             ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
             ArrayList<Attribute> attributes= new ArrayList<>();
@@ -104,6 +107,9 @@ public class PopAddRelationController extends CallPop implements Initializable {
             }
             else if(optionsCardinality.getValue().equals("Muchos a muchos")){
                 typeCardinality=Cardinality.MANY_TO_MANY;
+            }
+            else if(optionsCardinality.getValue().equals("Muchos a uno")){
+                typeCardinality=Cardinality.MANY_TO_ONE;
             }
             FigureType type = FigureType.STRONG;
             ArrayList<Entity> entities= (ArrayList<Entity>) entitiesSelect.clone();
