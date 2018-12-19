@@ -48,6 +48,8 @@ public class MainController extends CallPop implements Initializable{
     private ToggleButton attributeToggleButton;
     @FXML    
     private ToggleButton heritageToggleButton;
+    @FXML    
+    private ToggleButton aggregationToggleButton;
     @FXML
     private Button cleanButton;
     @FXML
@@ -250,6 +252,43 @@ public class MainController extends CallPop implements Initializable{
         editToggleButton.setScaleX(1);
         editToggleButton.setScaleY(1);
         canvas.setCursor(Cursor.CROSSHAIR);
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
+    }
+    
+    /**
+     * Si el "heritageToggleButton" es presionado, se activará y desactivará los demás.
+     * Permite crear "heritages" entre entidades dentro del canvas.
+     */
+    @FXML
+    private void buttonAggregationClicked(ActionEvent event){
+        entitiesSelect.clear();
+        aggregationToggleButton.setSelected(true);
+        attributeToggleButton.setSelected(false);
+        entityToggleButton.setSelected(false);
+        relationToggleButton.setSelected(false);
+        moveToggleButton.setSelected(false);
+        editToggleButton.setSelected(false);
+        deleteToggleButton.setSelected(false);
+        heritageToggleButton.setSelected(false);
+        //Cambios de tamaño de botones
+        aggregationToggleButton.setScaleX(1.15);
+        aggregationToggleButton.setScaleY(1.15);
+        heritageToggleButton.setScaleX(1);
+        heritageToggleButton.setScaleY(1);
+        attributeToggleButton.setScaleX(1);
+        attributeToggleButton.setScaleY(1);
+        entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
+        relationToggleButton.setScaleX(1);
+        relationToggleButton.setScaleY(1);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        deleteToggleButton.setScaleX(1);
+        deleteToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
+        canvas.setCursor(Cursor.DEFAULT);
         diagram.deselectAllEntities();
         diagram.paint(canvas,showPoints);
     }
@@ -647,6 +686,7 @@ public class MainController extends CallPop implements Initializable{
         toggleButtons.add(deleteToggleButton);
         toggleButtons.add(attributeToggleButton);
         toggleButtons.add(heritageToggleButton);
+        toggleButtons.add(aggregationToggleButton);
         buttons.add(cleanButton);
         buttons.add(exportButton);
         //Ajuste del tamaño de todos los botones

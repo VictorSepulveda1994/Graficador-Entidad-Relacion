@@ -175,6 +175,14 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </ToggleButton>
+                        <ToggleButton fx:id="aggregationToggleButton" mnemonicParsing="false" onAction="#buttonAggregationClicked" prefHeight="45.0" prefWidth="113.0" style="-fx-background-color: #5798d6;" text="Agregación">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ToggleButton>
                      </children>
                      <opaqueInsets>
                         <Insets />
