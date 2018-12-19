@@ -21,6 +21,7 @@ import model.Diagram;
 import model.Element;
 import model.Entity;
 import javafx.scene.input.ScrollEvent;
+import model.Relation;
 
 /**
  * FXML Controller class
@@ -93,6 +94,11 @@ public class MainController extends CallPop implements Initializable{
      * Lista que guarda las entidades seleccionadas por el usuario.
      */
     public static ArrayList<Entity> entitiesSelect;
+    
+    /**
+     * Lista que guarda las relaciones seleccionadas por el usuario.
+     */
+    public static ArrayList<Relation> relationsSelect;
 
     /**
      *
@@ -534,7 +540,6 @@ public class MainController extends CallPop implements Initializable{
         }
         else if(aggregationToggleButton.isSelected() && diagram.getRelations().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
-            diagram.addAttribute(event, canvas, showPoints);
             if (diagram.getSelectedElement()!=null){
                 Element element = diagram.getSelectedElement();
                 String type = element.getClass().getName().substring(6);
@@ -542,11 +547,11 @@ public class MainController extends CallPop implements Initializable{
                     diagram.deselectElement(event);
                     diagram.deselectAllEntities();
                 }
-                if("Relation".equals(type) && !searchEntity((Entity) element)){
-                    entitiesSelect.add((Entity) element);
+                else if("Relation".equals(type) && !searchRelation((Relation) element)){
+                    relationsSelect.add((Relation) element);
                 }
-                if (!element.isInFigure(event) && entitiesSelect.size()>1){
-                    popAddHeritage();
+                else if (!element.isInFigure(event) && relationsSelect.size()>0){
+                    popAddAggregation();
                     copy();
                 }   
             }
@@ -670,6 +675,7 @@ public class MainController extends CallPop implements Initializable{
         adjustNodes();
         diagram = new Diagram();
         entitiesSelect = new ArrayList<>();
+        relationsSelect = new ArrayList<>();
         diagramsUndo= new ArrayList<>();
         diagramsRedo= new ArrayList<>();
         rehacer=false;
@@ -746,6 +752,19 @@ public class MainController extends CallPop implements Initializable{
     private boolean searchEntity(Entity entity2){
         for (Entity entity : entitiesSelect) {
             if(entity.getName().equals(entity2.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Método que se encarga de buscar una entidad dentro de las entidades seleccionadas en el canvas.
+     * @param entity2
+     */
+    private boolean searchRelation(Relation relation2){
+        for (Entity entity : entitiesSelect) {
+            if(entity.getName().equals(relation2.getName())){
                 return true;
             }
         }

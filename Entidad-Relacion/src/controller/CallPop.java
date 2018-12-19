@@ -243,6 +243,30 @@ public class CallPop {
     }
     
     /**
+     * Abre ventana para crear una agregación.
+     * @throws java.io.IOException
+     */
+    public void popAddAggregation()throws IOException {
+        final Stage dialog = new Stage();
+        dialog.setTitle("Crear agregación");
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/view/PopAddAggregation.fxml"));
+        
+        Scene xscene = new Scene(root);
+        
+        dialog.setResizable(false);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner((Stage) root.getScene().getWindow());
+        
+        dialog.setScene(xscene);
+        dialog.showAndWait();
+        dialog.setResizable(false);
+        dialog.resizableProperty().setValue(Boolean.FALSE);
+        dialog.close();    
+        
+    }
+    
+    /**
      * Muestra un mensaje de error al ingresar nombre invalido.
      */
     public void alertName(){
