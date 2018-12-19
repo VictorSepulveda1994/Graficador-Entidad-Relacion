@@ -37,6 +37,7 @@ public class PopEditConnectorController extends CallPop implements Initializable
     CheckBox option;
 
     public static Connector newConnector;
+    public static boolean isDoubleConnector;
      /**
      * Inicio de la clase controladora
      */
@@ -44,7 +45,7 @@ public class PopEditConnectorController extends CallPop implements Initializable
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         newConnector = (Connector)selectedElement;      
-        if(connectorIsDouble()){
+        if(newConnector.isDoble()){
             option.setSelected(true);
         }
         else{
@@ -58,20 +59,25 @@ public class PopEditConnectorController extends CallPop implements Initializable
      */
     public void addToScreen(){
         if(option.isSelected()){
+            isDoubleConnector=true;
+            /*
             Element element1= newConnector.getElement1();
             element1.setDoubleConnector(true);
             newConnector.setElement1(element1);
             Element element2= newConnector.getElement2();
             element2.setDoubleConnector(true);
             newConnector.setElement2(element2);
+            */
         }
         else{
+            isDoubleConnector=false;/*
             Element element1= newConnector.getElement1();
             element1.setDoubleConnector(false);
             newConnector.setElement1(element1);
             Element element2= newConnector.getElement2();
             element2.setDoubleConnector(false);
             newConnector.setElement2(element2);
+            */
         }
         ((Stage)root.getScene().getWindow()).close();
 

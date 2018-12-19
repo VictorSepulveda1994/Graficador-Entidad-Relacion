@@ -516,6 +516,11 @@ public class MainController extends CallPop implements Initializable{
                     }
                     else{
                         popAddRelation();
+                        if(!diagram.getRelations().isEmpty()){
+                            for(int i=0;i<diagram.getRelations().get(diagram.getRelations().size()-1).getEntities().size();i++){
+                                diagram.createConnectorR(diagram.getRelations().get(diagram.getRelations().size()-1),diagram.getRelations().get(diagram.getRelations().size()-1).getEntities().get(i));
+                            }
+                        }
                         copy();
                     }
                 }   
@@ -832,13 +837,11 @@ public class MainController extends CallPop implements Initializable{
         deshacer=false;
         rehacer2=false;
         if(rehacer==true){
-            System.out.println("entre al false");
             rehacer=false;
             diagramsUndo.add(diagramsRedo.get(diagramsRedo.size()-1).getClone());
             diagramsRedo.clear(); 
         } 
         copy = diagram.getClone();
-        diagramsUndo.add(copy);
-        System.out.println("d" + diagramsUndo.size());        
+        diagramsUndo.add(copy);      
     }
 }

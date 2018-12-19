@@ -21,7 +21,7 @@
             <Font name="Century Gothic Bold" size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="nameNewAttribute" disable="true" layoutX="13.0" layoutY="93.0" prefHeight="31.0" prefWidth="440.0" style="-fx-border-color: #5798d6;" />
+      <TextField fx:id="nameNewAttribute" layoutX="13.0" layoutY="93.0" prefHeight="31.0" prefWidth="440.0" style="-fx-border-color: #5798d6;" />
       <Text layoutX="13.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de atributo">
          <font>
             <Font name="Century Gothic Bold" size="18.0" />

@@ -1,8 +1,5 @@
 package model;
 
-import controller.MainController;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
@@ -36,6 +33,7 @@ public class Figure {
     private ArrayList<Point> pointsLines;
     private ArrayList<Point> pointsInside;
     private boolean withArc;
+    private boolean doble;
     private Point posArc;
 
     /**
@@ -53,6 +51,7 @@ public class Figure {
         this.posY = posY;
         this.name = name;
         this.sides = sides;
+        doble=false;
         createPointsPolygon();
     }
     
@@ -100,6 +99,18 @@ public class Figure {
         this.withArc = withArc;
         pointsLines = new ArrayList<>();
         createPointsLine(point1,point2);
+    }
+    
+    public Figure(Point point1,Point point2,boolean withArc,boolean doble){
+        this.points = new ArrayList<>();
+        this.pointsInside = new ArrayList<>();
+        pointsLines = new ArrayList<>();
+        this.doble=doble;
+        createPointsLine(point1,point2);
+        if(doble){
+            pointsInside.add(new Point(point1.getX()+7,point1.getY()+7));
+            pointsInside.add(new Point(point2.getX()+7,point2.getY()+7));
+        }       
     }
 
     /**
