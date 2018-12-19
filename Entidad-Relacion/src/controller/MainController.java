@@ -532,6 +532,25 @@ public class MainController extends CallPop implements Initializable{
                 }   
             }
         }
+        else if(aggregationToggleButton.isSelected() && diagram.getRelations().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
+            diagram.selectElement(event, canvas, showPoints);
+            diagram.addAttribute(event, canvas, showPoints);
+            if (diagram.getSelectedElement()!=null){
+                Element element = diagram.getSelectedElement();
+                String type = element.getClass().getName().substring(6);
+                if("Entity".equals(type) || "Attribute".equals(type)){
+                    diagram.deselectElement(event);
+                    diagram.deselectAllEntities();
+                }
+                if("Relation".equals(type) && !searchEntity((Entity) element)){
+                    entitiesSelect.add((Entity) element);
+                }
+                if (!element.isInFigure(event) && entitiesSelect.size()>1){
+                    popAddHeritage();
+                    copy();
+                }   
+            }
+        }
         else if(attributeToggleButton.isSelected()){
             diagram.addAttribute(event, canvas, showPoints);
             copy();
