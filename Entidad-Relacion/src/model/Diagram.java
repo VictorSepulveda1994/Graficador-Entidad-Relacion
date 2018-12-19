@@ -658,6 +658,28 @@ public class Diagram extends CallPop implements Cloneable {
     }
     
     /**
+     *Deselecciona todas las entidades seleccionadas
+     */
+    public void deselectAll (){
+        for (Entity entitie : this.entities) {
+            entitie.setSelected(false);
+        }
+        for (Relation relation : this.relations) {
+            relation.setSelected(false);
+        }
+        for (Attribute attribute : this.attributes) {
+            attribute.setSelected(false);
+        }
+        for (Connector connector : this.connectors) {
+            connector.setSelected(false);
+        }
+        for (Heritage heritage : heritages) {
+            heritage.setSelected(false);
+        }
+        selectedElement=null;
+    }
+    
+    /**
      *
      * @return
      */

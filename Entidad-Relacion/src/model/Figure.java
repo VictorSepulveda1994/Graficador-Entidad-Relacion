@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 public class Figure {
     private String name;
     private int posX,posY;
+    private Point min,max;
     private int radiusPolygon = 80;
     private int radiusCircle = 15;
     private int sides;
@@ -56,7 +57,7 @@ public class Figure {
     }
     
     /**
-     *Constructor para crear rectangulos
+     *Constructor para crear rectangulos de entidades
      * @param name
      * @param posX
      * @param posY
@@ -70,6 +71,20 @@ public class Figure {
         this.posY = posY;
         this.name = name;
         createPointsRectangle();
+    }
+
+    /**
+     *Constructor para crear rectangulos de agregaciones
+     * @param name
+     * @param posX
+     * @param posY
+     */
+    public Figure(String name, Point min, Point max) {
+        this.posX = (min.getX() + max.getX()) / 2;
+        this.posY = (min.getY() + max.getY()) / 2;
+        this.min = min;
+        this.max = max;
+        this.name = name;
     }
     
     /**

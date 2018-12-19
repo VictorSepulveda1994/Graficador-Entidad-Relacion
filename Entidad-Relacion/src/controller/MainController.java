@@ -21,6 +21,7 @@ import model.Diagram;
 import model.Element;
 import model.Entity;
 import javafx.scene.input.ScrollEvent;
+import model.Attribute;
 import model.Relation;
 
 /**
@@ -98,7 +99,7 @@ public class MainController extends CallPop implements Initializable{
     /**
      * Lista que guarda las relaciones seleccionadas por el usuario.
      */
-    public static ArrayList<Relation> relationsSelect;
+    public static ArrayList<Element> elementsSelect;
 
     /**
      *
@@ -545,12 +546,19 @@ public class MainController extends CallPop implements Initializable{
                 String type = element.getClass().getName().substring(6);
                 if("Entity".equals(type) || "Attribute".equals(type)){
                     diagram.deselectElement(event);
-                    diagram.deselectAllEntities();
+                    diagram.deselectAll();
                 }
-                else if("Relation".equals(type) && !searchRelation((Relation) element)){
-                    relationsSelect.add((Relation) element);
+                if("Relation".equals(type) && !searchRelation((Relation) element)){
+                    elementsSelect.add((Relation) element);
+                    Relation relation = (Relation)element;
+                    for (Entity entity : relation.getEntities()) {
+                        elementsSelect.add(entity);
+                        for (Attribute attribute : entity.getAttributes()) {
+                            elementsSelect.add(attribute);
+                        }
+                    }
                 }
-                else if (!element.isInFigure(event) && relationsSelect.size()>0){
+                if (!element.isInFigure(event) && elementsSelect.size()>0){
                     popAddAggregation();
                     copy();
                 }   
@@ -675,7 +683,7 @@ public class MainController extends CallPop implements Initializable{
         adjustNodes();
         diagram = new Diagram();
         entitiesSelect = new ArrayList<>();
-        relationsSelect = new ArrayList<>();
+        elementsSelect = new ArrayList<>();
         diagramsUndo= new ArrayList<>();
         diagramsRedo= new ArrayList<>();
         rehacer=false;
