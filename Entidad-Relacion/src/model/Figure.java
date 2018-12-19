@@ -91,9 +91,8 @@ public class Figure {
         this.doble=doble;
         createPointsLine(point1,point2);
         if(doble){
-            points.add(new Point(point1.getX()-7,point1.getY()-7));
-            //points.add(new Point(point2.getX()-7,point2.getY()-7));
-            //createPointsLine(new Point(point1.getX()-7,point1.getY()-7),new Point(point2.getX()-7,point2.getY()-7));
+            pointsInside.add(new Point(point1.getX()+7,point1.getY()+7));
+            pointsInside.add(new Point(point2.getX()+7,point2.getY()+7));
         }       
     }
 
