@@ -939,13 +939,15 @@ public class Diagram extends CallPop implements Cloneable {
                         paint(canvas, showPoints); 
                     }
                 }
-                for(int a=0;a<connectorsRelations.size();a++){
+                int a=0;
+                while(a<connectorsRelations.size()){
                     if(relations.get(i).equals(connectorsRelations.get(a).getElement1())){
                         connectorsRelations.remove(a);
                         if(!connectorsRelations.isEmpty()){
-                            a=0;
+                            a--;
                         }
                     }
+                    a++;
                 }
                 this.relations.remove(i);              
             }
