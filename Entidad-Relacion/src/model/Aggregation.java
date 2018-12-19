@@ -16,11 +16,17 @@ public class Aggregation extends Entity{
         this.elements = elements;
         createFigure();
     }
+    
+    @Override
+    public void setName(String name){
+        this.name = name;
+    }
 
     private void createFigure() {
         this.figure = new Figure(name, minPoint(), maxPoint());
     }
     
+    @Override
     public Point minPoint(){
         int minX = 0,minY = 0;
         if(this.elements.size() > 0){
@@ -39,12 +45,14 @@ public class Aggregation extends Entity{
     }
     
     /**
-     * Método que retorna el punto máximo presente en "diagram"
+     * Método que retorna el punto máximo presente en "elements"
      * @return 
      */
+    @Override
     public Point maxPoint(){
         int maxX = 0,maxY = 0;
         if(this.elements.size() > 0){
+            System.out.println(entities.size());
             maxX = entities.get(0).maxPoint().getX();
             maxY = entities.get(0).maxPoint().getY();
         }

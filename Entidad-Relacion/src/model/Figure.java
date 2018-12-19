@@ -116,6 +116,32 @@ public class Figure {
     }
     
     /**
+     * Pinta las lineas en el "canvas" segun los puntos que hayan para el rectangulo de agregación
+     * @param canvas
+     * @param selected
+     */
+    public void paintLinesAggregation(Canvas canvas, boolean selected){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(3);
+        if( selected ){
+            gc.setFill(Color.BLUE);
+            gc.setStroke(Color.BLUE);
+        }
+        else{
+            gc.setFill(Color.BLACK);
+            gc.setStroke(Color.BLACK);
+        }
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font(20));
+        gc.fillText(name, posX, posY);
+        gc.strokeLine(min.getX()-5, min.getY()-5, max.getX()+5, min.getY()-5);
+        gc.strokeLine(max.getX()+5, min.getY()-5, max.getX()+5, max.getY()+5);
+        gc.strokeLine(max.getX()+5, max.getY()+5, min.getX()-5, max.getY()+5);
+        gc.strokeLine(min.getX()-5, max.getY()+5, min.getX()-5, min.getY()-5);
+    }
+    
+    /**
      * Pinta las lineas en el "canvas" segun los puntos que hayan en "points"
      * @param canvas
      * @param selected

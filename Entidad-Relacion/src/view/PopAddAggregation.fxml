@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="root" prefHeight="194.0" prefWidth="482.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopAddAggregationController">
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="194.0" prefWidth="482.0" style="-fx-background-color: #b8b4b4;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PopAddAggregationController">
    <children>
-      <TextField fx:id="nameEntity" layoutX="22.0" layoutY="89.0" prefHeight="31.0" prefWidth="428.0" style="-fx-border-color: #5798d6;">
+      <TextField fx:id="nameAggregation" layoutX="22.0" layoutY="89.0" prefHeight="31.0" prefWidth="428.0" style="-fx-border-color: #5798d6;">
          <font>
             <Font size="13.0" />
          </font>
@@ -33,11 +33,17 @@
          <font>
             <Font name="Century Gothic Bold" size="15.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ToggleButton>
-      <ToggleButton layoutX="377.0" layoutY="136.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="83.0" selected="true" style="-fx-background-color: #5798d6;" text="Cancelar">
+      <ToggleButton layoutX="377.0" layoutY="136.0" mnemonicParsing="false" onAction="#cancel" prefHeight="37.0" prefWidth="83.0" selected="true" style="-fx-background-color: #5798d6;" text="Cancelar">
          <font>
             <Font name="Century Gothic Bold" size="13.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ToggleButton>
    </children>
 </AnchorPane>

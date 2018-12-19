@@ -27,6 +27,7 @@ import model.Relation.Cardinality;
  */
 public class Diagram extends CallPop implements Cloneable {
     private ArrayList <Entity> entities;
+    private ArrayList <Aggregation> aggregations;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
     private ArrayList <Attribute> attributes;
@@ -52,6 +53,7 @@ public class Diagram extends CallPop implements Cloneable {
         connectors = new ArrayList <>();
         attributes = new ArrayList<>();
         heritages = new ArrayList<>();
+        aggregations = new ArrayList<>();
         count=0;
     }
     
@@ -110,6 +112,14 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public void addEntity (Entity entity){
         this.entities.add(entity);
+    }
+    
+    /**
+     *
+     * @param aggregation
+     */
+    public void addAggregation (Aggregation aggregation){
+        this.aggregations.add(aggregation);
     }
       
     /**
@@ -179,6 +189,10 @@ public class Diagram extends CallPop implements Cloneable {
         for (Entity entity : entities) {
             entity.figure.fillEntity(canvas);
             entity.paint(canvas,showPoints);
+        }
+        //dibuja las entidades
+        for (Aggregation aggregation : aggregations) {
+            aggregation.figure.paintLinesAggregation(canvas, showPoints);
         }
         //dibuja las relaciones
         for (Relation relation : relations) {
