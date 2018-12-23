@@ -96,6 +96,9 @@ public class MainController extends CallPop implements Initializable{
      *
      */
     public static ArrayList<Diagram> diagramsUndo;
+    
+    public static ArrayList<Diagram> diagrams= new ArrayList<>();
+    public static int posicion=0;
 
     /**
      *
@@ -703,20 +706,10 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     public void undo(){
-        rehacer2=false;
-        //primer deshacer no lo pesca
-        if(deshacer==false){
-            deshacer=true;
-            copy=diagram.getClone();
-            diagramsRedo.add(copy);
-            diagramsUndo.remove(diagramsUndo.size()-1);
-        }
-        if(!diagramsUndo.isEmpty()){
-            diagram=diagramsUndo.get(diagramsUndo.size()-1).getClone(); 
-            copy=diagram.getClone();
-            diagramsRedo.add(copy);
-            diagramsUndo.remove(diagramsUndo.size()-1);
-            
+        if(!diagrams.isEmpty() && posicion>0){
+            //System.out.println("undo: "+posicion+"diagram tiene: "+diagrams.size());
+            posicion--;
+            diagram=diagrams.get(posicion).getClone();
         }
         diagram.actualizar();
         diagram.paint(canvas, showPoints);     
@@ -727,17 +720,10 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     public void redo(){   
-        deshacer=false;
-        if(rehacer2==false){
-            rehacer2=true;
-            diagramsUndo.add(diagram);
-            diagramsRedo.remove(diagramsRedo.size()-1);
-        }
-        if(!diagramsRedo.isEmpty()){
+        if(!diagrams.isEmpty() && posicion<diagrams.size()-1){
             rehacer=true;
-            diagram=diagramsRedo.get(diagramsRedo.size()-1).getClone();
-            diagramsUndo.add(diagram);
-            diagramsRedo.remove(diagramsRedo.size()-1);
+            posicion++;
+            diagram=diagrams.get(posicion).getClone();
         }
         diagram.actualizar();
         diagram.paint(canvas, showPoints);
@@ -748,14 +734,17 @@ public class MainController extends CallPop implements Initializable{
      *Método que copia el diagrama dentro del arrays de deshacer 
      */
     public static void copy(){
-        deshacer=false;
-        rehacer2=false;
         if(rehacer==true){
             rehacer=false;
-            diagramsUndo.add(diagramsRedo.get(diagramsRedo.size()-1).getClone());
-            diagramsRedo.clear(); 
+            ArrayList<Diagram> newDiagram= new ArrayList<>();
+            for(int i=0;i<posicion+1;i++){
+                newDiagram.add(diagrams.get(i).getClone());
+            }
+            diagrams=(ArrayList<Diagram>) newDiagram.clone();
         } 
+        posicion++;
         copy = diagram.getClone();
-        diagramsUndo.add(copy);      
+        //System.out.println("copy: "+posicion+" entidades: "+copy.getEntities().size()+" relaciones: "+copy.getRelations().size());
+        diagrams.add(copy);      
     }
 }
