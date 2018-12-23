@@ -12,6 +12,7 @@ import model.Aggregation;
 import model.Attribute;
 import model.AttributeType;
 import static model.Diagram.count;
+import model.Element;
 import model.Entity;
 import model.FigureType;
 
@@ -54,8 +55,8 @@ public class PopAddAggregationController extends CallPop implements Initializabl
         if( nameOfAggregation.isEmpty()){
             nameOfAggregation="ag"+count;
             count++;
-            Entity e = null; 
-            Aggregation aggregation = new Aggregation(e);
+            ArrayList<Element> e = new ArrayList<>();
+            Aggregation aggregation = new Aggregation(true, nameOfAggregation, e);
             aggregation.setElements(MainController.elementsSelect);
             aggregation.setName(nameOfAggregation);
             MainController.diagram.addAggregation(aggregation);
@@ -67,9 +68,8 @@ public class PopAddAggregationController extends CallPop implements Initializabl
             alertName();
         }
         else{
-            ArrayList<Attribute> a = new ArrayList<>();
-            Entity e = new Entity(nameOfAggregation, count, count, true, FigureType.WEAK, a, Entity.CardinalityE.MANY); 
-            Aggregation aggregation = new Aggregation(e);
+            ArrayList<Element> e = new ArrayList<>();
+            Aggregation aggregation = new Aggregation(true, nameOfAggregation, e);
             aggregation.setElements(MainController.elementsSelect);
             aggregation.setName(nameOfAggregation);
             MainController.diagram.addAggregation(aggregation);

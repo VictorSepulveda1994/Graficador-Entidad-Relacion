@@ -551,6 +551,7 @@ public class MainController extends CallPop implements Initializable{
                 if("Relation".equals(type) && !searchRelation((Relation) element)){
                     elementsSelect.add((Relation) element);
                     Relation relation = (Relation)element;
+                    System.out.println(relation.getEntities().size());
                     for (Entity entity : relation.getEntities()) {
                         elementsSelect.add(entity);
                         for (Attribute attribute : entity.getAttributes()) {

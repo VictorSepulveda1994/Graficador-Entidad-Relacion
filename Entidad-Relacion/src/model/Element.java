@@ -34,7 +34,9 @@ public abstract class Element {
      *Constructor para crear agregaciones
      * 
      */
-    public Element(ArrayList<Element> elements) {
+    public Element(boolean selected, String name, ArrayList<Element> elements) {
+        this.name = name;
+        this.selected = selected;
         this.elements = elements;
     }
     

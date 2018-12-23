@@ -6,10 +6,10 @@ import java.util.ArrayList;
  *
  * @author Equipo Rocket
  */
-public class Aggregation extends Entity{
-    
-    public Aggregation(Entity entity) {
-        super(entity);
+public class Aggregation extends Element{
+
+    public Aggregation(boolean selected, String name, ArrayList<Element> elements) {
+        super(selected, name, elements);
     }
 
     public void setElements(ArrayList<Element> elements) {
@@ -52,9 +52,9 @@ public class Aggregation extends Entity{
     public Point maxPoint(){
         int maxX = 0,maxY = 0;
         if(this.elements.size() > 0){
-            System.out.println(entities.size());
-            maxX = entities.get(0).maxPoint().getX();
-            maxY = entities.get(0).maxPoint().getY();
+            //System.out.println(entities.size());
+            //maxX = entities.get(0).maxPoint().getX();
+            //maxY = entities.get(0).maxPoint().getY();
         }
         for (Element element : this.elements) {
             if(maxX < element.maxPoint().getX()){

@@ -135,10 +135,14 @@ public class Figure {
         gc.setTextBaseline(VPos.CENTER);
         gc.setFont(Font.font(20));
         gc.fillText(name, posX, posY);
-        gc.strokeLine(min.getX()-5, min.getY()-5, max.getX()+5, min.getY()-5);
-        gc.strokeLine(max.getX()+5, min.getY()-5, max.getX()+5, max.getY()+5);
-        gc.strokeLine(max.getX()+5, max.getY()+5, min.getX()-5, max.getY()+5);
-        gc.strokeLine(min.getX()-5, max.getY()+5, min.getX()-5, min.getY()-5);
+        int size = points.size();
+        for (int i = 0; i+1 < size; i++) {
+            if(i%2==0){
+                Point point1 = points.get(i);
+                Point point2 = points.get(i+1);
+                gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+            }
+        }
     }
     
     /**
