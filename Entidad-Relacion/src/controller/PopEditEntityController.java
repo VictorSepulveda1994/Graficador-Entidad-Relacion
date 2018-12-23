@@ -94,13 +94,8 @@ public class PopEditEntityController extends CallPop implements Initializable{
         }
         else{
             if(option.isSelected()){
-                if(newEntity.haveAttributeParcial()){
-                    type=FigureType.WEAK;  
-                }
-                else{
-                    alertParcialKey();
-                    ((Stage)root.getScene().getWindow()).close();
-                }              
+                type=FigureType.WEAK;  
+                ((Stage)root.getScene().getWindow()).close();                      
             }
             else{
                 type=FigureType.STRONG;
