@@ -105,6 +105,14 @@ public class Entity extends Element {
         }
         return false;
     }
-            
+           
+    public boolean haveAttributeKey(){
+        for(int i=0;i<attributes.size();i++){
+            if(attributes.get(i).getTipo()== AttributeType.KEY){
+                return true;
+            }
+        }
+        return false;
+    }
     
 }

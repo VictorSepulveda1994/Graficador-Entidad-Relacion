@@ -21,6 +21,8 @@ import model.Diagram;
 import model.Element;
 import model.Entity;
 import javafx.scene.input.ScrollEvent;
+import model.AttributeType;
+import model.FigureType;
 
 /**
  * FXML Controller class
@@ -48,6 +50,8 @@ public class MainController extends CallPop implements Initializable{
     private ToggleButton attributeToggleButton;
     @FXML    
     private ToggleButton heritageToggleButton;
+    @FXML    
+    private Button checkButton;
     @FXML
     private Button cleanButton;
     @FXML
@@ -154,6 +158,24 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void helpMe(MouseEvent event) throws IOException {
         popShowHelp();
+    }
+    
+    @FXML
+    private void checkAction(){
+        String restricciones= "";
+        for(int i=0;i<diagram.getEntities().size();i++){
+            if(diagram.getEntities().get(i).getType().equals(FigureType.WEAK)){
+                if(!diagram.getEntities().get(i).haveAttributeParcial()){
+                    restricciones=restricciones+"La entidad debil "+diagram.getEntities().get(i).getName()+": "+"no tiene clave parcial.\n";
+                }             
+            }
+            else{
+                if(!diagram.getEntities().get(i).haveAttributeKey()){
+                    restricciones=restricciones+"La entidad fuerte "+diagram.getEntities().get(i).getName()+": "+"no tiene clave.\n";
+                }                 
+            }
+        }
+        restricciones(restricciones);
     }
     
     /**
