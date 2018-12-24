@@ -114,26 +114,13 @@ public class MainController extends CallPop implements Initializable{
      */
     public static boolean rehacer;
     
-    /**
-     *
-     */
-    public static boolean rehacer2;
-
-    /**
-     *
-     */
-    public static boolean deshacer;
-
+    public static boolean primerdeshacer;
+    
     /**
      *
      */
     public static Diagram copy;
 
-    /**
-     *
-     */
-    public static Diagram copy2;
-    
     /**
      * Accion para cerrar la ventana.
      */
@@ -653,8 +640,8 @@ public class MainController extends CallPop implements Initializable{
         diagramsUndo= new ArrayList<>();
         diagramsRedo= new ArrayList<>();
         rehacer=false;
-        rehacer2=false;
         copy= new Diagram();
+        primerdeshacer=true;
         copy();
         showPoints = false;
         canvas.setCursor(Cursor.DEFAULT);
@@ -736,6 +723,11 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     public void undo(){
+        if(primerdeshacer){
+            primerdeshacer=false;
+            posicion--;
+            diagram=diagrams.get(posicion).getClone();
+        }
         if(!diagrams.isEmpty() && posicion>0){
             //System.out.println("undo: "+posicion+"diagram tiene: "+diagrams.size());
             posicion--;
