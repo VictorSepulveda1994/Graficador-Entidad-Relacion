@@ -175,6 +175,14 @@ public class MainController extends CallPop implements Initializable{
                 }                 
             }
         }
+        for(int i=0;i<diagram.getAttributes().size();i++){
+            if(diagram.getAttributes().get(i).getTipo().equals(AttributeType.COMPOUND)){
+                if(diagram.getAttributes().get(i).getAttributes().isEmpty()){
+                    restricciones=restricciones+"El atributo compuesto "+diagram.getAttributes().get(i).getName()+": "+"no tiene atributos adheridos.\n";
+                           
+                }
+            }
+        }
         restricciones(restricciones);
     }
     
