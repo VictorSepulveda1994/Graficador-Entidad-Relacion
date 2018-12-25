@@ -210,6 +210,13 @@ public abstract class Element {
     public void setDoubleConnector(boolean doubleConnector) {
         this.doubleConnector = doubleConnector;
     }
-    
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public ArrayList<Element> getElements() {
+        return elements;
+    }
     
 }

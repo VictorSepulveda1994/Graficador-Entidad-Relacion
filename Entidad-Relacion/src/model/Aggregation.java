@@ -10,11 +10,10 @@ public class Aggregation extends Element{
 
     public Aggregation(boolean selected, String name, ArrayList<Element> elements) {
         super(selected, name, elements);
-        this.figure = new Figure(name, minPoint(), maxPoint());
+        this.figure = new Figure(name, minimumPoint(), maximumPoint());
     }
     
-    @Override
-    public Point minPoint(){
+    public Point minimumPoint(){
         int minX = 0,minY = 0;
         if(this.elements.size() > 0){
             minX = this.elements.get(0).maxPoint().getX();
@@ -35,8 +34,7 @@ public class Aggregation extends Element{
      * Método que retorna el punto máximo presente en "elements"
      * @return 
      */
-    @Override
-    public Point maxPoint(){
+    public Point maximumPoint(){
         int maxX = 0,maxY = 0;
         if(this.elements.size() > 0){
             //System.out.println(entities.size());

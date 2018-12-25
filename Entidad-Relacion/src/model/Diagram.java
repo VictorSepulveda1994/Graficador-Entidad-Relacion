@@ -465,6 +465,14 @@ public class Diagram extends CallPop implements Cloneable {
                 }
             }
             
+            int i = 0;
+            for (Aggregation aggregation : this.aggregations) {
+                System.out.println(i);
+                Aggregation aggregation1 = new Aggregation(aggregation.isSelected(), aggregation.getName(), aggregation.getElements());
+                aggregations.set(i, aggregation1);
+                i++;
+            }
+            
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
         }

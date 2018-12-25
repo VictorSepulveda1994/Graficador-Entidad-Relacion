@@ -304,7 +304,7 @@ public class MainController extends CallPop implements Initializable{
         deleteToggleButton.setScaleY(1);
         editToggleButton.setScaleX(1);
         editToggleButton.setScaleY(1);
-        canvas.setCursor(Cursor.DEFAULT);
+        canvas.setCursor(Cursor.HAND);
         diagram.deselectAllEntities();
         diagram.paint(canvas,showPoints);
     }
@@ -573,11 +573,25 @@ public class MainController extends CallPop implements Initializable{
                 if("Relation".equals(type) && !searchRelation((Relation) element)){
                     elementsSelect.add((Relation) element);
                     Relation relation = (Relation)element;
-                    System.out.println(relation.getEntities().size());
+                    if(relation.getAttributes().size() > 0){
+                        for (Attribute attribute : relation.getAttributes()) {
+                            elementsSelect.add((Attribute) attribute);
+                            if(attribute.getAttributes().size() > 0){
+                                for (Attribute attribute1 : attribute.getAttributes()) {
+                                    elementsSelect.add((Attribute) attribute1);
+                                }
+                            }
+                        }
+                    }
                     for (Entity entity : relation.getEntities()) {
                         elementsSelect.add(entity);
                         for (Attribute attribute : entity.getAttributes()) {
                             elementsSelect.add(attribute);
+                            if(attribute.getAttributes().size() > 0){
+                                for (Attribute attribute1 : attribute.getAttributes()) {
+                                    elementsSelect.add((Attribute) attribute1);
+                                }
+                            }
                         }
                     }
                 }
