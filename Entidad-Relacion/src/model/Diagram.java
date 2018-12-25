@@ -190,9 +190,9 @@ public class Diagram extends CallPop implements Cloneable {
             entity.figure.fillEntity(canvas);
             entity.paint(canvas,showPoints);
         }
-        //dibuja las entidades
+        //dibuja las agregaciones
         for (Aggregation aggregation : aggregations) {
-            aggregation.figure.paintLinesAggregation(canvas, showPoints);
+            aggregation.paintAggregation(canvas, showPoints);
         }
         //dibuja las relaciones
         for (Relation relation : relations) {
@@ -627,6 +627,7 @@ public class Diagram extends CallPop implements Cloneable {
         this.connectors.clear();
         this.heritages.clear();
         this.attributes.clear();
+        this.aggregations.clear();
         entitiesSelect().clear();
         MainController.entitiesSelect.clear();
         canvas.setWidth(minWidth);
@@ -689,6 +690,9 @@ public class Diagram extends CallPop implements Cloneable {
         }
         for (Heritage heritage : heritages) {
             heritage.setSelected(false);
+        }
+        for (Aggregation aggregation : this.aggregations) {
+            aggregation.setSelected(false);
         }
         selectedElement=null;
     }

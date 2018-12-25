@@ -169,18 +169,21 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void buttonEntityClicked(ActionEvent event){
         entitiesSelect.clear();
-        attributeToggleButton.setSelected(false);
         entityToggleButton.setSelected(true);
+        attributeToggleButton.setSelected(false);
         relationToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
-        heritageToggleButton.setScaleX(1);
-        heritageToggleButton.setScaleY(1);
+        aggregationToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         entityToggleButton.setScaleX(1.15);
         entityToggleButton.setScaleY(1.15);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
+        heritageToggleButton.setScaleX(1);
+        heritageToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
@@ -211,10 +214,13 @@ public class MainController extends CallPop implements Initializable{
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setScaleX(1);
         heritageToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1.15);
         attributeToggleButton.setScaleY(1.15);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
@@ -243,6 +249,7 @@ public class MainController extends CallPop implements Initializable{
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setSelected(true);
         heritageToggleButton.setScaleX(1.15);
         heritageToggleButton.setScaleY(1.15);
@@ -250,6 +257,8 @@ public class MainController extends CallPop implements Initializable{
         attributeToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
@@ -314,15 +323,18 @@ public class MainController extends CallPop implements Initializable{
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
-        heritageToggleButton.setScaleX(1);
-        heritageToggleButton.setScaleY(1);
+        aggregationToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         relationToggleButton.setScaleX(1.15);
         relationToggleButton.setScaleY(1.15);
+        heritageToggleButton.setScaleX(1);
+        heritageToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1);
@@ -349,11 +361,12 @@ public class MainController extends CallPop implements Initializable{
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
-        heritageToggleButton.setScaleX(1);
-        heritageToggleButton.setScaleY(1);
+        aggregationToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         moveToggleButton.setScaleX(1.15);
         moveToggleButton.setScaleY(1.15);
+        heritageToggleButton.setScaleX(1);
+        heritageToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
@@ -404,14 +417,17 @@ public class MainController extends CallPop implements Initializable{
         pointsToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setScaleX(1);
         heritageToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
-        entityToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1.15);
@@ -432,13 +448,16 @@ public class MainController extends CallPop implements Initializable{
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(true);
         heritageToggleButton.setSelected(false);
+        deleteToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setScaleX(1);
         heritageToggleButton.setScaleY(1);
-        deleteToggleButton.setSelected(false);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
@@ -465,12 +484,15 @@ public class MainController extends CallPop implements Initializable{
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setScaleX(1);
         heritageToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
-        entityToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);

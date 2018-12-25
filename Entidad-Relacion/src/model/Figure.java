@@ -37,6 +37,7 @@ public class Figure {
     private ArrayList<Point> pointsInside;
     private boolean withArc;
     private Point posArc;
+    int d = 25;
 
     /**
      * Constructor para crear polígonos
@@ -133,10 +134,10 @@ public class Figure {
             gc.setFill(Color.BLACK);
             gc.setStroke(Color.BLACK);
         }
-        gc.setTextAlign(TextAlignment.LEFT);
-        gc.setTextBaseline(VPos.TOP);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.BOTTOM);
         gc.setFont(Font.font(20));
-        gc.fillText(name, posX, posY);
+        gc.fillText(name, min.getX(), min.getY());
         int size = points.size();
         for (int i = 0; i+1 < size; i++) {
             if(i%2==0){
@@ -775,7 +776,6 @@ public class Figure {
     }
 
     private void createPointsAggregation() {
-        int d = 15;
         int x = min.getX()-d;
         int y = min.getY()-d;
         while(x < max.getX()+d){

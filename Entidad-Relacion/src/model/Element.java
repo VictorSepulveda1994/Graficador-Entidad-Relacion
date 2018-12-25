@@ -45,6 +45,18 @@ public abstract class Element {
      * @param canvas
      * @param showPoints
      */
+    public void paintAggregation(Canvas canvas, boolean showPoints){
+        figure.paintLinesAggregation(canvas,selected);
+        if(showPoints){
+            figure.paintPoints(canvas);
+        }
+    }
+    
+    /**
+     * Método que llama al objeto "figure" y llama a sus métodos "paintLines" o "paintPoints"
+     * @param canvas
+     * @param showPoints
+     */
     public void paint(Canvas canvas, boolean showPoints){
         figure.paintLines(canvas,selected);
         if(showPoints){
