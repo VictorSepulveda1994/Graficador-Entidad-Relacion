@@ -10,19 +10,6 @@ public class Aggregation extends Element{
 
     public Aggregation(boolean selected, String name, ArrayList<Element> elements) {
         super(selected, name, elements);
-    }
-
-    public void setElements(ArrayList<Element> elements) {
-        this.elements = elements;
-        createFigure();
-    }
-    
-    @Override
-    public void setName(String name){
-        this.name = name;
-    }
-
-    private void createFigure() {
         this.figure = new Figure(name, minPoint(), maxPoint());
     }
     

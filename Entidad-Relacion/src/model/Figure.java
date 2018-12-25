@@ -80,11 +80,13 @@ public class Figure {
      * @param posY
      */
     public Figure(String name, Point min, Point max) {
+        points = new ArrayList<>();
         this.posX = (min.getX() + max.getX()) / 2;
         this.posY = (min.getY() + max.getY()) / 2;
         this.min = min;
         this.max = max;
         this.name = name;
+        createPointsAggregation();
     }
     
     /**
@@ -131,8 +133,8 @@ public class Figure {
             gc.setFill(Color.BLACK);
             gc.setStroke(Color.BLACK);
         }
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
+        gc.setTextAlign(TextAlignment.LEFT);
+        gc.setTextBaseline(VPos.TOP);
         gc.setFont(Font.font(20));
         gc.fillText(name, posX, posY);
         int size = points.size();
@@ -770,5 +772,33 @@ public class Figure {
         int y =(( point1.getY() + point2.getY() - 30) / 2);
         this.posArc = new Point(x, y);
         this.startAngle = (Math.toDegrees(Math.atan2(point2.getX() - point1.getX(), point2.getY() - point1.getY())) ) + 180;
+    }
+
+    private void createPointsAggregation() {
+        int d = 15;
+        int x = min.getX()-d;
+        int y = min.getY()-d;
+        while(x < max.getX()+d){
+            points.add(new Point(x, y));
+            x+=5;
+        }
+        x = max.getX()+d;
+        y = min.getY()-d;
+        while(y < max.getY()+d){
+            points.add(new Point(x, y));
+            y+=5;
+        }
+        x = max.getX()+d;
+        y = max.getY()+d;
+        while(x > min.getX()-d){
+            points.add(new Point(x, y));
+            x-=5;
+        }
+        x = min.getX()-d;
+        y = max.getY()+d;
+        while(y > min.getY()-d){
+            points.add(new Point(x, y));
+            y-=5;
+        }
     }
 }

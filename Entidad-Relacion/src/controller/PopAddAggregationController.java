@@ -55,10 +55,7 @@ public class PopAddAggregationController extends CallPop implements Initializabl
         if( nameOfAggregation.isEmpty()){
             nameOfAggregation="ag"+count;
             count++;
-            ArrayList<Element> e = new ArrayList<>();
-            Aggregation aggregation = new Aggregation(true, nameOfAggregation, e);
-            aggregation.setElements(MainController.elementsSelect);
-            aggregation.setName(nameOfAggregation);
+            Aggregation aggregation = new Aggregation(false, nameOfAggregation, MainController.elementsSelect);
             MainController.diagram.addAggregation(aggregation);
             MainController.elementsSelect.clear();
             MainController.diagram.deselectAll();
@@ -69,9 +66,7 @@ public class PopAddAggregationController extends CallPop implements Initializabl
         }
         else{
             ArrayList<Element> e = new ArrayList<>();
-            Aggregation aggregation = new Aggregation(true, nameOfAggregation, e);
-            aggregation.setElements(MainController.elementsSelect);
-            aggregation.setName(nameOfAggregation);
+            Aggregation aggregation = new Aggregation(false, nameOfAggregation, MainController.elementsSelect);
             MainController.diagram.addAggregation(aggregation);
             MainController.elementsSelect.clear();
             MainController.diagram.deselectAll();
