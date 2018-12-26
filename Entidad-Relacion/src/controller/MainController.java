@@ -188,6 +188,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonEntityClicked(ActionEvent event){
+        diagram.deselectAll();
         entitiesSelect.clear();
         elementsSelect.clear();
         entityToggleButton.setSelected(true);
@@ -227,6 +228,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonAttributeClicked(ActionEvent event){
+        diagram.deselectAll();
         entitiesSelect.clear();
         elementsSelect.clear();
         attributeToggleButton.setSelected(true);
@@ -264,6 +266,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonHeritageClicked(ActionEvent event){
+        diagram.deselectAll();
         entitiesSelect.clear();
         elementsSelect.clear();
         attributeToggleButton.setSelected(false);
@@ -301,6 +304,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonAggregationClicked(ActionEvent event){
+        diagram.deselectAll();
         entitiesSelect.clear();
         elementsSelect.clear();
         aggregationToggleButton.setSelected(true);
@@ -339,6 +343,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonRelationClicked(ActionEvent event){
+        diagram.deselectAll();
         entitiesSelect.clear();
         elementsSelect.clear();
         attributeToggleButton.setSelected(false);
@@ -378,6 +383,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonMoveClicked(ActionEvent event){
+        diagram.deselectAll();
         entitiesSelect.clear();
         elementsSelect.clear();
         attributeToggleButton.setSelected(false);
@@ -438,6 +444,7 @@ public class MainController extends CallPop implements Initializable{
     private void buttonDeleteFigureClicked(ActionEvent event){
         entitiesSelect.clear();
         elementsSelect.clear();
+        diagram.deselectAll();
         attributeToggleButton.setSelected(false);
         deleteToggleButton.setSelected(true);
         relationToggleButton.setSelected(false);
@@ -472,6 +479,7 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void buttonEditClicked(ActionEvent event) throws IOException{  
         elementsSelect.clear();
+        diagram.deselectAll();
         attributeToggleButton.setSelected(false);
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
@@ -550,7 +558,7 @@ public class MainController extends CallPop implements Initializable{
             popAddEntity(); 
             copy();
         }
-        else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
+        else if(relationToggleButton.isSelected() && diagram.getEntities().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0 || relationToggleButton.isSelected() && diagram.getAggregations().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
             if (diagram.getSelectedElement()!=null){
                 Element element = diagram.getSelectedElement();
@@ -558,6 +566,7 @@ public class MainController extends CallPop implements Initializable{
                 if("Relation".equals(type) || "Attribute".equals(type)){
                     diagram.deselectElement(event);
                     diagram.deselectAllEntities();
+                    diagram.deselectAll();
                 }
                 if (!element.isInFigure(event)){
                     entitiesSelect=diagram.entitiesSelect();
