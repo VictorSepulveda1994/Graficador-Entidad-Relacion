@@ -1,8 +1,5 @@
 package model;
 
-import controller.MainController;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 import java.util.ArrayList;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
@@ -13,7 +10,6 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-import javax.swing.JTextArea;
 
 /**
  * @author Equipo Rocket
@@ -36,6 +32,7 @@ public class Figure {
     private ArrayList<Point> pointsLines;
     private ArrayList<Point> pointsInside;
     private boolean withArc;
+    private boolean doble;
     private Point posArc;
     int d = 25;
 
@@ -54,6 +51,7 @@ public class Figure {
         this.posY = posY;
         this.name = name;
         this.sides = sides;
+        doble=false;
         createPointsPolygon();
     }
     
@@ -103,6 +101,18 @@ public class Figure {
         this.withArc = withArc;
         pointsLines = new ArrayList<>();
         createPointsLine(point1,point2);
+    }
+    
+    public Figure(Point point1,Point point2,boolean withArc,boolean doble){
+        this.points = new ArrayList<>();
+        this.pointsInside = new ArrayList<>();
+        pointsLines = new ArrayList<>();
+        this.doble=doble;
+        createPointsLine(point1,point2);
+        if(doble){
+            pointsInside.add(new Point(point1.getX()+7,point1.getY()+7));
+            pointsInside.add(new Point(point2.getX()+7,point2.getY()+7));
+        }       
     }
 
     /**
@@ -195,18 +205,21 @@ public class Figure {
         }
     
     public void paintCardinality (Canvas canvas,Element element1,Element element2,String cardinality){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        int x = ((element1.figure.getCenter().getX()+element2.figure.getCenter().getX())/2);
-        int y = ((element1.figure.getCenter().getY()+element2.figure.getCenter().getY())/2)-15;
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
-        gc.setFont(Font.font("default", FontWeight.EXTRA_BOLD, 28));
-        gc.setFill(Color.web("#FFFEFE"));
-        gc.fillText(cardinality,x,y);
-        gc.setFont(Font.font("default", FontWeight.LIGHT, 24));
-        gc.setFill(Color.web("#000000"));
-        gc.fillText(cardinality,x,y);
+        if(!(element1 instanceof Heritage) && !(element1 instanceof Attribute) && !(element2 instanceof Heritage) && !(element2 instanceof Attribute)){
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            int x = ((element1.figure.getCenter().getX()+element2.figure.getCenter().getX())/2);
+            int y = ((element1.figure.getCenter().getY()+element2.figure.getCenter().getY())/2);
+            Figure circule = new Figure(null,29,x,y);
+            circule.fillPolygon(canvas);
+            circule.paintLines(canvas, false);
+            gc.setTextAlign(TextAlignment.CENTER);
+            gc.setTextBaseline(VPos.CENTER);
+            gc.setFont(Font.font("default", FontWeight.LIGHT, 24));
+            gc.setFill(Color.web("#000000"));
+            gc.fillText(cardinality,x,y);
+        }
     }
+        
     /**
      *Dibuja lineas punteadas
      * @param canvas
@@ -444,7 +457,7 @@ public class Figure {
             createPointsPolygon();
         }
     }
-    
+  
     /**
      * Método que realiza un circulo en cada punto para resaltarlo
      * @param canvas
@@ -552,6 +565,7 @@ public class Figure {
                 points.add(point);
             }
         }
+        
     }
     
     /**
@@ -745,7 +759,7 @@ public class Figure {
         }
         this.points.add(new Point(x, y));
     }
-    
+       
     /**
      *
      *Dibuja los arcos en las lineas correspondientes
@@ -768,7 +782,7 @@ public class Figure {
      *
      *Crea los puntos de los arcos
      */
-    private void createPointsArc(Point point1, Point point2) {
+    public void createPointsArc(Point point1, Point point2) {
         int x =(( point1.getX() + point2.getX() - 30) / 2);
         int y =(( point1.getY() + point2.getY() - 30) / 2);
         this.posArc = new Point(x, y);
@@ -801,4 +815,11 @@ public class Figure {
             y-=5;
         }
     }
+    public double getStartAngle() {
+        return startAngle;
+    }
+
+    public void addPoint(Point point) {
+        this.points.add(point);
+    }  
 }

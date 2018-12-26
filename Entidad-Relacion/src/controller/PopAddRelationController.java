@@ -55,13 +55,16 @@ public class PopAddRelationController extends CallPop implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         optionsCardinality.setItems(typesOfCardinality);
+        optionsCardinality.setValue(typesOfCardinality.get(0));
+        
+        /*
         if(entitiesSelect.size()==2){
             optionsCardinality.setValue(typesOfCardinality.get(0));
         }
         else{
             optionsCardinality.setDisable(true);
             optionsCardinality.setValue("");
-        }
+        }*/
         
     }
     

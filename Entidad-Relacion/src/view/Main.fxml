@@ -205,6 +205,7 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="15.0" style="-fx-background-color: #5798d6;" GridPane.columnIndex="1">
                      <children>
+                        <Button fx:id="checkButton" mnemonicParsing="false" onAction="#checkAction" text="checkear" />
                         <ToggleButton fx:id="deleteToggleButton" contentDisplay="TOP" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonDeleteFigureClicked" prefHeight="55.0" prefWidth="53.0" text="Borrar">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />

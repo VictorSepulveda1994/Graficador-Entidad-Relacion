@@ -10,11 +10,6 @@ public class Entity extends Element {
 
     public FigureType type;
     public ArrayList<Entity> entities;
-    public CardinalityE typeCardinality;
-    
-    public enum CardinalityE {
-        ONE,MANY;
-    }
     
     /**
      *Constructor de entidad
@@ -25,7 +20,7 @@ public class Entity extends Element {
      * @param type
      * @param attributes
      */
-    public Entity(String name, int posX, int posY, boolean selected,FigureType type,ArrayList<Attribute> attributes,CardinalityE typeCardinality) {
+    public Entity(String name, int posX, int posY, boolean selected,FigureType type,ArrayList<Attribute> attributes) {
         super(name,selected,attributes);
         this.type=type;
         figure = new Figure(name, posX, posY);
@@ -33,7 +28,6 @@ public class Entity extends Element {
             figure.addDoubleLineRectangle();
         }
         this.entities= new ArrayList<>();
-        this.typeCardinality=typeCardinality;
     }
     
     /**
@@ -48,17 +42,8 @@ public class Entity extends Element {
             figure.addDoubleLineRectangle();
         }
         this.entities=entity.getEntities();
-        this.typeCardinality=entity.getTypeCardinality();
     }
 
-    public CardinalityE getTypeCardinality() {
-        return typeCardinality;
-    }
-
-    public void setTypeCardinality(CardinalityE typeCardinality) {
-        this.typeCardinality = typeCardinality;
-    }
-    
     /**
      *
      * @return
@@ -120,6 +105,14 @@ public class Entity extends Element {
         }
         return false;
     }
-            
+           
+    public boolean haveAttributeKey(){
+        for(int i=0;i<attributes.size();i++){
+            if(attributes.get(i).getTipo()== AttributeType.KEY){
+                return true;
+            }
+        }
+        return false;
+    }
     
 }

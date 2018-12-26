@@ -276,6 +276,17 @@ public class CallPop {
                 + "tiene mas de 12 caracteres o está repetido. Debe ingresar el nombre nuevamente.");
         alert.showAndWait();
     }
+    
+    /**
+     * Muestra un mensaje de error al ingresar nombre invalido.
+     * @param oraciones
+     */
+    public void restricciones(String oraciones){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Restricciones semanticas");
+        alert.setHeaderText(oraciones);
+        alert.showAndWait();
+    }
 
     /**
      * Muestra un mensaje de error al intentar seleccionar dos tipos de herencia a la misma vez o ninguno tipo.
