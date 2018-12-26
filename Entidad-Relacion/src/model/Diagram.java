@@ -392,6 +392,18 @@ public class Diagram extends CallPop implements Cloneable {
             }
             iE++;
         }
+        iE = 0;
+        for (Aggregation aggregation : aggregations) {
+            if(aggregation.isInFigure(event) && ready == false){
+                ready = true;
+                selectedElement = aggregation;
+                selectedElement.setSelected(true);
+                iElement = iE;
+                paint(canvas, showPoints);
+                break;
+            }
+            iE++;
+        }
         ready = false;
     }
     
