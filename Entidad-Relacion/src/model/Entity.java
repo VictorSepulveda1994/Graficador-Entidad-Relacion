@@ -43,7 +43,7 @@ public class Entity extends Element {
         }
         this.entities=entity.getEntities();
     }
-    
+
     /**
      *
      * @return

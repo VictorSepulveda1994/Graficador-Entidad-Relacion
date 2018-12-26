@@ -174,7 +174,8 @@ public class Diagram extends CallPop implements Cloneable {
         createConnectors();
         //dibuja los conectores
         for (Connector connector : connectors) {
-            connector.paint(canvas,showPoints);
+            connector.paint(canvas,showPoints);  
+            connector.figure.paintCardinality(canvas, connector.getElement1(), connector.getElement2(),connector.cardinalityLetter); 
         }
         for (Connector connector : connectorsRelations) {
             connector.paint(canvas,showPoints);
@@ -214,6 +215,7 @@ public class Diagram extends CallPop implements Cloneable {
         }
         //Se vuelven a pintar los puntos de control los conectores para que se puedan visualizar.
         for (Connector connector : connectors) {
+            connector.figure.paintCardinality(canvas, connector.getElement1(), connector.getElement2(), connector.cardinalityLetter);
             if(showPoints){
                 connector.figure.paintPoints(canvas);
             }
@@ -381,7 +383,6 @@ public class Diagram extends CallPop implements Cloneable {
                 selectedElement = entities.get(iElement);
                 for(int i=0;i<connectorsRelations.size();i++){
                     if(connectorsRelations.get(i).getElement2().getName().equals(entities.get(iElement).getName())){
-                        System.out.println("movi entidad y conector");
                         connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),entities.get(iElement)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
                     }
                 }
@@ -391,7 +392,7 @@ public class Diagram extends CallPop implements Cloneable {
                 entitiesCopy=(ArrayList<Entity>) relations.get(iElement).getEntities().clone();
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) relations.get(iElement).getAttributes().clone();
-                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType()));
+                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType(),((Relation)selectedElement).getTypeCardinality()));
                 selectedElement = relations.get(iElement);
                 for(int i=0;i<connectorsRelations.size();i++){
                     if(connectorsRelations.get(i).getElement1().getName().equals(relations.get(iElement).getName())){
@@ -676,6 +677,28 @@ public class Diagram extends CallPop implements Cloneable {
     }
     
     /**
+     *Deselecciona todas las entidades seleccionadas
+     */
+    public void deselectAll (){
+        for (Entity entitie : this.entities) {
+            entitie.setSelected(false);
+        }
+        for (Relation relation : this.relations) {
+            relation.setSelected(false);
+        }
+        for (Attribute attribute : this.attributes) {
+            attribute.setSelected(false);
+        }
+        for (Connector connector : this.connectors) {
+            connector.setSelected(false);
+        }
+        for (Heritage heritage : heritages) {
+            heritage.setSelected(false);
+        }
+        selectedElement=null;
+    }
+    
+    /**
      *
      * @return
      */
@@ -703,7 +726,55 @@ public class Diagram extends CallPop implements Cloneable {
      *Método que crea los conectores entre relaciones y entidades para dibujar las lineas
      */
     public void createConnectors(){
+        Boolean ready1=true;
+        Boolean ready2=true;
         ArrayList<Attribute> attributes1=new ArrayList<>();
+        for(int i=0;i<relations.size();i++){
+            for(int a=0;a<relations.get(i).getEntities().size();a++){            
+                Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
+                        ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
+                " ",false,attributes1);
+                switch (relations.get(i).typeCardinality) {
+                    case MANY_TO_MANY:
+                        connector.setCardinalityLetter("N");
+                        break;
+                    case ONE_TO_ONE:
+                        connector.setCardinalityLetter("1");
+                        break;
+                    case ONE_TO_MANY:
+                        if(ready1){
+                            connector.setCardinalityLetter("1");
+                            ready1=false;
+                        }
+                        else{
+                            connector.setCardinalityLetter("N");
+                            ready1=true;
+                        }
+                        break;
+                    case MANY_TO_ONE:
+                        if(ready2){
+                            connector.setCardinalityLetter("N");
+                            ready2=false;
+                        }
+                        else{
+                            connector.setCardinalityLetter("1");
+                            ready2=true;
+                        }
+                        break;
+                }
+                connectors.add(connector);
+
+                if(((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)) || isDoubleConnector(relations.get(i),relations.get(i).getEntities().get(a))){
+                    Point pointRelation = relations.get(i).getFigure().getCenter();
+                    pointRelation.setY(pointRelation.getY()-7);
+                    pointRelation.setX(pointRelation.getX()-7);
+                    connector= new Connector(relations.get(i),pointRelation
+                            ,relations.get(i).getEntities().get(a),new Point(((relations.get(i).getEntities().get(a).getFigure().getPosX()-7)),(relations.get(i).getEntities().get(a).getFigure().getPosY()-7)),
+                    " ",false,attributes1);
+                    connectors.add(connector);
+                }
+            }
+        }
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getAttributes().size();a++){
                 Connector connector= new Connector(relations.get(i),new Point(relations.get(i).figure.getPosX(),relations.get(i).figure.getPosY()),
@@ -844,7 +915,7 @@ public class Diagram extends CallPop implements Cloneable {
                 popEdit();
                 ready = true ;
                 if(!"".equals(enteredNameR)){
-                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType()));      
+                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType(),newrelation.getTypeCardinality()));      
                     enteredNameR="";
                     for(int i=0;i<connectorsRelations.size();i++){
                     if(connectorsRelations.get(i).getElement1().equals(selectedElement)){
@@ -985,7 +1056,7 @@ public class Diagram extends CallPop implements Cloneable {
                                 entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
                                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                                 attributesCopy=(ArrayList<Attribute>) relation.getAttributes().clone();
-                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType()));
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType(),relation.typeCardinality));
                                 paint(canvas, showPoints); 
                             }
                             j=0;
@@ -1270,4 +1341,5 @@ public class Diagram extends CallPop implements Cloneable {
         }
         return false;
     }
+ 
 }

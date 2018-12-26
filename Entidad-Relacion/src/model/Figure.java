@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 /**
@@ -16,6 +17,7 @@ import javafx.scene.text.TextAlignment;
 public class Figure {
     private String name;
     private int posX,posY;
+    private Point min,max;
     private int radiusPolygon = 80;
     private int radiusCircle = 15;
     private int sides;
@@ -53,7 +55,7 @@ public class Figure {
     }
     
     /**
-     *Constructor para crear rectangulos
+     *Constructor para crear rectangulos de entidades
      * @param name
      * @param posX
      * @param posY
@@ -67,6 +69,20 @@ public class Figure {
         this.posY = posY;
         this.name = name;
         createPointsRectangle();
+    }
+
+    /**
+     *Constructor para crear rectangulos de agregaciones
+     * @param name
+     * @param posX
+     * @param posY
+     */
+    public Figure(String name, Point min, Point max) {
+        this.posX = (min.getX() + max.getX()) / 2;
+        this.posY = (min.getY() + max.getY()) / 2;
+        this.min = min;
+        this.max = max;
+        this.name = name;
     }
     
     /**
@@ -155,6 +171,22 @@ public class Figure {
         }
         }
     
+    public void paintCardinality (Canvas canvas,Element element1,Element element2,String cardinality){
+        if(!(element1 instanceof Heritage) && !(element1 instanceof Attribute) && !(element2 instanceof Heritage) && !(element2 instanceof Attribute)){
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            int x = ((element1.figure.getCenter().getX()+element2.figure.getCenter().getX())/2);
+            int y = ((element1.figure.getCenter().getY()+element2.figure.getCenter().getY())/2);
+            Figure circule = new Figure(null,29,x,y);
+            circule.fillPolygon(canvas);
+            circule.paintLines(canvas, false);
+            gc.setTextAlign(TextAlignment.CENTER);
+            gc.setTextBaseline(VPos.CENTER);
+            gc.setFont(Font.font("default", FontWeight.LIGHT, 24));
+            gc.setFill(Color.web("#000000"));
+            gc.fillText(cardinality,x,y);
+        }
+    }
+        
     /**
      *Dibuja lineas punteadas
      * @param canvas
@@ -184,6 +216,7 @@ public class Figure {
             }
         }
     }
+    
     
     /**
      *Dibuja una linea debajo del texto 
@@ -391,7 +424,7 @@ public class Figure {
             createPointsPolygon();
         }
     }
-    
+  
     /**
      * Método que realiza un circulo en cada punto para resaltarlo
      * @param canvas
@@ -499,6 +532,7 @@ public class Figure {
                 points.add(point);
             }
         }
+        
     }
     
     /**
@@ -692,7 +726,7 @@ public class Figure {
         }
         this.points.add(new Point(x, y));
     }
-    
+       
     /**
      *
      *Dibuja los arcos en las lineas correspondientes
@@ -715,10 +749,18 @@ public class Figure {
      *
      *Crea los puntos de los arcos
      */
-    private void createPointsArc(Point point1, Point point2) {
+    public void createPointsArc(Point point1, Point point2) {
         int x =(( point1.getX() + point2.getX() - 30) / 2);
         int y =(( point1.getY() + point2.getY() - 30) / 2);
         this.posArc = new Point(x, y);
         this.startAngle = (Math.toDegrees(Math.atan2(point2.getX() - point1.getX(), point2.getY() - point1.getY())) ) + 180;
     }
+
+    public double getStartAngle() {
+        return startAngle;
+    }
+
+    public void addPoint(Point point) {
+        this.points.add(point);
+    }  
 }

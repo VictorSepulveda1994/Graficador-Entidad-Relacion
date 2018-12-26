@@ -14,6 +14,11 @@ public class Relation extends Element {
      * El tipo de la relación, débil o fuerte.
      */
     public FigureType type;
+    public Cardinality typeCardinality;
+    
+    public enum Cardinality {
+        ONE_TO_ONE,ONE_TO_MANY,MANY_TO_MANY,MANY_TO_ONE;
+    }
     
     /**
      *Constructor de la relación
@@ -26,7 +31,7 @@ public class Relation extends Element {
      * @param attributes
      * @param type
      */
-    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type) {
+    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type, Cardinality typeCardinality) {
         super(name,selected,attributes);
         this.entities = (ArrayList<Entity>) entities.clone();
         if((numberOfEntitiesWeak()==1 && this.entities.size()>1) || numberOfEntitiesWeak()==0){
@@ -39,7 +44,7 @@ public class Relation extends Element {
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
         }
-
+        this.typeCardinality=typeCardinality;
     }
     
     /**
@@ -59,6 +64,7 @@ public class Relation extends Element {
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
         }
+        this.typeCardinality=relation.typeCardinality;
     }
     
     /**
@@ -115,6 +121,14 @@ public class Relation extends Element {
         }
     }
 
+    public Cardinality getTypeCardinality() {
+        return typeCardinality;
+    }
+
+    public void setTypeCardinality(Cardinality typeCardinality) {
+        this.typeCardinality = typeCardinality;
+    }
+    
     /**
      *
      * @return
