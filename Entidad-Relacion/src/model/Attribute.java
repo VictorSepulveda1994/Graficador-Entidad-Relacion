@@ -17,6 +17,7 @@ public class Attribute extends Element{
      * El tipo de atributo.
      */
     AttributeType type;
+    int id;
 
     /**
      *Constructor para crear atributos 
@@ -27,13 +28,14 @@ public class Attribute extends Element{
      * @param posY
      * @param attributes
      */
-    public Attribute(AttributeType tipo, String name, boolean selected,int posX, int posY, ArrayList<Attribute> attributes ) {
+    public Attribute(AttributeType tipo, String name, boolean selected,int posX, int posY, ArrayList<Attribute> attributes, int id) {
         super(name, selected,attributes);
         this.type = tipo;
         this.figure= new Figure(name,30,posX,posY);
         if(tipo.equals(AttributeType.MULTIVALED)){
             figure.addDoubleLineEllipse();
         }
+        this.id=id;
     }
 
     /**
