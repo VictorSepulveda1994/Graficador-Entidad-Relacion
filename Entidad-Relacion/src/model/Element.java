@@ -181,6 +181,10 @@ public abstract class Element {
         this.attributes = attributes;
     }
 
+    public void setElements(ArrayList<Element> elements) {
+        this.elements = elements;
+    }
+
     /**
      * Encuentra un atributo dentro del diagrama y retorna su ubicacion
      * @param attribute

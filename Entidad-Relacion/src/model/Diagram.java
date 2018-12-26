@@ -86,6 +86,12 @@ public class Diagram extends CallPop implements Cloneable {
                 diagram.getHeritages().get(i).setDaughtersEntities
                     ((ArrayList<Entity>) heritages.get(i).getDaughtersEntities().clone());
             }
+            diagram.aggregations= (ArrayList<Aggregation>) aggregations.clone();
+            for(int i=0; i<diagram.getAggregations().size();i++){
+                diagram.getAggregations().get(i).setElements
+                    ((ArrayList<Element>) aggregations.get(i).getElements().clone());
+            }
+            
             diagram.connectors= new ArrayList<>();
             diagram.setCount(count);
             diagram.selectedElement= selectedElement;
@@ -1355,4 +1361,10 @@ public class Diagram extends CallPop implements Cloneable {
         }
         return false;
     }
+
+    public ArrayList<Aggregation> getAggregations() {
+        return aggregations;
+    }
+    
+    
 }
