@@ -42,6 +42,7 @@ public class Diagram extends CallPop implements Cloneable {
      *Contador para el nombre automatico
      */
     public static int count;
+    public static int countAttribute;
     private int iElement;
 
     /**
@@ -56,6 +57,7 @@ public class Diagram extends CallPop implements Cloneable {
         heritages = new ArrayList<>();
         aggregations = new ArrayList<>();
         count=0;
+        countAttribute=0;
     }
     
     public Diagram getClone() { 
@@ -96,6 +98,7 @@ public class Diagram extends CallPop implements Cloneable {
             diagram.connectorsRelations= (ArrayList<Connector>) connectorsRelations.clone();
             diagram.connectors= new ArrayList<>();
             diagram.setCount(count);
+            diagram.setCountAttribute(countAttribute);
             diagram.selectedElement= selectedElement;
             return diagram;
         } catch (CloneNotSupportedException e) { 
@@ -110,6 +113,14 @@ public class Diagram extends CallPop implements Cloneable {
 
     public static void setCount(int count) {
         Diagram.count = count;
+    }
+
+    public static int getCountAttribute() {
+        return countAttribute;
+    }
+
+    public static void setCountAttribute(int countAttribute) {
+        Diagram.countAttribute = countAttribute;
     }
     
     
@@ -428,7 +439,7 @@ public class Diagram extends CallPop implements Cloneable {
             else if( "Attribute".equals(type)){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) attributes.get(iElement).getAttributes().clone();
-                attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy));
+                attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy, ((Attribute)selectedElement).id));
                 selectedElement = attributes.get(iElement);
             }
             else if( "Heritage".equals(type)){
@@ -600,7 +611,7 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public int searchAttribute(Attribute attribute){
         for(int i=0; i<attributes.size();i++){
-            if(attributes.get(i).getName().equals(attribute.getName())){
+            if(attributes.get(i).id == attribute.id){
                 return i;
             }
         }
@@ -886,7 +897,8 @@ public class Diagram extends CallPop implements Cloneable {
                 ready = true;
                 if(!"".equals(nameAttribute)){
                     ArrayList<Attribute> attributes1=new ArrayList<>();
-                    Attribute attribute= new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1);
+                    Attribute attribute= new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1,countAttribute);
+                    countAttribute++;
                     entity.getAttributes().add(attribute);
                     MainController.diagram.getAttributes().add(attribute);
                     nameAttribute="";
@@ -900,7 +912,8 @@ public class Diagram extends CallPop implements Cloneable {
                 ready = true ;
                 if(!"".equals(nameAttribute)){
                     ArrayList<Attribute> attributes1=new ArrayList<>();
-                    Attribute attribute= new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1);
+                    Attribute attribute= new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1,countAttribute);
+                    countAttribute++;
                     relation.getAttributes().add(attribute);
                     MainController.diagram.getAttributes().add(attribute);
                     nameAttribute="";
@@ -916,7 +929,8 @@ public class Diagram extends CallPop implements Cloneable {
                     ready = true ;
                     if(!"".equals(nameAttribute)){
                         ArrayList<Attribute> attributes1=new ArrayList<>();
-                        Attribute attribute1= new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1);
+                        Attribute attribute1= new Attribute(attributeType,nameAttribute,false,(int)event.getX(),(int)event.getY(),attributes1,countAttribute);
+                        countAttribute++;
                         attribute.getAttributes().add(attribute1);
                         MainController.diagram.getAttributes().add(attribute1);
                         nameAttribute="";
@@ -1205,11 +1219,6 @@ public class Diagram extends CallPop implements Cloneable {
             }
         }
         
-        for (Attribute attribute : this.attributes) {
-            if (attribute.getName().equals(name)){
-                return true;                
-            }
-        }
         return false;
     }
     
@@ -1272,7 +1281,7 @@ public class Diagram extends CallPop implements Cloneable {
             }
         }
         for (int i = 0; i <this.attributes.size();i++) {
-            if(this.attributes.get(i).getName().equals(element.getName())){
+            if(this.attributes.get(i).id== ((Attribute)element).id){
                 return i;
             }
         }
@@ -1384,7 +1393,7 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public void updateNameAttribute(Element element,Attribute attribute,String oldName){
         for (int i = 0; i <element.getAttributes().size(); i++) {
-            if(element.getAttributes().get(i).name.equals(oldName)){
+            if((element.getAttributes().get(i).id==attribute.id)){
                 element.getAttributes().get(i).setName(attribute.getName());
                 element.getAttributes().get(i).figure.setName(attribute.getName());
             }
