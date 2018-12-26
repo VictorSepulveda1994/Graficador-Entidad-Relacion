@@ -573,6 +573,7 @@ public class MainController extends CallPop implements Initializable{
                     if(entitiesSelect.size()>2){
                         alertEntities();
                         diagram.deselectAllEntities();
+                        diagram.deselectAll();
                         entitiesSelect.clear();
                     }
                     else{

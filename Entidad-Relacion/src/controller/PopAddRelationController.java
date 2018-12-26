@@ -96,6 +96,7 @@ public class PopAddRelationController extends CallPop implements Initializable {
             entitiesSelect.clear();
             MainController.diagram.addRelation(relation);
             MainController.diagram.deselectAllEntities();
+            MainController.diagram.deselectAll();
             ((Stage)root.getScene().getWindow()).close();
         }    
         else if(nameOfRelation.length()>12 || MainController.diagram.thisNameExists(nameOfRelation)){
