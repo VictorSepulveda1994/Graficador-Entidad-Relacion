@@ -10,6 +10,7 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import model.Relation.Cardinality;
 
 /**
  * @author Equipo Rocket
@@ -173,6 +174,67 @@ public class Figure {
     
     public void paintCardinality (Canvas canvas,Element element1,Element element2,String cardinality){
         if(!(element1 instanceof Heritage) && !(element1 instanceof Attribute) && !(element2 instanceof Heritage) && !(element2 instanceof Attribute)){
+            ArrayList <Attribute> attributes = new ArrayList <> ();
+            Connector connector = new Connector (element1,element1.figure.getCenter(),element2,element2.figure.getCenter()," ",false,attributes);
+            Point point = connector.figure.addLineConnector(connector.getPointElement1(),connector.getPointElement2(),connector.getElement2());
+            if(element1 instanceof Entity && element2 instanceof Relation){
+                Relation relation = (Relation) element2;
+                if(relation.getEntities().size()==1){
+                   GraphicsContext gc = canvas.getGraphicsContext2D();
+                    int x = point.getX();
+                    int y = point.getY();
+                    Figure circule = new Figure(null,29,x,y);
+                    circule.fillPolygon(canvas);
+                    circule.paintLines(canvas, false);
+                    gc.setTextAlign(TextAlignment.CENTER);
+                    gc.setTextBaseline(VPos.CENTER);
+                    gc.setFont(Font.font("default", FontWeight.LIGHT, 24));
+                    gc.setFill(Color.web("#000000"));
+                    switch (relation.getTypeCardinality()) {
+                        case MANY_TO_ONE:
+                            gc.fillText("1",x,y);
+                            break;
+                        case ONE_TO_MANY:
+                            gc.fillText("N",x,y);
+                            break;
+                        case MANY_TO_MANY:
+                            gc.fillText("N",x,y);
+                            break;
+                        case ONE_TO_ONE:
+                            gc.fillText("1",x,y);
+                            break;
+                    }
+                }    
+            }
+            else if(element2 instanceof Entity && element1 instanceof Relation){
+               Relation relation = (Relation) element1;
+                if(relation.getEntities().size()==1){
+                   GraphicsContext gc = canvas.getGraphicsContext2D();
+                    int x = point.getX();
+                    int y = point.getY();
+                    Figure circule = new Figure(null,29,x,y);
+                    circule.fillPolygon(canvas);
+                    circule.paintLines(canvas, false);
+                    gc.setTextAlign(TextAlignment.CENTER);
+                    gc.setTextBaseline(VPos.CENTER);
+                    gc.setFont(Font.font("default", FontWeight.LIGHT, 24));
+                    gc.setFill(Color.web("#000000"));
+                    switch (relation.getTypeCardinality()) {
+                        case MANY_TO_ONE:
+                            gc.fillText("1",x,y);
+                            break;
+                        case ONE_TO_MANY:
+                            gc.fillText("N",x,y);
+                            break;
+                        case MANY_TO_MANY:
+                            gc.fillText("N",x,y);
+                            break;
+                        case ONE_TO_ONE:
+                            gc.fillText("1",x,y);
+                            break;
+                    }
+                } 
+            }
             GraphicsContext gc = canvas.getGraphicsContext2D();
             int x = ((element1.figure.getCenter().getX()+element2.figure.getCenter().getX())/2);
             int y = ((element1.figure.getCenter().getY()+element2.figure.getCenter().getY())/2);
@@ -185,6 +247,7 @@ public class Figure {
             gc.setFill(Color.web("#000000"));
             gc.fillText(cardinality,x,y);
         }
+        
     }
         
     /**
@@ -692,7 +755,7 @@ public class Figure {
      *
      * Agrega un conector más para las relaciones unitarias
      */
-    public void addLineConnector(Point point1, Point point2, Element e){
+    public Point addLineConnector(Point point1, Point point2, Element e){
         int x = 0;
         int y = 0;
         createPointsArc(point1, point2);
@@ -725,6 +788,7 @@ public class Figure {
             y = point2.getY()+ rectangleHeight;
         }
         this.points.add(new Point(x, y));
+        return new Point(x, y);
     }
        
     /**

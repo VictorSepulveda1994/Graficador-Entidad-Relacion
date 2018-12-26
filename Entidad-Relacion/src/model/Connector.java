@@ -43,7 +43,7 @@ public class Connector extends Element{
         if("Relation".equals(nameE1) && "Entity".equals(nameE2)){
             Relation rAux = (Relation) element1;
             if(rAux.getEntities().size()==1){
-                figure.addLineConnector(pointElement1, pointElement2, this.element2);
+                Point point = figure.addLineConnector(pointElement1, pointElement2, this.element2);
                 
             }
         }       
