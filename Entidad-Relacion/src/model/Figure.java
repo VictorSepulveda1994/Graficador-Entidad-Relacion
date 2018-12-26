@@ -180,7 +180,7 @@ public class Figure {
             if(element1 instanceof Entity && element2 instanceof Relation){
                 Relation relation = (Relation) element2;
                 if(relation.getEntities().size()==1){
-                   GraphicsContext gc = canvas.getGraphicsContext2D();
+                    GraphicsContext gc = canvas.getGraphicsContext2D();
                     int x = point.getX();
                     int y = point.getY();
                     Figure circule = new Figure(null,29,x,y);
@@ -209,7 +209,7 @@ public class Figure {
             else if(element2 instanceof Entity && element1 instanceof Relation){
                Relation relation = (Relation) element1;
                 if(relation.getEntities().size()==1){
-                   GraphicsContext gc = canvas.getGraphicsContext2D();
+                    GraphicsContext gc = canvas.getGraphicsContext2D();
                     int x = point.getX();
                     int y = point.getY();
                     Figure circule = new Figure(null,29,x,y);

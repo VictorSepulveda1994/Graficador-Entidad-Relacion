@@ -734,33 +734,51 @@ public class Diagram extends CallPop implements Cloneable {
                 Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
                 " ",false,attributes1);
+                if(relations.get(i).getEntities().size()==2){
                 switch (relations.get(i).typeCardinality) {
-                    case MANY_TO_MANY:
-                        connector.setCardinalityLetter("N");
-                        break;
-                    case ONE_TO_ONE:
-                        connector.setCardinalityLetter("1");
-                        break;
-                    case ONE_TO_MANY:
-                        if(ready1){
-                            connector.setCardinalityLetter("1");
-                            ready1=false;
-                        }
-                        else{
+                        case MANY_TO_MANY:
                             connector.setCardinalityLetter("N");
-                            ready1=true;
-                        }
-                        break;
-                    case MANY_TO_ONE:
-                        if(ready2){
-                            connector.setCardinalityLetter("N");
-                            ready2=false;
-                        }
-                        else{
+                            break;
+                        case ONE_TO_ONE:
                             connector.setCardinalityLetter("1");
-                            ready2=true;
-                        }
-                        break;
+                            break;
+                        case ONE_TO_MANY:
+                            if(ready1){
+                                connector.setCardinalityLetter("1");
+                                ready1=false;
+                            }
+                            else{
+                                connector.setCardinalityLetter("N");
+                                ready1=true;
+                            }
+                            break;
+                        case MANY_TO_ONE:
+                            if(ready2){
+                                connector.setCardinalityLetter("N");
+                                ready2=false;
+                            }
+                            else{
+                                connector.setCardinalityLetter("1");
+                                ready2=true;
+                            }
+                            break;
+                    }
+                }
+                else{
+                    switch (relations.get(i).typeCardinality) {
+                        case MANY_TO_MANY:
+                            connector.setCardinalityLetter("N");
+                            break;
+                        case ONE_TO_ONE:
+                            connector.setCardinalityLetter("1");
+                            break;
+                        case ONE_TO_MANY:
+                            connector.setCardinalityLetter("1");
+                            break;
+                        case MANY_TO_ONE:
+                            connector.setCardinalityLetter("N");
+                            break;
+                    }
                 }
                 connectors.add(connector);
 
