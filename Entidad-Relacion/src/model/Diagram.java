@@ -426,9 +426,6 @@ public class Diagram extends CallPop implements Cloneable {
                         connectorsRelations.set(i, new Connector(relations.get(iElement),connectorsRelations.get(i).getElement2()," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
                     }
                 }
-            }
-            else if( "Attribute".equals(type)){
-                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType(),((Relation)selectedElement).getTypeCardinality()));
             }else if( "Attribute".equals(type)){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) attributes.get(iElement).getAttributes().clone();
