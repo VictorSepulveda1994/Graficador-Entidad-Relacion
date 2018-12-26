@@ -5,8 +5,6 @@
  */
 package controller;
 
-import static controller.MainController.entitiesSelect;
-import static controller.PopAddRelationController.typeCardinality;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -23,7 +21,6 @@ import static model.Diagram.selectedElement;
 import model.Entity;
 import model.FigureType;
 import model.Relation;
-import model.Relation.Cardinality;
 
 /**
  * FXML Controller class
@@ -122,25 +119,19 @@ public class PopEditRelationController extends CallPop implements Initializable 
             option.setDisable(true);
         }
         optionsCardinality.setItems(typesOfCardinality);
-        if(newrelation.getEntities().size()==2){
-            switch (newrelation.getTypeCardinality()) {
-                case MANY_TO_MANY:
-                    optionsCardinality.setValue(typesOfCardinality.get(2));
-                    break;
-                case ONE_TO_MANY:
-                    optionsCardinality.setValue(typesOfCardinality.get(1));
-                    break;
-                case ONE_TO_ONE:
-                    optionsCardinality.setValue(typesOfCardinality.get(0));
-                    break;
-                case MANY_TO_ONE:
-                    optionsCardinality.setValue(typesOfCardinality.get(3));
-                    break;
-            }
-        }
-        else{
-            optionsCardinality.setDisable(true);
-            optionsCardinality.setValue("");
+        switch (newrelation.getTypeCardinality()) {
+            case MANY_TO_MANY:
+                optionsCardinality.setValue(typesOfCardinality.get(2));
+                break;
+            case ONE_TO_MANY:
+                optionsCardinality.setValue(typesOfCardinality.get(1));
+                break;
+            case ONE_TO_ONE:
+                optionsCardinality.setValue(typesOfCardinality.get(0));
+                break;
+            case MANY_TO_ONE:
+                optionsCardinality.setValue(typesOfCardinality.get(3));
+                break;
         }
     }    
     

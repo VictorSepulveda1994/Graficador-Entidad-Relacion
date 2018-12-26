@@ -176,7 +176,7 @@ public class Diagram extends CallPop implements Cloneable {
         createConnectors();
         //dibuja los conectores
         for (Connector connector : connectors) {
-            connector.paint(canvas,showPoints);
+            connector.paint(canvas,showPoints);  
             connector.figure.paintCardinality(canvas, connector.getElement1(), connector.getElement2(),connector.cardinalityLetter);
         }
         for (Connector connector : connectorsRelations) {
@@ -217,6 +217,7 @@ public class Diagram extends CallPop implements Cloneable {
         }
         //Se vuelven a pintar los puntos de control los conectores para que se puedan visualizar.
         for (Connector connector : connectors) {
+            connector.figure.paintCardinality(canvas, connector.getElement1(), connector.getElement2(), connector.cardinalityLetter);
             if(showPoints){
                 connector.figure.paintPoints(canvas);
             }
@@ -384,7 +385,6 @@ public class Diagram extends CallPop implements Cloneable {
                 selectedElement = entities.get(iElement);
                 for(int i=0;i<connectorsRelations.size();i++){
                     if(connectorsRelations.get(i).getElement2().getName().equals(entities.get(iElement).getName())){
-                        System.out.println("movi entidad y conector");
                         connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),entities.get(iElement)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
                     }
                 }
@@ -736,35 +736,33 @@ public class Diagram extends CallPop implements Cloneable {
                 Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
                         ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
                 " ",false,attributes1);
-                if(relations.get(i).getEntities().size()==2){
-                    switch (relations.get(i).typeCardinality) {
-                        case MANY_TO_MANY:
-                            connector.setCardinalityLetter("N");
-                            break;
-                        case ONE_TO_ONE:
+                switch (relations.get(i).typeCardinality) {
+                    case MANY_TO_MANY:
+                        connector.setCardinalityLetter("N");
+                        break;
+                    case ONE_TO_ONE:
+                        connector.setCardinalityLetter("1");
+                        break;
+                    case ONE_TO_MANY:
+                        if(ready1){
                             connector.setCardinalityLetter("1");
-                            break;
-                        case ONE_TO_MANY:
-                            if(ready1){
-                                connector.setCardinalityLetter("1");
-                                ready1=false;
-                            }
-                            else{
-                                connector.setCardinalityLetter("N");
-                                ready1=true;
-                            }
-                            break;
-                        case MANY_TO_ONE:
-                            if(ready2){
-                                connector.setCardinalityLetter("N");
-                                ready2=false;
-                            }
-                            else{
-                                connector.setCardinalityLetter("1");
-                                ready2=true;
-                            }
-                            break;
-                    }
+                            ready1=false;
+                        }
+                        else{
+                            connector.setCardinalityLetter("N");
+                            ready1=true;
+                        }
+                        break;
+                    case MANY_TO_ONE:
+                        if(ready2){
+                            connector.setCardinalityLetter("N");
+                            ready2=false;
+                        }
+                        else{
+                            connector.setCardinalityLetter("1");
+                            ready2=true;
+                        }
+                        break;
                 }
                 connectors.add(connector);
                 if(((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)) || isDoubleConnector(relations.get(i),relations.get(i).getEntities().get(a))){

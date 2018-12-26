@@ -173,18 +173,21 @@ public class Figure {
         }
     
     public void paintCardinality (Canvas canvas,Element element1,Element element2,String cardinality){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        int x = ((element1.figure.getCenter().getX()+element2.figure.getCenter().getX())/2);
-        int y = ((element1.figure.getCenter().getY()+element2.figure.getCenter().getY())/2)-15;
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.setTextBaseline(VPos.CENTER);
-        gc.setFont(Font.font("default", FontWeight.EXTRA_BOLD, 28));
-        gc.setFill(Color.web("#FFFEFE"));
-        gc.fillText(cardinality,x,y);
-        gc.setFont(Font.font("default", FontWeight.LIGHT, 24));
-        gc.setFill(Color.web("#000000"));
-        gc.fillText(cardinality,x,y);
+        if(!(element1 instanceof Heritage) && !(element1 instanceof Attribute) && !(element2 instanceof Heritage) && !(element2 instanceof Attribute)){
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            int x = ((element1.figure.getCenter().getX()+element2.figure.getCenter().getX())/2);
+            int y = ((element1.figure.getCenter().getY()+element2.figure.getCenter().getY())/2);
+            Figure circule = new Figure(null,29,x,y);
+            circule.fillPolygon(canvas);
+            circule.paintLines(canvas, false);
+            gc.setTextAlign(TextAlignment.CENTER);
+            gc.setTextBaseline(VPos.CENTER);
+            gc.setFont(Font.font("default", FontWeight.LIGHT, 24));
+            gc.setFill(Color.web("#000000"));
+            gc.fillText(cardinality,x,y);
+        }
     }
+    
     /**
      *Dibuja lineas punteadas
      * @param canvas
@@ -422,7 +425,7 @@ public class Figure {
             createPointsPolygon();
         }
     }
-    
+  
     /**
      * Método que realiza un circulo en cada punto para resaltarlo
      * @param canvas
@@ -530,6 +533,7 @@ public class Figure {
                 points.add(point);
             }
         }
+        
     }
     
     /**
@@ -722,8 +726,9 @@ public class Figure {
             y = point2.getY()+ rectangleHeight;
         }
         this.points.add(new Point(x, y));
+        //tomar este punto
     }
-    
+       
     /**
      *
      *Dibuja los arcos en las lineas correspondientes
