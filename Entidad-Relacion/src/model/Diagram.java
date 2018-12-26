@@ -19,6 +19,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import static controller.PopEditEntityController.newEntity;
 import static controller.PopEditHeritageController.newHeritage;
+import model.Entity.CardinalityE;
+import model.Relation.Cardinality;
 
 /**
  *
@@ -26,6 +28,7 @@ import static controller.PopEditHeritageController.newHeritage;
  */
 public class Diagram extends CallPop implements Cloneable {
     private ArrayList <Entity> entities;
+    private ArrayList <Aggregation> aggregations;
     private ArrayList <Relation> relations;
     private ArrayList <Connector> connectors;
     private ArrayList <Connector> connectorsRelations;
@@ -53,6 +56,7 @@ public class Diagram extends CallPop implements Cloneable {
         connectorsRelations = new ArrayList <>();
         attributes = new ArrayList<>();
         heritages = new ArrayList<>();
+        aggregations = new ArrayList<>();
         count=0;
     }
     
@@ -85,6 +89,12 @@ public class Diagram extends CallPop implements Cloneable {
                 diagram.getHeritages().get(i).setDaughtersEntities
                     ((ArrayList<Entity>) heritages.get(i).getDaughtersEntities().clone());
             }
+            diagram.aggregations= (ArrayList<Aggregation>) aggregations.clone();
+            for(int i=0; i<diagram.getAggregations().size();i++){
+                diagram.getAggregations().get(i).setElements
+                    ((ArrayList<Element>) aggregations.get(i).getElements().clone());
+            }
+            
             diagram.connectorsRelations= (ArrayList<Connector>) connectorsRelations.clone();
             diagram.connectors= new ArrayList<>();
             diagram.setCount(count);
@@ -112,6 +122,14 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public void addEntity (Entity entity){
         this.entities.add(entity);
+    }
+    
+    /**
+     *
+     * @param aggregation
+     */
+    public void addAggregation (Aggregation aggregation){
+        this.aggregations.add(aggregation);
     }
       
     /**
@@ -178,11 +196,16 @@ public class Diagram extends CallPop implements Cloneable {
         }
         for (Connector connector : connectorsRelations) {
             connector.paint(canvas,showPoints);
+            connector.figure.paintCardinality(canvas, connector.getElement1(), connector.getElement2(),connector.cardinalityLetter);
         }
         //dibuja las entidades
         for (Entity entity : entities) {
             entity.figure.fillEntity(canvas);
             entity.paint(canvas,showPoints);
+        }
+        //dibuja las agregaciones
+        for (Aggregation aggregation : aggregations) {
+            aggregation.paintAggregation(canvas, showPoints);
         }
         //dibuja las relaciones
         for (Relation relation : relations) {
@@ -372,12 +395,17 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public void moveElement(MouseEvent event, Canvas canvas, boolean showPoints, int minWidth, int minHeight){
         copy();
+        boolean modificate = false;
         if( selectedElement != null && event.getX()-70 > 0  && event.getY()-40 > 0){
             String type = selectedElement.getClass().getName().substring(6);
+            ArrayList<Point> positions = isInAggregation(selectedElement);
+            if(positions.size() > 0){
+                modificate = true;
+            }   
             if( "Entity".equals(type) ){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) entities.get(iElement).getAttributes().clone();
-                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType(),attributesCopy));
+                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType(),attributesCopy,((Entity)selectedElement).getTypeCardinality()));
                 selectedElement = entities.get(iElement);
                 for(int i=0;i<connectorsRelations.size();i++){
                     if(connectorsRelations.get(i).getElement2().getName().equals(entities.get(iElement).getName())){
@@ -400,6 +428,8 @@ public class Diagram extends CallPop implements Cloneable {
                 }
             }
             else if( "Attribute".equals(type)){
+                relations.set(iElement, new Relation(selectedElement.name, selectedElement.figure.getSides(), (int)event.getX(), (int) event.getY(), selectedElement.selected,entitiesCopy,attributesCopy,((Relation)selectedElement).getType(),((Relation)selectedElement).getTypeCardinality()));
+            }else if( "Attribute".equals(type)){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) attributes.get(iElement).getAttributes().clone();
                 attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy));
@@ -415,6 +445,7 @@ public class Diagram extends CallPop implements Cloneable {
                 heritages.set(iElement, new Heritage(selectedElement.name,(int)event.getX(),(int) event.getY(), selectedElement.selected,attributesCopy,entitiesCopy,type1));
                 selectedElement = heritages.get(iElement);
             }
+            
             
             //Guarda las entidades dentro de las relaciones
             for (int i=0; i<relations.size();i++) {
@@ -469,9 +500,33 @@ public class Diagram extends CallPop implements Cloneable {
             }
            
             
+            if(modificate){
+                for (Point position : positions) {
+                    aggregations.get(position.getX()).getElements().set(position.getY(), selectedElement);
+                    Aggregation aggregation = new Aggregation(aggregations.get(position.getX()).selected, aggregations.get(position.getX()).getName(), aggregations.get(position.getX()).getElements());
+                    aggregations.set(position.getX(), aggregation);
+                }
+            }
+            
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
         }
+    }
+    
+    public ArrayList<Point> isInAggregation(Element selectedElement){
+        int i = -1 , j = -1;
+        ArrayList<Point> positions = new ArrayList<>();
+        for (Aggregation aggregation : this.aggregations) {
+            i++;
+            ArrayList<Integer> p = aggregation.searchElement(selectedElement);
+            if(p.size() > 0){
+                for (Integer integer : p) {
+                    Point pos = new Point(i, integer);
+                    positions.add(pos);
+                }
+            }
+        }
+        return positions;
     }
     
     public void actualizar(){
@@ -631,6 +686,7 @@ public class Diagram extends CallPop implements Cloneable {
         this.connectors.clear();
         this.heritages.clear();
         this.attributes.clear();
+        this.aggregations.clear();
         entitiesSelect().clear();
         MainController.entitiesSelect.clear();
         canvas.setWidth(minWidth);
@@ -676,6 +732,31 @@ public class Diagram extends CallPop implements Cloneable {
     }
     
     /**
+     *Deselecciona todas las entidades seleccionadas
+     */
+    public void deselectAll (){
+        for (Entity entitie : this.entities) {
+            entitie.setSelected(false);
+        }
+        for (Relation relation : this.relations) {
+            relation.setSelected(false);
+        }
+        for (Attribute attribute : this.attributes) {
+            attribute.setSelected(false);
+        }
+        for (Connector connector : this.connectors) {
+            connector.setSelected(false);
+        }
+        for (Heritage heritage : heritages) {
+            heritage.setSelected(false);
+        }
+        for (Aggregation aggregation : this.aggregations) {
+            aggregation.setSelected(false);
+        }
+        selectedElement=null;
+    }
+    
+    /**
      *
      * @return
      */
@@ -703,6 +784,8 @@ public class Diagram extends CallPop implements Cloneable {
      *Método que crea los conectores entre relaciones y entidades para dibujar las lineas
      */
     public void createConnectors(){
+        Boolean ready1=true;
+        Boolean ready2=true;
         ArrayList<Attribute> attributes1=new ArrayList<>();
         for(int i=0;i<relations.size();i++){
             for(int a=0;a<relations.get(i).getAttributes().size();a++){
@@ -824,7 +907,7 @@ public class Diagram extends CallPop implements Cloneable {
                 popEditEntity();
                 ready = true;
                 if(!"".equals(enteredName)){
-                    entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes()));
+                    entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes(),newEntity.getTypeCardinality()));
                     enteredName="";
                     for(int i=0;i<connectorsRelations.size();i++){
                         if(connectorsRelations.get(i).getElement2().equals(selectedElement)){
@@ -844,7 +927,7 @@ public class Diagram extends CallPop implements Cloneable {
                 popEdit();
                 ready = true ;
                 if(!"".equals(enteredNameR)){
-                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType()));      
+                    relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType(),newrelation.getTypeCardinality()));      
                     enteredNameR="";
                     for(int i=0;i<connectorsRelations.size();i++){
                     if(connectorsRelations.get(i).getElement1().equals(selectedElement)){
@@ -985,7 +1068,7 @@ public class Diagram extends CallPop implements Cloneable {
                                 entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
                                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                                 attributesCopy=(ArrayList<Attribute>) relation.getAttributes().clone();
-                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType()));
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType(),relation.typeCardinality));
                                 paint(canvas, showPoints); 
                             }
                             j=0;
@@ -1270,4 +1353,58 @@ public class Diagram extends CallPop implements Cloneable {
         }
         return false;
     }
+
+    public ArrayList<Aggregation> getAggregations() {
+        return aggregations;
+    }
+    
+    
 }
+            for(int a=0;a<relations.get(i).getEntities().size();a++){            
+                Connector connector= new Connector(relations.get(i),relations.get(i).getFigure().getCenter()
+                        ,relations.get(i).getEntities().get(a),new Point((relations.get(i).getEntities().get(a).getFigure().getPosX()),relations.get(i).getEntities().get(a).getFigure().getPosY()),
+                " ",false,attributes1);
+                if(relations.get(i).getEntities().size()==2){
+                    switch (relations.get(i).typeCardinality) {
+                        case MANY_TO_MANY:
+                            connector.setCardinalityLetter("N");
+                            break;
+                        case ONE_TO_ONE:
+                            connector.setCardinalityLetter("1");
+                            break;
+                        case ONE_TO_MANY:
+                            if(ready1){
+                                connector.setCardinalityLetter("1");
+                                ready1=false;
+                            }
+                            else{
+                                connector.setCardinalityLetter("N");
+                                ready1=true;
+                            }
+                            break;
+                        case MANY_TO_ONE:
+                            if(ready2){
+                                connector.setCardinalityLetter("N");
+                                ready2=false;
+                            }
+                            else{
+                                connector.setCardinalityLetter("1");
+                                ready2=true;
+                            }
+                            break;
+                    }
+                }
+                connectors.add(connector);
+                if(((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)) || isDoubleConnector(relations.get(i),relations.get(i).getEntities().get(a))){
+                    Point pointRelation = relations.get(i).getFigure().getCenter();
+                    pointRelation.setY(pointRelation.getY()-7);
+                    pointRelation.setX(pointRelation.getX()-7);
+                    connector= new Connector(relations.get(i),pointRelation
+                            ,relations.get(i).getEntities().get(a),new Point(((relations.get(i).getEntities().get(a).getFigure().getPosX()-7)),(relations.get(i).getEntities().get(a).getFigure().getPosY()-7)),
+                    " ",false,attributes1);
+                    connectors.add(connector);
+                }
+            }
+        }
+        for(int i=0;i<relations.size();i++){
+

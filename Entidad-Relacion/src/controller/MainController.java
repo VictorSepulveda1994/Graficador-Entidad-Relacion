@@ -21,6 +21,8 @@ import model.Diagram;
 import model.Element;
 import model.Entity;
 import javafx.scene.input.ScrollEvent;
+import model.Attribute;
+import model.Relation;
 import model.AttributeType;
 import model.FigureType;
 
@@ -51,6 +53,8 @@ public class MainController extends CallPop implements Initializable{
     @FXML    
     private ToggleButton heritageToggleButton;
     @FXML    
+    private ToggleButton aggregationToggleButton;
+    @FXML
     private Button checkButton;
     @FXML
     private Button cleanButton;
@@ -95,6 +99,11 @@ public class MainController extends CallPop implements Initializable{
      * Lista que guarda las entidades seleccionadas por el usuario.
      */
     public static ArrayList<Entity> entitiesSelect;
+    
+    /**
+     * Lista que guarda las relaciones seleccionadas por el usuario.
+     */
+    public static ArrayList<Element> elementsSelect;
 
     /**
      *
@@ -180,18 +189,21 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void buttonEntityClicked(ActionEvent event){
         entitiesSelect.clear();
-        attributeToggleButton.setSelected(false);
         entityToggleButton.setSelected(true);
+        attributeToggleButton.setSelected(false);
         relationToggleButton.setSelected(false);
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
-        heritageToggleButton.setScaleX(1);
-        heritageToggleButton.setScaleY(1);
+        aggregationToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         entityToggleButton.setScaleX(1.15);
         entityToggleButton.setScaleY(1.15);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
+        heritageToggleButton.setScaleX(1);
+        heritageToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
@@ -222,10 +234,13 @@ public class MainController extends CallPop implements Initializable{
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setScaleX(1);
         heritageToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1.15);
         attributeToggleButton.setScaleY(1.15);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
@@ -254,9 +269,49 @@ public class MainController extends CallPop implements Initializable{
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setSelected(true);
         heritageToggleButton.setScaleX(1.15);
         heritageToggleButton.setScaleY(1.15);
+        attributeToggleButton.setScaleX(1);
+        attributeToggleButton.setScaleY(1);
+        entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
+        relationToggleButton.setScaleX(1);
+        relationToggleButton.setScaleY(1);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        deleteToggleButton.setScaleX(1);
+        deleteToggleButton.setScaleY(1);
+        editToggleButton.setScaleX(1);
+        editToggleButton.setScaleY(1);
+        canvas.setCursor(Cursor.CROSSHAIR);
+        diagram.deselectAllEntities();
+        diagram.paint(canvas,showPoints);
+    }
+    
+    /**
+     * Si el "heritageToggleButton" es presionado, se activará y desactivará los demás.
+     * Permite crear "heritages" entre entidades dentro del canvas.
+     */
+    @FXML
+    private void buttonAggregationClicked(ActionEvent event){
+        entitiesSelect.clear();
+        aggregationToggleButton.setSelected(true);
+        attributeToggleButton.setSelected(false);
+        entityToggleButton.setSelected(false);
+        relationToggleButton.setSelected(false);
+        moveToggleButton.setSelected(false);
+        editToggleButton.setSelected(false);
+        deleteToggleButton.setSelected(false);
+        heritageToggleButton.setSelected(false);
+        //Cambios de tamaño de botones
+        aggregationToggleButton.setScaleX(1.15);
+        aggregationToggleButton.setScaleY(1.15);
+        heritageToggleButton.setScaleX(1);
+        heritageToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
@@ -269,7 +324,7 @@ public class MainController extends CallPop implements Initializable{
         deleteToggleButton.setScaleY(1);
         editToggleButton.setScaleX(1);
         editToggleButton.setScaleY(1);
-        canvas.setCursor(Cursor.CROSSHAIR);
+        canvas.setCursor(Cursor.HAND);
         diagram.deselectAllEntities();
         diagram.paint(canvas,showPoints);
     }
@@ -288,15 +343,18 @@ public class MainController extends CallPop implements Initializable{
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
-        heritageToggleButton.setScaleX(1);
-        heritageToggleButton.setScaleY(1);
+        aggregationToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         relationToggleButton.setScaleX(1.15);
         relationToggleButton.setScaleY(1.15);
+        heritageToggleButton.setScaleX(1);
+        heritageToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1);
@@ -323,11 +381,12 @@ public class MainController extends CallPop implements Initializable{
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
-        heritageToggleButton.setScaleX(1);
-        heritageToggleButton.setScaleY(1);
+        aggregationToggleButton.setSelected(false);
         //Cambios de tamaño de botones
         moveToggleButton.setScaleX(1.15);
         moveToggleButton.setScaleY(1.15);
+        heritageToggleButton.setScaleX(1);
+        heritageToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
@@ -378,14 +437,17 @@ public class MainController extends CallPop implements Initializable{
         pointsToggleButton.setSelected(false);
         editToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setScaleX(1);
         heritageToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
-        entityToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
         relationToggleButton.setScaleY(1);
         deleteToggleButton.setScaleX(1.15);
@@ -406,13 +468,16 @@ public class MainController extends CallPop implements Initializable{
         moveToggleButton.setSelected(false);
         editToggleButton.setSelected(true);
         heritageToggleButton.setSelected(false);
+        deleteToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setScaleX(1);
         heritageToggleButton.setScaleY(1);
-        deleteToggleButton.setSelected(false);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
         entityToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
@@ -439,12 +504,15 @@ public class MainController extends CallPop implements Initializable{
         editToggleButton.setSelected(false);
         deleteToggleButton.setSelected(false);
         heritageToggleButton.setSelected(false);
+        aggregationToggleButton.setSelected(false);
         heritageToggleButton.setScaleX(1);
         heritageToggleButton.setScaleY(1);
         entityToggleButton.setScaleX(1);
+        entityToggleButton.setScaleY(1);
         attributeToggleButton.setScaleX(1);
         attributeToggleButton.setScaleY(1);
-        entityToggleButton.setScaleY(1);
+        aggregationToggleButton.setScaleX(1);
+        aggregationToggleButton.setScaleY(1);
         moveToggleButton.setScaleX(1);
         moveToggleButton.setScaleY(1);
         relationToggleButton.setScaleX(1);
@@ -483,7 +551,7 @@ public class MainController extends CallPop implements Initializable{
                 }
                 if (!element.isInFigure(event)){
                     entitiesSelect=diagram.entitiesSelect();
-                    if(entitiesSelect.size()>6){
+                    if(entitiesSelect.size()>2){
                         alertEntities();
                         diagram.deselectAllEntities();
                         entitiesSelect.clear();
@@ -517,6 +585,47 @@ public class MainController extends CallPop implements Initializable{
                     copy();
                 }   
             }
+        }
+        else if(aggregationToggleButton.isSelected() && diagram.getRelations().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
+            diagram.selectElement(event, canvas, showPoints);
+            if (diagram.getSelectedElement()!=null){
+                Element element = diagram.getSelectedElement();
+                String type = element.getClass().getName().substring(6);
+                if("Entity".equals(type) || "Attribute".equals(type)){
+                    diagram.deselectElement(event);
+                    diagram.deselectAll();
+                }
+                if("Relation".equals(type) && !searchRelation((Relation) element)){
+                    elementsSelect.add((Relation) element);
+                    Relation relation = (Relation)element;
+                    if(relation.getAttributes().size() > 0){
+                        for (Attribute attribute : relation.getAttributes()) {
+                            elementsSelect.add((Attribute) attribute);
+                            if(attribute.getAttributes().size() > 0){
+                                for (Attribute attribute1 : attribute.getAttributes()) {
+                                    elementsSelect.add((Attribute) attribute1);
+                                }
+                            }
+                        }
+                    }
+                    for (Entity entity : relation.getEntities()) {
+                        elementsSelect.add(entity);
+                        for (Attribute attribute : entity.getAttributes()) {
+                            elementsSelect.add(attribute);
+                            if(attribute.getAttributes().size() > 0){
+                                for (Attribute attribute1 : attribute.getAttributes()) {
+                                    elementsSelect.add((Attribute) attribute1);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (!element.isInFigure(event) && elementsSelect.size()>0){
+                    popAddAggregation();
+                    copy();
+                }   
+            }
+            elementsSelect = new ArrayList<>();
         }
         else if(attributeToggleButton.isSelected()){
             diagram.addAttribute(event, canvas, showPoints);
@@ -637,6 +746,7 @@ public class MainController extends CallPop implements Initializable{
         adjustNodes();
         diagram = new Diagram();
         entitiesSelect = new ArrayList<>();
+        elementsSelect = new ArrayList<>();
         diagramsUndo= new ArrayList<>();
         diagramsRedo= new ArrayList<>();
         rehacer=false;
@@ -672,6 +782,7 @@ public class MainController extends CallPop implements Initializable{
         toggleButtons.add(deleteToggleButton);
         toggleButtons.add(attributeToggleButton);
         toggleButtons.add(heritageToggleButton);
+        toggleButtons.add(aggregationToggleButton);
         buttons.add(cleanButton);
         buttons.add(exportButton);
         //Ajuste del tamaño de todos los botones
@@ -712,6 +823,19 @@ public class MainController extends CallPop implements Initializable{
     private boolean searchEntity(Entity entity2){
         for (Entity entity : entitiesSelect) {
             if(entity.getName().equals(entity2.getName())){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Método que se encarga de buscar una entidad dentro de las entidades seleccionadas en el canvas.
+     * @param entity2
+     */
+    private boolean searchRelation(Relation relation2){
+        for (Entity entity : entitiesSelect) {
+            if(entity.getName().equals(relation2.getName())){
                 return true;
             }
         }

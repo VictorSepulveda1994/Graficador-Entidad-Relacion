@@ -34,8 +34,22 @@ public abstract class Element {
      *Constructor para crear agregaciones
      * 
      */
-    public Element(ArrayList<Element> elements) {
+    public Element(boolean selected, String name, ArrayList<Element> elements) {
+        this.name = name;
+        this.selected = selected;
         this.elements = elements;
+    }
+    
+    /**
+     * Método que llama al objeto "figure" y llama a sus métodos "paintLines" o "paintPoints"
+     * @param canvas
+     * @param showPoints
+     */
+    public void paintAggregation(Canvas canvas, boolean showPoints){
+        figure.paintLinesAggregation(canvas,selected);
+        if(showPoints){
+            figure.paintPoints(canvas);
+        }
     }
     
     /**
@@ -167,6 +181,10 @@ public abstract class Element {
         this.attributes = attributes;
     }
 
+    public void setElements(ArrayList<Element> elements) {
+        this.elements = elements;
+    }
+
     /**
      * Encuentra un atributo dentro del diagrama y retorna su ubicacion
      * @param attribute
@@ -196,6 +214,13 @@ public abstract class Element {
     public void setDoubleConnector(boolean doubleConnector) {
         this.doubleConnector = doubleConnector;
     }
-    
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public ArrayList<Element> getElements() {
+        return elements;
+    }
     
 }

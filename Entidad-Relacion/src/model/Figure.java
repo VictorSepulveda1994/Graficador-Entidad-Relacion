@@ -8,7 +8,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javax.swing.JTextArea;
 
 /**
  * @author Equipo Rocket
@@ -16,6 +18,7 @@ import javafx.scene.text.TextAlignment;
 public class Figure {
     private String name;
     private int posX,posY;
+    private Point min,max;
     private int radiusPolygon = 80;
     private int radiusCircle = 15;
     private int sides;
@@ -32,6 +35,7 @@ public class Figure {
     private boolean withArc;
     private boolean doble;
     private Point posArc;
+    int d = 25;
 
     /**
      * Constructor para crear polígonos
@@ -53,7 +57,7 @@ public class Figure {
     }
     
     /**
-     *Constructor para crear rectangulos
+     *Constructor para crear rectangulos de entidades
      * @param name
      * @param posX
      * @param posY
@@ -67,6 +71,22 @@ public class Figure {
         this.posY = posY;
         this.name = name;
         createPointsRectangle();
+    }
+
+    /**
+     *Constructor para crear rectangulos de agregaciones
+     * @param name
+     * @param posX
+     * @param posY
+     */
+    public Figure(String name, Point min, Point max) {
+        points = new ArrayList<>();
+        this.posX = (min.getX() + max.getX()) / 2;
+        this.posY = (min.getY() + max.getY()) / 2;
+        this.min = min;
+        this.max = max;
+        this.name = name;
+        createPointsAggregation();
     }
     
     /**
@@ -107,6 +127,36 @@ public class Figure {
         points.add(point1);
         points.add(point2);
         createPointsArc(point1, point2);
+    }
+    
+    /**
+     * Pinta las lineas en el "canvas" segun los puntos que hayan para el rectangulo de agregación
+     * @param canvas
+     * @param selected
+     */
+    public void paintLinesAggregation(Canvas canvas, boolean selected){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(3);
+        if( selected ){
+            gc.setFill(Color.BLUE);
+            gc.setStroke(Color.BLUE);
+        }
+        else{
+            gc.setFill(Color.BLACK);
+            gc.setStroke(Color.BLACK);
+        }
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.BOTTOM);
+        gc.setFont(Font.font(20));
+        gc.fillText(name, min.getX(), min.getY());
+        int size = points.size();
+        for (int i = 0; i+1 < size; i++) {
+            if(i%2==0){
+                Point point1 = points.get(i);
+                Point point2 = points.get(i+1);
+                gc.strokeLine(point1.getX(), point1.getY(), point2.getX(), point2.getY());
+            }
+        }
     }
     
     /**
@@ -155,6 +205,19 @@ public class Figure {
         }
         }
     
+    public void paintCardinality (Canvas canvas,Element element1,Element element2,String cardinality){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        int x = ((element1.figure.getCenter().getX()+element2.figure.getCenter().getX())/2);
+        int y = ((element1.figure.getCenter().getY()+element2.figure.getCenter().getY())/2)-15;
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.setFont(Font.font("default", FontWeight.EXTRA_BOLD, 28));
+        gc.setFill(Color.web("#FFFEFE"));
+        gc.fillText(cardinality,x,y);
+        gc.setFont(Font.font("default", FontWeight.LIGHT, 24));
+        gc.setFill(Color.web("#000000"));
+        gc.fillText(cardinality,x,y);
+    }
     /**
      *Dibuja lineas punteadas
      * @param canvas
@@ -184,6 +247,7 @@ public class Figure {
             }
         }
     }
+    
     
     /**
      *Dibuja una linea debajo del texto 
@@ -720,5 +784,32 @@ public class Figure {
         int y =(( point1.getY() + point2.getY() - 30) / 2);
         this.posArc = new Point(x, y);
         this.startAngle = (Math.toDegrees(Math.atan2(point2.getX() - point1.getX(), point2.getY() - point1.getY())) ) + 180;
+    }
+
+    private void createPointsAggregation() {
+        int x = min.getX()-d;
+        int y = min.getY()-d;
+        while(x < max.getX()+d){
+            points.add(new Point(x, y));
+            x+=5;
+        }
+        x = max.getX()+d;
+        y = min.getY()-d;
+        while(y < max.getY()+d){
+            points.add(new Point(x, y));
+            y+=5;
+        }
+        x = max.getX()+d;
+        y = max.getY()+d;
+        while(x > min.getX()-d){
+            points.add(new Point(x, y));
+            x-=5;
+        }
+        x = min.getX()-d;
+        y = max.getY()+d;
+        while(y > min.getY()-d){
+            points.add(new Point(x, y));
+            y-=5;
+        }
     }
 }

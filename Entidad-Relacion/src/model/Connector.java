@@ -16,9 +16,11 @@ public class Connector extends Element{
     private Point pointElement1;
     private Element element2;
     private Point pointElement2;
+    public  String cardinalityLetter;
     private boolean withArc;
     private boolean doble;
     
+
     /**
      *Constructor para crear un conector
      * @param element1
@@ -44,7 +46,7 @@ public class Connector extends Element{
             if(rAux.getEntities().size()==1){
                 figure.addLineConnector(pointElement1, pointElement2, this.element2);
             }
-        }
+        }       
     }
 
     /**
@@ -90,7 +92,7 @@ public class Connector extends Element{
      *
      * @return
      */
-    public Point getPointElement1() {
+    public Point getPointElement1() {  
         return pointElement1;
     }
 
@@ -116,6 +118,14 @@ public class Connector extends Element{
      */
     public void setPointElement2(Point pointElement2) {
         this.pointElement2 = pointElement2;
+    }
+
+    public String getCardinalityLetter() {
+        return cardinalityLetter;
+    }
+
+    public void setCardinalityLetter(String cardinalityLetter) {
+        this.cardinalityLetter = cardinalityLetter;
     }
 
     /**

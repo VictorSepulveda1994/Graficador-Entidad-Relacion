@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import model.Entity.CardinalityE;
 
 /**
  *
@@ -14,6 +15,11 @@ public class Relation extends Element {
      * El tipo de la relación, débil o fuerte.
      */
     public FigureType type;
+    public Cardinality typeCardinality;
+    
+    public enum Cardinality {
+        ONE_TO_ONE,ONE_TO_MANY,MANY_TO_MANY,MANY_TO_ONE;
+    }
     
     /**
      *Constructor de la relación
@@ -26,7 +32,7 @@ public class Relation extends Element {
      * @param attributes
      * @param type
      */
-    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type) {
+    public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type, Cardinality typeCardinality) {
         super(name,selected,attributes);
         this.entities = (ArrayList<Entity>) entities.clone();
         if((numberOfEntitiesWeak()==1 && this.entities.size()>1) || numberOfEntitiesWeak()==0){
@@ -39,7 +45,10 @@ public class Relation extends Element {
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
         }
-
+        this.typeCardinality=typeCardinality;
+        if(this.entities.size()==2){
+            checkCardinality();
+        }
     }
     
     /**
@@ -58,6 +67,10 @@ public class Relation extends Element {
         figure = new Figure(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY());
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
+        }
+        this.typeCardinality=relation.typeCardinality;
+        if(this.entities.size()==2){
+            checkCardinality();
         }
     }
     
@@ -114,7 +127,36 @@ public class Relation extends Element {
             }
         }
     }
+    
+    public void checkCardinality(){
+        switch (this.typeCardinality) {
+            case MANY_TO_MANY:
+                this.entities.get(0).setTypeCardinality(CardinalityE.MANY);
+                this.entities.get(1).setTypeCardinality(CardinalityE.MANY);
+                break;
+            case ONE_TO_MANY:
+                this.entities.get(0).setTypeCardinality(CardinalityE.ONE);
+                this.entities.get(1).setTypeCardinality(CardinalityE.MANY);
+                break;
+            case ONE_TO_ONE:
+                this.entities.get(0).setTypeCardinality(CardinalityE.ONE);
+                this.entities.get(1).setTypeCardinality(CardinalityE.ONE);
+                break;
+            case MANY_TO_ONE:
+                this.entities.get(0).setTypeCardinality(CardinalityE.MANY);
+                this.entities.get(1).setTypeCardinality(CardinalityE.ONE);
+                break;
+        }
+    }
 
+    public Cardinality getTypeCardinality() {
+        return typeCardinality;
+    }
+
+    public void setTypeCardinality(Cardinality typeCardinality) {
+        this.typeCardinality = typeCardinality;
+    }
+    
     /**
      *
      * @return

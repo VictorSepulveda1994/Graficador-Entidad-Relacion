@@ -8,19 +8,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Aggregation;
 import model.Attribute;
+import model.AttributeType;
+import static model.Diagram.count;
+import model.Element;
 import model.Entity;
 import model.FigureType;
-import static model.Diagram.count;
-import model.Entity.CardinalityE;
-
 
 /**
- * FXML Controller class
- * Esta clase se encarga de agregar una entidad.
  * @author Equipo Rocket
  */
-public class PopAddEntityController extends CallPop implements Initializable {
+public class PopAddAggregationController extends CallPop implements Initializable {
 
     /**
      * Panel donde se realizaran las acciones.
@@ -32,12 +31,12 @@ public class PopAddEntityController extends CallPop implements Initializable {
      * Entrada por donde se recibe el nombre de la entidad a crear.
      */
     @FXML
-    private TextField nameEntity;
+    private TextField nameAggregation;
     
     /**
     * Inicialización del nombre de la entidad.
     */
-    public static String nameOfEntity = "";
+    public static String nameOfAggregation = "";
     
     /**
      * Inicio de la clase controladora
@@ -52,22 +51,25 @@ public class PopAddEntityController extends CallPop implements Initializable {
      * Crea un objeto "entity" y es agregado a "diagram".
      */
     public void addToScreen(){
-        nameOfEntity=nameEntity.textProperty().get();
-        if( nameOfEntity.isEmpty()){
-            nameOfEntity="e"+count;
+        nameOfAggregation=nameAggregation.textProperty().get();
+        if( nameOfAggregation.isEmpty()){
+            nameOfAggregation="ag"+count;
             count++;
-            FigureType type = FigureType.STRONG;
-            ArrayList<Attribute> attributes= new ArrayList<>();
-            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type,attributes,CardinalityE.MANY));
+            Aggregation aggregation = new Aggregation(false, nameOfAggregation, MainController.elementsSelect);
+            MainController.diagram.addAggregation(aggregation);
+            //MainController.elementsSelect.clear();
+            MainController.diagram.deselectAll();
             ((Stage)root.getScene().getWindow()).close();
         }
-        else if(nameOfEntity.length()>12 || MainController.diagram.thisNameExists(nameOfEntity)){
+        else if(nameOfAggregation.length()>12 || MainController.diagram.thisNameExists(nameOfAggregation)){
             alertName();
         }
         else{
-            FigureType type = FigureType.STRONG;
-            ArrayList<Attribute> attributes= new ArrayList<>();
-            MainController.diagram.addEntity(new Entity(nameOfEntity, (int)MainController.event.getX(), (int)MainController.event.getY(), false,type,attributes,CardinalityE.MANY));
+            ArrayList<Element> e = new ArrayList<>();
+            Aggregation aggregation = new Aggregation(false, nameOfAggregation, MainController.elementsSelect);
+            MainController.diagram.addAggregation(aggregation);
+            MainController.elementsSelect.clear();
+            MainController.diagram.deselectAll();
             ((Stage)root.getScene().getWindow()).close();
         }
     }
@@ -76,6 +78,8 @@ public class PopAddEntityController extends CallPop implements Initializable {
      * Metodo que se encarga de cancelar la operación
      */
     public void cancel(){
+        //MainController.elementsSelect.clear();
+        MainController.diagram.deselectAll();
         ((Stage)root.getScene().getWindow()).close();
     }
 }

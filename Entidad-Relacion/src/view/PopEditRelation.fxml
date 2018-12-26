@@ -3,6 +3,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,11 +21,11 @@
                </font></Text>
          </children>
       </Pane>
-      <Text layoutX="24.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo nombre">
+      <Text layoutX="24.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nuevo nombre">
          <font>
             <Font name="Century Gothic Bold" size="18.0" />
          </font></Text>
-      <TextField fx:id="newName" layoutX="24.0" layoutY="109.0" prefHeight="36.0" prefWidth="400.0" />
+      <TextField fx:id="newName" layoutX="24.0" layoutY="93.0" prefHeight="36.0" prefWidth="400.0" />
       <Text layoutX="24.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Entidades relacionadas" underline="true">
          <font>
             <Font name="Century Gothic Bold" size="17.0" />
@@ -75,9 +76,15 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <CheckBox fx:id="option" layoutX="24.0" layoutY="152.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="209.0" text="Relación débil">
+      <CheckBox fx:id="option" layoutX="252.0" layoutY="155.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="209.0" text="Relación débil">
          <font>
             <Font name="Century Gothic Bold" size="14.0" />
          </font></CheckBox>
+      <ChoiceBox fx:id="optionsCardinality" layoutX="24.0" layoutY="160.0" prefWidth="150.0" />
+      <Text layoutX="24.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cardinalidad">
+         <font>
+            <Font name="Century Gothic Bold" size="17.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

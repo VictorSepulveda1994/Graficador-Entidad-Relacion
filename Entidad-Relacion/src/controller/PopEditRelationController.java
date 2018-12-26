@@ -5,12 +5,17 @@
  */
 package controller;
 
+import static controller.MainController.entitiesSelect;
+import static controller.PopAddRelationController.typeCardinality;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -18,6 +23,7 @@ import static model.Diagram.selectedElement;
 import model.Entity;
 import model.FigureType;
 import model.Relation;
+import model.Relation.Cardinality;
 
 /**
  * FXML Controller class
@@ -56,6 +62,12 @@ public class PopEditRelationController extends CallPop implements Initializable 
     @FXML
     public CheckBox option;
     
+     @FXML
+    public ChoiceBox optionsCardinality;
+    
+    ObservableList <String> typesOfCardinality = FXCollections.observableArrayList("Uno a uno","Uno a muchos","Muchos a muchos","Muchos a uno");
+    
+    public static Relation.Cardinality typeCardinality;
     /**
      * Donde se guarda el nombre editado de la relación.
      */
@@ -86,6 +98,7 @@ public class PopEditRelationController extends CallPop implements Initializable 
      */
     ArrayList<String> names;
          
+    
     /**
      * Initializes the controller class.
      */
@@ -108,6 +121,27 @@ public class PopEditRelationController extends CallPop implements Initializable 
         if(newrelation.numberOfEntitiesWeak()==1 && newrelation.getEntities().size()<=1){
             option.setDisable(true);
         }
+        optionsCardinality.setItems(typesOfCardinality);
+        if(newrelation.getEntities().size()==2){
+            switch (newrelation.getTypeCardinality()) {
+                case MANY_TO_MANY:
+                    optionsCardinality.setValue(typesOfCardinality.get(2));
+                    break;
+                case ONE_TO_MANY:
+                    optionsCardinality.setValue(typesOfCardinality.get(1));
+                    break;
+                case ONE_TO_ONE:
+                    optionsCardinality.setValue(typesOfCardinality.get(0));
+                    break;
+                case MANY_TO_ONE:
+                    optionsCardinality.setValue(typesOfCardinality.get(3));
+                    break;
+            }
+        }
+        else{
+            optionsCardinality.setDisable(true);
+            optionsCardinality.setValue("");
+        }
     }    
     
     /**
@@ -126,9 +160,22 @@ public class PopEditRelationController extends CallPop implements Initializable 
                 type=FigureType.STRONG;
             }  
             newrelation.setType(type);
-            newrelation.setName(enteredNameR);
-            ((Stage)root.getScene().getWindow()).close();                  
+            newrelation.setName(enteredNameR);                
         }
+        if(optionsCardinality.getValue().equals("Uno a uno")){  
+            typeCardinality=Relation.Cardinality.ONE_TO_ONE;
+        }
+        else if(optionsCardinality.getValue().equals("Uno a muchos")){
+            typeCardinality=Relation.Cardinality.ONE_TO_MANY;
+        }
+        else if(optionsCardinality.getValue().equals("Muchos a muchos")){
+            typeCardinality=Relation.Cardinality.MANY_TO_MANY;
+        }
+        else if(optionsCardinality.getValue().equals("Muchos a uno")){
+            typeCardinality=Relation.Cardinality.MANY_TO_ONE;
+        }
+        newrelation.setTypeCardinality(typeCardinality);
+        ((Stage)root.getScene().getWindow()).close(); 
     }
     
     /**
