@@ -182,6 +182,13 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <graphic>
+                              <ImageView fitHeight="37.0" fitWidth="45.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@../icons/aggregation.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
                         </ToggleButton>
                      </children>
                      <opaqueInsets>
@@ -205,7 +212,17 @@
                <children>
                   <HBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="15.0" style="-fx-background-color: #5798d6;" GridPane.columnIndex="1">
                      <children>
-                        <Button fx:id="checkButton" mnemonicParsing="false" onAction="#checkAction" text="checkear" />
+                        <Button fx:id="checkButton" contentDisplay="TOP" mnemonicParsing="false" onAction="#checkAction" prefHeight="53.0" prefWidth="58.0" text="Revisar">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" smooth="false">
+                                 <image>
+                                    <Image url="@../icons/check.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
                         <ToggleButton fx:id="deleteToggleButton" contentDisplay="TOP" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonDeleteFigureClicked" prefHeight="55.0" prefWidth="53.0" text="Borrar">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />

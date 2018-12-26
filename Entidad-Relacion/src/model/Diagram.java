@@ -680,11 +680,13 @@ public class Diagram extends CallPop implements Cloneable {
         this.entities.clear();
         this.relations.clear();
         this.connectors.clear();
+        this.connectorsRelations.clear();
         this.heritages.clear();
         this.attributes.clear();
         this.aggregations.clear();
         entitiesSelect().clear();
         MainController.entitiesSelect.clear();
+        MainController.elementsSelect.clear();
         canvas.setWidth(minWidth);
         canvas.setHeight(minHeight);
     }

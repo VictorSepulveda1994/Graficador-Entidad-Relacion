@@ -68,7 +68,7 @@ public class PopAddAggregationController extends CallPop implements Initializabl
             ArrayList<Element> e = new ArrayList<>();
             Aggregation aggregation = new Aggregation(false, nameOfAggregation, MainController.elementsSelect);
             MainController.diagram.addAggregation(aggregation);
-            MainController.elementsSelect.clear();
+            //MainController.elementsSelect.clear();
             MainController.diagram.deselectAll();
             ((Stage)root.getScene().getWindow()).close();
         }
