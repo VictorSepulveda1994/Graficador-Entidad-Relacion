@@ -44,7 +44,6 @@ public class Connector extends Element{
             Relation rAux = (Relation) element1;
             if(rAux.getEntities().size()==1){
                 figure.addLineConnector(pointElement1, pointElement2, this.element2);
-                this.cardinalityLetter="M";
                 
             }
         }       

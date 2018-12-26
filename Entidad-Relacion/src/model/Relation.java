@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import model.Entity.CardinalityE;
 
 /**
  *
@@ -46,9 +45,6 @@ public class Relation extends Element {
             figure.addDoubleLinePolygon();
         }
         this.typeCardinality=typeCardinality;
-        if(this.entities.size()==2){
-            checkCardinality();
-        }
     }
     
     /**
@@ -69,9 +65,6 @@ public class Relation extends Element {
             figure.addDoubleLinePolygon();
         }
         this.typeCardinality=relation.typeCardinality;
-        if(this.entities.size()==2){
-            checkCardinality();
-        }
     }
     
     /**
@@ -125,27 +118,6 @@ public class Relation extends Element {
             if(entity.equals(this.entities.get(i))){
                 this.entities.remove(i);
             }
-        }
-    }
-    
-    public void checkCardinality(){
-        switch (this.typeCardinality) {
-            case MANY_TO_MANY:
-                this.entities.get(0).setTypeCardinality(CardinalityE.MANY);
-                this.entities.get(1).setTypeCardinality(CardinalityE.MANY);
-                break;
-            case ONE_TO_MANY:
-                this.entities.get(0).setTypeCardinality(CardinalityE.ONE);
-                this.entities.get(1).setTypeCardinality(CardinalityE.MANY);
-                break;
-            case ONE_TO_ONE:
-                this.entities.get(0).setTypeCardinality(CardinalityE.ONE);
-                this.entities.get(1).setTypeCardinality(CardinalityE.ONE);
-                break;
-            case MANY_TO_ONE:
-                this.entities.get(0).setTypeCardinality(CardinalityE.MANY);
-                this.entities.get(1).setTypeCardinality(CardinalityE.ONE);
-                break;
         }
     }
 

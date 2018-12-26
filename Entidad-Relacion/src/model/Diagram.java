@@ -19,8 +19,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import static controller.PopEditEntityController.newEntity;
 import static controller.PopEditHeritageController.newHeritage;
-import model.Entity.CardinalityE;
-import model.Relation.Cardinality;
 
 /**
  *
@@ -177,7 +175,7 @@ public class Diagram extends CallPop implements Cloneable {
         //dibuja los conectores
         for (Connector connector : connectors) {
             connector.paint(canvas,showPoints);  
-            connector.figure.paintCardinality(canvas, connector.getElement1(), connector.getElement2(),connector.cardinalityLetter);
+            connector.figure.paintCardinality(canvas, connector.getElement1(), connector.getElement2(),connector.cardinalityLetter); 
         }
         for (Connector connector : connectorsRelations) {
             connector.paint(canvas,showPoints);
@@ -381,7 +379,7 @@ public class Diagram extends CallPop implements Cloneable {
             if( "Entity".equals(type) ){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) entities.get(iElement).getAttributes().clone();
-                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType(),attributesCopy,((Entity)selectedElement).getTypeCardinality()));
+                entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType(),attributesCopy));
                 selectedElement = entities.get(iElement);
                 for(int i=0;i<connectorsRelations.size();i++){
                     if(connectorsRelations.get(i).getElement2().getName().equals(entities.get(iElement).getName())){
@@ -765,6 +763,7 @@ public class Diagram extends CallPop implements Cloneable {
                         break;
                 }
                 connectors.add(connector);
+
                 if(((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)) || isDoubleConnector(relations.get(i),relations.get(i).getEntities().get(a))){
                     Point pointRelation = relations.get(i).getFigure().getCenter();
                     pointRelation.setY(pointRelation.getY()-7);
@@ -896,7 +895,7 @@ public class Diagram extends CallPop implements Cloneable {
                 popEditEntity();
                 ready = true;
                 if(!"".equals(enteredName)){
-                    entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes(),newEntity.getTypeCardinality()));
+                    entities.set(iE, new Entity(newEntity.getName(),newEntity.figure.getPosX(),newEntity.figure.getPosY(),false,newEntity.getType(),newEntity.getAttributes()));
                     enteredName="";
                     for(int i=0;i<connectorsRelations.size();i++){
                         if(connectorsRelations.get(i).getElement2().equals(selectedElement)){
@@ -1342,4 +1341,5 @@ public class Diagram extends CallPop implements Cloneable {
         }
         return false;
     }
+ 
 }

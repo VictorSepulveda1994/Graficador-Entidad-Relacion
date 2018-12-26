@@ -10,7 +10,6 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-import javax.swing.JTextArea;
 
 /**
  * @author Equipo Rocket
@@ -187,7 +186,7 @@ public class Figure {
             gc.fillText(cardinality,x,y);
         }
     }
-    
+        
     /**
      *Dibuja lineas punteadas
      * @param canvas
@@ -726,7 +725,6 @@ public class Figure {
             y = point2.getY()+ rectangleHeight;
         }
         this.points.add(new Point(x, y));
-        //tomar este punto
     }
        
     /**
@@ -751,10 +749,18 @@ public class Figure {
      *
      *Crea los puntos de los arcos
      */
-    private void createPointsArc(Point point1, Point point2) {
+    public void createPointsArc(Point point1, Point point2) {
         int x =(( point1.getX() + point2.getX() - 30) / 2);
         int y =(( point1.getY() + point2.getY() - 30) / 2);
         this.posArc = new Point(x, y);
         this.startAngle = (Math.toDegrees(Math.atan2(point2.getX() - point1.getX(), point2.getY() - point1.getY())) ) + 180;
     }
+
+    public double getStartAngle() {
+        return startAngle;
+    }
+
+    public void addPoint(Point point) {
+        this.points.add(point);
+    }  
 }
