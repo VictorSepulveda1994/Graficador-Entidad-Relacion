@@ -600,6 +600,7 @@ public class MainController extends CallPop implements Initializable{
                     copy();
                 }   
             }
+            elementsSelect = new ArrayList<>();
         }
         else if(attributeToggleButton.isSelected()){
             diagram.addAttribute(event, canvas, showPoints);

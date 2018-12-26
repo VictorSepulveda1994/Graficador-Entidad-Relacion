@@ -57,7 +57,7 @@ public class PopAddAggregationController extends CallPop implements Initializabl
             count++;
             Aggregation aggregation = new Aggregation(false, nameOfAggregation, MainController.elementsSelect);
             MainController.diagram.addAggregation(aggregation);
-            MainController.elementsSelect.clear();
+            //MainController.elementsSelect.clear();
             MainController.diagram.deselectAll();
             ((Stage)root.getScene().getWindow()).close();
         }
@@ -78,7 +78,7 @@ public class PopAddAggregationController extends CallPop implements Initializabl
      * Metodo que se encarga de cancelar la operación
      */
     public void cancel(){
-        MainController.elementsSelect.clear();
+        //MainController.elementsSelect.clear();
         MainController.diagram.deselectAll();
         ((Stage)root.getScene().getWindow()).close();
     }

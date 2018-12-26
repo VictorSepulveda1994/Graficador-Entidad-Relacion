@@ -382,8 +382,13 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public void moveElement(MouseEvent event, Canvas canvas, boolean showPoints, int minWidth, int minHeight){
         copy();
+        boolean modificate = false;
         if( selectedElement != null && event.getX()-70 > 0  && event.getY()-40 > 0){
             String type = selectedElement.getClass().getName().substring(6);
+            ArrayList<Point> positions = isInAggregation(selectedElement);
+            if(positions.size() > 0){
+                modificate = true;
+            }   
             if( "Entity".equals(type) ){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) entities.get(iElement).getAttributes().clone();
@@ -412,6 +417,7 @@ public class Diagram extends CallPop implements Cloneable {
                 heritages.set(iElement, new Heritage(selectedElement.name,(int)event.getX(),(int) event.getY(), selectedElement.selected,attributesCopy,entitiesCopy,type1));
                 selectedElement = heritages.get(iElement);
             }
+            
             
             //Guarda las entidades dentro de las relaciones
             for (int i=0; i<relations.size();i++) {
@@ -465,17 +471,33 @@ public class Diagram extends CallPop implements Cloneable {
                 }
             }
             
-            int i = 0;
-            for (Aggregation aggregation : this.aggregations) {
-                System.out.println(i);
-                Aggregation aggregation1 = new Aggregation(aggregation.isSelected(), aggregation.getName(), aggregation.getElements());
-                aggregations.set(i, aggregation1);
-                i++;
+            if(modificate){
+                for (Point position : positions) {
+                    aggregations.get(position.getX()).getElements().set(position.getY(), selectedElement);
+                    Aggregation aggregation = new Aggregation(aggregations.get(position.getX()).selected, aggregations.get(position.getX()).getName(), aggregations.get(position.getX()).getElements());
+                    aggregations.set(position.getX(), aggregation);
+                }
             }
             
             adjustScreen(canvas, minWidth, minHeight);
             paint(canvas, showPoints);
         }
+    }
+    
+    public ArrayList<Point> isInAggregation(Element selectedElement){
+        int i = -1 , j = -1;
+        ArrayList<Point> positions = new ArrayList<>();
+        for (Aggregation aggregation : this.aggregations) {
+            i++;
+            ArrayList<Integer> p = aggregation.searchElement(selectedElement);
+            if(p.size() > 0){
+                for (Integer integer : p) {
+                    Point pos = new Point(i, integer);
+                    positions.add(pos);
+                }
+            }
+        }
+        return positions;
     }
     
     public void actualizar(){

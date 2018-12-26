@@ -13,13 +13,27 @@ public class Aggregation extends Element{
         this.figure = new Figure(name, minimumPoint(), maximumPoint());
     }
     
+    public ArrayList<Integer> searchElement(Element selectedElement){
+        int i = -1;
+        ArrayList<Integer> positions = new ArrayList<>();
+        for (Element element : this.elements) {
+            i++;
+            if(selectedElement.getFigure().getPosX() == element.getFigure().getPosX() && selectedElement.getFigure().getPosY() == element.getFigure().getPosY()){
+                positions.add(i);
+            }
+        }
+        return positions;
+    }
+    
     public Point minimumPoint(){
         int minX = 0,minY = 0;
         if(this.elements.size() > 0){
             minX = this.elements.get(0).maxPoint().getX();
             minY = this.elements.get(0).maxPoint().getY();
         }
+        System.out.println(elements.size());
         for (Element element : this.elements) {
+            System.out.println(element.getClass());
             if(minX > element.minPoint().getX()){
                 minX = element.minPoint().getX();
             }
