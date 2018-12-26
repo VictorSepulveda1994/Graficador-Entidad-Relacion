@@ -189,7 +189,7 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void buttonEntityClicked(ActionEvent event){
         entitiesSelect.clear();
-        //elementsSelect.clear();
+        elementsSelect.clear();
         entityToggleButton.setSelected(true);
         attributeToggleButton.setSelected(false);
         relationToggleButton.setSelected(false);
@@ -228,7 +228,7 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void buttonAttributeClicked(ActionEvent event){
         entitiesSelect.clear();
-        //elementsSelect.clear();
+        elementsSelect.clear();
         attributeToggleButton.setSelected(true);
         entityToggleButton.setSelected(false);
         relationToggleButton.setSelected(false);
@@ -265,7 +265,7 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void buttonHeritageClicked(ActionEvent event){
         entitiesSelect.clear();
-        //elementsSelect.clear();
+        elementsSelect.clear();
         attributeToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
         relationToggleButton.setSelected(false);
@@ -340,6 +340,7 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void buttonRelationClicked(ActionEvent event){
         entitiesSelect.clear();
+        elementsSelect.clear();
         attributeToggleButton.setSelected(false);
         relationToggleButton.setSelected(true);
         entityToggleButton.setSelected(false);
@@ -378,7 +379,7 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void buttonMoveClicked(ActionEvent event){
         entitiesSelect.clear();
-        //elementsSelect.clear();
+        elementsSelect.clear();
         attributeToggleButton.setSelected(false);
         moveToggleButton.setSelected(true);
         relationToggleButton.setSelected(false);
@@ -436,7 +437,7 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void buttonDeleteFigureClicked(ActionEvent event){
         entitiesSelect.clear();
-        //elementsSelect.clear();
+        elementsSelect.clear();
         attributeToggleButton.setSelected(false);
         deleteToggleButton.setSelected(true);
         relationToggleButton.setSelected(false);
@@ -470,7 +471,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonEditClicked(ActionEvent event) throws IOException{  
-        //elementsSelect.clear();
+        elementsSelect.clear();
         attributeToggleButton.setSelected(false);
         relationToggleButton.setSelected(false);
         entityToggleButton.setSelected(false);
@@ -632,9 +633,9 @@ public class MainController extends CallPop implements Initializable{
                 if (!element.isInFigure(event) && elementsSelect.size()>0){
                     popAddAggregation();
                     copy();
+                    MainController.elementsSelect.clear();
                 }   
             }
-            elementsSelect = new ArrayList<>();
         }
         else if(attributeToggleButton.isSelected()){
             diagram.addAttribute(event, canvas, showPoints);
