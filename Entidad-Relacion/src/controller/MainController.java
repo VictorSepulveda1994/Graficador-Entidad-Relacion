@@ -179,7 +179,35 @@ public class MainController extends CallPop implements Initializable{
                 }
             }
         }
-        restricciones(restricciones);
+        for(int i=0;i<diagram.getHeritages().size();i++){
+            for(int a=0;a<diagram.getHeritages().get(i).getParentEntity().getAttributes().size();a++){
+                for(int e=0;e<diagram.getHeritages().get(i).getDaughtersEntities().size();e++){
+                    for(int o=0;o<diagram.getHeritages().get(i).getDaughtersEntities().get(e).getAttributes().size();o++){
+                        if(diagram.getHeritages().get(i).getParentEntity().getAttributes().get(a).getName().equals(diagram.getHeritages().get(i).getDaughtersEntities().get(e).getAttributes().get(o).getName())){
+                            restricciones=restricciones+"El atributo "+diagram.getHeritages().get(i).getParentEntity().getAttributes().get(a).getName()+" se encuentra en el padre y uno de sus hijos. \n";
+                        }
+                    }
+                }
+            }
+        }
+        
+        for(int i=0;i<diagram.getEntities().size();i++){
+            for(int a=0;a<diagram.getEntities().get(i).getAttributes().size();a++){
+                for(int e=a+1;e<diagram.getEntities().get(i).getAttributes().size();e++){
+                    if(diagram.getEntities().get(i).getAttributes().get(a).getName().equals(diagram.getEntities().get(i).getAttributes().get(e).getName())){
+                        restricciones=restricciones+"El atributo con nombre "+diagram.getEntities().get(i).getAttributes().get(a).getName()+" ya se encuentra en la entidad. \n";
+                    }
+                }
+            }
+        }
+        
+        if(restricciones.equals("")){
+            restricciones("No se encontraron errores.");
+        }
+        else{
+            restricciones(restricciones);
+        }
+        
     }
     
     /**
