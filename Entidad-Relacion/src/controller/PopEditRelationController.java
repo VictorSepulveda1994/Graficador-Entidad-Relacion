@@ -198,15 +198,20 @@ public class PopEditRelationController extends CallPop implements Initializable 
      */
     @FXML
     public void agregar(){
-        for(int i=0;i<avaliables.size();i++){
-            if(avaliables.get(i).isSelected()){
-                for(int a=0;a<MainController.diagram.getEntities().size();a++) {
-                    if(MainController.diagram.getEntities().get(a).getName().equals(avaliables.get(i).getText())){
-                        newrelation.getEntities().add(MainController.diagram.getEntities().get(a));  
-                        break;
+        if(newrelation.getEntities().size()<2){
+            for(int i=0;i<avaliables.size();i++){
+                if(avaliables.get(i).isSelected()){
+                    for(int a=0;a<MainController.diagram.getEntities().size();a++) {
+                        if(MainController.diagram.getEntities().get(a).getName().equals(avaliables.get(i).getText())){
+                            newrelation.getEntities().add(MainController.diagram.getEntities().get(a));  
+                            break;
+                        }
                     }
                 }
             }
+        }
+        else{
+            alertEntities();
         }
         actualizarRoot();
     }

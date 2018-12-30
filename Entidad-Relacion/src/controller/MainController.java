@@ -720,6 +720,7 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void mouseDragged(MouseEvent event){
         if(moveToggleButton.isSelected()){
+            copy();
             diagram.moveElement(event, canvas, showPoints, minWidth, minHeight);
         }
     }

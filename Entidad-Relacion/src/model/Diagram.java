@@ -416,7 +416,6 @@ public class Diagram extends CallPop implements Cloneable {
      * @param minHeight
      */
     public void moveElement(MouseEvent event, Canvas canvas, boolean showPoints, int minWidth, int minHeight){
-        copy();
         boolean modificate = false;
         if( selectedElement != null && event.getX()-70 > 0  && event.getY()-40 > 0){
             String type = selectedElement.getClass().getName().substring(6);
