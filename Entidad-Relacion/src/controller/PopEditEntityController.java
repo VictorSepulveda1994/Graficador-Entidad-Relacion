@@ -54,12 +54,6 @@ public class PopEditEntityController extends CallPop implements Initializable{
      */
     public static Entity newEntity;
     
-    /***
-     *  Texto que le advierte al usuario que no puede poner la entidad debil sino cumple con el requisito necesario.
-     */
-    @FXML
-    public Text alertEntity;
-    
     /**
      * Inicio de la clase controladora
      */
@@ -74,10 +68,6 @@ public class PopEditEntityController extends CallPop implements Initializable{
         }
         else{
             option.setSelected(false);
-        }
-        if(!theEntityCanBeWeak()){
-            option.setDisable(true);
-            alertEntity.setVisible(true);
         }
 
     }
@@ -105,22 +95,6 @@ public class PopEditEntityController extends CallPop implements Initializable{
             ((Stage)root.getScene().getWindow()).close();
             
         }
-    }
-    
-    public boolean theEntityCanBeWeak(){
-        MainController.diagram.actualizar();
-        int numberOfStrongEntities=0;
-        for (int i = 0; i <MainController.diagram.getRelations().size(); i++) {
-            Relation relation = MainController.diagram.getRelations().get(i);
-            if(relation.hasThisEntity(newEntity)){
-                for (int j = 0; j <relation.getEntities().size(); j++) {
-                    if(relation.getEntities().get(j).getType().equals(FigureType.STRONG) && !relation.getEntities().get(j).getName().equals(newEntity.getName())){
-                        numberOfStrongEntities+=1;
-                    }
-                }
-            }
-        }
-        return numberOfStrongEntities>=1;
     }
     
     /**
