@@ -104,7 +104,7 @@ public class Figure {
         createPointsLine(point1,point2);
     }
     
-    public Figure(Point point1,Point point2,boolean withArc,boolean doble,Element element){
+    public Figure(Point point1,Point point2,boolean withArc,boolean doble){
         this.points = new ArrayList<>();
         this.pointsInside = new ArrayList<>();
         pointsLines = new ArrayList<>();
@@ -115,7 +115,7 @@ public class Figure {
             Point pointTwo = new Point(point2.getX()+7,point2.getY()+7);
             pointsInside.add(pointOne);
             pointsInside.add(pointTwo);
-            addLineConnector(pointOne,pointTwo,element);
+            addLineConnector(pointOne,pointTwo);
         }       
     }
 
@@ -206,13 +206,13 @@ public class Figure {
         if(this.withArc){
             addArc(canvas, selected);
         }
-        }
+    }
     
     public void paintCardinality (Canvas canvas,Element element1,Element element2,String cardinality){
         if(!(element1 instanceof Heritage) && !(element1 instanceof Attribute) && !(element2 instanceof Heritage) && !(element2 instanceof Attribute)){
             ArrayList <Attribute> attributes = new ArrayList <> ();
             Connector connector = new Connector (element1,element1.figure.getCenter(),element2,element2.figure.getCenter()," ",false,attributes);
-            Point point = connector.figure.addLineConnector(connector.getPointElement1(),connector.getPointElement2(),connector.getElement2());
+            Point point = connector.figure.addLineConnector(connector.getPointElement1(),connector.getPointElement2());
             if(element1 instanceof Entity && element2 instanceof Relation){
                 Relation relation = (Relation) element2;
                 if(relation.getEntities().size()==1){
@@ -791,7 +791,7 @@ public class Figure {
      *
      * Agrega un conector más para las relaciones unitarias
      */
-    public Point addLineConnector(Point point1, Point point2, Element e){
+    public Point addLineConnector(Point point1, Point point2){
         int x = 0;
         int y = 0;
         createPointsArc(point1, point2);
@@ -826,7 +826,7 @@ public class Figure {
         this.points.add(new Point(x, y));
         return new Point(x, y);
     }
-       
+      
     /**
      *
      *Dibuja los arcos en las lineas correspondientes
@@ -882,6 +882,7 @@ public class Figure {
             y-=5;
         }
     }
+    
     public double getStartAngle() {
         return startAngle;
     }

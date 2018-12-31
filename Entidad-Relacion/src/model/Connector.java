@@ -43,7 +43,7 @@ public class Connector extends Element{
         if("Relation".equals(nameE1) && "Entity".equals(nameE2)){
             Relation rAux = (Relation) element1;
             if(rAux.getEntities().size()==1){
-                Point point = figure.addLineConnector(pointElement1, pointElement2, this.element2);
+                Point point = figure.addLineConnector(pointElement1, pointElement2);
                 
             }
         }       
@@ -76,7 +76,7 @@ public class Connector extends Element{
         this.pointElement1 = element1.getFigure().getCenter();
         this.pointElement2 = element2.getFigure().getCenter();
         this.withArc = withArc;
-        figure = new Figure(element1.getFigure().getCenter(), element2.getFigure().getCenter(),this.withArc,this.doble,this.element2);
+        figure = new Figure(element1.getFigure().getCenter(), element2.getFigure().getCenter(),this.withArc,this.doble);
     }
 
     public boolean isDoble() {
