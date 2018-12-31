@@ -1273,21 +1273,22 @@ public class Diagram extends CallPop implements Cloneable {
     }
     
     public void deleteOneConnectorsRelations (Element element){
-        for (int i = 0; i <this.connectorsRelations.size(); i++) {
-            System.out.println("tamono"+this.connectorsRelations.size()+"y i:"+i);
-            System.out.println("Elemento1: "+this.connectorsRelations.get(i).getElement1().name);
-            System.out.println("Elemento2: "+this.connectorsRelations.get(i).getElement2().name);
-            System.out.println("elemento que entra: "+element.name);
-            if((element.name.equals(this.connectorsRelations.get(i).getElement1().name)) || (element.name.equals(this.connectorsRelations.get(i).getElement2().name))){
-                System.out.println("se borro");
-                System.out.println("Elemento1: "+this.connectorsRelations.get(i).getElement1().name);
-                System.out.println("Elemento2: "+this.connectorsRelations.get(i).getElement2().name);
-                this.connectorsRelations.remove(i);
-                System.out.println("se borro");
-                System.out.println("tamono"+this.connectorsRelations.size()+"y i:"+i);
-                i=0;
+        while(isInConnectorsRelations(element)){
+            for (int i = 0; i <this.connectorsRelations.size(); i++) {
+                if((element.name.equals(this.connectorsRelations.get(i).getElement1().name)) || (element.name.equals(this.connectorsRelations.get(i).getElement2().name))){
+                    this.connectorsRelations.remove(i);
+                }
             }
         }
+    }
+    
+    public boolean isInConnectorsRelations (Element element){
+        for (int i = 0; i <this.connectorsRelations.size(); i++) {
+            if((element.name.equals(this.connectorsRelations.get(i).getElement1().name)) || (element.name.equals(this.connectorsRelations.get(i).getElement2().name))){
+                return true;
+            }
+        }
+        return false;
     }
      
     public int foundIndexElement (Element element){
