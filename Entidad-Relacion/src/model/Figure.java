@@ -104,18 +104,17 @@ public class Figure {
         createPointsLine(point1,point2);
     }
     
-    public Figure(Point point1,Point point2,boolean withArc,boolean doble){
+    public Figure(Point point1,Point point2,boolean withArc,boolean doble,boolean isUnitaryRelation){
         this.points = new ArrayList<>();
         this.pointsInside = new ArrayList<>();
         pointsLines = new ArrayList<>();
         this.doble=doble;
         createPointsLine(point1,point2);
-        if(doble){
+        if(doble && !isUnitaryRelation){
             Point pointOne = new Point(point1.getX()+7,point1.getY()+7);
             Point pointTwo = new Point(point2.getX()+7,point2.getY()+7);
             pointsInside.add(pointOne);
             pointsInside.add(pointTwo);
-            addLineConnector(pointOne,pointTwo);
         }       
     }
 

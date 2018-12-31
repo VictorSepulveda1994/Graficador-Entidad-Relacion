@@ -60,34 +60,15 @@ public class PopEditConnectorController extends CallPop implements Initializable
     public void addToScreen(){
         if(option.isSelected()){
             isDoubleConnector=true;
-            /*
-            Element element1= newConnector.getElement1();
-            element1.setDoubleConnector(true);
-            newConnector.setElement1(element1);
-            Element element2= newConnector.getElement2();
-            element2.setDoubleConnector(true);
-            newConnector.setElement2(element2);
-            */
         }
         else{
-            isDoubleConnector=false;/*
-            Element element1= newConnector.getElement1();
-            element1.setDoubleConnector(false);
-            newConnector.setElement1(element1);
-            Element element2= newConnector.getElement2();
-            element2.setDoubleConnector(false);
-            newConnector.setElement2(element2);
-            */
+            isDoubleConnector=false;
         }
         ((Stage)root.getScene().getWindow()).close();
 
         
     }
     
-    public boolean connectorIsDouble(){
-        return newConnector.getElement1().doubleConnector==true && newConnector.getElement2().doubleConnector==true;
-    }
-      
     /**
      * Cancela la operación
      */

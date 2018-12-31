@@ -14,7 +14,6 @@ public abstract class Element {
     protected String name;
     protected boolean selected;
     protected ArrayList<Attribute> attributes = new ArrayList<>();
-    public boolean doubleConnector;
     protected ArrayList<Element> elements;
 
     /**
@@ -27,7 +26,6 @@ public abstract class Element {
         this.name = name;
         this.selected = selected;
         this.attributes=(ArrayList<Attribute>) attributes.clone();
-        this.doubleConnector=false;
     }
     
     /**
@@ -205,14 +203,6 @@ public abstract class Element {
      */
     public void addAttribute(Attribute attribute) {
         this.attributes.add(attribute);
-    }
-
-    public boolean isDoubleConnector() {
-        return doubleConnector;
-    }
-
-    public void setDoubleConnector(boolean doubleConnector) {
-        this.doubleConnector = doubleConnector;
     }
 
     public boolean isSelected() {

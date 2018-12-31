@@ -1062,7 +1062,14 @@ public class Diagram extends CallPop implements Cloneable {
                 selectedElement=connector;
                 popEditConnector();
                 ready = true ;
-                connectorsRelations.set(iE, new Connector(newConnector.getElement1(),newConnector.getElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes(),false,isDoubleConnector));
+                Connector connector1 = new Connector(newConnector.getElement1(),newConnector.getElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes(),false,isDoubleConnector);
+                connectorsRelations.set(iE,connector1);
+                if(connector1.isDoble() && connector1.isUnitaryRelation()){
+                    Point point1 = new Point (connector1.getElement1().figure.getCenter().getX()-7,connector1.getElement1().figure.getCenter().getY()-7);
+                    Point point2 = new Point (connector1.getElement2().figure.getCenter().getX()-7,connector1.getElement2().figure.getCenter().getY()-7);
+                    ArrayList <Attribute> attributes = (ArrayList<Attribute>) connector1.attributes.clone();
+                    connectorsRelations.add(new Connector(connector1.getElement1(),point1,connector1.getElement2(),point2,"",connector1.selected,attributes));
+                }  
                 break;
             }
             iE++;
@@ -1420,13 +1427,6 @@ public class Diagram extends CallPop implements Cloneable {
                 element.getAttributes().get(i).figure.setName(attribute.getName());
             }
         } 
-    }
-    
-    public boolean isDoubleConnector (Element element1, Element element2){
-        if(element1.doubleConnector==true && element2.doubleConnector==true){
-            return true;
-        }
-        return false;
     }
 
     public ArrayList<Aggregation> getAggregations() {

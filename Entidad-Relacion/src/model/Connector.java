@@ -76,7 +76,7 @@ public class Connector extends Element{
         this.pointElement1 = element1.getFigure().getCenter();
         this.pointElement2 = element2.getFigure().getCenter();
         this.withArc = withArc;
-        figure = new Figure(element1.getFigure().getCenter(), element2.getFigure().getCenter(),this.withArc,this.doble);
+        figure = new Figure(element1.getFigure().getCenter(), element2.getFigure().getCenter(),this.withArc,this.doble,isUnitaryRelation ());
     }
 
     public boolean isDoble() {
@@ -87,7 +87,16 @@ public class Connector extends Element{
         this.doble = doble;
     }
    
-
+    public boolean isUnitaryRelation (){
+        if(this.element1 instanceof Entity && this.element2 instanceof Relation){
+            return ((Relation)this.element2).getEntities().size()==1;
+        }
+        else if (this.element2 instanceof Entity && this.element1 instanceof Relation){
+            return ((Relation)this.element1).getEntities().size()==1;
+        }
+        return false;
+    }
+    
     /**
      *
      * @return

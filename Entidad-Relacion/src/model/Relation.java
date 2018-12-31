@@ -173,13 +173,4 @@ public class Relation extends Element {
     public void setType(FigureType type) {
         this.type = type;
     }
-
-    public boolean isDoubleConnector() {
-        return doubleConnector;
-    }
-
-    public void setDoubleConnector(boolean doubleConnector) {
-        this.doubleConnector = doubleConnector;
-    }
-    
 }
