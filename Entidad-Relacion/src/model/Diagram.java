@@ -859,16 +859,6 @@ public class Diagram extends CallPop implements Cloneable {
                     }
                 }
                 connectors.add(connector);
-
-                if(((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)) || isDoubleConnector(relations.get(i),relations.get(i).getEntities().get(a))){
-                    Point pointRelation = relations.get(i).getFigure().getCenter();
-                    pointRelation.setY(pointRelation.getY()-7);
-                    pointRelation.setX(pointRelation.getX()-7);
-                    connector= new Connector(relations.get(i),pointRelation
-                            ,relations.get(i).getEntities().get(a),new Point(((relations.get(i).getEntities().get(a).getFigure().getPosX()-7)),(relations.get(i).getEntities().get(a).getFigure().getPosY()-7)),
-                    " ",false,attributes1);
-                    connectors.add(connector);
-                }
             }
         }
         for(int i=0;i<relations.size();i++){
