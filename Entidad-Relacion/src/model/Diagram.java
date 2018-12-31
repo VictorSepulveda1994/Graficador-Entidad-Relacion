@@ -893,6 +893,50 @@ public class Diagram extends CallPop implements Cloneable {
                 connectors.add(connectorAux);
             }
         }
+        for (int i = 0; i <this.connectorsRelations.size(); i++) {
+            Connector connector1 = this.connectorsRelations.get(i);
+            if(connector1.isDoble() && connector1.isUnitaryRelation()){
+                Point point1 = new Point (connector1.getElement1().figure.getCenter().getX()-8,connector1.getElement1().figure.getCenter().getY()-8);
+                Point point2 = new Point (connector1.getElement2().figure.getCenter().getX()-8,connector1.getElement2().figure.getCenter().getY()-8);
+                ArrayList <Attribute> attributes = (ArrayList<Attribute>) connector1.attributes.clone();
+                Connector connector2 = new Connector(connector1.getElement1(),point1,connector1.getElement2(),point2,"",connector1.selected,attributes);
+                if(connector1.getElement1() instanceof Entity && connector1.getElement2() instanceof Relation){
+                    Relation relation = (Relation)connector1.getElement2();
+                    switch (relation.typeCardinality) {
+                        case MANY_TO_MANY:
+                            connector2.setCardinalityLetter("N");
+                            break;
+                        case ONE_TO_ONE:
+                            connector2.setCardinalityLetter("1");
+                            break;
+                        case ONE_TO_MANY:
+                            connector2.setCardinalityLetter("1");
+                            break;
+                        case MANY_TO_ONE:
+                            connector2.setCardinalityLetter("N");
+                            break;
+                    }   
+                }
+                else if(connector1.getElement2() instanceof Entity && connector1.getElement1() instanceof Relation){
+                    Relation relation = (Relation)connector1.getElement1();
+                    switch (relation.typeCardinality) {
+                        case MANY_TO_MANY:
+                            connector2.setCardinalityLetter("N");
+                            break;
+                        case ONE_TO_ONE:
+                            connector2.setCardinalityLetter("1");
+                            break;
+                        case ONE_TO_MANY:
+                            connector2.setCardinalityLetter("1");
+                            break;
+                        case MANY_TO_ONE:
+                            connector2.setCardinalityLetter("N");
+                            break;
+                    }
+                }
+                connectors.add(connector2);
+            } 
+        }
     }
     
     public void createConnectorR(Element element1, Element element2){
@@ -1063,13 +1107,7 @@ public class Diagram extends CallPop implements Cloneable {
                 popEditConnector();
                 ready = true ;
                 Connector connector1 = new Connector(newConnector.getElement1(),newConnector.getElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes(),false,isDoubleConnector);
-                connectorsRelations.set(iE,connector1);
-                if(connector1.isDoble() && connector1.isUnitaryRelation()){
-                    Point point1 = new Point (connector1.getElement1().figure.getCenter().getX()-7,connector1.getElement1().figure.getCenter().getY()-7);
-                    Point point2 = new Point (connector1.getElement2().figure.getCenter().getX()-7,connector1.getElement2().figure.getCenter().getY()-7);
-                    ArrayList <Attribute> attributes = (ArrayList<Attribute>) connector1.attributes.clone();
-                    connectorsRelations.add(new Connector(connector1.getElement1(),point1,connector1.getElement2(),point2,"",connector1.selected,attributes));
-                }  
+                connectorsRelations.set(iE,connector1); 
                 break;
             }
             iE++;
