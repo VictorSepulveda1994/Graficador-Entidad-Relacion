@@ -10,7 +10,6 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-import model.Relation.Cardinality;
 
 /**
  * @author Equipo Rocket

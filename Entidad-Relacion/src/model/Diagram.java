@@ -2,7 +2,6 @@ package model;
 
 import controller.CallPop;
 import controller.MainController;
-import static controller.MainController.copy;
 import controller.PopAddAttributeController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;

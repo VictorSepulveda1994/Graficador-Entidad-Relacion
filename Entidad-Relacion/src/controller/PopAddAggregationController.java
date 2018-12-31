@@ -9,12 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Aggregation;
-import model.Attribute;
-import model.AttributeType;
 import static model.Diagram.count;
 import model.Element;
-import model.Entity;
-import model.FigureType;
 
 /**
  * @author Equipo Rocket

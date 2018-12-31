@@ -14,8 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Connector;
 import static model.Diagram.selectedElement;
-import model.Element;
-
 
 /**
  * FXML Controller class
