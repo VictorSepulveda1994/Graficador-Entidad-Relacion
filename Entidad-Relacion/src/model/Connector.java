@@ -40,7 +40,7 @@ public class Connector extends Element{
         figure = new Figure(this.pointElement1,this.pointElement2,this.withArc);
         String nameE1 = element1.getClass().getName().substring(6);
         String nameE2 = element2.getClass().getName().substring(6);
-        if("Relation".equals(nameE1) && "Entity".equals(nameE2)){
+        if(("Relation".equals(nameE1) && "Entity".equals(nameE2)) || (("Relation".equals(nameE1) && "Aggregation".equals(nameE2)))){
             Relation rAux = (Relation) element1;
             if(rAux.getEntities().size()==1){
                 Point point = figure.addLineConnector(pointElement1, pointElement2);
