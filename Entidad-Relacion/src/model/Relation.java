@@ -34,12 +34,7 @@ public class Relation extends Element {
     public Relation(String name, int sides, int posX, int posY, boolean selected, ArrayList<Entity> entities,ArrayList<Attribute> attributes, FigureType type, Cardinality typeCardinality) {
         super(name,selected,attributes);
         this.entities = (ArrayList<Entity>) entities.clone();
-        if((numberOfEntitiesWeak()==1 && this.entities.size()>1) || numberOfEntitiesWeak()==0){
-            this.type=type;
-        }
-        else{
-            this.type=FigureType.WEAK;
-        }
+        this.type=type;
         figure = new Figure(name, sides, posX, posY);
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
@@ -54,12 +49,7 @@ public class Relation extends Element {
     public Relation(Relation relation){
         super(relation.getName(),false,relation.getAttributes());
         this.entities = relation.getEntities();
-        if((numberOfEntitiesWeak()==1 && this.entities.size()>1) || numberOfEntitiesWeak()==0){
-            this.type=relation.getType();
-        }
-        else{
-            this.type=FigureType.WEAK;
-        }
+        this.type=relation.getType();
         figure = new Figure(relation.getName(),relation.figure.getSides(),relation.figure.getPosX(),relation.figure.getPosY());
         if(type==FigureType.WEAK){
             figure.addDoubleLinePolygon();
@@ -166,6 +156,15 @@ public class Relation extends Element {
         }
     }
     
+    public boolean hasAStrongEntity (){
+        int strongEntities=0;
+        for (int i = 0; i <this.entities.size(); i++) {
+            if(this.entities.get(i).type.equals(FigureType.STRONG)){
+                strongEntities++;
+            }
+        }
+        return strongEntities>0;
+    }
     /**
      *
      * @param type
@@ -173,13 +172,4 @@ public class Relation extends Element {
     public void setType(FigureType type) {
         this.type = type;
     }
-
-    public boolean isDoubleConnector() {
-        return doubleConnector;
-    }
-
-    public void setDoubleConnector(boolean doubleConnector) {
-        this.doubleConnector = doubleConnector;
-    }
-    
 }

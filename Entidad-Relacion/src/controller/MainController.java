@@ -24,6 +24,7 @@ import javafx.scene.input.ScrollEvent;
 import model.AttributeType;
 import model.FigureType;
 import model.Attribute;
+import model.Connector;
 import model.Relation;
 
 /**
@@ -163,15 +164,48 @@ public class MainController extends CallPop implements Initializable{
         for(int i=0;i<diagram.getEntities().size();i++){
             if(diagram.getEntities().get(i).getType().equals(FigureType.WEAK)){
                 if(!diagram.getEntities().get(i).haveAttributeParcial()){
-                    restricciones=restricciones+"La entidad debil "+diagram.getEntities().get(i).getName()+": "+"no tiene clave parcial.\n";
-                }             
+                    restricciones=restricciones+"La entidad débil "+diagram.getEntities().get(i).getName()+": "+"no tiene clave parcial.\n";
+                }
+                if(diagram.hasAnyRelation(diagram.getEntities().get(i))){
+                    int entityWeakProblem1=0;
+                    for (int j = 0; j <diagram.getRelations().size(); j++) {
+                        Relation relation = diagram.getRelations().get(j);
+                        if(relation.hasThisEntity(diagram.getEntities().get(i)) && relation.hasAStrongEntity()){
+                            entityWeakProblem1++;                            
+                        }
+                        if(relation.hasThisEntity(diagram.getEntities().get(i)) && relation.type.equals(FigureType.WEAK)){
+                            Connector connector = diagram.foundConnector(relation,diagram.getEntities().get(i));
+                            if(!connector.isDoble()){
+                                restricciones=restricciones+"La relacion débil "+relation.getName()+": "+"no tiene el conector doble con la entidad débil "+diagram.getEntities().get(i).getName()+".\n";         
+                            }
+                        }
+                        if(relation.hasThisEntity(diagram.getEntities().get(i)) && relation.getEntities().size()==1){
+                            Connector connector = diagram.foundConnector(relation,diagram.getEntities().get(i));
+                            if(!relation.getType().equals(FigureType.WEAK) && !connector.isDoble()){
+                                restricciones=restricciones+"La relación "+relation.getName()+": "+"no es débil ni tiene su conector doble con la entidad "+diagram.getEntities().get(i).getName()+".\n";         
+                            }
+                            else if (!relation.getType().equals(FigureType.WEAK) && connector.isDoble()){
+                                restricciones=restricciones+"La relación "+relation.getName()+": "+"no es débil.\n";                 
+                            }
+                            
+                        }
+                        
+                    }
+                    if(entityWeakProblem1==0){
+                        restricciones=restricciones+"La entidad débil "+diagram.getEntities().get(i).getName()+": "+"no esta relacionada con una entidad fuerte.\n";         
+                    }
+                }
+                else{
+                    restricciones=restricciones+"La entidad débil "+diagram.getEntities().get(i).getName()+": "+"no esta relacionada con una entidad fuerte.\n";         
+                }
             }
             else{
                 if(!diagram.getEntities().get(i).haveAttributeKey()){
                     restricciones=restricciones+"La entidad fuerte "+diagram.getEntities().get(i).getName()+": "+"no tiene clave.\n";
                 }                 
-            }
+            }            
         }
+        
         for(int i=0;i<diagram.getAttributes().size();i++){
             if(diagram.getAttributes().get(i).getTipo().equals(AttributeType.COMPOUND)){
                 if(diagram.getAttributes().get(i).getAttributes().isEmpty()){

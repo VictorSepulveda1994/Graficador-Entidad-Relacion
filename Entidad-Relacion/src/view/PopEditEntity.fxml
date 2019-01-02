@@ -56,10 +56,5 @@
             <Font size="17.0" />
          </font>
       </CheckBox>
-      <Text fx:id="alertEntity" fill="RED" layoutX="22.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La entidad necesita estar relacionada con una entidad fuerte para poder ser debíl" visible="false">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

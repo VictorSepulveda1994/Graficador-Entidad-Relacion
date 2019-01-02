@@ -2,7 +2,6 @@ package model;
 
 import controller.CallPop;
 import controller.MainController;
-import static controller.MainController.copy;
 import controller.PopAddAttributeController;
 import static controller.PopAddAttributeController.attributeType;
 import static controller.PopAddAttributeController.nameAttribute;
@@ -859,16 +858,6 @@ public class Diagram extends CallPop implements Cloneable {
                     }
                 }
                 connectors.add(connector);
-
-                if(((relations.get(i).getType()==FigureType.WEAK) && (relations.get(i).getEntities().get(a).getType()==FigureType.WEAK)) || isDoubleConnector(relations.get(i),relations.get(i).getEntities().get(a))){
-                    Point pointRelation = relations.get(i).getFigure().getCenter();
-                    pointRelation.setY(pointRelation.getY()-7);
-                    pointRelation.setX(pointRelation.getX()-7);
-                    connector= new Connector(relations.get(i),pointRelation
-                            ,relations.get(i).getEntities().get(a),new Point(((relations.get(i).getEntities().get(a).getFigure().getPosX()-7)),(relations.get(i).getEntities().get(a).getFigure().getPosY()-7)),
-                    " ",false,attributes1);
-                    connectors.add(connector);
-                }
             }
         }
         for(int i=0;i<relations.size();i++){
@@ -902,6 +891,50 @@ public class Diagram extends CallPop implements Cloneable {
                 Connector connectorAux = new Connector(heritage, daughterEntity, "", false, heritage.attributes, true);
                 connectors.add(connectorAux);
             }
+        }
+        for (int i = 0; i <this.connectorsRelations.size(); i++) {
+            Connector connector1 = this.connectorsRelations.get(i);
+            if(connector1.isDoble() && connector1.isUnitaryRelation()){
+                Point point1 = new Point (connector1.getElement1().figure.getCenter().getX()-8,connector1.getElement1().figure.getCenter().getY()-8);
+                Point point2 = new Point (connector1.getElement2().figure.getCenter().getX()-8,connector1.getElement2().figure.getCenter().getY()-8);
+                ArrayList <Attribute> attributes = (ArrayList<Attribute>) connector1.attributes.clone();
+                Connector connector2 = new Connector(connector1.getElement1(),point1,connector1.getElement2(),point2,"",connector1.selected,attributes);
+                if(connector1.getElement1() instanceof Entity && connector1.getElement2() instanceof Relation){
+                    Relation relation = (Relation)connector1.getElement2();
+                    switch (relation.typeCardinality) {
+                        case MANY_TO_MANY:
+                            connector2.setCardinalityLetter("N");
+                            break;
+                        case ONE_TO_ONE:
+                            connector2.setCardinalityLetter("1");
+                            break;
+                        case ONE_TO_MANY:
+                            connector2.setCardinalityLetter("1");
+                            break;
+                        case MANY_TO_ONE:
+                            connector2.setCardinalityLetter("N");
+                            break;
+                    }   
+                }
+                else if(connector1.getElement2() instanceof Entity && connector1.getElement1() instanceof Relation){
+                    Relation relation = (Relation)connector1.getElement1();
+                    switch (relation.typeCardinality) {
+                        case MANY_TO_MANY:
+                            connector2.setCardinalityLetter("N");
+                            break;
+                        case ONE_TO_ONE:
+                            connector2.setCardinalityLetter("1");
+                            break;
+                        case ONE_TO_MANY:
+                            connector2.setCardinalityLetter("1");
+                            break;
+                        case MANY_TO_ONE:
+                            connector2.setCardinalityLetter("N");
+                            break;
+                    }
+                }
+                connectors.add(connector2);
+            } 
         }
     }
     
@@ -985,6 +1018,7 @@ public class Diagram extends CallPop implements Cloneable {
      * @throws IOException
      */
     public void selectElementEdit(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        actualizar();
         boolean ready = false;
         int iE=0;
         for (Entity entity : entities) {
@@ -1014,7 +1048,6 @@ public class Diagram extends CallPop implements Cloneable {
                 popEdit();
                 ready = true ;
                 if(!"".equals(enteredNameR)){
-                    System.out.println(" "+newrelation.getEntities().size());
                     relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType(),newrelation.getTypeCardinality()));      
                     enteredNameR="";
                     int i=0;
@@ -1029,8 +1062,9 @@ public class Diagram extends CallPop implements Cloneable {
                             i++;
                         }
                     }
+                    actualizar();
                     for(int a=0;a<relations.get(iE).getEntities().size();a++){
-                        createConnectorR(relations.get(iE),relations.get(iE).getEntities().get(i));
+                        createConnectorR(relations.get(iE),relations.get(iE).getEntities().get(a));
                     }
                 }
                 break;
@@ -1083,7 +1117,8 @@ public class Diagram extends CallPop implements Cloneable {
                 selectedElement=connector;
                 popEditConnector();
                 ready = true ;
-                connectorsRelations.set(iE, new Connector(newConnector.getElement1(),newConnector.getElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes(),false,isDoubleConnector));
+                Connector connector1 = new Connector(newConnector.getElement1(),newConnector.getElement2(),newConnector.name,newConnector.selected,newConnector.getAttributes(),false,isDoubleConnector);
+                connectorsRelations.set(iE,connector1); 
                 break;
             }
             iE++;
@@ -1121,16 +1156,7 @@ public class Diagram extends CallPop implements Cloneable {
                         paint(canvas, showPoints); 
                     }
                 }
-                int a=0;
-                while(a<connectorsRelations.size()){
-                    if(relations.get(i).equals(connectorsRelations.get(a).getElement1())){
-                        connectorsRelations.remove(a);
-                        if(!connectorsRelations.isEmpty()){
-                            a--;
-                        }
-                    }
-                    a++;
-                }
+                deleteOneConnectorsRelations(this.relations.get(i));
                 this.relations.remove(i);              
             }
         }
@@ -1157,7 +1183,7 @@ public class Diagram extends CallPop implements Cloneable {
                         if(this.relations.get(j).hasThisEntity(entity)){
                             Relation relation = this.relations.get(j);
                             if (relation.getEntities().size()<=1){
-                                deleteSomeAttributes(this.relations.get(i));
+                                deleteSomeAttributes(this.relations.get(j));
                                 this.relations.get(j).getAttributes().clear();
                                 this.relations.remove(j);                      
                             }
@@ -1187,14 +1213,7 @@ public class Diagram extends CallPop implements Cloneable {
                     }
                 }
                 if (!hasAnyRelation(this.entities.get(i))){
-                    for(int a=0;a<connectorsRelations.size();a++){
-                        if(entities.get(i).equals(connectorsRelations.get(a).getElement2())){
-                            connectorsRelations.remove(a);
-                            if(!connectorsRelations.isEmpty()){
-                                a=0;
-                            }
-                        }
-                    }
+                    deleteOneConnectorsRelations(this.entities.get(i));
                     this.entities.remove(i);
                 }
             }
@@ -1308,6 +1327,25 @@ public class Diagram extends CallPop implements Cloneable {
             }
             
         }
+    }
+    
+    public void deleteOneConnectorsRelations (Element element){
+        while(isInConnectorsRelations(element)){
+            for (int i = 0; i <this.connectorsRelations.size(); i++) {
+                if((element.name.equals(this.connectorsRelations.get(i).getElement1().name)) || (element.name.equals(this.connectorsRelations.get(i).getElement2().name))){
+                    this.connectorsRelations.remove(i);
+                }
+            }
+        }
+    }
+    
+    public boolean isInConnectorsRelations (Element element){
+        for (int i = 0; i <this.connectorsRelations.size(); i++) {
+            if((element.name.equals(this.connectorsRelations.get(i).getElement1().name)) || (element.name.equals(this.connectorsRelations.get(i).getElement2().name))){
+                return true;
+            }
+        }
+        return false;
     }
      
     public int foundIndexElement (Element element){
@@ -1440,17 +1478,21 @@ public class Diagram extends CallPop implements Cloneable {
             }
         } 
     }
-    
-    public boolean isDoubleConnector (Element element1, Element element2){
-        if(element1.doubleConnector==true && element2.doubleConnector==true){
-            return true;
-        }
-        return false;
-    }
 
     public ArrayList<Aggregation> getAggregations() {
         return aggregations;
     }
     
-    
+    public Connector foundConnector (Element element1, Element element2){
+        for (int i = 0; i <this.connectorsRelations.size(); i++) {
+            Connector connector = this.connectorsRelations.get(i);
+            if(connector.getElement1().name.equals(element1.name) && connector.getElement2().name.equals(element2.name)){
+                return connector;
+            }
+            else if(connector.getElement2().name.equals(element1.name) && connector.getElement1().name.equals(element2.name)){
+                return connector;
+            }
+        }
+        return null;
+    }
 }
