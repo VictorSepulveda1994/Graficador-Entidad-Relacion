@@ -6,11 +6,18 @@ import java.util.ArrayList;
  *
  * @author Equipo Rocket
  */
-public class Aggregation extends Entity{
+public class Aggregation extends Entity {
+
 
     public Aggregation(boolean selected, String name, ArrayList<Element> elements) {
         super(selected, name, elements);
         this.figure = new Figure(name, minimumPoint(), maximumPoint());
+    }
+    
+    public Aggregation(Aggregation aggregation){
+        super(aggregation.selected,aggregation.name,aggregation.getElements());
+        this.figure= new Figure(aggregation.name,aggregation.minimumPoint(),aggregation.maximumPoint());
+        
     }
     
     public ArrayList<Integer> searchElement(Element selectedElement){
