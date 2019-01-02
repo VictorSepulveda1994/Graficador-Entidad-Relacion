@@ -598,7 +598,6 @@ public class MainController extends CallPop implements Initializable{
                 }
                 if (!element.isInFigure(event)){
                     entitiesSelect=diagram.entitiesSelect();
-                    System.out.println(entitiesSelect.size());
                     if(entitiesSelect.size()>2){
                         alertEntities();
                         diagram.deselectAllEntities();
@@ -693,7 +692,7 @@ public class MainController extends CallPop implements Initializable{
         }
         
         //Una vez realizada la acción correspondiente, actualizamos el canvas
-        if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 ){
+        if(diagram.getEntities().size() > 0 || diagram.getRelations().size() > 0 || diagram.getAggregations().size() > 0 ){
             diagram.adjustScreen(canvas, minWidth, minHeight);
             diagram.paint(canvas,showPoints);
         }

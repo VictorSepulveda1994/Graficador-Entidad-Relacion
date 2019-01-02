@@ -207,14 +207,15 @@ public class Diagram extends CallPop implements Cloneable {
         for (Connector connector : connectorsRelations) {
             connector.paint(canvas,showPoints);
         }
+        //dibuja las agregaciones
+        for (Aggregation aggregation : aggregations) {
+            //aggregation.figure.fillAggregation(canvas);
+            aggregation.paintAggregation(canvas, showPoints);
+        }
         //dibuja las entidades
         for (Entity entity : entities) {
             entity.figure.fillEntity(canvas);
             entity.paint(canvas,showPoints);
-        }
-        //dibuja las agregaciones
-        for (Aggregation aggregation : aggregations) {
-            aggregation.paintAggregation(canvas, showPoints);
         }
         //dibuja las relaciones
         for (Relation relation : relations) {
@@ -291,6 +292,14 @@ public class Diagram extends CallPop implements Cloneable {
                 minY = attribute.minPoint().getY();
             }
         }
+        for (Aggregation aggregation : aggregations) {
+            if(minX > aggregation.minPoint().getX()){
+                minX = aggregation.minPoint().getX();
+            }
+            if(minY > aggregation.minPoint().getY()){
+                minY = aggregation.minPoint().getY();
+            }
+        }
         return (new Point(minX, minY));
     }
     
@@ -330,6 +339,14 @@ public class Diagram extends CallPop implements Cloneable {
             }
             if(maxY < attribute.maxPoint().getY()){
                 maxY = attribute.maxPoint().getY();
+            }
+        }
+        for (Aggregation aggregation : aggregations) {
+            if(maxX < aggregation.maxPoint().getX()){
+                maxX = aggregation.maxPoint().getX();
+            }
+            if(maxY < aggregation.maxPoint().getY()){
+                maxY = aggregation.maxPoint().getY();
             }
         }
         return (new Point(maxX, maxY));
@@ -722,8 +739,13 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public int numberOfEntitiesSelect (){
         int count = 0;
-        for (Entity entitie : this.entities) {
-            if(entitie.selected){
+        for (Entity entity : this.entities) {
+            if(entity.selected){
+                count++;
+            }
+        }
+        for (Aggregation aggregation : this.aggregations) {
+            if(aggregation.selected){
                 count++;
             }
         }

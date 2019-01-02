@@ -203,7 +203,7 @@ public class Figure {
         if(this.withArc){
             addArc(canvas, selected);
         }
-        }
+    }
     
     public void paintCardinality (Canvas canvas,Element element1,Element element2,String cardinality){
         if(!(element1 instanceof Heritage) && !(element1 instanceof Attribute) && !(element2 instanceof Heritage) && !(element2 instanceof Attribute)){
@@ -417,6 +417,24 @@ public class Figure {
             rectangleHeight = rH;
             points.clear();
             createPointsRectangle();
+    }
+    
+    /**
+     *Pinta interior de agregaciones 
+     * @param canvas
+     */
+    public void fillAggregation(Canvas canvas){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setLineWidth(7);
+        gc.setStroke(Color.WHITE);
+        //double aggregationWidth = Math.sqrt( Math.pow(max.getX()-min.getX(), 2) + Math.pow(min.getY()-min.getY(), 2));
+        //double aggregationHeight = Math.sqrt( Math.pow(min.getX()-min.getX(), 2) + Math.pow(max.getY()-min.getY(), 2));
+        Point minP = new Point(min.getX(), min.getY());
+        Point maxP = new Point(max.getX(), max.getY());
+        while(minP.getY()-d < maxP.getY()+d){
+            gc.strokeLine(minP.getX()-d, minP.getY()-d, maxP.getX()+d, minP.getY()-d);
+            minP.setY(minP.getY() + 5);
+        }
     }
     
     /**
