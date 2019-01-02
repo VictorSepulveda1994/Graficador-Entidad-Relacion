@@ -1339,6 +1339,37 @@ public class Diagram extends CallPop implements Cloneable {
                 heritages.remove(i);                          
             }
         }
+        //Eliminar Agregacion
+        for (int i = 0; i <aggregations.size(); i++) {
+            if(aggregations.get(i).isInFigure(event) && ready == false){
+                ready = true;
+                for(int a=0;a<relations.size();a++){
+                    for(int e=0;e<relations.get(a).getEntities().size();e++){
+                        if(relations.get(a).getEntities().get(e).isInFigure(event)){
+                            if (relations.get(a).getEntities().size()<=1){
+                                relations.get(a).getAttributes().clear();
+                                relations.remove(a);   
+                                relations.get(a).getEntities().remove(e);
+                            }
+                            else{
+                                relations.get(a).getEntities().remove(e);
+                                ArrayList<Entity> entitiesCopy = new ArrayList<>();
+                                entitiesCopy=(ArrayList<Entity>) relations.get(a).getEntities().clone();
+                                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                                attributesCopy=(ArrayList<Attribute>) relations.get(a).getAttributes().clone();
+                                this.relations.set(a, new Relation(relations.get(a).name,relations.get(a).figure.getSides()-1,relations.get(a).figure.getPosX(),relations.get(a).figure.getPosY(),relations.get(a).selected,entitiesCopy,attributesCopy,relations.get(a).getType(),relations.get(a).typeCardinality));
+                                paint(canvas, showPoints); 
+                            }
+                        }
+                    }
+                }
+                if (!hasAnyRelation(aggregations.get(i))){
+                    deleteOneConnectorsRelations(aggregations.get(i));
+                }
+                aggregations.remove(i);                          
+            }
+        }
+        
         ready = false;
         paint(canvas, showPoints);
     }
