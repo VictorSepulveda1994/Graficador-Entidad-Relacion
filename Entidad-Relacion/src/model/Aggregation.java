@@ -6,11 +6,18 @@ import java.util.ArrayList;
  *
  * @author Equipo Rocket
  */
-public class Aggregation extends Element{
+public class Aggregation extends Entity {
+
 
     public Aggregation(boolean selected, String name, ArrayList<Element> elements) {
         super(selected, name, elements);
         this.figure = new Figure(name, minimumPoint(), maximumPoint());
+    }
+    
+    public Aggregation(Aggregation aggregation){
+        super(aggregation.selected,aggregation.name,aggregation.getElements());
+        this.figure= new Figure(aggregation.name,aggregation.minimumPoint(),aggregation.maximumPoint());
+        
     }
     
     public ArrayList<Integer> searchElement(Element selectedElement){
@@ -31,7 +38,6 @@ public class Aggregation extends Element{
             minX = this.elements.get(0).maxPoint().getX();
             minY = this.elements.get(0).maxPoint().getY();
         }
-        System.out.println(elements.size());
         for (Element element : this.elements) {
             System.out.println(element.getClass());
             if(minX > element.minPoint().getX()){
@@ -50,11 +56,6 @@ public class Aggregation extends Element{
      */
     public Point maximumPoint(){
         int maxX = 0,maxY = 0;
-        if(this.elements.size() > 0){
-            //System.out.println(entities.size());
-            //maxX = entities.get(0).maxPoint().getX();
-            //maxY = entities.get(0).maxPoint().getY();
-        }
         for (Element element : this.elements) {
             if(maxX < element.maxPoint().getX()){
                 maxX = element.maxPoint().getX();

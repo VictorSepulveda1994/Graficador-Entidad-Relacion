@@ -12,6 +12,16 @@ public class Entity extends Element {
     public ArrayList<Entity> entities;
     
     /**
+     *Constructor de agregación
+     * @param selected
+     * @param name
+     * @param elements
+     */
+    public Entity(boolean selected, String name, ArrayList<Element> elements) {
+        super(selected, name, elements);
+    }
+    
+    /**
      *Constructor de entidad
      * @param name
      * @param posX
