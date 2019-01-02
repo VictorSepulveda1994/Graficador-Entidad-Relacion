@@ -39,7 +39,6 @@ public class Aggregation extends Entity {
             minY = this.elements.get(0).maxPoint().getY();
         }
         for (Element element : this.elements) {
-            System.out.println(element.getClass());
             if(minX > element.minPoint().getX()){
                 minX = element.minPoint().getX();
             }

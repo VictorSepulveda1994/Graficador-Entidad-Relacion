@@ -84,6 +84,8 @@ public class Figure {
         this.posY = (min.getY() + max.getY()) / 2;
         this.min = min;
         this.max = max;
+        this.posX = min.getX()-d;
+        this.posY = max.getY()+d;
         this.name = name;
         createPointsAggregation();
     }

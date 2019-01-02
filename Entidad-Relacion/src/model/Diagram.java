@@ -1235,7 +1235,11 @@ public class Diagram extends CallPop implements Cloneable {
                     }
                 }
                 deleteOneConnectorsRelations(this.relations.get(i));
-                this.relations.remove(i);              
+                this.relations.remove(i);
+                for (Aggregation aggregation : aggregations) {
+                    System.out.println(aggregation.elements.contains(this.relations.get(i)));
+                    
+                }
             }
         }
         //Eliminar una entidad
@@ -1527,6 +1531,53 @@ public class Diagram extends CallPop implements Cloneable {
             relation.updateType();
         }
         paint(canvas, showPoints);
+    }
+    
+    public void updateAggregation(MouseEvent event){
+        int i = 0;
+        ArrayList<Integer> positions = new ArrayList<>();
+        ArrayList<Element> elements = new ArrayList<>();
+        Aggregation ag;
+        for (Aggregation aggregation : aggregations) {
+            if(aggregation.getFigure().isInFigure(event)){
+                positions.add(i);
+            }
+            i++;
+        }
+        for (Integer position : positions) {
+            ag = aggregations.get(position);
+            for (Element element : ag.getElements()) {
+                String type = element.getClass().getName().substring(6);
+                if("Relation".equals(type)){
+                    elements.add((Relation) element);
+                    Relation relation = (Relation)element;
+                    if(relation.getAttributes().size() > 0){
+                        for (Attribute attribute : relation.getAttributes()) {
+                            elements.add((Attribute) attribute);
+                            if(attribute.getAttributes().size() > 0){
+                                for (Attribute attribute1 : attribute.getAttributes()) {
+                                    elements.add((Attribute) attribute1);
+                                }
+                            }
+                        }
+                    }
+                    for (Entity entity : relation.getEntities()) {
+                        elements.add(entity);
+                        for (Attribute attribute : entity.getAttributes()) {
+                            elements.add(attribute);
+                            if(attribute.getAttributes().size() > 0){
+                                for (Attribute attribute1 : attribute.getAttributes()) {
+                                    elements.add((Attribute) attribute1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ag = new Aggregation(ag.selected, ag.name, elements);
+            aggregations.set(position, ag);
+        }
+        
     }
     
     /**
