@@ -1018,6 +1018,7 @@ public class Diagram extends CallPop implements Cloneable {
      * @throws IOException
      */
     public void selectElementEdit(MouseEvent event, Canvas canvas, boolean showPoints) throws IOException{
+        actualizar();
         boolean ready = false;
         int iE=0;
         for (Entity entity : entities) {
@@ -1047,7 +1048,6 @@ public class Diagram extends CallPop implements Cloneable {
                 popEdit();
                 ready = true ;
                 if(!"".equals(enteredNameR)){
-                    System.out.println(" "+newrelation.getEntities().size());
                     relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType(),newrelation.getTypeCardinality()));      
                     enteredNameR="";
                     int i=0;
@@ -1062,8 +1062,9 @@ public class Diagram extends CallPop implements Cloneable {
                             i++;
                         }
                     }
+                    actualizar();
                     for(int a=0;a<relations.get(iE).getEntities().size();a++){
-                        createConnectorR(relations.get(iE),relations.get(iE).getEntities().get(i));
+                        createConnectorR(relations.get(iE),relations.get(iE).getEntities().get(a));
                     }
                 }
                 break;
@@ -1482,5 +1483,16 @@ public class Diagram extends CallPop implements Cloneable {
         return aggregations;
     }
     
-    
+    public Connector foundConnector (Element element1, Element element2){
+        for (int i = 0; i <this.connectorsRelations.size(); i++) {
+            Connector connector = this.connectorsRelations.get(i);
+            if(connector.getElement1().name.equals(element1.name) && connector.getElement2().name.equals(element2.name)){
+                return connector;
+            }
+            else if(connector.getElement2().name.equals(element1.name) && connector.getElement1().name.equals(element2.name)){
+                return connector;
+            }
+        }
+        return null;
+    }
 }

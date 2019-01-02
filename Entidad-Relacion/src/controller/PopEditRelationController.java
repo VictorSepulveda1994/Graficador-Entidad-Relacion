@@ -115,9 +115,6 @@ public class PopEditRelationController extends CallPop implements Initializable 
         else{
             option.setSelected(false);
         }
-        if(newrelation.numberOfEntitiesWeak()==1 && newrelation.getEntities().size()<=1){
-            option.setDisable(true);
-        }
         optionsCardinality.setItems(typesOfCardinality);
         switch (newrelation.getTypeCardinality()) {
             case MANY_TO_MANY:
