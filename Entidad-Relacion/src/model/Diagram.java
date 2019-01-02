@@ -1548,9 +1548,17 @@ public class Diagram extends CallPop implements Cloneable {
             ag = aggregations.get(position);
             for (Element element : ag.getElements()) {
                 String type = element.getClass().getName().substring(6);
+                if("Aggregation".equals(type)){
+                    
+                }
                 if("Relation".equals(type)){
                     elements.add((Relation) element);
                     Relation relation = (Relation)element;
+                    if(relation.elements != null){
+                        for (Element element1 : relation.elements) {
+                            elements.add(element1);
+                        }
+                    }
                     if(relation.getAttributes().size() > 0){
                         for (Attribute attribute : relation.getAttributes()) {
                             elements.add((Attribute) attribute);
@@ -1577,7 +1585,7 @@ public class Diagram extends CallPop implements Cloneable {
             ag = new Aggregation(ag.selected, ag.name, elements);
             aggregations.set(position, ag);
         }
-        
+        createConnectors();
     }
     
     /**
