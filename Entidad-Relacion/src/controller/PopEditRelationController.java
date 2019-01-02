@@ -17,6 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Aggregation;
 import static model.Diagram.selectedElement;
 import model.Entity;
 import model.FigureType;
@@ -203,6 +204,13 @@ public class PopEditRelationController extends CallPop implements Initializable 
                             newrelation.getEntities().add(MainController.diagram.getEntities().get(a));  
                             break;
                         }
+
+                    }
+                    for (int j = 0; j <MainController.diagram.getAggregations().size(); j++) {
+                        if(MainController.diagram.getAggregations().get(j).getName().equals(avaliables.get(i).getText())){
+                            newrelation.getEntities().add(MainController.diagram.getEntities().get(j));  
+                            break;
+                        }
                     }
                 }
             }
@@ -238,6 +246,18 @@ public class PopEditRelationController extends CallPop implements Initializable 
                     cb.setLayoutY(tamaño);
                     tamaño+=20;
                     names.add(entitie1.getName());
+                    avaliables.add(cb);
+                    entitiesAvaliables.getChildren().add(cb);
+                }
+            }
+        }
+        for (Aggregation aggregation1 : MainController.diagram.getAggregations()){
+            if(!newrelation.getEntities().contains(aggregation1)){
+                if (!names.contains(aggregation1.getName())){
+                    CheckBox cb = new CheckBox(aggregation1.getName());
+                    cb.setLayoutY(tamaño);
+                    tamaño+=20;
+                    names.add(aggregation1.getName());
                     avaliables.add(cb);
                     entitiesAvaliables.getChildren().add(cb);
                 }
