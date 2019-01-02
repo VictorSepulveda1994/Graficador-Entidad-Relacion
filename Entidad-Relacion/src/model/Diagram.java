@@ -1047,13 +1047,24 @@ public class Diagram extends CallPop implements Cloneable {
                 popEdit();
                 ready = true ;
                 if(!"".equals(enteredNameR)){
+                    System.out.println(" "+newrelation.getEntities().size());
                     relations.set(iE, new Relation(newrelation.getName(),newrelation.getEntities().size(),newrelation.getFigure().getPosX(),newrelation.getFigure().getPosY(),false,newrelation.getEntities(),newrelation.getAttributes(),newrelation.getType(),newrelation.getTypeCardinality()));      
                     enteredNameR="";
-                    for(int i=0;i<connectorsRelations.size();i++){
-                    if(connectorsRelations.get(i).getElement1().equals(selectedElement)){
-                        connectorsRelations.set(i, new Connector(relations.get(iE),connectorsRelations.get(i).getElement2()," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                    int i=0;
+                    while(i<connectorsRelations.size()){
+                        if(connectorsRelations.get(i).getElement1().equals(selectedElement)){
+                            connectorsRelations.remove(i);
+                            if(i>0){
+                                i--;
+                            }
+                        }
+                        else{
+                            i++;
+                        }
                     }
-                }
+                    for(int a=0;a<relations.get(iE).getEntities().size();a++){
+                        createConnectorR(relations.get(iE),relations.get(iE).getEntities().get(i));
+                    }
                 }
                 break;
             }
@@ -1112,6 +1123,7 @@ public class Diagram extends CallPop implements Cloneable {
             iE++;
         }
         ready = false;
+        actualizar();
         paint(canvas, showPoints);
     }
     
