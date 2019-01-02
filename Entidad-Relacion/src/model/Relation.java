@@ -105,7 +105,7 @@ public class Relation extends Element {
      */
     public void removeEntity (Entity entity){
         for (int i = 0; i < this.entities.size(); i++) {
-            if(entity.equals(this.entities.get(i))){
+            if(entity.name.equals(this.entities.get(i).name)){
                 this.entities.remove(i);
             }
         }

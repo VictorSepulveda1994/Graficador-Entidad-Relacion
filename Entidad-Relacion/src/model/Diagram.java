@@ -1236,10 +1236,6 @@ public class Diagram extends CallPop implements Cloneable {
                 }
                 deleteOneConnectorsRelations(this.relations.get(i));
                 this.relations.remove(i);
-                for (Aggregation aggregation : aggregations) {
-                    System.out.println(aggregation.elements.contains(this.relations.get(i)));
-                    
-                }
             }
         }
         //Eliminar una entidad
@@ -1337,6 +1333,39 @@ public class Diagram extends CallPop implements Cloneable {
             if(heritages.get(i).isInFigure(event) && ready == false){
                 ready = true;
                 heritages.remove(i);                          
+            }
+        }
+        
+        //Eliminar Agregación
+        for (int i = 0; i <aggregations.size(); i++) {
+            if(aggregations.get(i).isInFigure(event) && ready == false){
+                ready = true;
+                Aggregation aggregation = aggregations.get(i);
+                while(hasAnyRelation(aggregation)){
+                    for (int j = 0; j <this.relations.size(); j++) {
+                        if(this.relations.get(j).hasThisEntity(aggregation)){
+                            Relation relation = this.relations.get(j);
+                            if (relation.getEntities().size()<=1){
+                                deleteSomeAttributes(this.relations.get(j));
+                                this.relations.get(j).getAttributes().clear();
+                                this.relations.remove(j);
+                            }
+                            else{
+                                relation.removeEntity(aggregation);
+                                ArrayList<Entity> entitiesCopy = new ArrayList<>();
+                                entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
+                                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                                attributesCopy=(ArrayList<Attribute>) relation.getAttributes().clone();
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType(),relation.typeCardinality)); 
+                            }
+                            j=0;
+                        }
+                    }
+                }
+                if (!hasAnyRelation(aggregations.get(i))){
+                    deleteOneConnectorsRelations(aggregations.get(i));
+                    aggregations.remove(i);
+                } 
             }
         }
         ready = false;

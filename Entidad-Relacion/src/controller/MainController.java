@@ -826,6 +826,16 @@ public class MainController extends CallPop implements Initializable{
                     diagram.getHeritages().get(i).setSelected(false);
                 }
             }
+            //Pintar Agregación
+            for (int i = 0; i <diagram.getAggregations().size(); i++) {
+                if(diagram.getAggregations().get(i).isInFigure(event)){
+                    diagram.getAggregations().get(i).setSelected(true);
+                    break;
+                }
+                else{
+                    diagram.getAggregations().get(i).setSelected(false);
+                }
+            }
             diagram.paint(canvas, showPoints);
         }
     }
