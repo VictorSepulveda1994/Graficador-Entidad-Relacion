@@ -598,6 +598,7 @@ public class MainController extends CallPop implements Initializable{
                 }
                 if (!element.isInFigure(event)){
                     entitiesSelect=diagram.entitiesSelect();
+                    System.out.println(entitiesSelect.size());
                     if(entitiesSelect.size()>2){
                         alertEntities();
                         diagram.deselectAllEntities();

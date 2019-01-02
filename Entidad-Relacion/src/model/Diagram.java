@@ -657,6 +657,9 @@ public class Diagram extends CallPop implements Cloneable {
             if( "Heritage".equals(type)){
                 heritages.get(iElement).setSelected(false);
             }
+            if( "Aggregation".equals(type)){
+                aggregations.get(iElement).setSelected(false);
+            }
         }
         selectedElement = null;
         iElement = -1;
@@ -733,9 +736,14 @@ public class Diagram extends CallPop implements Cloneable {
      */
     public ArrayList<Entity> entitiesSelect (){
         ArrayList<Entity> entitiesAux= new ArrayList<>();
-        for (Entity entitie : this.entities) {
-            if(entitie.selected){
-                entitiesAux.add(entitie);
+        for (Entity entity : this.entities) {
+            if(entity.selected){
+                entitiesAux.add(entity);
+            }
+        }
+        for (Aggregation aggregation : this.aggregations) {
+            if(aggregation.selected){
+                entitiesAux.add(aggregation);
             }
         }
         return entitiesAux;
