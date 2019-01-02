@@ -122,6 +122,7 @@ public class MainController extends CallPop implements Initializable{
      *
      */
     public static boolean rehacer;
+    public boolean move;
     
     public static boolean primerdeshacer;
     
@@ -411,6 +412,7 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     private void buttonMoveClicked(ActionEvent event){
+        move=true;
         diagram.deselectAll();
         entitiesSelect.clear();
         elementsSelect.clear();
@@ -582,6 +584,10 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void canvasClicked(MouseEvent event) throws IOException {
         MainController.event = event;
+        if(!moveToggleButton.isSelected() && move==true){
+            move=false;
+            copy();
+        }
         if(entityToggleButton.isSelected() && event.getX()-75 > 0  && event.getY()-45 > 0){
             popAddEntity(); 
             copy();
@@ -720,7 +726,6 @@ public class MainController extends CallPop implements Initializable{
     @FXML
     private void mouseDragged(MouseEvent event){
         if(moveToggleButton.isSelected()){
-            copy();
             diagram.moveElement(event, canvas, showPoints, minWidth, minHeight);
         }
     }
@@ -798,6 +803,7 @@ public class MainController extends CallPop implements Initializable{
         elementsSelect = new ArrayList<>();
         diagramsUndo= new ArrayList<>();
         diagramsRedo= new ArrayList<>();
+        move=false;
         rehacer=false;
         copy= new Diagram();
         primerdeshacer=true;
@@ -897,6 +903,13 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     public void undo(){
+        moveToggleButton.setSelected(false);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        if(!moveToggleButton.isSelected() && move==true){
+            move=false;
+            copy();
+        }
         if(primerdeshacer){
             primerdeshacer=false;
             posicion--;
@@ -916,6 +929,13 @@ public class MainController extends CallPop implements Initializable{
      */
     @FXML
     public void redo(){   
+        moveToggleButton.setSelected(false);
+        moveToggleButton.setScaleX(1);
+        moveToggleButton.setScaleY(1);
+        if(!moveToggleButton.isSelected() && move==true){
+            move=false;
+            copy();
+        }
         if(!diagrams.isEmpty() && posicion<diagrams.size()-1){
             rehacer=true;
             posicion++;
