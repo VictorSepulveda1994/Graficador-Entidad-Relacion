@@ -1339,37 +1339,39 @@ public class Diagram extends CallPop implements Cloneable {
                 heritages.remove(i);                          
             }
         }
-        //Eliminar Agregacion
+                
+        //Eliminar Agregación
         for (int i = 0; i <aggregations.size(); i++) {
             if(aggregations.get(i).isInFigure(event) && ready == false){
                 ready = true;
-                for(int a=0;a<relations.size();a++){
-                    for(int e=0;e<relations.get(a).getEntities().size();e++){
-                        if(relations.get(a).getEntities().get(e).isInFigure(event)){
-                            if (relations.get(a).getEntities().size()<=1){
-                                relations.get(a).getAttributes().clear();
-                                relations.remove(a);   
-                                relations.get(a).getEntities().remove(e);
+                Aggregation aggregation = aggregations.get(i);
+                while(hasAnyRelation(aggregation)){
+                    for (int j = 0; j <this.relations.size(); j++) {
+                        if(this.relations.get(j).hasThisEntity(aggregation)){
+                            Relation relation = this.relations.get(j);
+                            if (relation.getEntities().size()<=1){
+                                deleteSomeAttributes(this.relations.get(j));
+                                this.relations.get(j).getAttributes().clear();
+                                this.relations.remove(j);
                             }
                             else{
-                                relations.get(a).getEntities().remove(e);
+                                relation.removeEntity(aggregation);
                                 ArrayList<Entity> entitiesCopy = new ArrayList<>();
-                                entitiesCopy=(ArrayList<Entity>) relations.get(a).getEntities().clone();
+                                entitiesCopy=(ArrayList<Entity>) relation.getEntities().clone();
                                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
-                                attributesCopy=(ArrayList<Attribute>) relations.get(a).getAttributes().clone();
-                                this.relations.set(a, new Relation(relations.get(a).name,relations.get(a).figure.getSides()-1,relations.get(a).figure.getPosX(),relations.get(a).figure.getPosY(),relations.get(a).selected,entitiesCopy,attributesCopy,relations.get(a).getType(),relations.get(a).typeCardinality));
-                                paint(canvas, showPoints); 
+                                attributesCopy=(ArrayList<Attribute>) relation.getAttributes().clone();
+                                this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType(),relation.typeCardinality)); 
                             }
+                            j=0;
                         }
                     }
                 }
                 if (!hasAnyRelation(aggregations.get(i))){
                     deleteOneConnectorsRelations(aggregations.get(i));
-                }
-                aggregations.remove(i);                          
+                    aggregations.remove(i);
+                } 
             }
         }
-        
         ready = false;
         paint(canvas, showPoints);
     }
