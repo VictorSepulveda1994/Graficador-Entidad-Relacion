@@ -1231,15 +1231,14 @@ public class Diagram extends CallPop implements Cloneable {
                         } 
                         deleteAttribute(relation.getAttributes().get(j));
                         relation.getAttributes().remove(j);
-                        paint(canvas, showPoints); 
                     }
+                }
+                int index = getIndexAggregation(this.relations.get(i));
+                if(index!=-1){
+                    this.aggregations.remove(index);
                 }
                 deleteOneConnectorsRelations(this.relations.get(i));
                 this.relations.remove(i);
-                for (Aggregation aggregation : aggregations) {
-                    System.out.println(aggregation.elements.contains(this.relations.get(i)));
-                    
-                }
             }
         }
         //Eliminar una entidad
@@ -1255,9 +1254,7 @@ public class Diagram extends CallPop implements Cloneable {
                             }
                         }                      
                         deleteAttribute(entity.getAttributes().get(j));
-                        entity.getAttributes().remove(j);
-                        paint(canvas, showPoints);
-                        
+                        entity.getAttributes().remove(j);                        
                     }
                 }
                 while(hasAnyRelation(entity)){
@@ -1276,7 +1273,6 @@ public class Diagram extends CallPop implements Cloneable {
                                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                                 attributesCopy=(ArrayList<Attribute>) relation.getAttributes().clone();
                                 this.relations.set(j, new Relation(relation.name,relation.figure.getSides()-1,relation.figure.getPosX(),relation.figure.getPosY(),relation.selected,entitiesCopy,attributesCopy,relation.getType(),relation.typeCardinality));
-                                paint(canvas, showPoints); 
                             }
                             j=0;
                         }
@@ -1295,6 +1291,10 @@ public class Diagram extends CallPop implements Cloneable {
                     }
                 }
                 if (!hasAnyRelation(this.entities.get(i))){
+                    int index = getIndexAggregation(this.entities.get(i));
+                    if(index!=-1){
+                        this.aggregations.remove(index);
+                    }
                     deleteOneConnectorsRelations(this.entities.get(i));
                     this.entities.remove(i);
                 }
@@ -1327,6 +1327,10 @@ public class Diagram extends CallPop implements Cloneable {
                     if(indexAttribute!=-1){
                         this.attributes.get(j).attributes.remove(indexAttribute);
                     }
+                }
+                int index = getIndexAggregation(this.attributes.get(i));
+                if(index!=-1){
+                    this.aggregations.remove(index);
                 }
                 this.attributes.remove(i);              
             }
@@ -1665,4 +1669,28 @@ public class Diagram extends CallPop implements Cloneable {
         }
         return null;
     }
+    
+    //Metodo que revisa si un elemnento es el unico dentro de una agregación y retorna la posicion de ser asi.
+    public int getIndexAggregation (Element element){
+        System.out.println("entre");
+        for (int i = 0; i <this.aggregations.size(); i++) {
+            System.out.println(i);
+            System.out.println("e: "+element.name);
+            System.out.println("a: "+this.aggregations.get(i).name);
+            System.out.println(this.aggregations.get(i).elements.size());
+            for (int j = 0; j <this.aggregations.get(i).elements.size(); j++) {
+                System.out.println(j+") element"+this.aggregations.get(i).elements.get(j).name);
+            }
+            System.out.println(this.aggregations.get(i).hasThisElement(element));
+            System.out.println(this.aggregations.get(i).elements.size()==1);
+            
+            if(this.aggregations.get(i).hasThisElement(element) && this.aggregations.get(i).elements.size()<2){
+                deleteOneConnectorsRelations(aggregations.get(i));
+                System.out.println("nklmlmkk");
+                return i;
+            }
+        }
+        return -1;
+    }
+    
 }
