@@ -496,6 +496,55 @@ public class Diagram extends CallPop implements Cloneable {
                 point2.setX(point2.getX()-x1);
                 point2.setY(point2.getY()-y1);
                 for(int i=0;i<aggregations.get(iElement).getElements().size();i++){
+                    if(aggregations.get(iElement).getElements().get(i).getClass().getName().equals("model.Aggregation")){
+                        for(int j=0;j<aggregations.get(iElement).getElements().get(i).getElements().size();j++){
+                            if(aggregations.get(iElement).getElements().get(i).getElements().get(j).getClass().getName().equals("model.Entity")){
+                                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                                int ubicacion=searchEntity((Entity)aggregations.get(iElement).getElements().get(i).getElements().get(j));
+                                attributesCopy=(ArrayList<Attribute>) entities.get(ubicacion).getAttributes().clone();
+                                int x2=(int) (entities.get(ubicacion).getFigure().getCenter().getX()-x1);
+                                int y2=(int) (entities.get(ubicacion).getFigure().getCenter().getY()-y1);
+                                entities.set(ubicacion, new Entity(aggregations.get(iElement).getElements().get(i).getElements().get(j).getName(), x2,y2,false,((Entity) aggregations.get(iElement).getElements().get(i).getElements().get(j)).getType(),attributesCopy));
+                                aggregations.get(iElement).getElements().get(i).getElements().set(j,entities.get(ubicacion));
+                                for(int a=0;a<connectorsRelations.size();a++){
+                                    if(connectorsRelations.get(a).getElement2().getName().equals(entities.get(ubicacion).getName())){
+                                        connectorsRelations.set(a, new Connector(connectorsRelations.get(a).getElement1(),entities.get(ubicacion)," ",false, (ArrayList<Attribute>) connectorsRelations.get(a).getAttributes().clone(),false,connectorsRelations.get(a).isDoble()));
+                                    }
+                                }
+                            }
+                            if(aggregations.get(iElement).getElements().get(i).getElements().get(j).getClass().getName().equals("model.Relation")){
+                                int ubicacion=searchRelation((Relation)aggregations.get(iElement).getElements().get(i).getElements().get(j));
+                                ArrayList<Entity> entitiesCopy= new ArrayList<>();
+                                entitiesCopy=(ArrayList<Entity>) relations.get(ubicacion).getEntities().clone();
+                                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                                attributesCopy=(ArrayList<Attribute>) relations.get(ubicacion).getAttributes().clone();
+                                int x2=(int) (relations.get(ubicacion).getFigure().getCenter().getX()-x1);
+                                int y2=(int) (relations.get(ubicacion).getFigure().getCenter().getY()-y1);
+                                relations.set(ubicacion, new Relation(aggregations.get(iElement).getElements().get(i).getElements().get(j).name, aggregations.get(iElement).getElements().get(i).getElements().get(j).figure.getSides(),x2,y2, aggregations.get(iElement).getElements().get(i).getElements().get(j).selected,entitiesCopy,attributesCopy,((Relation)aggregations.get(iElement).getElements().get(i).getElements().get(j)).getType(),((Relation)aggregations.get(iElement).getElements().get(i).getElements().get(j)).getTypeCardinality()));
+                                aggregations.get(iElement).getElements().get(i).getElements().set(j,relations.get(ubicacion));
+                                for(int a=0;a<connectorsRelations.size();a++){
+                                    if(connectorsRelations.get(a).getElement1().getName().equals(relations.get(ubicacion).getName())){
+                                        connectorsRelations.set(a, new Connector(relations.get(ubicacion),connectorsRelations.get(a).getElement2()," ",false, (ArrayList<Attribute>) connectorsRelations.get(a).getAttributes().clone(),false,connectorsRelations.get(a).isDoble()));
+                                    }
+                                }
+                            }
+
+                            if(aggregations.get(iElement).getElements().get(i).getElements().get(j).getClass().getName().equals("model.Attribute")){
+                                ArrayList<Attribute> attributesCopy= new ArrayList<>();
+                                int ubicacion=searchAttribute((Attribute)aggregations.get(iElement).getElements().get(i).getElements().get(j));
+                                if(ubicacion>-1){
+                                    attributesCopy=(ArrayList<Attribute>) attributes.get(ubicacion).getAttributes().clone();
+                                    int x2=(int) (attributes.get(ubicacion).getFigure().getCenter().getX()-x1);
+                                    int y2=(int) (attributes.get(ubicacion).getFigure().getCenter().getY()-y1);
+                                    attributes.set(ubicacion, new Attribute(attributes.get(ubicacion).getTipo(),attributes.get(ubicacion).name,attributes.get(ubicacion).selected,x2,y2,attributesCopy, attributes.get(ubicacion).id));
+                                    aggregations.get(iElement).getElements().get(i).getElements().set(j,attributes.get(ubicacion));
+                                }  
+                            } 
+                        }
+                        int ubicacion= searchAggregation((Aggregation)aggregations.get(iElement));
+                        System.out.println("ubicacion: "+ubicacion);
+                        aggregations.set(ubicacion, (Aggregation) aggregations.get(iElement).getElements().get(i));
+                    }
                     if(aggregations.get(iElement).getElements().get(i).getClass().getName().equals("model.Entity")){
                         ArrayList<Attribute> attributesCopy= new ArrayList<>();
                         int ubicacion=searchEntity((Entity)aggregations.get(iElement).getElements().get(i));
@@ -689,6 +738,15 @@ public class Diagram extends CallPop implements Cloneable {
     public int searchEntity(Entity entity){
         for(int i=0; i<entities.size();i++){
             if(entities.get(i).getName().equals(entity.getName())){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public int searchAggregation(Aggregation aggregation){
+        for(int i=0; i<aggregations.size();i++){
+            if(aggregations.get(i).getName().equals(aggregation.getName())){
                 return i;
             }
         }
@@ -1593,10 +1651,10 @@ public class Diagram extends CallPop implements Cloneable {
         int i = 0;
         ArrayList<Integer> positions = new ArrayList<>();
         ArrayList<Element> elements = new ArrayList<>();
-        Aggregation ag;
+        Aggregation ag= new Aggregation(false,"",elements);
         
         for (Aggregation aggregation : aggregations) {
-  
+ 
             if(aggregation.getFigure().isInFigure(event)){
                 positions.add(i);
             }
@@ -1607,7 +1665,13 @@ public class Diagram extends CallPop implements Cloneable {
             for (Element element : ag.getElements()) {
                 String type = element.getClass().getName().substring(6);
                 if("Aggregation".equals(type)){
-                    
+                    elements.add((Aggregation)element);
+                    Aggregation aggregation= (Aggregation) element;
+                    if(aggregation.elements!=null){
+                        for (Element element1 : aggregation.elements) {
+                            elements.add(element1);
+                        }
+                    }
                 }
                 if("Relation".equals(type)){
                     elements.add((Relation) element);
