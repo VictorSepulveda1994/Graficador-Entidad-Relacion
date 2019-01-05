@@ -677,6 +677,7 @@ public class MainController extends CallPop implements Initializable{
         else if(aggregationToggleButton.isSelected() && diagram.getRelations().size() > 0 && event.getX()-75 > 0  && event.getY()-45 > 0){
             diagram.selectElement(event, canvas, showPoints);
             if (diagram.getSelectedElement()!=null){
+                elementsSelect.clear();
                 Element element = diagram.getSelectedElement();
                 String type = element.getClass().getName().substring(6);
                 if("Entity".equals(type) || "Attribute".equals(type)){
@@ -961,7 +962,6 @@ public class MainController extends CallPop implements Initializable{
             diagram=diagrams.get(posicion).getClone();
         }
         if(!diagrams.isEmpty() && posicion>0){
-            //System.out.println("undo: "+posicion+"diagram tiene: "+diagrams.size());
             posicion--;
             diagram=diagrams.get(posicion).getClone();
         }
@@ -1005,7 +1005,6 @@ public class MainController extends CallPop implements Initializable{
         } 
         posicion++;
         copy = diagram.getClone();
-        //System.out.println("copy: "+posicion+" entidades: "+copy.getEntities().size()+" relaciones: "+copy.getRelations().size());
         diagrams.add(copy);      
     }
 }
