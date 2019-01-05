@@ -108,4 +108,16 @@ public class Aggregation extends Entity {
         return (new Point(maxX, maxY));
     }
     
+    public boolean hasAllThisElements (ArrayList <Element> elements){
+        int count=0;
+        for (int i = 0; i <this.elements.size(); i++) {
+            for (int j = 0; j <elements.size(); j++) {
+                if(compareElement(this.elements.get(i),elements.get(j))){
+                    count++;
+                }  
+            }  
+        }
+        return count==this.elements.size();
+    }
+    
 }
