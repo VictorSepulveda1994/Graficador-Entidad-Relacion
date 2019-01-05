@@ -1281,7 +1281,7 @@ public class Diagram extends CallPop implements Cloneable {
                             if (relation.getEntities().size()<=1){
                                 deleteSomeAttributes(this.relations.get(j));
                                 this.relations.get(j).getAttributes().clear();
-                                elementsDelete.add(this.relations.remove(j));
+                                elementsDelete.add(this.relations.get(j));
                                 this.relations.remove(j);                      
                             }
                             else{
