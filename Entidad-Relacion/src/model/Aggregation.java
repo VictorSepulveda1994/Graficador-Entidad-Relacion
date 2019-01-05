@@ -58,6 +58,10 @@ public class Aggregation extends Entity {
         return false;
     }
     
+    public boolean isTheLastElement (Element element){
+        return this.elements.size()==1 && compareElement(element,this.elements.get(0));
+    }
+    
     //Metodo para comparar, si el elemento 1 es igual al 2.
     public boolean compareElement (Element element1,Element element2){
         if((element1 instanceof Entity && element2 instanceof Entity) || (element1 instanceof Relation && element2 instanceof Relation)){
@@ -76,6 +80,15 @@ public class Aggregation extends Entity {
             return false;
         }
         return false;
+    }
+    
+    public void deleteElement (Element element){
+        for (int i = 0; i <this.elements.size(); i++) {
+            if(compareElement(element,this.elements.get(i))){
+                this.elements.remove(i);
+                break;
+            }
+        }
     }
     
     /**

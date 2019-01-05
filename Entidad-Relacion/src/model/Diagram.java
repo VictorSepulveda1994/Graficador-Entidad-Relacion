@@ -1247,10 +1247,18 @@ public class Diagram extends CallPop implements Cloneable {
                         relation.getAttributes().remove(j);
                     }
                 }
-                int index = getIndexAggregation(this.relations.get(i));
-                if(index!=-1){
-                    this.aggregations.remove(index);
+                
+                while(hasAnyAggregation(relation)){
+                    for (int j = 0; j <this.aggregations.size(); j++) {
+                        if(this.aggregations.get(i).hasThisElement(relation) && this.aggregations.get(i).elements.size()==1){
+                            this.aggregations.remove(i);                      
+                        } 
+                        else if(this.aggregations.get(i).hasThisElement(relation) && this.aggregations.get(i).elements.size()!=1){
+                            this.aggregations.get(i).deleteElement(relation);
+                        }
+                    }
                 }
+                
                 deleteOneConnectorsRelations(this.relations.get(i));
                 this.relations.remove(i);
             }
@@ -1304,11 +1312,18 @@ public class Diagram extends CallPop implements Cloneable {
                         }
                     }
                 }
-                if (!hasAnyRelation(this.entities.get(i))){
-                    int index = getIndexAggregation(this.entities.get(i));
-                    if(index!=-1){
-                        this.aggregations.remove(index);
+                
+                while(hasAnyAggregation(entity)){
+                    for (int j = 0; j <this.aggregations.size(); j++) {
+                        if(this.aggregations.get(i).hasThisElement(entity) && this.aggregations.get(i).elements.size()==1){
+                            this.aggregations.remove(i);                      
+                        } 
+                        else if(this.aggregations.get(i).hasThisElement(entity) && this.aggregations.get(i).elements.size()!=1){
+                            this.aggregations.get(i).deleteElement(entity);
+                        }   
                     }
+                }
+                if (!hasAnyRelation(this.entities.get(i))){
                     deleteOneConnectorsRelations(this.entities.get(i));
                     this.entities.remove(i);
                 }
@@ -1342,9 +1357,15 @@ public class Diagram extends CallPop implements Cloneable {
                         this.attributes.get(j).attributes.remove(indexAttribute);
                     }
                 }
-                int index = getIndexAggregation(this.attributes.get(i));
-                if(index!=-1){
-                    this.aggregations.remove(index);
+                while(hasAnyAggregation(this.attributes.get(i))){
+                    for (int j = 0; j <this.aggregations.size(); j++) {
+                         if(this.aggregations.get(i).hasThisElement(this.attributes.get(i)) && this.aggregations.get(i).elements.size()==1){
+                            this.aggregations.remove(i);                      
+                        } 
+                        else if(this.aggregations.get(i).hasThisElement(this.attributes.get(i)) && this.aggregations.get(i).elements.size()!=1){
+                            this.aggregations.get(i).deleteElement(this.attributes.get(i));
+                        } 
+                    }
                 }
                 this.attributes.remove(i);              
             }
@@ -1654,6 +1675,19 @@ public class Diagram extends CallPop implements Cloneable {
         return false;
     }
     
+    /**
+     * Metodo para saber si un elemento esta dentro de una agregacion en el diagrama.
+     * @return verdadero el elemento ingresado esta en una agregacion dentro del diagrama o falso en caso contrario.
+     */
+    public boolean hasAnyAggregation(Element element){
+        for (int i = 0; i <this.aggregations.size(); i++) {
+            if(this.aggregations.get(i).hasThisElement(element)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /***
      * Este metodo se encarga de actualizar el nombre de un attributo dentro de la lista de un elemento del diagrama.
      * @param element El elemento en donde se va a buscar el attributo.
@@ -1685,28 +1719,6 @@ public class Diagram extends CallPop implements Cloneable {
         }
         return null;
     }
-    
-    //Metodo que revisa si un elemnento es el unico dentro de una agregación y retorna la posicion de ser asi.
-    public int getIndexAggregation (Element element){
-        System.out.println("entre");
-        for (int i = 0; i <this.aggregations.size(); i++) {
-            System.out.println(i);
-            System.out.println("e: "+element.name);
-            System.out.println("a: "+this.aggregations.get(i).name);
-            System.out.println(this.aggregations.get(i).elements.size());
-            for (int j = 0; j <this.aggregations.get(i).elements.size(); j++) {
-                System.out.println(j+") element"+this.aggregations.get(i).elements.get(j).name);
-            }
-            System.out.println(this.aggregations.get(i).hasThisElement(element));
-            System.out.println(this.aggregations.get(i).elements.size()==1);
-            
-            if(this.aggregations.get(i).hasThisElement(element) && this.aggregations.get(i).elements.size()<2){
-                deleteOneConnectorsRelations(aggregations.get(i));
-                System.out.println("nklmlmkk");
-                return i;
-            }
-        }
-        return -1;
-    }
+
     
 }
