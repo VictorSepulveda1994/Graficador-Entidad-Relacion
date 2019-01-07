@@ -600,7 +600,7 @@ public class Diagram extends CallPop implements Cloneable {
                 selectedElement=aggregations.get(iElement);
                 for(int i=0;i<connectorsRelations.size();i++){
                     if((connectorsRelations.get(i).getElement2().getName().equals(aggregations.get(iElement).getName()))){
-                        connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),aggregations.get(iElement)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                        connectorsRelations.remove(i);
                     }
                 }
             }
