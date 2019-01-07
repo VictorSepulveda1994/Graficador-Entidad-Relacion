@@ -1529,6 +1529,19 @@ public class Diagram extends CallPop implements Cloneable {
                 }
                 elementsDelete.add(relation);
                 deleteOneConnectorsRelations(this.relations.get(i));
+                ArrayList<Point> positions= new ArrayList<>();
+                positions = isInAggregation(relation);
+                boolean modificate=false;
+                Element element=null;
+                if(positions.size() > 0){
+                    modificate = true;
+                    element=relation;
+                }
+                if(element!=null && modificate==true){
+                    for (Point position : positions) {
+                        aggregations.remove(position.getX());
+                    }
+                }
                 this.relations.remove(i);
             }
         }
