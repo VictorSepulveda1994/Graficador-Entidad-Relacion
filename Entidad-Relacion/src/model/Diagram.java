@@ -554,12 +554,19 @@ public class Diagram extends CallPop implements Cloneable {
                 System.out.println(aggregation.figure.getPosX());
                 System.out.println(aggregation.figure.getPosY());
                 
+                for(int i=0;i<this.aggregations.size();i++){
+                    for(int a=0;a<this.aggregations.get(i).getElements().size();a++){
+                        if(this.aggregations.get(i).getElements().get(a).name.equals(aggregation.name)){
+                            this.aggregations.get(i).getElements().set(a,new Aggregation(aggregation));
+                        }
+                    }
+                    this.aggregations.set(i, new Aggregation(aggregations.get(i)));
+                }
                 for (int i = 0; i <this.relations.size(); i++) {
                     for (int j = 0; j <this.relations.get(i).getEntities().size(); j++) {
                         if(this.relations.get(i).getEntities().get(j).name.equals(aggregation.name)){
                             this.relations.get(i).getEntities().set(j,new Aggregation(aggregation));
-                        }
-                        
+                        }   
                     }
                 }
                 aggregations.set(iElement,new Aggregation(aggregation));
@@ -627,10 +634,10 @@ public class Diagram extends CallPop implements Cloneable {
                     aggregations.set(position.getX(), new Aggregation(aggregation));
                 }
             }
-            actualizar();
-            adjustScreen(canvas, minWidth, minHeight);
-            paint(canvas, showPoints);
         }
+        actualizar();
+        adjustScreen(canvas, minWidth, minHeight);
+        paint(canvas, showPoints);
     }
     
     public void moverA(int x1,int y1,int iElement){
@@ -709,104 +716,105 @@ public class Diagram extends CallPop implements Cloneable {
     
     public void actualizar(){
         //Guarda las entidades dentro de las relaciones
-            for (int i=0; i<relations.size();i++) {
-                for (int a=0; a<relations.get(i).getEntities().size();a++) {
-                    int nElement=searchEntity(relations.get(i).getEntities().get(a));
-                    if(nElement!=-1){
-                        relations.get(i).getEntities().set(a, entities.get(nElement));
-                    }
-                }
-            }
-            
-            for(int a =0; a< aggregations.size();a++){
-                for (int i = 0; i <this.relations.size(); i++) {
-                    for (int j = 0; j <this.relations.get(i).getEntities().size(); j++) {
-                        if(this.relations.get(i).getEntities().get(j).name.equals(aggregations.get(a).name)){
-                            this.relations.get(i).getEntities().set(j,new Aggregation(aggregations.get(a)));
-                        }
-                    }
-                }
-            }
-            //Guarda los atributos dentro de las relaciones
-            for (int i=0; i<relations.size();i++) {
-                for (int a=0; a<relations.get(i).getAttributes().size();a++) {
-                    int nElement=searchAttribute(relations.get(i).getAttributes().get(a));
-                    if(nElement!=-1){
-                        relations.get(i).getAttributes().set(a, attributes.get(nElement));
-                    }
-                }
-            }
-            
-            //Guarda los attributos dentro de las entidades
-            for (int i=0; i<entities.size();i++) {
-                for (int a=0; a<entities.get(i).getAttributes().size();a++) {
-                    int nElement=searchAttribute(entities.get(i).getAttributes().get(a));
-                    if(nElement!=-1){
-                        entities.get(i).getAttributes().set(a, attributes.get(nElement));
-                    }
-                }
-            }
-            
-            //Guarda los atributos dentro de los atributos
-            for (int i=0; i<attributes.size();i++) {
-                for (int a=0; a<attributes.get(i).getAttributes().size();a++) {
-                    int nElement=searchAttribute(attributes.get(i).getAttributes().get(a));
-                    if(nElement!=-1){
-                        attributes.get(i).getAttributes().set(a, attributes.get(nElement));
-                    }
-                }
-            }
-            //Guarda nuevamente los atributos y padre de la herencia
-            for (int i=0; i<heritages.size();i++) {
-                for (int a=0; a<heritages.get(i).getDaughtersEntities().size();a++) {
-                    int nElement=searchEntity(heritages.get(i).getDaughtersEntities().get(a));
-                    if(nElement!=-1){
-                        heritages.get(i).getDaughtersEntities().set(a, entities.get(nElement));
-                    }
-                }   
-                int nElement=searchEntity(heritages.get(i).getParentEntity());
+        for (int i=0; i<relations.size();i++) {
+            for (int a=0; a<relations.get(i).getEntities().size();a++) {
+                int nElement=searchEntity(relations.get(i).getEntities().get(a));
                 if(nElement!=-1){
-                    heritages.get(i).setParentEntity(entities.get(nElement));  
+                    relations.get(i).getEntities().set(a, entities.get(nElement));
                 }
             }
-            
-            for (int i=0; i<aggregations.size();i++) {
-                for (int a=0; a<aggregations.get(i).getElements().size();a++) {
-                    if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Aggregation")){
-                        int nElement=searchAggregation((Aggregation) aggregations.get(i).getElements().get(a));
-                        if(nElement!=-1){
-                            aggregations.get(i).getElements().set(a, new Aggregation(aggregations.get(nElement)));
-                        }
+        }
+
+        //Guarda los atributos dentro de las relaciones
+        for (int i=0; i<relations.size();i++) {
+            for (int a=0; a<relations.get(i).getAttributes().size();a++) {
+                int nElement=searchAttribute(relations.get(i).getAttributes().get(a));
+                if(nElement!=-1){
+                    relations.get(i).getAttributes().set(a, attributes.get(nElement));
+                }
+            }
+        }
+
+        //Guarda los attributos dentro de las entidades
+        for (int i=0; i<entities.size();i++) {
+            for (int a=0; a<entities.get(i).getAttributes().size();a++) {
+                int nElement=searchAttribute(entities.get(i).getAttributes().get(a));
+                if(nElement!=-1){
+                    entities.get(i).getAttributes().set(a, attributes.get(nElement));
+                }
+            }
+        }
+
+        //Guarda los atributos dentro de los atributos
+        for (int i=0; i<attributes.size();i++) {
+            for (int a=0; a<attributes.get(i).getAttributes().size();a++) {
+                int nElement=searchAttribute(attributes.get(i).getAttributes().get(a));
+                if(nElement!=-1){
+                    attributes.get(i).getAttributes().set(a, attributes.get(nElement));
+                }
+            }
+        }
+        //Guarda nuevamente los atributos y padre de la herencia
+        for (int i=0; i<heritages.size();i++) {
+            for (int a=0; a<heritages.get(i).getDaughtersEntities().size();a++) {
+                int nElement=searchEntity(heritages.get(i).getDaughtersEntities().get(a));
+                if(nElement!=-1){
+                    heritages.get(i).getDaughtersEntities().set(a, entities.get(nElement));
+                }
+            }   
+            int nElement=searchEntity(heritages.get(i).getParentEntity());
+            if(nElement!=-1){
+                heritages.get(i).setParentEntity(entities.get(nElement));  
+            }
+        }
+        
+        for (int i=0; i<aggregations.size();i++) {
+            for (int a=0; a<aggregations.get(i).getElements().size();a++) {
+                if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Aggregation")){
+                    int nElement=searchAggregation((Aggregation) aggregations.get(i).getElements().get(a));
+                    if(nElement!=-1){
+                        aggregations.get(i).getElements().set(a, new Aggregation(aggregations.get(nElement)));
                     }
-                    if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Entity")){
-                        int nElement=searchEntity((Entity) aggregations.get(i).getElements().get(a));
-                        if(nElement!=-1){
-                            aggregations.get(i).getElements().set(a, entities.get(nElement));
-                        }
+                }
+                if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Entity")){
+                    int nElement=searchEntity((Entity) aggregations.get(i).getElements().get(a));
+                    if(nElement!=-1){
+                        aggregations.get(i).getElements().set(a, entities.get(nElement));
                     }
-                    if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Relation")){
-                        int nElement=searchRelation((Relation) aggregations.get(i).getElements().get(a));
-                        if(nElement!=-1){
-                            aggregations.get(i).getElements().set(a, new Relation(relations.get(nElement)));
-                        }
+                }
+                if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Relation")){
+                    int nElement=searchRelation((Relation) aggregations.get(i).getElements().get(a));
+                    if(nElement!=-1){
+                        aggregations.get(i).getElements().set(a, new Relation(relations.get(nElement)));
                     }
-                    if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Attribute")){
-                        int nElement=searchAttribute((Attribute) aggregations.get(i).getElements().get(a));
-                        if(nElement!=-1){
-                            aggregations.get(i).getElements().set(a, attributes.get(nElement));
-                        }
+                }
+                if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Attribute")){
+                    int nElement=searchAttribute((Attribute) aggregations.get(i).getElements().get(a));
+                    if(nElement!=-1){
+                        aggregations.get(i).getElements().set(a, attributes.get(nElement));
                     }
                 }
             }
-            for (int i=0; i<connectorsRelations.size();i++) {  
-                Connector nElement=foundConnector(connectorsRelations.get(i).getElement1(),connectorsRelations.get(i).getElement2());
-                if(nElement!=null){
-                    connectorsRelations.set(i, nElement);
-                    
+            aggregations.set(i, new Aggregation(aggregations.get(i)));
+        }
+        
+        for(int a =0; a< aggregations.size();a++){
+            for (int i = 0; i <this.relations.size(); i++) {
+                for (int j = 0; j <this.relations.get(i).getEntities().size(); j++) {
+                    if(this.relations.get(i).getEntities().get(j).name.equals(aggregations.get(a).name)){
+                        this.relations.get(i).getEntities().set(j,new Aggregation(aggregations.get(a)));
+                    }
                 }
             }
-            connectors.clear();
-            createConnectors();
+        }
+        for (int i=0; i<connectorsRelations.size();i++) {  
+            Connector connector=foundConnector(connectorsRelations.get(i).getElement1(),connectorsRelations.get(i).getElement2());
+            if(connector!=null){
+                connectorsRelations.set(i, connector);
+            }
+        }
+        connectors.clear();
+        createConnectors();
     }
     
     /**
