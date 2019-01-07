@@ -72,7 +72,7 @@ public class Aggregation extends Entity {
         else if(element1 instanceof Attribute && element2 instanceof Attribute){
             Attribute attribute1 = (Attribute)element1;
             Attribute attribute2 = (Attribute)element2;
-            if((attribute1.id==attribute2.id) && (attribute1.type.equals(attribute2.type)) && (attribute1.figure.getPosX()==attribute2.figure.getPosX()) && (attribute1.figure.getPosY()==attribute2.figure.getPosY()) && (attribute1.name.equals(attribute2.name))){
+            if((attribute1.id==attribute2.id) && (attribute1.type.equals(attribute2.type)) && (attribute1.name.equals(attribute2.name))){
                 return true;
             }    
         }
