@@ -18,7 +18,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import static controller.PopEditEntityController.newEntity;
 import static controller.PopEditHeritageController.newHeritage;
-import javax.lang.model.util.Elements;
 
 /**
  *
@@ -437,9 +436,11 @@ public class Diagram extends CallPop implements Cloneable {
      * @param minHeight
      */
     public void moveElement(MouseEvent event, Canvas canvas, boolean showPoints, int minWidth, int minHeight){
+        actualizar();
         boolean modificate = false;
         if( selectedElement != null && event.getX()-70 > 0  && event.getY()-40 > 0){
             String type = selectedElement.getClass().getName().substring(6);
+            System.out.println(type);
             ArrayList<Point> positions = isInAggregation(selectedElement);
             if(positions.size() > 0){
                 modificate = true;
@@ -450,8 +451,15 @@ public class Diagram extends CallPop implements Cloneable {
                 entities.set(iElement, new Entity(selectedElement.name, (int)event.getX(), (int) event.getY(), selectedElement.selected,((Entity)selectedElement).getType(),attributesCopy));
                 selectedElement = entities.get(iElement);
                 for(int i=0;i<connectorsRelations.size();i++){
-                    if(connectorsRelations.get(i).getElement2().getName().equals(entities.get(iElement).getName())){
+                    if((connectorsRelations.get(i).getElement2().getName().equals(entities.get(iElement).getName()))){
                         connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),entities.get(iElement)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                    }  
+                }
+                if(needUpdateAggregation(entities.get(iElement))){
+                    for(int i=0;i<connectorsRelations.size();i++){
+                    if((connectorsRelations.get(i).getElement2().getName().equals(aggregations.get(iElement).getName()))){
+                        connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),aggregations.get(iElement)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                        }
                     }
                 }
             }
@@ -467,12 +475,26 @@ public class Diagram extends CallPop implements Cloneable {
                         connectorsRelations.set(i, new Connector(relations.get(iElement),connectorsRelations.get(i).getElement2()," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
                     }
                 }
+                if(needUpdateAggregation(relations.get(iElement))){
+                    for(int i=0;i<connectorsRelations.size();i++){
+                    if((connectorsRelations.get(i).getElement2().getName().equals(aggregations.get(iElement).getName()))){
+                        connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),aggregations.get(iElement)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                        }
+                    }
+                }
             }
             else if( "Attribute".equals(type)){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
                 attributesCopy=(ArrayList<Attribute>) attributes.get(iElement).getAttributes().clone();
                 attributes.set(iElement, new Attribute(((Attribute)selectedElement).getTipo(),selectedElement.name,selectedElement.selected,(int)event.getX(), (int) event.getY(),attributesCopy, ((Attribute)selectedElement).id));
                 selectedElement = attributes.get(iElement);
+                if(needUpdateAggregation(attributes.get(iElement))){
+                    for(int i=0;i<connectorsRelations.size();i++){
+                    if((connectorsRelations.get(i).getElement2().getName().equals(aggregations.get(iElement).getName()))){
+                        connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),aggregations.get(iElement)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                        }
+                    }
+                }
             }
             else if( "Heritage".equals(type)){
                 ArrayList<Attribute> attributesCopy= new ArrayList<>();
@@ -498,14 +520,14 @@ public class Diagram extends CallPop implements Cloneable {
                 y=point.getY()-y;
                 point2.setX(point2.getX()-x1);
                 point2.setY(point2.getY()-y1);
-                System.out.println("numero de elementos: "+aggregations.get(iElement).getElements().size());
+                //System.out.println("numero de elementos: "+aggregations.get(iElement).getElements().size());
                 for(int i=0;i<aggregations.get(iElement).getElements().size();i++){
                     if(aggregations.get(iElement).getElements().get(i).getClass().getName().equals("model.Aggregation")){
                         int ubicacion= searchAggregation((Aggregation)aggregations.get(iElement).getElements().get(i));
                         moverA(x1,y1,ubicacion);
-                        System.out.println("ubicacion: "+ubicacion);
+                        //System.out.println("ubicacion: "+ubicacion);
                         aggregations.set(ubicacion, new Aggregation((Aggregation) aggregations.get(iElement).getElements().get(i)));
-                        System.out.println("i: "+i);
+                        //System.out.println("i: "+i);
                         aggregations.get(iElement).getElements().set(i, new Aggregation(aggregations.get(ubicacion)));
                     }
                     if(aggregations.get(iElement).getElements().get(i).getClass().getName().equals("model.Entity")){
@@ -574,18 +596,23 @@ public class Diagram extends CallPop implements Cloneable {
                 }
                 aggregations.set(iElement,new Aggregation(aggregation));
                 selectedElement=aggregations.get(iElement);
+                for(int i=0;i<connectorsRelations.size();i++){
+                    if((connectorsRelations.get(i).getElement2().getName().equals(aggregations.get(iElement).getName()))){
+                        connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),aggregations.get(iElement)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
+                    }
+                }
             }
-            
             
             //Guarda las entidades dentro de las relaciones
             for (int i=0; i<relations.size();i++) {
-                for (int a=0; a<relations.get(i).getEntities().size();a++) {
+                for (int a=0; a<relations.get(i).getEntities().size();a++) {                 
                     int nElement=searchEntity(relations.get(i).getEntities().get(a));
                     if(nElement!=-1){
                         relations.get(i).getEntities().set(a, entities.get(nElement));
                     }
                 }
             }
+            
             //Guarda los atributos dentro de las relaciones
             for (int i=0; i<relations.size();i++) {
                 for (int a=0; a<relations.get(i).getAttributes().size();a++) {
@@ -1641,6 +1668,11 @@ public class Diagram extends CallPop implements Cloneable {
             }
         }
         
+        for (Aggregation aggregation : this.aggregations) {
+            if(aggregation.name.equals(name)){
+                return true;
+            }
+        }
         return false;
     }
     
@@ -1934,6 +1966,19 @@ public class Diagram extends CallPop implements Cloneable {
             }
         }
         return null;
+    }
+    
+    public boolean needUpdateAggregation(Element element){
+        for (int i = 0; i <this.aggregations.size(); i++) {
+            if(this.aggregations.get(i).hasThisElement(element)){
+                for (int j = 0; j <this.relations.size(); j++) {
+                    if(this.relations.get(j).hasThisEntity(this.aggregations.get(i))){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     
 }
