@@ -97,10 +97,13 @@ public class Diagram extends CallPop implements Cloneable {
             }
             
             diagram.connectorsRelations= (ArrayList<Connector>) connectorsRelations.clone();
-            diagram.connectors= new ArrayList<>();
+            diagram.connectors.clear();
+            diagram.createConnectors();
+            diagram.connectors=connectors;
             diagram.setCount(count);
             diagram.setCountAttribute(countAttribute);
             diagram.selectedElement= selectedElement;
+            diagram.actualizar();
             return diagram;
         } catch (CloneNotSupportedException e) { 
             System.out.println (" Cloning not allowed. " );
