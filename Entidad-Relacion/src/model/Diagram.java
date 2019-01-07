@@ -549,7 +549,6 @@ public class Diagram extends CallPop implements Cloneable {
                     } 
                 }
                    
-                selectedElement=aggregations.get(iElement);
                 Aggregation aggregation =  new Aggregation(aggregations.get(iElement));
                 System.out.println(aggregation.name);
                 System.out.println(aggregation.figure.getPosX());
@@ -558,12 +557,13 @@ public class Diagram extends CallPop implements Cloneable {
                 for (int i = 0; i <this.relations.size(); i++) {
                     for (int j = 0; j <this.relations.get(i).getEntities().size(); j++) {
                         if(this.relations.get(i).getEntities().get(j).name.equals(aggregation.name)){
-                            this.relations.get(i).getEntities().set(j,aggregation);
+                            this.relations.get(i).getEntities().set(j,new Aggregation(aggregation));
                         }
                         
                     }
                 }
-                aggregations.set(iElement,aggregation);
+                aggregations.set(iElement,new Aggregation(aggregation));
+                selectedElement=aggregations.get(iElement);
             }
             
             
@@ -624,7 +624,7 @@ public class Diagram extends CallPop implements Cloneable {
                 for (Point position : positions) {
                     aggregations.get(position.getX()).getElements().set(position.getY(), selectedElement);
                     Aggregation aggregation = new Aggregation(aggregations.get(position.getX()).selected, aggregations.get(position.getX()).getName(), aggregations.get(position.getX()).getElements());
-                    aggregations.set(position.getX(), aggregation);
+                    aggregations.set(position.getX(), new Aggregation(aggregation));
                 }
             }
             actualizar();
@@ -679,6 +679,16 @@ public class Diagram extends CallPop implements Cloneable {
             } 
         }
         aggregations.set(iElement, new Aggregation(aggregations.get(iElement)));
+        
+        for (int i = 0; i <this.relations.size(); i++) {
+            for (int j = 0; j <this.relations.get(i).getEntities().size(); j++) {
+                if(this.relations.get(i).getEntities().get(j).name.equals(aggregations.get(iElement).name)){
+                    this.relations.get(i).getEntities().set(j,new Aggregation(aggregations.get(iElement)));
+                }
+
+            }
+        }
+        actualizar();
     }
         
     public ArrayList<Point> isInAggregation(Element selectedElement){
@@ -704,6 +714,16 @@ public class Diagram extends CallPop implements Cloneable {
                     int nElement=searchEntity(relations.get(i).getEntities().get(a));
                     if(nElement!=-1){
                         relations.get(i).getEntities().set(a, entities.get(nElement));
+                    }
+                }
+            }
+            
+            for(int a =0; a< aggregations.size();a++){
+                for (int i = 0; i <this.relations.size(); i++) {
+                    for (int j = 0; j <this.relations.get(i).getEntities().size(); j++) {
+                        if(this.relations.get(i).getEntities().get(j).name.equals(aggregations.get(a).name)){
+                            this.relations.get(i).getEntities().set(j,new Aggregation(aggregations.get(a)));
+                        }
                     }
                 }
             }
@@ -755,7 +775,7 @@ public class Diagram extends CallPop implements Cloneable {
                     if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Aggregation")){
                         int nElement=searchAggregation((Aggregation) aggregations.get(i).getElements().get(a));
                         if(nElement!=-1){
-                            aggregations.get(i).getElements().set(a, aggregations.get(nElement));
+                            aggregations.get(i).getElements().set(a, new Aggregation(aggregations.get(nElement)));
                         }
                     }
                     if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Entity")){
@@ -767,7 +787,7 @@ public class Diagram extends CallPop implements Cloneable {
                     if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Relation")){
                         int nElement=searchRelation((Relation) aggregations.get(i).getElements().get(a));
                         if(nElement!=-1){
-                            aggregations.get(i).getElements().set(a, relations.get(nElement));
+                            aggregations.get(i).getElements().set(a, new Relation(relations.get(nElement)));
                         }
                     }
                     if(aggregations.get(i).getElements().get(a).getClass().getName().equals("model.Attribute")){
@@ -778,6 +798,15 @@ public class Diagram extends CallPop implements Cloneable {
                     }
                 }
             }
+            for (int i=0; i<connectorsRelations.size();i++) {  
+                Connector nElement=foundConnector(connectorsRelations.get(i).getElement1(),connectorsRelations.get(i).getElement2());
+                if(nElement!=null){
+                    connectorsRelations.set(i, nElement);
+                    
+                }
+            }
+            connectors.clear();
+            createConnectors();
     }
     
     /**
