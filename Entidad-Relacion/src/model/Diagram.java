@@ -1343,6 +1343,9 @@ public class Diagram extends CallPop implements Cloneable {
         actualizar();
         boolean ready = false;
         int iE=0;
+        boolean modificate=false;
+        Element element = null;
+        ArrayList<Point> positions= new ArrayList<>();
         for (Entity entity : entities) {
             if(entity.isInFigure(event) && ready == false){
                 selectedElement=entity;
@@ -1357,11 +1360,25 @@ public class Diagram extends CallPop implements Cloneable {
                             connectorsRelations.set(i, new Connector(connectorsRelations.get(i).getElement1(),entities.get(iE)," ",false, (ArrayList<Attribute>) connectorsRelations.get(i).getAttributes().clone(),false,connectorsRelations.get(i).isDoble()));
                         }
                     }
+                    positions = isInAggregation(entities.get(iE));
+                    if(positions.size() > 0){
+                        modificate = true;
+                        element=entities.get(iE);
+                    } 
                 }
                 break;
             }
             iE++;
         }
+        
+        if(modificate && element!=null){
+            for (Point position : positions) {
+                aggregations.get(position.getX()).getElements().set(position.getY(), element);
+                Aggregation aggregation = new Aggregation(aggregations.get(position.getX()).selected, aggregations.get(position.getX()).getName(), aggregations.get(position.getX()).getElements());
+                aggregations.set(position.getX(), new Aggregation(aggregation));
+            }
+        }
+        modificate=false;
         iE=0;
         for (Relation relation : relations) {
             if(relation.isInFigure(event) && ready == false){
@@ -1388,11 +1405,29 @@ public class Diagram extends CallPop implements Cloneable {
                     for(int a=0;a<relations.get(iE).getEntities().size();a++){
                         createConnectorR(relations.get(iE),relations.get(iE).getEntities().get(a));
                     }
+                    positions = isInAggregation(relations.get(iE));
+                    if(positions.size() > 0){
+                        modificate = true;
+                        element=relations.get(iE);
+                    }
                 }
                 break;
             }
             iE++;
         }
+        if(modificate && element!=null){
+            for (Point position : positions) {
+                for(int i=0;i<((Relation)element).getEntities().size();i++){
+                    if(!aggregations.contains(((Relation)element).getEntities().get(i))){
+                        aggregations.get(position.getX()).getElements().add(((Relation)element).getEntities().get(i));
+                    }
+                }
+                aggregations.get(position.getX()).getElements().set(position.getY(), element);
+                Aggregation aggregation = new Aggregation(aggregations.get(position.getX()).selected, aggregations.get(position.getX()).getName(), aggregations.get(position.getX()).getElements());
+                aggregations.set(position.getX(), new Aggregation(aggregation));
+            }
+        }
+        modificate=false;
         for (Attribute attribute : attributes) {
             if(attribute.isInFigure(event) && ready == false){
                 selectedElement=attribute;
@@ -1415,10 +1450,23 @@ public class Diagram extends CallPop implements Cloneable {
                     attribute.setName(enteredNameA);
                     attribute.figure.setName(enteredNameA);
                     enteredNameA="";
+                    positions = isInAggregation(attribute);
+                    if(positions.size() > 0){
+                        modificate = true;
+                        element=attribute;
+                    }
                 }
                 break;
             }
         }
+        if(modificate && element!=null){
+            for (Point position : positions) {
+                aggregations.get(position.getX()).getElements().set(position.getY(), element);
+                Aggregation aggregation = new Aggregation(aggregations.get(position.getX()).selected, aggregations.get(position.getX()).getName(), aggregations.get(position.getX()).getElements());
+                aggregations.set(position.getX(), new Aggregation(aggregation));
+            }
+        }
+        modificate=false;
         iE=0;
         for (Heritage heritage : heritages) {
             if(heritage.isInFigure(event) && ready == false){
