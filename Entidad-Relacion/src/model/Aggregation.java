@@ -49,6 +49,48 @@ public class Aggregation extends Entity {
         return (new Point(minX, minY));
     }
     
+    public boolean hasThisElement (Element element){
+        for (Element element1 : this.elements){
+            if(compareElement(element,element1)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isTheLastElement (Element element){
+        return this.elements.size()==1 && compareElement(element,this.elements.get(0));
+    }
+    
+    //Metodo para comparar, si el elemento 1 es igual al 2.
+    public boolean compareElement (Element element1,Element element2){
+        if((element1 instanceof Entity && element2 instanceof Entity) || (element1 instanceof Relation && element2 instanceof Relation)){
+            if(element1.name.equals(element2.name)){
+                return true;
+            }   
+        }
+        else if(element1 instanceof Attribute && element2 instanceof Attribute){
+            Attribute attribute1 = (Attribute)element1;
+            Attribute attribute2 = (Attribute)element2;
+            if((attribute1.id==attribute2.id) && (attribute1.type.equals(attribute2.type)) && (attribute1.figure.getPosX()==attribute2.figure.getPosX()) && (attribute1.figure.getPosY()==attribute2.figure.getPosY()) && (attribute1.name.equals(attribute2.name))){
+                return true;
+            }    
+        }
+        else{
+            return false;
+        }
+        return false;
+    }
+    
+    public void deleteElement (Element element){
+        for (int i = 0; i <this.elements.size(); i++) {
+            if(compareElement(element,this.elements.get(i))){
+                this.elements.remove(i);
+                break;
+            }
+        }
+    }
+    
     /**
      * Método que retorna el punto máximo presente en "elements"
      * @return 
@@ -64,6 +106,18 @@ public class Aggregation extends Entity {
             }
         }
         return (new Point(maxX, maxY));
+    }
+    
+    public boolean hasAllThisElements (ArrayList <Element> elements){
+        int count=0;
+        for (int i = 0; i <this.elements.size(); i++) {
+            for (int j = 0; j <elements.size(); j++) {
+                if(compareElement(this.elements.get(i),elements.get(j))){
+                    count++;
+                }  
+            }  
+        }
+        return count==this.elements.size();
     }
     
 }
